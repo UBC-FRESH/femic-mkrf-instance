@@ -1,0 +1,15 @@
+schema_version: 1
+
+repository:
+  name: "femic-mkrf-instance"
+  visibility: "private"
+  publication_state: "thin-baseline"
+  notes:
+    - "Initial MKRF bootstrap publication with no real model payload yet."
+
+artifacts:
+  - artifact_id: "mkrf_bootstrap_smoke"
+    path: "data/annex_smoke/mkrf_bootstrap_smoke.bin"
+    class: "annex_smoke"
+    published: true
+    notes: "Non-sensitive annex-backed smoke artifact for remote bootstrap validation."
