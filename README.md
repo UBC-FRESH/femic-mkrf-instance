@@ -38,13 +38,13 @@ Policy:
 
 ## Quickstart
 
-1. Validate the instance contract:
-   `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
-2. Validate the rebuild contract:
+1. Validate the rebuild contract:
    `femic instance validate-spec --spec config/rebuild.spec.yaml`
-3. Dry-run the rebuild sequence:
+2. Dry-run the rebuild sequence:
    `femic instance rebuild --spec config/rebuild.spec.yaml --dry-run --run-id mkrf_dryrun`
-4. If this is a thin clone, materialize the annex smoke artifact:
+3. If this is a thin clone, materialize the annex smoke artifact:
    `python -m datalad get data/annex_smoke/mkrf_bootstrap_smoke.bin`
+4. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
+   only after the real MKRF boundary and checkpoint inputs are published.
 
 See `runbooks/REBUILD_RUNBOOK.md` for the current thin-baseline boundary.

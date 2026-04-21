@@ -6,9 +6,8 @@ sequence are ready to publish.
 
 ## Thin-baseline checks
 
-1. `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
-2. `femic instance validate-spec --spec config/rebuild.spec.yaml`
-3. `femic instance rebuild --spec config/rebuild.spec.yaml --dry-run --run-id mkrf_dryrun`
+1. `femic instance validate-spec --spec config/rebuild.spec.yaml`
+2. `femic instance rebuild --spec config/rebuild.spec.yaml --dry-run --run-id mkrf_dryrun`
 
 ## Current scope boundary
 
@@ -20,6 +19,7 @@ sequence are ready to publish.
    - one annex-backed non-sensitive smoke artifact.
 3. Before publishing the first substantive MKRF payload:
    - finalize the real run profile, silviculture surface, and TIPSY rules;
+   - publish the real MKRF boundary and checkpoint inputs required by `femic prep validate-case`;
    - classify bulky payload families in `.gitattributes`;
    - update metadata checksum ledgers; and
    - replace this thin-baseline runbook section with the real compile/BTC/Patchworks workflow.
