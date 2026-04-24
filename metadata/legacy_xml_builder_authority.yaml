@@ -38,8 +38,9 @@ femic_translation_direction:
   - Refactor workbook tables and named ranges into FEMIC-native config and table surfaces.
 
 current_boundary:
-  next_bounded_step: materialize_workbook_values_into_tracked_review_tables
+  next_bounded_step: draft_input_variables_femic_config_translation
   notes:
     - This review resolves the editable-source authority seam at the metadata level.
+    - Parent-side tracked review extracts now live under metadata/mkrf_xlsm_review/ and are referenced by metadata/legacy_xlsm_review_extracts.yaml.
     - No workbook payload has been copied into the instance by this slice.
     - No runnable XML rebuild path is claimed yet.
