@@ -44,13 +44,16 @@ Those copied files are preserved for review and interpretation only.
 
 ## Relevant editable-source companions
 
-These are recorded here as companion seams, not yet as adopted rebuild truth:
+These are now classified more narrowly:
 
 - `XML/baseMKRF.xml`
 - `XML/Curves.xml`
 - `XML/002_base.xlsm`
 - `XML/001_makeCurves_XML.py`
 - `XML/003_MakeAccounts.py`
+
+See `runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md` for the current authority
+decision across those surfaces.
 
 ## Intended FEMIC interpretation
 
@@ -71,6 +74,6 @@ These are recorded here as companion seams, not yet as adopted rebuild truth:
   into this instance by this slice;
 - `patchworksLog.csv`, outputs, and mapping-analysis payloads remain deferred;
 - no upstream mapping-analysis geodatabases or VDYP payloads are imported here;
-- no decision is made yet on whether the XML files or the builder chain are the
-  governing editable-source truth; and
+- the workbook data surfaces are now treated as the governing editable-source
+  truth for the core XML builder lane; and
 - this note is for review metadata only, not runnable rebuild instructions.
