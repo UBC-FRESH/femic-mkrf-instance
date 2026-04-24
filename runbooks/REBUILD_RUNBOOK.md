@@ -19,6 +19,7 @@ sequence are ready to publish.
      package anatomy;
    - copied archival control files under `data/legacy_mkrf/compiled_controls/`;
    - copied archival track tables under `data/legacy_mkrf/compiled_tracks/`;
+   - copied archival spatial runtime files under `data/legacy_mkrf/compiled_spatial/`;
    - metadata ledgers;
    - one annex-backed non-sensitive smoke artifact.
 3. Before publishing the first substantive MKRF payload:
@@ -26,7 +27,8 @@ sequence are ready to publish.
      `metadata/legacy_compiled_package_reference.yaml` as the source of truth
      for the current compiled-package anatomy intake;
    - treat `data/legacy_mkrf/compiled_controls/` and
-     `data/legacy_mkrf/compiled_tracks/` as inert archival references, not as
+     `data/legacy_mkrf/compiled_tracks/` and
+     `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as
      an approved runnable rebuild surface;
    - finalize the real run profile, silviculture surface, and TIPSY rules;
    - publish the real MKRF boundary and checkpoint inputs required by `femic prep validate-case`;
