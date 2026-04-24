@@ -35,7 +35,9 @@ legacy MKRF Patchworks package.
 Instance-local reference surfaces:
 
 - `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md`
+- `runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md`
 - `metadata/legacy_compiled_package_reference.yaml`
+- `metadata/legacy_xml_builder_authority.yaml`
 - `data/legacy_mkrf/compiled_controls/`
 - `data/legacy_mkrf/compiled_tracks/`
 - `data/legacy_mkrf/compiled_spatial/`
@@ -68,6 +70,8 @@ Important boundary:
 - these copied files are **archival references only**;
 - the copied bulky compiled runtime families now include `Tracks/*.csv`,
   `Spatial/fragments.*`, and `Spatial/topo_frag100.csv`;
+- the governing editable-source seam for the core XML builder is now treated as
+  workbook data surfaces from `002_base.xlsm`, not the checked-in generated XML;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.
@@ -92,15 +96,17 @@ Policy:
    `femic instance rebuild --spec config/rebuild.spec.yaml --dry-run --run-id mkrf_dryrun`
 3. Review the legacy compiled-package reference note:
    `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md`
-4. Inspect the copied archival control layer under:
+4. Review the legacy XML-builder authority note:
+   `runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md`
+5. Inspect the copied archival control layer under:
    `data/legacy_mkrf/compiled_controls/`
-5. Inspect the copied archival track tables under:
+6. Inspect the copied archival track tables under:
    `data/legacy_mkrf/compiled_tracks/`
-6. Inspect the copied archival spatial runtime files under:
+7. Inspect the copied archival spatial runtime files under:
    `data/legacy_mkrf/compiled_spatial/`
-7. If this is a thin clone, materialize the annex smoke artifact:
+8. If this is a thin clone, materialize the annex smoke artifact:
    `python -m datalad get data/annex_smoke/mkrf_bootstrap_smoke.bin`
-8. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
+9. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
    only after the real MKRF boundary and checkpoint inputs are published.
 
 See `runbooks/REBUILD_RUNBOOK.md` for the current thin-baseline boundary.

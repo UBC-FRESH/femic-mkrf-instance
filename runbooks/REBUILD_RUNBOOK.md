@@ -26,6 +26,9 @@ sequence are ready to publish.
    - use `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md` and
      `metadata/legacy_compiled_package_reference.yaml` as the source of truth
      for the current compiled-package anatomy intake;
+   - use `runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md` and
+     `metadata/legacy_xml_builder_authority.yaml` as the source of truth for
+     the current XML-builder authority-chain review;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as

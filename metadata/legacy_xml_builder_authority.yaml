@@ -1,0 +1,45 @@
+schema_version: 1
+
+legacy_xml_builder_review:
+  case_id: mkrf_legacy_2016
+  source_root: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML
+  conclusion:
+    governing_editable_source:
+      component: 002_base.xlsm
+      role: authoritative_parameter_store_and_core_xml_serializer
+    generated_core_artifact:
+      component: baseMKRF.xml
+      role: generated_core_forestmodel_xml
+    generated_curve_artifact:
+      component: Curves.xml
+      role: generated_curve_fragment
+    helper_scripts:
+      - 001_makeCurves_XML.py
+      - 003_MakeAccounts.py
+
+evidence_summary:
+  - "The embedded ForestModel.bas VBA module exposes DumpXML(filename) as the XML writer."
+  - "DumpXML(...) emits the XML by calling dumpProlog, dumpCurves, dumpRetention, dumpUnmanaged, dumpStratum, and dumpAttributes."
+  - "baseMKRF.xml identifies the SPS spreadsheet tool and records 002_base.xlsm in the generated header."
+  - "baseMKRF.xml includes Curves.xml through the beforeCurves entity, so the core XML and curve fragment are separate generated surfaces."
+  - "001_makeCurves_XML.py writes Curves.xml from CSV/CURVE_TABLE.csv."
+
+governing_workbook_surfaces:
+  - "Input Variables: probDesc, horizon, startYear, maxAge, exclude, blockKey, areaExpr, ageExpr, inpColumns, inpConstants, treatmentEligibility, beforeCurves, afterCurves, afterRetention, afterUnmanaged, afterStratum, afterAttributes"
+  - "Netdown: netdownCriteria, netdownNames, netdownFactors"
+  - "Curves sheets: curveNames"
+  - "Stratum sheets: stratumCriteria, stratumFeatures, stratumSuccession, stratumProducts, stratumTreatments, stratumFactors"
+  - "Attributes sheets: attributes"
+  - "Constants sheets: constantValues"
+
+femic_translation_direction:
+  - Preserve workbook data surfaces as the governing evidence.
+  - Do not preserve SPS VBA as the long-term runtime path.
+  - Refactor workbook tables and named ranges into FEMIC-native config and table surfaces.
+
+current_boundary:
+  next_bounded_step: extract_workbook_parameter_surfaces_into_reviewable_femic_inputs
+  notes:
+    - This review resolves the editable-source authority seam at the metadata level.
+    - No workbook payload has been copied into the instance by this slice.
+    - No runnable XML rebuild path is claimed yet.

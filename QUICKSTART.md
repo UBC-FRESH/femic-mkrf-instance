@@ -11,14 +11,16 @@
 6. Optionally update `config/rebuild.allowlist.yaml` for intentional baseline diffs.
 7. Review the current legacy compiled-package reference in
    `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md`.
-8. Inspect the copied archival control layer in
+8. Review the current XML-builder authority note in
+   `runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md`.
+9. Inspect the copied archival control layer in
    `data/legacy_mkrf/compiled_controls/`.
-9. Inspect the copied archival track tables in
+10. Inspect the copied archival track tables in
    `data/legacy_mkrf/compiled_tracks/`.
-10. Inspect the copied archival spatial runtime files in
+11. Inspect the copied archival spatial runtime files in
    `data/legacy_mkrf/compiled_spatial/`.
-11. Add case-specific instructions to `runbooks/REBUILD_RUNBOOK.md`.
-12. Add/edit `config/tipsy/tsamkrf.yaml`.
-13. Use `femic prep validate-case --run-config config/run_profile.mkrf.yaml`
+12. Add case-specific instructions to `runbooks/REBUILD_RUNBOOK.md`.
+13. Add/edit `config/tipsy/tsamkrf.yaml`.
+14. Use `femic prep validate-case --run-config config/run_profile.mkrf.yaml`
    only after the real MKRF boundary and checkpoint inputs have been published
    into this instance.
