@@ -68,3 +68,8 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Machine-readable surface-family map for the governing MKRF XLSM builder lane."
+  - artifact_id: "legacy_xlsm_review_extracts_yaml"
+    path: "metadata/legacy_xlsm_review_extracts.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local pointer to the parent-side tracked workbook review extracts for the governing MKRF XLSM lane."

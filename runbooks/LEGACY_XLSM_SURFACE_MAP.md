@@ -39,7 +39,9 @@ FEMIC-facing surfaces:
 
 ## Current boundary
 
-- This map classifies workbook surfaces only.
-- It does not yet materialize those values into tracked CSV/YAML tables.
+- This map classifies workbook surfaces, and the parent FEMIC repo now carries
+  tracked review extracts under `metadata/mkrf_xlsm_review/`.
+- Use `metadata/legacy_xlsm_review_extracts.yaml` in this instance as the
+  pointer surface to those extracted workbook values.
 - It does not reimplement the SPS VBA.
 - It does not publish the workbook itself into the instance.

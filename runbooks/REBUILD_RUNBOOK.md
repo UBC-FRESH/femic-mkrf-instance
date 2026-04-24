@@ -32,6 +32,9 @@ sequence are ready to publish.
    - use `runbooks/LEGACY_XLSM_SURFACE_MAP.md` and
      `metadata/legacy_xlsm_surface_map.yaml` as the source of truth for the
      current workbook sheet/range family map;
+   - use `metadata/legacy_xlsm_review_extracts.yaml` as the source of truth
+     for the parent-side tracked review extracts that materialize workbook
+     values without copying the workbook into this instance;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as

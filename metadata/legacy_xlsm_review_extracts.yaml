@@ -1,0 +1,68 @@
+schema_version: 1
+
+legacy_xlsm_review_extracts:
+  case_id: mkrf_legacy_2016
+  source_workbook: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+  parent_review_root: metadata/mkrf_xlsm_review
+  extract_manifest: metadata/mkrf_xlsm_review/extract_manifest.yaml
+  evidence_role:
+    - Parent-repo tracked review extracts for the governing workbook-owned values.
+    - Review evidence only; not live FEMIC config and not a workbook publication surface.
+
+  extracted_surfaces:
+    - sheet: Input Variables
+      path: metadata/mkrf_xlsm_review/input_variables.review.csv
+      range_artifacts:
+        - metadata/mkrf_xlsm_review/ranges/input_variables_prob_desc.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_horizon.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_start_year.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_max_age.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_exclude.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_block_key.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_area_expr.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_age_expr.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_treatment_eligibility.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_before_curves.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_after_curves.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_after_retention.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_after_unmanaged.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_after_stratum.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_after_attributes.review.yaml
+        - metadata/mkrf_xlsm_review/ranges/input_variables_columns.review.csv
+        - metadata/mkrf_xlsm_review/ranges/input_variables_constants.review.csv
+    - sheet: Netdown
+      path: metadata/mkrf_xlsm_review/netdown.review.csv
+      range_artifacts:
+        - metadata/mkrf_xlsm_review/ranges/netdown_criteria.review.csv
+        - metadata/mkrf_xlsm_review/ranges/netdown_names.review.csv
+        - metadata/mkrf_xlsm_review/ranges/netdown_factors.review.csv
+    - sheet: Curve Library
+      path: metadata/mkrf_xlsm_review/curve_library.review.csv
+      range_artifacts:
+        - metadata/mkrf_xlsm_review/ranges/curve_names.review.csv
+    - sheet: Attrib
+      path: metadata/mkrf_xlsm_review/attrib.review.csv
+      range_artifacts:
+        - metadata/mkrf_xlsm_review/ranges/attrib_attributes.review.csv
+    - sheet: Treat
+      path: metadata/mkrf_xlsm_review/treat.review.csv
+      range_artifacts:
+        - metadata/mkrf_xlsm_review/ranges/treat_stratum_criteria.review.csv
+        - metadata/mkrf_xlsm_review/ranges/treat_stratum_succession.review.csv
+        - metadata/mkrf_xlsm_review/ranges/treat_stratum_features.review.csv
+        - metadata/mkrf_xlsm_review/ranges/treat_stratum_treatments.review.csv
+        - metadata/mkrf_xlsm_review/ranges/treat_stratum_factors.review.csv
+        - metadata/mkrf_xlsm_review/ranges/treat_stratum_products.review.csv
+    - sheet: Lookups
+      path: metadata/mkrf_xlsm_review/ranges/lookups_spp_comp.review.csv
+      role: supporting_lookup_review_extract
+    - sheet: Post Renewal Succession
+      path: metadata/mkrf_xlsm_review/ranges/post_renewal_treatment_responses.review.csv
+      role: supporting_transition_review_extract
+
+  current_boundary:
+    next_bounded_step: draft_input_variables_femic_config_translation
+    notes:
+      - The review extracts live in the parent FEMIC repo and are referenced here as lineage evidence.
+      - No workbook payload was copied into the instance by this slice.
+      - No VBA reimplementation or runnable rebuild claim is made by this slice.
