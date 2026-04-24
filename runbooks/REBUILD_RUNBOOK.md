@@ -19,32 +19,14 @@ sequence are ready to publish.
      package anatomy;
    - copied archival control files under `data/legacy_mkrf/compiled_controls/`;
    - copied archival track tables under `data/legacy_mkrf/compiled_tracks/`;
-   - copied archival spatial runtime files under `data/legacy_mkrf/compiled_spatial/`;
    - metadata ledgers;
    - one annex-backed non-sensitive smoke artifact.
 3. Before publishing the first substantive MKRF payload:
    - use `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md` and
      `metadata/legacy_compiled_package_reference.yaml` as the source of truth
      for the current compiled-package anatomy intake;
-   - use `runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md` and
-     `metadata/legacy_xml_builder_authority.yaml` as the source of truth for
-     the current XML-builder authority-chain review;
-   - use `runbooks/LEGACY_XLSM_SURFACE_MAP.md` and
-     `metadata/legacy_xlsm_surface_map.yaml` as the source of truth for the
-     current workbook sheet/range family map;
-   - use `metadata/legacy_xlsm_review_extracts.yaml` as the source of truth
-     for the parent-side tracked review extracts that materialize workbook
-     values without copying the workbook into this instance;
-   - use `config/legacy_xml_builder/input_variables.mkrf.yaml`,
-     `metadata/legacy_input_variables_translation.yaml`, and
-     `runbooks/LEGACY_INPUT_VARIABLES_TRANSLATION.md` as the source of truth
-     for the first live-vs-staged Input Variables translation, including the
-     live block/area/age/exclude export contract, the live additional
-     stratification fragment bindings, and the live treatment-eligibility
-     review flag;
    - treat `data/legacy_mkrf/compiled_controls/` and
-     `data/legacy_mkrf/compiled_tracks/` and
-     `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as
+     `data/legacy_mkrf/compiled_tracks/` as inert archival references, not as
      an approved runnable rebuild surface;
    - finalize the real run profile, silviculture surface, and TIPSY rules;
    - publish the real MKRF boundary and checkpoint inputs required by `femic prep validate-case`;

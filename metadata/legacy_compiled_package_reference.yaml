@@ -3,10 +3,10 @@ schema_version: 1
 legacy_reference:
   source_case_id: mkrf_legacy_2016
   source_root: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF
-  imported_as: review_metadata_plus_archival_controls_tracks_and_spatial
+  imported_as: review_metadata_plus_archival_controls_and_tracks
   notes:
-    - The small compiled control layer, the legacy track-table family, and the legacy spatial runtime family are copied into this instance by this slice.
-    - Reporting-output and upstream mapping-analysis families remain deferred.
+    - The small compiled control layer and the legacy track-table family are copied into this instance by this slice.
+    - Spatial, output, and upstream mapping-analysis families remain deferred.
 
 entrypoints:
   pin:
@@ -36,14 +36,12 @@ compiled_package_families:
     legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/fragments.*
     role: compiled_fragment_geometry
     candidate_femic_home: output/patchworks_mkrf_validated/fragments/
-    imported_now: archival_copy
-    archival_copy_root: data/legacy_mkrf/compiled_spatial/
+    imported_now: metadata_only
   - family_id: topology
     legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/topo_frag100.csv
     role: spatial_topology_sidecar
     candidate_femic_home: models/mkrf_patchworks_model/blocks/topology_fragments.csv
-    imported_now: archival_copy
-    archival_copy_path: data/legacy_mkrf/compiled_spatial/topo_frag100.csv
+    imported_now: metadata_only
   - family_id: target_scripts
     legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Targets/*.bsh
     role: target_control_scripts
@@ -59,35 +57,33 @@ compiled_package_families:
 
 editable_source_companions:
   - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/baseMKRF.xml
-    role: generated_core_xml_artifact
+    role: editable_xml_source
     candidate_femic_home: output/patchworks_mkrf_validated/forestmodel.xml
-    status: resolved_generated_from_workbook_builder
+    status: unresolved_governing_source
   - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/Curves.xml
-    role: generated_curve_fragment
+    role: curve_xml_source
     candidate_femic_home: output/patchworks_mkrf_validated/curve_sources/Curves.xml
-    status: resolved_generated_from_curve_table_pipeline
+    status: unresolved_governing_source
   - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
-    role: authoritative_parameter_workbook
+    role: builder_workbook
     candidate_femic_home: data/legacy_mkrf/xml_builders/002_base.xlsm
-    status: resolved_governing_editable_source
+    status: unresolved_governing_source
   - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/001_makeCurves_XML.py
-    role: curve_fragment_generator
+    role: builder_script
     candidate_femic_home: data/legacy_mkrf/xml_builders/001_makeCurves_XML.py
-    status: resolved_helper_script
+    status: unresolved_governing_source
   - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/003_MakeAccounts.py
-    role: post_matrix_account_export_helper
+    role: builder_script
     candidate_femic_home: data/legacy_mkrf/xml_builders/003_MakeAccounts.py
-    status: resolved_helper_script
+    status: unresolved_governing_source
 
 current_boundary:
-  next_bounded_step: extract_the_governing_workbook_surfaces_into_reviewable_femic_inputs
+  next_bounded_step: import_the_spatial_runtime_family_or_resolve_one_specific_unresolved_seam
   deferred_families:
-    - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/patchworksLog.csv
+    - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/*
     - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/*
     - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Outputs/*
   notes:
-    - The copied archival control layer, track tables, and spatial runtime files are preserved for review only.
-    - The workbook data surfaces are now treated as the governing editable-source seam for the core XML builder.
-    - Upstream mapping-analysis and reporting families remain deferred.
-    - patchworksLog.csv remains outside the current archival slice.
+    - The copied archival control layer and track tables are preserved for review only.
+    - Upstream mapping-analysis plus spatial/reporting families remain deferred.
     - This slice still does not publish runnable legacy artifacts.
