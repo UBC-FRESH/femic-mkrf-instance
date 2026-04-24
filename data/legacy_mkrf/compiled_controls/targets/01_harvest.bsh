@@ -1,0 +1,1 @@
+setActive ("product.yield.managed.total", true, true, false);	setMinimumPeriodic ("product.yield.managed.total", 500000, 1, 30);	setMinWeight ("product.yield.managed.total", 1, 1, 30);

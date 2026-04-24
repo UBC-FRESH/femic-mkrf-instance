@@ -1,0 +1,9 @@
+/*
+ * These commands will build an input matrix according to the following recipe.
+ */
+
+
+ca.spatial.tracks.builder.Process.main(new String[] {"S:\\1034\\13\\04_Models\\PW_MKRF\\Spatial\\fragments.shp", // fragment data set
+   "S:\\1034\\13\\04_Models\\PW_MKRF\\Tracks", // output folder
+   "S:\\1034\\13\\04_Models\\PW_MKRF\\XML\\baseMKRF.xml" // ForestModel XML input
+});

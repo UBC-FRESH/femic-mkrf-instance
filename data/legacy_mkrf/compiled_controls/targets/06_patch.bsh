@@ -1,0 +1,10 @@
+setActive ("patch.grpblk.0_1.size", true, false, true);		setMaximumPeriodic ("patch.grpblk.0_1.size", 0, 0, 30);		setMaxWeight ("patch.grpblk.0_1.size", 1000000);
+setActive ("patch.grpblk.1_5.size", true, false, true);		setMaximumPeriodic ("patch.grpblk.1_5.size", 10, 0, 30);		setMaxWeight ("patch.grpblk.1_5.size", 100000);
+setActive ("patch.grpblk.40_50.size", true, false, true);		setMaximumPeriodic ("patch.grpblk.40_50.size", 5, 0, 30);		setMaxWeight ("patch.grpblk.40_50.size", 1000);
+setActive ("patch.grpblk.50plus.size", true, false, true);		setMaximumPeriodic ("patch.grpblk.50plus.size", 0, 0, 30);		setMaxWeight ("patch.grpblk.50plus.size", 1000);
+setActive ("patch.grpblk.5_40.shape", true, false, true);		setMaximumPeriodic ("patch.grpblk.5_40.shape", 0, 0, 30);		setMaxWeight ("patch.grpblk.5_40.shape", 10);
+setActive ("patch.grpblk.40_50.shape", true, false, true);		setMaximumPeriodic ("patch.grpblk.40_50.shape", 0, 0, 30);		setMaxWeight ("patch.grpblk.40_50.shape", 10);
+setActive ("patch.sepblk.40_50.size", true, false, true);		setMaximumPeriodic ("patch.sepblk.40_50.size", 5, 0, 30);		setMaxWeight ("patch.sepblk.40_50.size", 10);
+setActive ("patch.sepblk.50plus.size", true, false, true);		setMaximumPeriodic ("patch.sepblk.50plus.size", 0, 0, 30);		setMaxWeight ("patch.sepblk.50plus.size", 1000);
+setActive ("patch.sepblk.0_40.shape", true, false, true);		setMaximumPeriodic ("patch.sepblk.0_40.shape", 0, 0, 30);		setMaxWeight ("patch.sepblk.0_40.shape", 10);
+setActive ("patch.sepblk.40_50.shape", true, false, true);		setMaximumPeriodic ("patch.sepblk.40_50.shape", 0, 0, 30);		setMaxWeight ("patch.sepblk.40_50.shape", 10);

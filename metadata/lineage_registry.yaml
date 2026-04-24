@@ -23,3 +23,18 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Machine-readable bagging/tagging map for the stable compiled legacy PW_MKRF package."
+  - artifact_id: "legacy_compiled_control_entrypoints"
+    path: "data/legacy_mkrf/compiled_controls/entrypoints/"
+    class: "archival_reference"
+    published: true
+    notes: "Copied archival control entrypoints from the legacy PW_MKRF package."
+  - artifact_id: "legacy_compiled_control_scripts"
+    path: "data/legacy_mkrf/compiled_controls/scripts/"
+    class: "archival_reference"
+    published: true
+    notes: "Copied archival runtime/report helper scripts from the legacy PW_MKRF package."
+  - artifact_id: "legacy_compiled_control_targets"
+    path: "data/legacy_mkrf/compiled_controls/targets/"
+    class: "archival_reference"
+    published: true
+    notes: "Copied archival target-control scripts from the legacy PW_MKRF package."

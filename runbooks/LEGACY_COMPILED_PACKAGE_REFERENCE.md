@@ -10,6 +10,14 @@ Authoritative legacy source lane for this note:
 This note does **not** mean the legacy payload itself is published here. It is
 only the instance-local reference contract for the compiled package shape.
 
+Copied archival files now live under:
+
+- `data/legacy_mkrf/compiled_controls/entrypoints/`
+- `data/legacy_mkrf/compiled_controls/scripts/`
+- `data/legacy_mkrf/compiled_controls/targets/`
+
+Those copied files are preserved for review and interpretation only.
+
 ## Primary entrypoints
 
 - `baseMKRF.pin`
@@ -55,7 +63,8 @@ These are recorded here as companion seams, not yet as adopted rebuild truth:
 
 ## Current boundary
 
-- no bulky compiled payload is copied into this instance by this slice;
+- only the small control layer is copied into this instance by this slice;
+- tracks, fragments, topology, outputs, and mapping-analysis payloads remain deferred;
 - no upstream mapping-analysis geodatabases or VDYP payloads are imported here;
 - no decision is made yet on whether the XML files or the builder chain are the
   governing editable-source truth; and

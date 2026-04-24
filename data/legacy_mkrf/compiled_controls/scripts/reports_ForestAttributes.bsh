@@ -1,0 +1,180 @@
+//Index report
+reportWriter.addReport(new IndexReport("Forest_Attributes/index",
+     "Forest_Attributes","",reportWriter.getReports()));
+
+//---------Crosstab by landbase definition-----------
+crosstab = new CrosstabStore(control.getBlockTable(), "true", Horizon.periodList, false);
+crosstab.addValue("area.THLB", "feature.area.managed.total");
+crosstab.addValue("area.THLBret", "if(CONTCLAS eq 'C',feature.area.unmanaged.total,0)");
+crosstab.addValue("area.NHLB", "if(CONTCLAS eq 'N',feature.area.unmanaged.total,0)");
+crosstab.addValue("yield.THLB", "feature.yield.managed.total");
+crosstab.addValue("yield.THLBret", "if(CONTCLAS eq 'C',feature.yield.unmanaged.total,0)");
+crosstab.addValue("yield.NHLB", "if(CONTCLAS eq 'N',feature.yield.unmanaged.total,0)");
+
+//---------AREA-----------
+report1 = new PeriodPatternReport("Forest_Attributes/area", // filename
+    "Area by landbase definition", // title
+    "ha",// units
+    crosstab, // attributeStore
+    "true", // reselectExpression
+    Horizon.periodList, // periods
+    false, // annualize
+    "", // HTMLText
+    false, // percent
+    "area." // pattern
+);
+//report1.setNoChart(true);
+reportWriter.addReport(report1);
+
+reportWriter.addReport(new StandardReport("Forest_Attributes/area_THLB_state", "Area THLB by management state", 
+	"area (ha)", control.getTargetTable(), 
+	"feature.area.managed.state.", 
+	"CURRENT", "", false));
+
+// Range categories (x,y) are x-inclusive, y-exclusive
+categories1 = new RangeLabel[] {
+    new RangeLabel("0-20", -10, 21.0), 
+    new RangeLabel("21-40", 21.0, 41.0), 
+    new RangeLabel("41-60", 41.0, 61.0), 
+    new RangeLabel("61-80", 61.0, 81.0), 
+    new RangeLabel("81-100", 81.0, 101.0), 
+    new RangeLabel("101-120", 101.0, 121.0), 
+    new RangeLabel("121-140", 121.0, 141.0),
+	new RangeLabel("141-250", 141.0, 251.0),
+    new RangeLabel("250+", 251.0, 9999.0)};
+
+reportWriter.addReport(new RangePeriodReport("Forest_Attributes/area_THLB_ageclass", "Area THLB by Age Class",
+	"hectares", control.getBlockTable(), "feature.area.managed.total", "Strata.managed.AGE",
+	categories1, "CONTCLAS eq 'C'", Horizon.periodList, null, false));
+	
+reportWriter.addReport(new RangePeriodReport("Forest_Attributes/area_NHLB_ageclass", "Area NHLB by Age Class",
+	"hectares", control.getBlockTable(), "feature.area.unmanaged.total", "Strata.unmanaged.AGE",
+	categories1, "true", Horizon.periodList, null, false));
+
+//---------GROWING STOCK-----------
+report1 = new PeriodPatternReport("Forest_Attributes/yield", // filename
+    "Yield by landbase definition", // title
+    "m3",// units
+    crosstab, // attributeStore
+    "true", // reselectExpression
+    Horizon.periodList, // periods
+    false, // annualize
+    "", // HTMLText
+    false, // percent
+    "yield." // pattern
+);
+//report1.setNoChart(true);
+reportWriter.addReport(report1);
+
+reportWriter.addReport(new StandardReport("Forest_Attributes/yield_THLB_State", "Yield THLB by management state", 
+	"Volume (m3)", control.getTargetTable(), 
+	"feature.yield.managed.state.", 
+	"CURRENT", "", false));
+	
+reportWriter.addReport(new StandardReport("Forest_Attributes/yield_THLB_indsp", "Yield THLB by Individual Species", 
+	"Volume (m3)", control.getTargetTable(), 
+	"feature.yield.managed.indsp.", 
+	"CURRENT", "", false));
+                      
+//---------merch GROWING STOCK-----------
+reportWriter.addReport(new StandardReport("Forest_Attributes/yieldmerch_THLB", "Yield THLB merchantable", 
+	"Volume (m3)", control.getTargetTable(), 
+	"feature.yield.managed.merch", 
+	"CURRENT", "", false));
+
+//---------attributes by Operability-----------
+crosstab = new CrosstabStore(control.getBlockTable(), "CONTCLAS ne 'X'", Horizon.periodList, false);
+category3 = new Comparable[] {"Low Operability", "Operable", "Reserve", "Riparian"};
+
+crosstab.addCategory("Oper", "Operabilit", category3);
+crosstab.addValue("Area", "feature.area.managed.total");
+crosstab.addValue("Yield", "feature.yield.managed.total");
+
+report1 = new PeriodCategoryReport("Forest_Attributes/area_oper", //filename
+    "Area THLB by Operability", //title
+    "ha", // unit
+    crosstab, //attributestore
+    "true", // reelect expression
+    Horizon.periodList, //periods
+    false, //annulaize
+    "", //html
+    false, //percent
+    "Area",//value
+    "Oper", //catengory expression
+    category3 //categoires
+    );
+reportWriter.addReport(report1);
+
+report1 = new PeriodCategoryReport("Forest_Attributes/yield_oper", //filename
+    "Yield THLB by Operability", //title
+    "m3", // unit
+    crosstab, //attributestore
+    "true", // reelect expression
+    Horizon.periodList, //periods
+    false, //annulaize
+    "", //html
+    false, //percent
+    "Yield",//value
+    "Oper", //catengory expression
+    category3 //categoires
+    );
+reportWriter.addReport(report1);
+
+//---------attributes by Candidate treatment CT-----------
+crosstab = new CrosstabStore(control.getBlockTable(), "'CT' in CANDIDATETREATMENTS", Horizon.periodList, false);
+category3 = new Comparable[] {"CT"};
+
+for(i=0;i<category3.length;i++){
+	crosstab.addValue("Area."+category3[i], "if('"+category3[i]+"' in  CANDIDATETREATMENTS,feature.area.managed.total,0)");
+}
+
+report1 = new PeriodPatternReport("Forest_Attributes/area_THLB_ct", // filename
+    "Area THLB eligible for thinning", // title
+    "ha/year",// units
+    crosstab, // attributeStore
+    "true", // reselectExpression
+    Horizon.periodList, // periods
+    true, // annualize
+    "", // HTMLText
+    false, // percent
+    "Area." // pattern
+);
+report1.setNoChart(false);
+reportWriter.addReport(report1);
+ 
+//--------TABLE Query------
+// periods6 = new int[] {
+    // 0, 
+    // 10, 
+    // 20, 
+    // 30};
+	
+// expressions1 = new String[] {
+    // "RES_KEY",
+    // "Strata.managed.au",
+    // "MANAGEDAREA",
+    // "Strata.managed.AGE",
+    // "Strata.unmanaged.au",
+    // "UNMANAGEDAREA",
+    // "Strata.unmanaged.AGE"
+    // };
+
+// columnNames1 = new String[] {
+    // "RES_KEY",
+    // "THLB_AU",
+    // "THLB_HA",
+    // "THLB_AGE",
+    // "NHLB_AU",
+    // "NHLB_HA",
+    // "NHLB_AGE"
+    // };
+
+// report1 = new TableQueryReport("Table_Qry/Table_Age", // filename
+    // "Table Age", // title
+    // control.getBlockTable(), // attributeStore
+    // "", // reselectExpression
+    // expressions1, // expressions
+    // columnNames1, // columnNames
+    // periods6 // periods
+// );
+// reportWriter.addReport(report1);

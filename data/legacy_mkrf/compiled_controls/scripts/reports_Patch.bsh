@@ -1,0 +1,147 @@
+//Index report
+reportWriter.addReport(new IndexReport("Patch_Reports/index",
+                    "Patch_Reports",
+                    "",
+                    reportWriter.getReports()));
+					
+// Patch basic reports reports
+reportWriter.addReport(new StandardReport("Patch_Reports/opn_size",
+       "Opening size distribution", "percent", control.getTargetTable(),
+       "patch.grpblk*size","CURRENT","Harvest openings",false));
+
+reportWriter.addReport(new StandardReport("Patch_Reports/opn_freq",
+       "Opening frequency distribution","frequency",control.getTargetTable(),
+       "patch.grpblk*frequency","CURRENT","Harvest openings",false));
+	   
+reportWriter.addReport(new StandardReport("Patch_Reports/patch_size",
+       "Patch size distribution", "percent", control.getTargetTable(),
+       "patch.sepblk*size","CURRENT","Patches <=10yrs and 100m apart",false));
+
+reportWriter.addReport(new StandardReport("Patch_Reports/patch_freq",
+       "Patch frequency distribution","frequency",control.getTargetTable(),
+       "patch.sepblk*frequency","CURRENT","Patches <=10yrs and 100m apart",false));
+       
+//Patch target limit reports
+reportWriter.addReport(new TargetLimitReport ("Patch_Reports/Opn_Control", "Opening Target_Control",
+        control.getTargetTable(),"percent","Openings (ha)","Current Value","patch.grpblk.*size", false, ""))
+        .addDefaultParam("chart.width","1000");
+		
+reportWriter.addReport(new TargetLimitReport ("Patch_Reports/Patch_Control", "Patch Target_Control",
+        control.getTargetTable(),"percent","Patch <=10yrs and 100m apart (ha)","Current Value","patch.sepblk.*size", false, ""))
+        .addDefaultParam("chart.width","1000");
+		
+//Patch maps
+theme3 = new DefaultTheme(control.getBlockTable(), // attributeStore
+    new PolygonSymbol(new Color(204, 204, 255)) // symbol
+);
+theme3.setCaption("FMLB");
+layer2 = new GeoRelLayer(control.getBlockTable(), // table
+    theme3 // theme
+);
+theme5 = new NumericTheme(control.getBlockTable() // attributeStore
+);
+theme5.setFieldname("product.area.managed.treat.CC.size");
+theme5.setNormalize("");
+theme5.setCaption("patch grpblk");
+theme5.addElement(new ThemeElement("0_1", new PolygonSymbol(new Color(239, 0, 0))), "0.001 - 1");
+theme5.addElement(new ThemeElement("1_5", new PolygonSymbol(new Color(254, 245, 0))), "1 - 5");
+theme5.addElement(new ThemeElement("5_40", new PolygonSymbol(new Color(254, 173, 0))), "5 - 40");
+theme5.addElement(new ThemeElement("40_50", new PolygonSymbol(new Color(0, 254, 118))), "40 - 50");
+theme5.addElement(new ThemeElement("50_plus", new PolygonSymbol(new Color(254, 188, 135))), "50 - 999999");
+layer4 = new GeoRelLayer(control.getBlockTable(), // table
+    theme5 // theme
+);
+theme7 = new NumericTheme(control.getBlockTable() // attributeStore
+);
+theme7.setFieldname("feature.area.managed.seral.le10.size");
+theme7.setNormalize("");
+theme7.setCaption("patch sepblk");
+theme7.addElement(new ThemeElement("0_40", new PolygonSymbol(null, new LineSymbol(new SimpleLineSymbol(Color.black, 2.0)).setVisibility(0, 1.0E10, AlphaComposite.SrcOver))), "0.001 - 40");
+theme7.addElement(new ThemeElement("40_50", new PolygonSymbol(null, new LineSymbol(new SimpleLineSymbol(Color.blue, 2.0)).setVisibility(0, 1.0E10, AlphaComposite.SrcOver))), "40 - 50");
+theme7.addElement(new ThemeElement("50_plus", new PolygonSymbol(null, new LineSymbol(new SimpleLineSymbol(new Color(0, 204, 204), 2.0)).setVisibility(0, 1.0E10, AlphaComposite.SrcOver))), "50 - 999999");
+layer6 = new GeoRelLayer(control.getBlockTable(), // table
+    theme7 // theme
+);
+layerList1 = new LayerList();
+layerList1.add(layer2);
+layerList1.add(layer4);
+layerList1.add(layer6);
+layerList1.setConnected(false);
+layerList1.setPeriod(1);
+report1 = new MapReport("Patch_Reports/Maps/Patches_000.png", // fullFilename
+    "Patches Year 000", // title
+    layerList1, // layerList
+    0, // period
+    1080, // width
+    1920, // height
+    20, // captionX
+    20, // captionY
+    true, // showLegend
+    "" // htmlText
+);
+reportWriter.addReport(report1);
+
+report2 = new MapReport("Patch_Reports/Maps/Patches_010.png", // fullFilename
+    "Patches Year 010", // title
+    layerList1, // layerList
+    1, // period
+    1080, // width
+    1920, // height
+    20, // captionX
+    20, // captionY
+    true, // showLegend
+    "" // htmlText
+);
+reportWriter.addReport(report2);
+
+report2 = new MapReport("Patch_Reports/Maps/Patches_020.png", // fullFilename
+    "Patches Year 020", // title
+    layerList1, // layerList
+    2, // period
+    1080, // width
+    1920, // height
+    20, // captionX
+    20, // captionY
+    true, // showLegend
+    "" // htmlText
+);
+reportWriter.addReport(report2);
+
+report3 = new MapReport("Patch_Reports/Maps/Patches_050.png", // fullFilename
+    "Patches Year 050", // title
+    layerList1, // layerList
+    5, // period
+    1080, // width
+    1920, // height
+    20, // captionX
+    20, // captionY
+    true, // showLegend
+    "" // htmlText
+);
+reportWriter.addReport(report3);
+
+report4 = new MapReport("Patch_Reports/Maps/Patches_100.png", // fullFilename
+    "Patches Year 100", // title
+    layerList1, // layerList
+    10, // period
+    1080, // width
+    1920, // height
+    20, // captionX
+    20, // captionY
+    true, // showLegend
+    "" // htmlText
+);
+reportWriter.addReport(report4);
+
+report5 = new MapReport("Patch_Reports/Maps/Patches_300.png", // fullFilename
+    "Patches Year 300", // title
+    layerList1, // layerList
+    30, // period
+    1080, // width
+    1920, // height
+    20, // captionX
+    20, // captionY
+    true, // showLegend
+    "" // htmlText
+);
+reportWriter.addReport(report5);

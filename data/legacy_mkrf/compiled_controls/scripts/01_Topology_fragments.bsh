@@ -1,0 +1,12 @@
+/*
+ * These commands will calculate raster proximal topology according to the following recipe.
+ */
+
+
+pt = new ca.spatial.gis.raster.ProximalTopology("S:\\1034\\13\\04_Models\\PW_MKRF\\Spatial\\fragments.shp", // Input data set
+   20.0f, // Cellsize
+   "RES_KEY", // Polygon label
+   100.0f, // search threshold
+   "S:\\1034\\13\\04_Models\\PW_MKRF\\Spatial\\topo_frag100.csv" // Output
+);
+pt.execute();

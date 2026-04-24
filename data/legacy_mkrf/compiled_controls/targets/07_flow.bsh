@@ -1,0 +1,2 @@
+setActive ("feature.flow.yield.total", true, true, false);	setMinimumPeriodic ("feature.flow.yield.total", 0, 1, 30);	setMinWeight ("feature.flow.yield.total", 1);
+setActive ("product.flow.yield.even", true, true, true);	setMinimumPeriodic ("product.flow.yield.even", 0, 1, 30); setMaximumPeriodic ("product.flow.yield.even", 0, 1, 30);	setMinWeight ("product.flow.yield.even", 1); setMaxWeight ("product.flow.yield.even", 1);

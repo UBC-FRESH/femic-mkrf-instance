@@ -1,0 +1,167 @@
+//Index report
+reportWriter.addReport(new IndexReport("Harvest_Attributes/index",
+    "Harvest_Attributes","",reportWriter.getReports()));
+					
+// --------AREA---------
+
+reportWriter.addReport(new StandardReport("Harvest_Attributes/area_state",
+    "Area by management state", 
+    "ha/yr", control.getTargetTable(),
+    "product.area.managed.state.", "CURRENT/PERIODWIDTH", "Values are annualized.", false));
+	
+reportWriter.addReport(new StandardReport("Harvest_Attributes/area_treat",
+    "Area by treatment", 
+    "ha/yr", control.getTargetTable(),
+    "product.area.managed.treat.", "CURRENT/PERIODWIDTH", "Values are annualized.", false));
+            
+// --------VOLUME---------
+reportWriter.addReport(new StandardReport("Harvest_Attributes/yield_state",
+    "Yield by management state", 
+    "m3/yr", control.getTargetTable(),
+    "product.yield.managed.state.", "CURRENT/PERIODWIDTH", "Values are annualized.", false));
+	
+reportWriter.addReport(new StandardReport("Harvest_Attributes/yield_indsp",
+    "Yield by Individual Species", 
+    "m3/yr", control.getTargetTable(),
+    "product.yield.managed.indsp.", "CURRENT/PERIODWIDTH", "Values are annualized.", false));
+	
+reportWriter.addReport(new StandardReport("Harvest_Attributes/yield_treat",
+    "Yield by treatment", 
+    "m3/yr", control.getTargetTable(),
+    "product.yield.managed.treat.", "CURRENT/PERIODWIDTH", "Values are annualized.", false));
+
+reportWriter.addReport(new TargetLimitReport("Harvest_Attributes/harvestVolumeControls", 
+    "Harvest volume controls", control.getTargetTable(), 
+    "m3/year", "product classes", "Simulated class", 
+    "product.yield.managed.total*", true, "Values are annualized."));
+
+//---------attributes by operability-----------
+crosstab = new CrosstabStore(control.getBlockTable(), "CURRENTTREATMENT ne ''", Horizon.periodList, false);
+category3 = new Comparable[] {"Low Operability", "Operable", "Reserve", "Riparian"};
+crosstab.addCategory("Oper", "Operabilit", category3);
+crosstab.addValue("Area", "product.area.managed.total");
+crosstab.addValue("Yield", "product.yield.managed.total");
+
+report1 = new PeriodCategoryReport("Harvest_Attributes/area_oper", //filename
+    "Area by operability", //title
+    "ha/yr", // unit
+    crosstab, //attributestore
+    "true", // reelect expression
+    Horizon.activeList, //periods
+    true, //annulaize
+    "Values are annualized.", //html
+    false, //percent
+    "Area",//value
+    "Oper", //catengory expression
+    category3 //categoires
+    );
+reportWriter.addReport(report1);
+
+report1 = new PeriodCategoryReport("Harvest_Attributes/yield_oper", //filename
+    "Yield by operability", //title
+    "m3/yr", // unit
+    crosstab, //attributestore
+    "true", // reelect expression
+    Horizon.activeList, //periods
+    true, //annulaize
+    "Values are annualized.", //html
+    false, //percent
+    "Yield",//value
+    "Oper", //catengory expression
+    category3 //categoires
+    );
+reportWriter.addReport(report1);
+
+// --------Attributes by age class---------
+// Range categories (x,y) are x-inclusive, y-exclusive   
+ RangeLabel[] ProdAgeClass3 = new RangeLabel[] {
+        new RangeLabel("000-040",-99.0,40.0),
+        new RangeLabel("040-060",40.0,60.0),
+        new RangeLabel("060-080",60.0,80.0),
+        new RangeLabel("080-120",80.0,120.0),
+        new RangeLabel("120-200",120.0,200.0),
+        new RangeLabel("200+",200.0,9999.0)
+      };
+
+categories3 = new Comparable[] {
+    "000-040",
+    "040-060",
+    "060-080",
+    "080-120", 
+    "120-200", 
+    "200+"};
+
+reportWriter.addReport(new RangePeriodReport("Harvest_Attributes/area_ageclass", "Area by Age Class",
+		"Area (ha)", control.getBlockTable(), 
+		"product.area.managed.total / PERIODWIDTH", 
+		"TREATMENTAGE", 
+		ProdAgeClass3, "CURRENTTREATMENT ne ''", 
+		Horizon.activeList, "Values are annualized.", false));
+        
+reportWriter.addReport(new RangePeriodReport("Harvest_Attributes/yield_ageclass", "Yield by Age Class",
+		"Volume (m3/year)", control.getBlockTable(), 
+		"product.yield.managed.total / PERIODWIDTH", 
+		"TREATMENTAGE", 
+		ProdAgeClass3, "CURRENTTREATMENT ne ''", 
+		Horizon.activeList, "Values are annualized.", false));
+
+// --------RATIO REPORTS---------
+CrosstabStore cts = new CrosstabStore(blockData, "CURRENTTREATMENT eq 'CC'", Horizon.periodList);
+    cts.addValue("HarvVol", "product.yield.managed.total");
+  	cts.addValue("AgeArea", "TREATMENTAGE*product.area.managed.total");
+  	cts.addValue("Area", "product.area.managed.total");
+
+reportWriter.addReport(new PeriodValueReport("Harvest_Attributes/Averages/avAge", "Age at harvest", "Years", 
+      cts,new String[] {"AgeArea/Area"},new String[] {"AvAge"},"Area>0", Horizon.activeList, "Average age at harvest", false));
+
+reportWriter.addReport(new PeriodValueReport("Harvest_Attributes/Averages/avVPH", "Volume at harvest", 
+     "m3/ha", cts,new String[] {"HarvVol/Area"},new String[] {"VPH"},"Area>0", Horizon.activeList, "Average volume at harvest", false));
+	 
+//thinning
+CrosstabStore cts = new CrosstabStore(blockData, "CURRENTTREATMENT eq 'CT'", Horizon.periodList);
+    cts.addValue("HarvVol", "product.yield.managed.total");
+  	cts.addValue("AgeArea", "TREATMENTAGE*product.area.managed.total");
+  	cts.addValue("Area", "product.area.managed.total");
+
+reportWriter.addReport(new PeriodValueReport("Harvest_Attributes/Averages/avAge_ct", "Age at thinning", "Years", 
+      cts,new String[] {"AgeArea/Area"},new String[] {"AvAge"},"Area>0", Horizon.activeList, "Average age at thinning", false));
+
+reportWriter.addReport(new PeriodValueReport("Harvest_Attributes/Averages/avVPH_ct", "Volume at thinning", 
+     "m3/ha", cts,new String[] {"HarvVol/Area"},new String[] {"VPH"},"Area>0", Horizon.activeList, "Average volume at thinning", false));
+
+// --------Attributes by VPH class---------
+VPHclass = new RangeLabel[] {
+    new RangeLabel("<300", 0, 300.0), 
+    new RangeLabel("300-500", 300.0, 500.0), 
+    new RangeLabel("500-700", 500.0, 700.0), 
+    new RangeLabel("700-1,000", 700.0, 1000.0), 
+    new RangeLabel("1,000+", 1000.0, 9999.0)};
+
+cts5 = new CrosstabStore(control.getBlockTable(), // parent
+    "CURRENTTREATMENT ne ''", // reselectExpression
+    Horizon.periodList, // periods
+    false // transpose
+);
+
+cts5.addRange("VPH1", "product.yield.managed.total/product.area.managed.total", VPHclass);
+cts5.addValue("HarvVol1", "product.yield.managed.total");
+categories3 = new Comparable[] {
+    "<300", 
+    "300-500", 
+    "500-700", 
+    "700-1,000", 
+    "1,000+"};
+
+reportWriter.addReport(new PeriodCategoryReport("Harvest_Attributes/yield_VPHClass", // filename
+    "Yield by VPH class", // title
+    "m3/year", // units
+    cts5, // attributeStore
+    "true", // reselectExpression
+    Horizon.activeList, // periods
+    true, // annualize
+    "Values are annualized. Classes represent volume per ha (VPH) ranges", // HTMLText
+    false, // percent
+    "HarvVol1", // valueExpression
+    "VPH1", // categoryExpression
+    categories3 // categories
+));
