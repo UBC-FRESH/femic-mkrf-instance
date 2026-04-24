@@ -29,6 +29,9 @@ sequence are ready to publish.
    - use `runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md` and
      `metadata/legacy_xml_builder_authority.yaml` as the source of truth for
      the current XML-builder authority-chain review;
+   - use `runbooks/LEGACY_XLSM_SURFACE_MAP.md` and
+     `metadata/legacy_xlsm_surface_map.yaml` as the source of truth for the
+     current workbook sheet/range family map;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as

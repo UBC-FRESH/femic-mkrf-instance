@@ -36,8 +36,10 @@ Instance-local reference surfaces:
 
 - `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md`
 - `runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md`
+- `runbooks/LEGACY_XLSM_SURFACE_MAP.md`
 - `metadata/legacy_compiled_package_reference.yaml`
 - `metadata/legacy_xml_builder_authority.yaml`
+- `metadata/legacy_xlsm_surface_map.yaml`
 - `data/legacy_mkrf/compiled_controls/`
 - `data/legacy_mkrf/compiled_tracks/`
 - `data/legacy_mkrf/compiled_spatial/`
@@ -98,15 +100,17 @@ Policy:
    `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md`
 4. Review the legacy XML-builder authority note:
    `runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md`
-5. Inspect the copied archival control layer under:
+5. Review the legacy workbook surface map:
+   `runbooks/LEGACY_XLSM_SURFACE_MAP.md`
+6. Inspect the copied archival control layer under:
    `data/legacy_mkrf/compiled_controls/`
-6. Inspect the copied archival track tables under:
+7. Inspect the copied archival track tables under:
    `data/legacy_mkrf/compiled_tracks/`
-7. Inspect the copied archival spatial runtime files under:
+8. Inspect the copied archival spatial runtime files under:
    `data/legacy_mkrf/compiled_spatial/`
-8. If this is a thin clone, materialize the annex smoke artifact:
+9. If this is a thin clone, materialize the annex smoke artifact:
    `python -m datalad get data/annex_smoke/mkrf_bootstrap_smoke.bin`
-9. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
+10. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
    only after the real MKRF boundary and checkpoint inputs are published.
 
 See `runbooks/REBUILD_RUNBOOK.md` for the current thin-baseline boundary.

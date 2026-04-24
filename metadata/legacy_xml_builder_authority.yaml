@@ -38,7 +38,7 @@ femic_translation_direction:
   - Refactor workbook tables and named ranges into FEMIC-native config and table surfaces.
 
 current_boundary:
-  next_bounded_step: extract_workbook_parameter_surfaces_into_reviewable_femic_inputs
+  next_bounded_step: materialize_workbook_values_into_tracked_review_tables
   notes:
     - This review resolves the editable-source authority seam at the metadata level.
     - No workbook payload has been copied into the instance by this slice.

@@ -1,0 +1,90 @@
+schema_version: 1
+
+legacy_xlsm_surface_map:
+  case_id: mkrf_legacy_2016
+  source_workbook: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+  governing_scope:
+    - Input Variables
+    - Codes
+    - Curve Library
+    - Netdown
+    - Attrib
+    - Treat
+    - Lookups
+    - Post Renewal Succession
+
+surface_summary:
+  - sheet: Input Variables
+    role: primary problem and include-fragment config surface
+    xml_sections:
+      - dumpProlog
+      - dumpUnmanaged
+      - includeFragment
+    candidate_femic_home:
+      - config/legacy_xml_builder/input_variables.yaml
+      - config/legacy_xml_builder/input_columns.csv
+
+  - sheet: Codes
+    role: workbook registry and enum surface
+    xml_sections:
+      - workbook_sheet_family_discovery
+    candidate_femic_home:
+      - metadata/legacy_xml_builder/sheet_registry.yaml
+      - config/legacy_xml_builder/enums.yaml
+
+  - sheet: Curve Library
+    role: curve point library feeding dumpCurves
+    xml_sections:
+      - dumpCurves
+    candidate_femic_home:
+      - data/legacy_mkrf/curve_tables/curve_library.csv
+
+  - sheet: Netdown
+    role: aspatial netdown criteria and factor surface
+    xml_sections:
+      - dumpRetention
+    candidate_femic_home:
+      - config/legacy_xml_builder/netdown_rules.csv
+
+  - sheet: Attrib
+    role: general attribute assignment surface
+    xml_sections:
+      - dumpAttributes
+    candidate_femic_home:
+      - config/legacy_xml_builder/general_attributes.csv
+
+  - sheet: Treat
+    role: active stratum bundle with criteria, features, succession, products, and treatments
+    xml_sections:
+      - dumpStratum
+    candidate_femic_home:
+      - config/legacy_xml_builder/strata/Treat/
+
+  - sheet: Post Renewal Succession
+    role: supporting treatment-response lookup surface
+    xml_sections:
+      - supporting_formula_source_for_stratum_transitions
+    candidate_femic_home:
+      - config/legacy_xml_builder/post_renewal_succession.csv
+
+  - sheet: Lookups
+    role: lookup/CSV bridge and formula support surface
+    xml_sections:
+      - indirect_formula_support
+    candidate_femic_home:
+      - data/legacy_mkrf/xml_builder_lookups/
+
+registry_mismatch_note:
+  statement:
+    The Codes registry advertises additional constants and lookup families that
+    do not appear as discrete materialized worksheet tabs in the workbook copy
+    reviewed so far. Treat those registry entries as evidence, but not yet as
+    confirmed tab-level surfaces.
+
+current_boundary:
+  next_bounded_step: materialize_workbook_values_into_tracked_review_tables
+  notes:
+    - This map classifies workbook surfaces only.
+    - No workbook payload has been copied into the instance.
+    - No VBA reimplementation is claimed yet.
+
