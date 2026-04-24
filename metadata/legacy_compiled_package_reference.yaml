@@ -59,34 +59,35 @@ compiled_package_families:
 
 editable_source_companions:
   - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/baseMKRF.xml
-    role: editable_xml_source
+    role: generated_core_xml_artifact
     candidate_femic_home: output/patchworks_mkrf_validated/forestmodel.xml
-    status: unresolved_governing_source
+    status: resolved_generated_from_workbook_builder
   - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/Curves.xml
-    role: curve_xml_source
+    role: generated_curve_fragment
     candidate_femic_home: output/patchworks_mkrf_validated/curve_sources/Curves.xml
-    status: unresolved_governing_source
+    status: resolved_generated_from_curve_table_pipeline
   - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
-    role: builder_workbook
+    role: authoritative_parameter_workbook
     candidate_femic_home: data/legacy_mkrf/xml_builders/002_base.xlsm
-    status: unresolved_governing_source
+    status: resolved_governing_editable_source
   - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/001_makeCurves_XML.py
-    role: builder_script
+    role: curve_fragment_generator
     candidate_femic_home: data/legacy_mkrf/xml_builders/001_makeCurves_XML.py
-    status: unresolved_governing_source
+    status: resolved_helper_script
   - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/003_MakeAccounts.py
-    role: builder_script
+    role: post_matrix_account_export_helper
     candidate_femic_home: data/legacy_mkrf/xml_builders/003_MakeAccounts.py
-    status: unresolved_governing_source
+    status: resolved_helper_script
 
 current_boundary:
-  next_bounded_step: resolve_the_governing_editable_source_seam_or_import_one_reporting_family
+  next_bounded_step: extract_the_governing_workbook_surfaces_into_reviewable_femic_inputs
   deferred_families:
     - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/patchworksLog.csv
     - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/*
     - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Outputs/*
   notes:
     - The copied archival control layer, track tables, and spatial runtime files are preserved for review only.
+    - The workbook data surfaces are now treated as the governing editable-source seam for the core XML builder.
     - Upstream mapping-analysis and reporting families remain deferred.
-    - `patchworksLog.csv` remains outside the current archival slice.
+    - patchworksLog.csv remains outside the current archival slice.
     - This slice still does not publish runnable legacy artifacts.

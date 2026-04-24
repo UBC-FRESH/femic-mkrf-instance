@@ -48,3 +48,13 @@ artifacts:
     class: "archival_reference"
     published: true
     notes: "Copied archival compiled spatial runtime family from the legacy PW_MKRF package."
+  - artifact_id: "legacy_xml_builder_authority_note"
+    path: "runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local authority review for the legacy MKRF workbook-driven XML builder lane."
+  - artifact_id: "legacy_xml_builder_authority_yaml"
+    path: "metadata/legacy_xml_builder_authority.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable authority-chain record for the legacy MKRF XML builder surfaces."
