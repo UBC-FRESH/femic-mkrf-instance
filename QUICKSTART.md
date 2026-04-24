@@ -13,8 +13,10 @@
    `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md`.
 8. Inspect the copied archival control layer in
    `data/legacy_mkrf/compiled_controls/`.
-9. Add case-specific instructions to `runbooks/REBUILD_RUNBOOK.md`.
-10. Add/edit `config/tipsy/tsamkrf.yaml`.
-11. Use `femic prep validate-case --run-config config/run_profile.mkrf.yaml`
+9. Inspect the copied archival track tables in
+   `data/legacy_mkrf/compiled_tracks/`.
+10. Add case-specific instructions to `runbooks/REBUILD_RUNBOOK.md`.
+11. Add/edit `config/tipsy/tsamkrf.yaml`.
+12. Use `femic prep validate-case --run-config config/run_profile.mkrf.yaml`
    only after the real MKRF boundary and checkpoint inputs have been published
    into this instance.

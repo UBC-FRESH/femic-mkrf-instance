@@ -15,6 +15,7 @@ Copied archival files now live under:
 - `data/legacy_mkrf/compiled_controls/entrypoints/`
 - `data/legacy_mkrf/compiled_controls/scripts/`
 - `data/legacy_mkrf/compiled_controls/targets/`
+- `data/legacy_mkrf/compiled_tracks/`
 
 Those copied files are preserved for review and interpretation only.
 
@@ -63,8 +64,9 @@ These are recorded here as companion seams, not yet as adopted rebuild truth:
 
 ## Current boundary
 
-- only the small control layer is copied into this instance by this slice;
-- tracks, fragments, topology, outputs, and mapping-analysis payloads remain deferred;
+- the small control layer plus the `Tracks/*.csv` family are copied into this
+  instance by this slice;
+- fragments, topology, outputs, and mapping-analysis payloads remain deferred;
 - no upstream mapping-analysis geodatabases or VDYP payloads are imported here;
 - no decision is made yet on whether the XML files or the builder chain are the
   governing editable-source truth; and

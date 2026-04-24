@@ -3,10 +3,10 @@ schema_version: 1
 legacy_reference:
   source_case_id: mkrf_legacy_2016
   source_root: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF
-  imported_as: review_metadata_plus_archival_controls
+  imported_as: review_metadata_plus_archival_controls_and_tracks
   notes:
-    - Only the small compiled control layer is copied into this instance by this slice.
-    - Bulky runtime, spatial, output, and upstream mapping-analysis families remain deferred.
+    - The small compiled control layer and the legacy track-table family are copied into this instance by this slice.
+    - Spatial, output, and upstream mapping-analysis families remain deferred.
 
 entrypoints:
   pin:
@@ -30,7 +30,8 @@ compiled_package_families:
     legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Tracks/*.csv
     role: compiled_matrix_runtime_tables
     candidate_femic_home: models/mkrf_patchworks_model/tracks/
-    imported_now: metadata_only
+    imported_now: archival_copy
+    archival_copy_root: data/legacy_mkrf/compiled_tracks/
   - family_id: fragments
     legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/fragments.*
     role: compiled_fragment_geometry
@@ -77,13 +78,12 @@ editable_source_companions:
     status: unresolved_governing_source
 
 current_boundary:
-  next_bounded_step: import_one_selected_bulky_runtime_family_or_resolve_one_specific_unresolved_seam
+  next_bounded_step: import_the_spatial_runtime_family_or_resolve_one_specific_unresolved_seam
   deferred_families:
-    - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Tracks/*
     - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/*
     - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/*
     - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Outputs/*
   notes:
-    - The copied archival control layer is preserved for review only.
-    - Upstream mapping-analysis plus bulky runtime/spatial/reporting families remain deferred.
+    - The copied archival control layer and track tables are preserved for review only.
+    - Upstream mapping-analysis plus spatial/reporting families remain deferred.
     - This slice still does not publish runnable legacy artifacts.

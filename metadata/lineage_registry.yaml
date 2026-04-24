@@ -38,3 +38,8 @@ artifacts:
     class: "archival_reference"
     published: true
     notes: "Copied archival target-control scripts from the legacy PW_MKRF package."
+  - artifact_id: "legacy_compiled_track_tables"
+    path: "data/legacy_mkrf/compiled_tracks/"
+    class: "archival_reference"
+    published: true
+    notes: "Copied archival compiled track-table family from the legacy PW_MKRF package."

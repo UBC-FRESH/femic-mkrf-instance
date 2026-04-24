@@ -14,7 +14,8 @@ Included now:
 - `config/run_profile.mkrf.yaml`, `config/silviculture.mkrf.yaml`, and
   `config/tipsy/tsamkrf.yaml` starter surfaces;
 - instance-local legacy compiled-package reference metadata plus a copied
-  archival control layer for the stable 2016 `PW_MKRF` package;
+  archival control layer plus archival track tables for the stable 2016
+  `PW_MKRF` package;
 - `runbooks/REBUILD_RUNBOOK.md`;
 - metadata ledgers for provenance and checksum tracking; and
 - one non-sensitive annex-backed smoke artifact used to validate publication
@@ -36,6 +37,7 @@ Instance-local reference surfaces:
 - `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md`
 - `metadata/legacy_compiled_package_reference.yaml`
 - `data/legacy_mkrf/compiled_controls/`
+- `data/legacy_mkrf/compiled_tracks/`
 
 These surfaces summarize the discovered compiled package anatomy:
 
@@ -52,11 +54,16 @@ Copied archival controls now present in-instance:
 - `data/legacy_mkrf/compiled_controls/scripts/`
 - `data/legacy_mkrf/compiled_controls/targets/`
 
+Copied archival track tables now present in-instance:
+
+- `data/legacy_mkrf/compiled_tracks/`
+
 Important boundary:
 
 - these copied files are **archival references only**;
-- the full legacy compiled runtime payload itself is not published into this
-  instance yet;
+- only one bulky compiled runtime family (`Tracks/*.csv`) is published into
+  this instance so far;
+- spatial, output, and upstream mapping-analysis payloads are still deferred;
 - the bulky upstream mapping-analysis lane is still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.
 
@@ -82,9 +89,11 @@ Policy:
    `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md`
 4. Inspect the copied archival control layer under:
    `data/legacy_mkrf/compiled_controls/`
-5. If this is a thin clone, materialize the annex smoke artifact:
+5. Inspect the copied archival track tables under:
+   `data/legacy_mkrf/compiled_tracks/`
+6. If this is a thin clone, materialize the annex smoke artifact:
    `python -m datalad get data/annex_smoke/mkrf_bootstrap_smoke.bin`
-6. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
+7. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
    only after the real MKRF boundary and checkpoint inputs are published.
 
 See `runbooks/REBUILD_RUNBOOK.md` for the current thin-baseline boundary.
