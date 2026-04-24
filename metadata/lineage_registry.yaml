@@ -58,3 +58,13 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Machine-readable authority-chain record for the legacy MKRF XML builder surfaces."
+  - artifact_id: "legacy_xlsm_surface_map_note"
+    path: "runbooks/LEGACY_XLSM_SURFACE_MAP.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local workbook surface map for the governing MKRF XLSM builder lane."
+  - artifact_id: "legacy_xlsm_surface_map_yaml"
+    path: "metadata/legacy_xlsm_surface_map.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable surface-family map for the governing MKRF XLSM builder lane."

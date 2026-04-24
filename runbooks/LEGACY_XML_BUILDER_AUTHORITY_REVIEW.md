@@ -60,6 +60,9 @@ the desired long-term runtime path. The intended translation is:
 - refactor those surfaces into FEMIC-native config and tabular inputs; and
 - replace the SPS VBA serializer with FEMIC-native exporters/builders.
 
+See `runbooks/LEGACY_XLSM_SURFACE_MAP.md` for the current sheet/range family
+map across the workbook.
+
 ## Boundary
 
 - This note resolves the authority seam at the **metadata** level only.
