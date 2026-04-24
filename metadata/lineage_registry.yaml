@@ -13,3 +13,13 @@ artifacts:
     class: "annex_smoke"
     published: true
     notes: "Non-sensitive annex-backed smoke artifact for remote bootstrap validation."
+  - artifact_id: "legacy_compiled_package_reference_note"
+    path: "runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local reference note summarizing the stable compiled 2016 PW_MKRF package anatomy."
+  - artifact_id: "legacy_compiled_package_reference_yaml"
+    path: "metadata/legacy_compiled_package_reference.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable bagging/tagging map for the stable compiled legacy PW_MKRF package."

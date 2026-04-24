@@ -1,0 +1,62 @@
+# MKRF Legacy Compiled Package Reference
+
+This note records the **stable compiled-package anatomy** imported from the
+legacy circa-2016 MKRF Patchworks model as review metadata only.
+
+Authoritative legacy source lane for this note:
+
+- `MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF`
+
+This note does **not** mean the legacy payload itself is published here. It is
+only the instance-local reference contract for the compiled package shape.
+
+## Primary entrypoints
+
+- `baseMKRF.pin`
+  primary compiled Patchworks model entrypoint
+- `runME.bsh`
+  one-line launcher that sources `ScenarioSet.bsh`
+- `ScenarioSet.bsh`
+  scenario-set controller with convergence and target activation logic
+
+## Stable compiled package families
+
+- `Tracks/*.csv`
+  compiled Patchworks matrix/runtime tables
+- `Spatial/fragments.*`
+  fragment geometry surface
+- `Spatial/topo_frag100.csv`
+  topology sidecar
+- `Targets/*.bsh`
+  target-control scripts
+- `Scripts/*.bsh`
+  report/runtime helper scripts
+
+## Relevant editable-source companions
+
+These are recorded here as companion seams, not yet as adopted rebuild truth:
+
+- `XML/baseMKRF.xml`
+- `XML/Curves.xml`
+- `XML/002_base.xlsm`
+- `XML/001_makeCurves_XML.py`
+- `XML/003_MakeAccounts.py`
+
+## Intended FEMIC interpretation
+
+- `baseMKRF.pin`
+  future analysis/runtime wrapper reference
+- `Tracks/*.csv`
+  future checked-in Patchworks runtime payload family
+- `Spatial/fragments.*` and `topo_frag100.csv`
+  future validated fragments/runtime spatial family
+- `ScenarioSet.bsh`, `runME.bsh`, `Scripts/*.bsh`, `Targets/*.bsh`
+  future runbook/analysis-control reference family
+
+## Current boundary
+
+- no bulky compiled payload is copied into this instance by this slice;
+- no upstream mapping-analysis geodatabases or VDYP payloads are imported here;
+- no decision is made yet on whether the XML files or the builder chain are the
+  governing editable-source truth; and
+- this note is for review metadata only, not runnable rebuild instructions.

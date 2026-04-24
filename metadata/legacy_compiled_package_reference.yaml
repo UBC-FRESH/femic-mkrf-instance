@@ -1,0 +1,81 @@
+schema_version: 1
+
+legacy_reference:
+  source_case_id: mkrf_legacy_2016
+  source_root: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF
+  imported_as: review_metadata_only
+  notes:
+    - No bulky legacy payload is published into this instance by this slice.
+    - This file summarizes only the stable compiled-package anatomy.
+
+entrypoints:
+  pin:
+    legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/baseMKRF.pin
+    role: primary_compiled_model_entrypoint
+    candidate_femic_home: models/mkrf_patchworks_model/analysis/baseMKRF.pin
+  launcher:
+    legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/runME.bsh
+    role: scenario_launcher
+    candidate_femic_home: runbooks/legacy_patchworks_scripts/runME.bsh
+  scenario_controller:
+    legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/ScenarioSet.bsh
+    role: scenario_set_controller
+    candidate_femic_home: runbooks/legacy_patchworks_scripts/ScenarioSet.bsh
+
+compiled_package_families:
+  - family_id: tracks
+    legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Tracks/*.csv
+    role: compiled_matrix_runtime_tables
+    candidate_femic_home: models/mkrf_patchworks_model/tracks/
+    imported_now: metadata_only
+  - family_id: fragments
+    legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/fragments.*
+    role: compiled_fragment_geometry
+    candidate_femic_home: output/patchworks_mkrf_validated/fragments/
+    imported_now: metadata_only
+  - family_id: topology
+    legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/topo_frag100.csv
+    role: spatial_topology_sidecar
+    candidate_femic_home: models/mkrf_patchworks_model/blocks/topology_fragments.csv
+    imported_now: metadata_only
+  - family_id: target_scripts
+    legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Targets/*.bsh
+    role: target_control_scripts
+    candidate_femic_home: models/mkrf_patchworks_model/targets/
+    imported_now: metadata_only
+  - family_id: runtime_scripts
+    legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Scripts/*.bsh
+    role: reporting_and_runtime_helpers
+    candidate_femic_home: runbooks/legacy_patchworks_scripts/
+    imported_now: metadata_only
+
+editable_source_companions:
+  - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/baseMKRF.xml
+    role: editable_xml_source
+    candidate_femic_home: output/patchworks_mkrf_validated/forestmodel.xml
+    status: unresolved_governing_source
+  - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/Curves.xml
+    role: curve_xml_source
+    candidate_femic_home: output/patchworks_mkrf_validated/curve_sources/Curves.xml
+    status: unresolved_governing_source
+  - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+    role: builder_workbook
+    candidate_femic_home: data/legacy_mkrf/xml_builders/002_base.xlsm
+    status: unresolved_governing_source
+  - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/001_makeCurves_XML.py
+    role: builder_script
+    candidate_femic_home: data/legacy_mkrf/xml_builders/001_makeCurves_XML.py
+    status: unresolved_governing_source
+  - legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/003_MakeAccounts.py
+    role: builder_script
+    candidate_femic_home: data/legacy_mkrf/xml_builders/003_MakeAccounts.py
+    status: unresolved_governing_source
+
+current_boundary:
+  next_bounded_step: import_selected_compiled_runtime_artifacts_or_resolve_one_specific_unresolved_seam
+  deferred_families:
+    - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/*
+    - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Outputs/*
+  notes:
+    - Upstream mapping-analysis and bulky report/output families remain deferred.
+    - This slice records anatomy only; it does not publish runnable legacy artifacts.

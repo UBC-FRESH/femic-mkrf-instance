@@ -15,9 +15,14 @@ sequence are ready to publish.
 2. The current repo carries only:
    - the standard FEMIC instance scaffold;
    - starter MKRF config surfaces;
+   - instance-local metadata documenting the stable compiled legacy `PW_MKRF`
+     package anatomy;
    - metadata ledgers;
    - one annex-backed non-sensitive smoke artifact.
 3. Before publishing the first substantive MKRF payload:
+   - use `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md` and
+     `metadata/legacy_compiled_package_reference.yaml` as the source of truth
+     for the current compiled-package anatomy intake;
    - finalize the real run profile, silviculture surface, and TIPSY rules;
    - publish the real MKRF boundary and checkpoint inputs required by `femic prep validate-case`;
    - classify bulky payload families in `.gitattributes`;
