@@ -43,3 +43,8 @@ artifacts:
     class: "archival_reference"
     published: true
     notes: "Copied archival compiled track-table family from the legacy PW_MKRF package."
+  - artifact_id: "legacy_compiled_spatial_runtime"
+    path: "data/legacy_mkrf/compiled_spatial/"
+    class: "archival_reference"
+    published: true
+    notes: "Copied archival compiled spatial runtime family from the legacy PW_MKRF package."

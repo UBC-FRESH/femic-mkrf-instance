@@ -3,10 +3,10 @@ schema_version: 1
 legacy_reference:
   source_case_id: mkrf_legacy_2016
   source_root: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF
-  imported_as: review_metadata_plus_archival_controls_and_tracks
+  imported_as: review_metadata_plus_archival_controls_tracks_and_spatial
   notes:
-    - The small compiled control layer and the legacy track-table family are copied into this instance by this slice.
-    - Spatial, output, and upstream mapping-analysis families remain deferred.
+    - The small compiled control layer, the legacy track-table family, and the legacy spatial runtime family are copied into this instance by this slice.
+    - Reporting-output and upstream mapping-analysis families remain deferred.
 
 entrypoints:
   pin:
@@ -36,12 +36,14 @@ compiled_package_families:
     legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/fragments.*
     role: compiled_fragment_geometry
     candidate_femic_home: output/patchworks_mkrf_validated/fragments/
-    imported_now: metadata_only
+    imported_now: archival_copy
+    archival_copy_root: data/legacy_mkrf/compiled_spatial/
   - family_id: topology
     legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/topo_frag100.csv
     role: spatial_topology_sidecar
     candidate_femic_home: models/mkrf_patchworks_model/blocks/topology_fragments.csv
-    imported_now: metadata_only
+    imported_now: archival_copy
+    archival_copy_path: data/legacy_mkrf/compiled_spatial/topo_frag100.csv
   - family_id: target_scripts
     legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Targets/*.bsh
     role: target_control_scripts
@@ -78,12 +80,13 @@ editable_source_companions:
     status: unresolved_governing_source
 
 current_boundary:
-  next_bounded_step: import_the_spatial_runtime_family_or_resolve_one_specific_unresolved_seam
+  next_bounded_step: resolve_the_governing_editable_source_seam_or_import_one_reporting_family
   deferred_families:
-    - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/*
+    - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/patchworksLog.csv
     - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/*
     - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Outputs/*
   notes:
-    - The copied archival control layer and track tables are preserved for review only.
-    - Upstream mapping-analysis plus spatial/reporting families remain deferred.
+    - The copied archival control layer, track tables, and spatial runtime files are preserved for review only.
+    - Upstream mapping-analysis and reporting families remain deferred.
+    - `patchworksLog.csv` remains outside the current archival slice.
     - This slice still does not publish runnable legacy artifacts.

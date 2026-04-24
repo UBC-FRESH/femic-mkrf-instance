@@ -15,7 +15,7 @@ Included now:
   `config/tipsy/tsamkrf.yaml` starter surfaces;
 - instance-local legacy compiled-package reference metadata plus a copied
   archival control layer plus archival track tables for the stable 2016
-  `PW_MKRF` package;
+  `PW_MKRF` package, plus the archival spatial runtime family;
 - `runbooks/REBUILD_RUNBOOK.md`;
 - metadata ledgers for provenance and checksum tracking; and
 - one non-sensitive annex-backed smoke artifact used to validate publication
@@ -38,6 +38,7 @@ Instance-local reference surfaces:
 - `metadata/legacy_compiled_package_reference.yaml`
 - `data/legacy_mkrf/compiled_controls/`
 - `data/legacy_mkrf/compiled_tracks/`
+- `data/legacy_mkrf/compiled_spatial/`
 
 These surfaces summarize the discovered compiled package anatomy:
 
@@ -58,13 +59,17 @@ Copied archival track tables now present in-instance:
 
 - `data/legacy_mkrf/compiled_tracks/`
 
+Copied archival spatial runtime files now present in-instance:
+
+- `data/legacy_mkrf/compiled_spatial/`
+
 Important boundary:
 
 - these copied files are **archival references only**;
-- only one bulky compiled runtime family (`Tracks/*.csv`) is published into
-  this instance so far;
-- spatial, output, and upstream mapping-analysis payloads are still deferred;
-- the bulky upstream mapping-analysis lane is still deferred; and
+- the copied bulky compiled runtime families now include `Tracks/*.csv`,
+  `Spatial/fragments.*`, and `Spatial/topo_frag100.csv`;
+- `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
+  are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.
 
 ## DataLad dataset policy
@@ -91,9 +96,11 @@ Policy:
    `data/legacy_mkrf/compiled_controls/`
 5. Inspect the copied archival track tables under:
    `data/legacy_mkrf/compiled_tracks/`
-6. If this is a thin clone, materialize the annex smoke artifact:
+6. Inspect the copied archival spatial runtime files under:
+   `data/legacy_mkrf/compiled_spatial/`
+7. If this is a thin clone, materialize the annex smoke artifact:
    `python -m datalad get data/annex_smoke/mkrf_bootstrap_smoke.bin`
-7. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
+8. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
    only after the real MKRF boundary and checkpoint inputs are published.
 
 See `runbooks/REBUILD_RUNBOOK.md` for the current thin-baseline boundary.
