@@ -80,11 +80,18 @@ legacy_input_variables_translation:
       exporter_binding: forestmodel.input.age and fragments.F_AGE
       rationale: The opt-in MKRF exporter now uses this expression for ForestModel input binding and for the exported fragments F_AGE field.
     - field: staged.additional_stratification_columns
-      status: staged_only
+      status: live_export
       workbook_label: Additional stratification columns
       legacy_range_name: inpColumns
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_columns.review.csv
-      rationale: Current exporter consumes already-bundled AU/context tables and does not yet rebuild them from legacy column-expression bindings.
+      exporter_binding:
+        - fragments.status <- CONTCLAS
+        - fragments.au_1 <- string(AU_EX)
+        - fragments.auf <- string(AU_FU)
+        - fragments.oper <- Operabilit
+        - fragments.ct <- CT_eligib
+        - fragments.aux <- AU_EX
+      rationale: The opt-in MKRF exporter now materializes these bindings as additional fragment fields, with workbook key `au` written as `au_1` to avoid colliding with the base required `AU` fragments field.
     - field: staged.treatment_eligibility_expression
       status: staged_only
       workbook_label: Ineligible for treatments
@@ -143,9 +150,9 @@ legacy_input_variables_translation:
       - staged.unique_record_label_expression
       - staged.polygon_area_expression
       - staged.stand_age_expression
+      - staged.additional_stratification_columns
     staged_only_fields:
       - staged.max_inventory_age
-      - staged.additional_stratification_columns
       - staged.treatment_eligibility_expression
       - staged.include_fragments.before_curves
       - staged.include_fragments.after_curves
@@ -156,7 +163,8 @@ legacy_input_variables_translation:
       - staged.constants
     notes:
       - The translated config is MKRF-first and opt-in; it does not affect K3Z or TSA29 defaults.
-      - Live export wiring now covers ForestModel description/year/horizon plus the legacy block/area/age/exclude expressions.
-      - Live legacy expressions require the referenced checkpoint source columns to be present so fragments export can preserve those values alongside the XML contract.
-      - Additional stratification columns, treatment eligibility, include hooks, and constants are preserved as lineage evidence but are not yet activated by the current exporter.
-    next_bounded_step: operationalize_additional_stratification_columns
+      - Live export wiring now covers ForestModel description/year/horizon plus the legacy block/area/age/exclude expressions and the additional stratification fragment bindings.
+      - Live legacy expressions and additional stratification bindings require the referenced checkpoint source columns to be present so fragments export can preserve those values alongside the XML contract.
+      - Workbook key `au` is written as fragments field `au_1` to avoid colliding with the base required `AU` fragments field.
+      - Treatment eligibility, include hooks, and constants are preserved as lineage evidence but are not yet activated by the current exporter.
+    next_bounded_step: operationalize_treatment_eligibility_expression

@@ -24,11 +24,17 @@ Live exporter fields:
   drives ForestModel `input.area` and exported fragments `AREA_HA`
 - `staged.stand_age_expression`
   drives ForestModel `input.age` and exported fragments `F_AGE`
+- `staged.additional_stratification_columns`
+  drive exported fragments `status`, `au_1`, `auf`, `oper`, `ct`, and `aux`
 
 These workbook-derived values now affect exporter behavior in this slice.
 When the live expressions reference checkpoint source columns such as
 `RES_KEY`, `AGE_2020`, or `CONTCLAS`, those columns must be present in the
 checkpoint and are passed through into the exported fragments surface.
+The live additional-stratification bindings use the same rule. The workbook
+key `au` is written as fragment field `au_1` so it does not collide with the
+base required `AU` fragments field that already exists in the Patchworks
+fragments schema.
 
 ## What remains staged only
 
@@ -36,7 +42,6 @@ The translated config also preserves legacy workbook seams that are **not yet
 live**:
 
 - `max_inventory_age`
-- additional stratification column bindings
 - treatment-eligibility expression
 - legacy include-fragment hooks
 - legacy matrix-builder constants
@@ -58,6 +63,6 @@ layout semantics from workbook-authored expressions.
 
 - This slice does not make the full legacy workbook live.
 - This slice does not publish the workbook itself into the instance.
-- This slice does not activate additional stratification bindings, treatment
-  eligibility, include hooks, or constants.
+- This slice does not activate treatment eligibility, include hooks, or
+  constants.
 - This slice does not claim a runnable MKRF rebuild contract.
