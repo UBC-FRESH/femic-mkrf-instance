@@ -37,10 +37,13 @@ Instance-local reference surfaces:
 - `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md`
 - `runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md`
 - `runbooks/LEGACY_XLSM_SURFACE_MAP.md`
+- `runbooks/LEGACY_INPUT_VARIABLES_TRANSLATION.md`
 - `metadata/legacy_compiled_package_reference.yaml`
 - `metadata/legacy_xml_builder_authority.yaml`
 - `metadata/legacy_xlsm_surface_map.yaml`
 - `metadata/legacy_xlsm_review_extracts.yaml`
+- `metadata/legacy_input_variables_translation.yaml`
+- `config/legacy_xml_builder/input_variables.mkrf.yaml`
 - `data/legacy_mkrf/compiled_controls/`
 - `data/legacy_mkrf/compiled_tracks/`
 - `data/legacy_mkrf/compiled_spatial/`
@@ -78,6 +81,10 @@ Important boundary:
 - parent-side tracked workbook review extracts now live under
   `metadata/mkrf_xlsm_review/` in the parent FEMIC repo and are referenced here
   by `metadata/legacy_xlsm_review_extracts.yaml`;
+- the first MKRF-first translated `Input Variables` config now lives at
+  `config/legacy_xml_builder/input_variables.mkrf.yaml`, but only
+  `description`, `start_year`, and `horizon_years` are live in exporter
+  behavior at this stage;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.
@@ -106,17 +113,21 @@ Policy:
    `runbooks/LEGACY_XML_BUILDER_AUTHORITY_REVIEW.md`
 5. Review the legacy workbook surface map:
    `runbooks/LEGACY_XLSM_SURFACE_MAP.md`
-6. Review the parent-side workbook review extract pointer:
+6. Review the Input Variables translation note:
+   `runbooks/LEGACY_INPUT_VARIABLES_TRANSLATION.md`
+7. Review the parent-side workbook review extract pointer:
    `metadata/legacy_xlsm_review_extracts.yaml`
-7. Inspect the copied archival control layer under:
+8. Review the translated Input Variables config:
+   `config/legacy_xml_builder/input_variables.mkrf.yaml`
+9. Inspect the copied archival control layer under:
    `data/legacy_mkrf/compiled_controls/`
-8. Inspect the copied archival track tables under:
+10. Inspect the copied archival track tables under:
    `data/legacy_mkrf/compiled_tracks/`
-9. Inspect the copied archival spatial runtime files under:
+11. Inspect the copied archival spatial runtime files under:
    `data/legacy_mkrf/compiled_spatial/`
-10. If this is a thin clone, materialize the annex smoke artifact:
+12. If this is a thin clone, materialize the annex smoke artifact:
    `python -m datalad get data/annex_smoke/mkrf_bootstrap_smoke.bin`
-11. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
+13. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
    only after the real MKRF boundary and checkpoint inputs are published.
 
 See `runbooks/REBUILD_RUNBOOK.md` for the current thin-baseline boundary.

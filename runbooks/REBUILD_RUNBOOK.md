@@ -35,6 +35,10 @@ sequence are ready to publish.
    - use `metadata/legacy_xlsm_review_extracts.yaml` as the source of truth
      for the parent-side tracked review extracts that materialize workbook
      values without copying the workbook into this instance;
+   - use `config/legacy_xml_builder/input_variables.mkrf.yaml`,
+     `metadata/legacy_input_variables_translation.yaml`, and
+     `runbooks/LEGACY_INPUT_VARIABLES_TRANSLATION.md` as the source of truth
+     for the first live-vs-staged Input Variables translation;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as

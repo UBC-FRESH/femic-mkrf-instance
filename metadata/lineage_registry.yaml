@@ -73,3 +73,18 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local pointer to the parent-side tracked workbook review extracts for the governing MKRF XLSM lane."
+  - artifact_id: "legacy_input_variables_translation_config"
+    path: "config/legacy_xml_builder/input_variables.mkrf.yaml"
+    class: "translated_config"
+    published: true
+    notes: "MKRF-first FEMIC-native translation of the legacy workbook Input Variables surface."
+  - artifact_id: "legacy_input_variables_translation_yaml"
+    path: "metadata/legacy_input_variables_translation.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable lineage/status map for the MKRF Input Variables translation."
+  - artifact_id: "legacy_input_variables_translation_note"
+    path: "runbooks/LEGACY_INPUT_VARIABLES_TRANSLATION.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local note documenting the live-vs-staged boundary for the first MKRF Input Variables translation."

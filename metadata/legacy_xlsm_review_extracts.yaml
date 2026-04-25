@@ -61,8 +61,9 @@ legacy_xlsm_review_extracts:
       role: supporting_transition_review_extract
 
   current_boundary:
-    next_bounded_step: draft_input_variables_femic_config_translation
+    next_bounded_step: extend_staged_input_variables_into_export_contract
     notes:
       - The review extracts live in the parent FEMIC repo and are referenced here as lineage evidence.
+      - The first translated config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml with lineage/status tracked in metadata/legacy_input_variables_translation.yaml.
       - No workbook payload was copied into the instance by this slice.
       - No VBA reimplementation or runnable rebuild claim is made by this slice.

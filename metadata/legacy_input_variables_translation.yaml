@@ -1,0 +1,157 @@
+schema_version: 1
+
+legacy_input_variables_translation:
+  case_id: mkrf_legacy_2016
+  source_workbook: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+  workbook_sheet: Input Variables
+  translated_config: config/legacy_xml_builder/input_variables.mkrf.yaml
+  source_extracts:
+    sheet: metadata/mkrf_xlsm_review/input_variables.review.csv
+    ranges:
+      probDesc: metadata/mkrf_xlsm_review/ranges/input_variables_prob_desc.review.yaml
+      startYear: metadata/mkrf_xlsm_review/ranges/input_variables_start_year.review.yaml
+      horizon: metadata/mkrf_xlsm_review/ranges/input_variables_horizon.review.yaml
+      maxAge: metadata/mkrf_xlsm_review/ranges/input_variables_max_age.review.yaml
+      exclude: metadata/mkrf_xlsm_review/ranges/input_variables_exclude.review.yaml
+      blockKey: metadata/mkrf_xlsm_review/ranges/input_variables_block_key.review.yaml
+      areaExpr: metadata/mkrf_xlsm_review/ranges/input_variables_area_expr.review.yaml
+      ageExpr: metadata/mkrf_xlsm_review/ranges/input_variables_age_expr.review.yaml
+      inpColumns: metadata/mkrf_xlsm_review/ranges/input_variables_columns.review.csv
+      treatmentEligibility: metadata/mkrf_xlsm_review/ranges/input_variables_treatment_eligibility.review.yaml
+      beforeCurves: metadata/mkrf_xlsm_review/ranges/input_variables_before_curves.review.yaml
+      afterCurves: metadata/mkrf_xlsm_review/ranges/input_variables_after_curves.review.yaml
+      afterRetention: metadata/mkrf_xlsm_review/ranges/input_variables_after_retention.review.yaml
+      afterUnmanaged: metadata/mkrf_xlsm_review/ranges/input_variables_after_unmanaged.review.yaml
+      afterStratum: metadata/mkrf_xlsm_review/ranges/input_variables_after_stratum.review.yaml
+      afterAttributes: metadata/mkrf_xlsm_review/ranges/input_variables_after_attributes.review.yaml
+      inpConstants: metadata/mkrf_xlsm_review/ranges/input_variables_constants.review.csv
+
+  normalized_field_map:
+    - field: description
+      status: live_export
+      workbook_label: Problem description
+      legacy_range_name: probDesc
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_prob_desc.review.yaml
+      exporter_binding: forestmodel.description
+    - field: start_year
+      status: live_export
+      workbook_label: Starting year of analysis
+      legacy_range_name: startYear
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_start_year.review.yaml
+      exporter_binding: forestmodel.year
+    - field: horizon_years
+      status: live_export
+      workbook_label: Forecasting horizon
+      legacy_range_name: horizon
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_horizon.review.yaml
+      exporter_binding: forestmodel.horizon
+    - field: staged.max_inventory_age
+      status: staged_only
+      workbook_label: Maximum inventory age
+      legacy_range_name: maxAge
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_max_age.review.yaml
+      rationale: Current checkpoint-first exporter does not yet derive its curve eval span from this legacy workbook field.
+    - field: staged.exclude_expression
+      status: staged_only
+      workbook_label: Exclude expression
+      legacy_range_name: exclude
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_exclude.review.yaml
+      rationale: Current fragments export derives exclusion from checkpoint/block contracts rather than legacy matrix-builder expressions.
+    - field: staged.unique_record_label_expression
+      status: staged_only
+      workbook_label: Unique record label
+      legacy_range_name: blockKey
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_block_key.review.yaml
+      rationale: Current exporter already assumes checkpoint-derived BLOCK/fragment ids instead of workbook-authored record-label expressions.
+    - field: staged.polygon_area_expression
+      status: staged_only
+      workbook_label: Polygon area
+      legacy_range_name: areaExpr
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_area_expr.review.yaml
+      rationale: Current exporter reads area from checkpoint geometry rather than workbook-authored matrix-builder expressions.
+    - field: staged.stand_age_expression
+      status: staged_only
+      workbook_label: Stand age
+      legacy_range_name: ageExpr
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_age_expr.review.yaml
+      rationale: Current exporter reads stand age from checkpoint columns rather than workbook-authored matrix-builder expressions.
+    - field: staged.additional_stratification_columns
+      status: staged_only
+      workbook_label: Additional stratification columns
+      legacy_range_name: inpColumns
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_columns.review.csv
+      rationale: Current exporter consumes already-bundled AU/context tables and does not yet rebuild them from legacy column-expression bindings.
+    - field: staged.treatment_eligibility_expression
+      status: staged_only
+      workbook_label: Ineligible for treatments
+      legacy_range_name: treatmentEligibility
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_treatment_eligibility.review.yaml
+      rationale: Current treatment logic is driven by FEMIC config/bundle context rather than the legacy workbook expression seam.
+    - field: staged.include_fragments.before_curves
+      status: staged_only
+      workbook_label: Include before curves
+      legacy_range_name: beforeCurves
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_before_curves.review.yaml
+      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+    - field: staged.include_fragments.after_curves
+      status: staged_only
+      workbook_label: Include after curves
+      legacy_range_name: afterCurves
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_after_curves.review.yaml
+      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+    - field: staged.include_fragments.after_retention
+      status: staged_only
+      workbook_label: Include after retention
+      legacy_range_name: afterRetention
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_after_retention.review.yaml
+      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+    - field: staged.include_fragments.after_unmanaged
+      status: staged_only
+      workbook_label: Include after unmanaged
+      legacy_range_name: afterUnmanaged
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_after_unmanaged.review.yaml
+      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+    - field: staged.include_fragments.after_stratum
+      status: staged_only
+      workbook_label: Include after stratum
+      legacy_range_name: afterStratum
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_after_stratum.review.yaml
+      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+    - field: staged.include_fragments.after_attributes
+      status: staged_only
+      workbook_label: Include after attributes
+      legacy_range_name: afterAttributes
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_after_attributes.review.yaml
+      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+    - field: staged.constants
+      status: staged_only
+      workbook_label: Matrix builder constants
+      legacy_range_name: inpConstants
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_constants.review.csv
+      rationale: Current exporter does not yet consume legacy workbook constants directly.
+
+  current_boundary:
+    current_live_export_fields:
+      - description
+      - start_year
+      - horizon_years
+    staged_only_fields:
+      - staged.max_inventory_age
+      - staged.exclude_expression
+      - staged.unique_record_label_expression
+      - staged.polygon_area_expression
+      - staged.stand_age_expression
+      - staged.additional_stratification_columns
+      - staged.treatment_eligibility_expression
+      - staged.include_fragments.before_curves
+      - staged.include_fragments.after_curves
+      - staged.include_fragments.after_retention
+      - staged.include_fragments.after_unmanaged
+      - staged.include_fragments.after_stratum
+      - staged.include_fragments.after_attributes
+      - staged.constants
+    notes:
+      - The translated config is MKRF-first and opt-in; it does not affect K3Z or TSA29 defaults.
+      - Live export wiring is intentionally limited to ForestModel description/year/horizon semantics.
+      - Legacy expressions, include hooks, and constants are preserved as lineage evidence but are not yet activated by the current exporter.
+    next_bounded_step: extend_staged_input_variables_into_export_contract
