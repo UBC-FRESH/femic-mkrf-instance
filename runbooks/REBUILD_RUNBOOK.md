@@ -38,7 +38,8 @@ sequence are ready to publish.
    - use `config/legacy_xml_builder/input_variables.mkrf.yaml`,
      `metadata/legacy_input_variables_translation.yaml`, and
      `runbooks/LEGACY_INPUT_VARIABLES_TRANSLATION.md` as the source of truth
-     for the first live-vs-staged Input Variables translation;
+     for the first live-vs-staged Input Variables translation, including the
+     live block/area/age/exclude export contract;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as

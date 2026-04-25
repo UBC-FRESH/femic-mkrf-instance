@@ -38,10 +38,10 @@ femic_translation_direction:
   - Refactor workbook tables and named ranges into FEMIC-native config and table surfaces.
 
 current_boundary:
-  next_bounded_step: extend_staged_input_variables_into_export_contract
+  next_bounded_step: operationalize_additional_stratification_columns
   notes:
     - This review resolves the editable-source authority seam at the metadata level.
     - Parent-side tracked review extracts now live under metadata/mkrf_xlsm_review/ and are referenced by metadata/legacy_xlsm_review_extracts.yaml.
-    - The first translated config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml and makes only description/year/horizon live in exporter behavior.
+    - The first translated config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml and now makes description/year/horizon plus the legacy block/area/age/exclude expressions live in exporter behavior.
     - No workbook payload has been copied into the instance by this slice.
     - No runnable XML rebuild path is claimed yet.
