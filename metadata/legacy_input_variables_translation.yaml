@@ -52,53 +52,41 @@ legacy_input_variables_translation:
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_max_age.review.yaml
       rationale: Current checkpoint-first exporter does not yet derive its curve eval span from this legacy workbook field.
     - field: staged.exclude_expression
-      status: live_export
+      status: staged_only
       workbook_label: Exclude expression
       legacy_range_name: exclude
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_exclude.review.yaml
-      exporter_binding: forestmodel.input.exclude
-      rationale: The opt-in MKRF exporter now emits this expression into ForestModel XML and requires any referenced checkpoint source columns to be present in fragments export.
+      rationale: Current fragments export derives exclusion from checkpoint/block contracts rather than legacy matrix-builder expressions.
     - field: staged.unique_record_label_expression
-      status: live_export
+      status: staged_only
       workbook_label: Unique record label
       legacy_range_name: blockKey
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_block_key.review.yaml
-      exporter_binding: forestmodel.input.block and fragments.BLOCK
-      rationale: The opt-in MKRF exporter now uses this expression for ForestModel input binding and for the exported fragments BLOCK field.
+      rationale: Current exporter already assumes checkpoint-derived BLOCK/fragment ids instead of workbook-authored record-label expressions.
     - field: staged.polygon_area_expression
-      status: live_export
+      status: staged_only
       workbook_label: Polygon area
       legacy_range_name: areaExpr
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_area_expr.review.yaml
-      exporter_binding: forestmodel.input.area and fragments.AREA_HA
-      rationale: The opt-in MKRF exporter now uses this expression for ForestModel input binding and for the exported fragments AREA_HA field.
+      rationale: Current exporter reads area from checkpoint geometry rather than workbook-authored matrix-builder expressions.
     - field: staged.stand_age_expression
-      status: live_export
+      status: staged_only
       workbook_label: Stand age
       legacy_range_name: ageExpr
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_age_expr.review.yaml
-      exporter_binding: forestmodel.input.age and fragments.F_AGE
-      rationale: The opt-in MKRF exporter now uses this expression for ForestModel input binding and for the exported fragments F_AGE field.
+      rationale: Current exporter reads stand age from checkpoint columns rather than workbook-authored matrix-builder expressions.
     - field: staged.additional_stratification_columns
-      status: live_export
+      status: staged_only
       workbook_label: Additional stratification columns
       legacy_range_name: inpColumns
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_columns.review.csv
-      exporter_binding:
-        - fragments.status <- CONTCLAS
-        - fragments.au_1 <- string(AU_EX)
-        - fragments.auf <- string(AU_FU)
-        - fragments.oper <- Operabilit
-        - fragments.ct <- CT_eligib
-        - fragments.aux <- AU_EX
-      rationale: The opt-in MKRF exporter now materializes these bindings as additional fragment fields, with workbook key `au` written as `au_1` to avoid colliding with the base required `AU` fragments field.
+      rationale: Current exporter consumes already-bundled AU/context tables and does not yet rebuild them from legacy column-expression bindings.
     - field: staged.treatment_eligibility_expression
-      status: live_export
+      status: staged_only
       workbook_label: Ineligible for treatments
       legacy_range_name: treatmentEligibility
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_treatment_eligibility.review.yaml
-      exporter_binding: fragments.treat_inel <- treatment_eligibility_expression (Y when true, N when false)
-      rationale: The opt-in MKRF exporter now evaluates the legacy workbook expression against the live additional stratification bindings plus the translated legacy constants surface and materializes the result as fragments field `treat_inel`.
+      rationale: Current treatment logic is driven by FEMIC config/bundle context rather than the legacy workbook expression seam.
     - field: staged.include_fragments.before_curves
       status: staged_only
       workbook_label: Include before curves
@@ -140,21 +128,21 @@ legacy_input_variables_translation:
       workbook_label: Matrix builder constants
       legacy_range_name: inpConstants
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_constants.review.csv
-      rationale: Current exporter only consumes a narrow subset of the translated constants surface for treatment-eligibility symbol resolution; the broader legacy constants seam does not yet drive FEMIC-native export or builder behavior directly.
+      rationale: Current exporter does not yet consume legacy workbook constants directly.
 
   current_boundary:
     current_live_export_fields:
       - description
       - start_year
       - horizon_years
+    staged_only_fields:
+      - staged.max_inventory_age
       - staged.exclude_expression
       - staged.unique_record_label_expression
       - staged.polygon_area_expression
       - staged.stand_age_expression
       - staged.additional_stratification_columns
       - staged.treatment_eligibility_expression
-    staged_only_fields:
-      - staged.max_inventory_age
       - staged.include_fragments.before_curves
       - staged.include_fragments.after_curves
       - staged.include_fragments.after_retention
@@ -164,9 +152,6 @@ legacy_input_variables_translation:
       - staged.constants
     notes:
       - The translated config is MKRF-first and opt-in; it does not affect K3Z or TSA29 defaults.
-      - Live export wiring now covers ForestModel description/year/horizon plus the legacy block/area/age/exclude expressions, the additional stratification fragment bindings, and the translated treatment-eligibility review flag.
-      - Live legacy expressions and additional stratification bindings require the referenced checkpoint source columns to be present so fragments export can preserve those values alongside the XML contract.
-      - Workbook key `au` is written as fragments field `au_1` to avoid colliding with the base required `AU` fragments field.
-      - The live treatment-eligibility seam currently materializes as fragments field `treat_inel` and is intentionally narrower than a full legacy unmanaged-track rebuild.
-      - Include hooks and the broader matrix-builder constants seam remain preserved as lineage evidence but are not yet activated by the current exporter.
-    next_bounded_step: operationalize_matrix_builder_constants_seam
+      - Live export wiring is intentionally limited to ForestModel description/year/horizon semantics.
+      - Legacy expressions, include hooks, and constants are preserved as lineage evidence but are not yet activated by the current exporter.
+    next_bounded_step: extend_staged_input_variables_into_export_contract

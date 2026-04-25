@@ -82,8 +82,9 @@ registry_mismatch_note:
     confirmed tab-level surfaces.
 
 current_boundary:
-  next_bounded_step: draft_input_variables_femic_config_translation
+  next_bounded_step: extend_staged_input_variables_into_export_contract
   notes:
     - Parent-side tracked review extracts now exist under metadata/mkrf_xlsm_review/ and are referenced by metadata/legacy_xlsm_review_extracts.yaml.
+    - The first translated Input Variables config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml with lineage/status tracked in metadata/legacy_input_variables_translation.yaml.
     - No workbook payload has been copied into the instance.
     - No VBA reimplementation is claimed yet.
