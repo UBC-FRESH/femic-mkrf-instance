@@ -21,7 +21,8 @@
    `metadata/legacy_xlsm_review_extracts.yaml`.
 12. Review the translated Input Variables config in
    `config/legacy_xml_builder/input_variables.mkrf.yaml`, including the live
-   block/area/age/exclude export seam.
+   block/area/age/exclude export seam and the live additional stratification
+   fragment bindings.
 13. Inspect the copied archival control layer in
    `data/legacy_mkrf/compiled_controls/`.
 14. Inspect the copied archival track tables in

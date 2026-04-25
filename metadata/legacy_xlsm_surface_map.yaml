@@ -82,10 +82,10 @@ registry_mismatch_note:
     confirmed tab-level surfaces.
 
 current_boundary:
-  next_bounded_step: operationalize_additional_stratification_columns
+  next_bounded_step: operationalize_treatment_eligibility_expression
   notes:
     - Parent-side tracked review extracts now exist under metadata/mkrf_xlsm_review/ and are referenced by metadata/legacy_xlsm_review_extracts.yaml.
     - The first translated Input Variables config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml with lineage/status tracked in metadata/legacy_input_variables_translation.yaml.
-    - The live exporter seam now covers description/year/horizon plus the legacy block/area/age/exclude expressions.
+    - The live exporter seam now covers description/year/horizon plus the legacy block/area/age/exclude expressions and the additional stratification fragment bindings.
     - No workbook payload has been copied into the instance.
     - No VBA reimplementation is claimed yet.
