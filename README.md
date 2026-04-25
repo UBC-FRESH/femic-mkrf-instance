@@ -84,8 +84,9 @@ Important boundary:
 - the first MKRF-first translated `Input Variables` config now lives at
   `config/legacy_xml_builder/input_variables.mkrf.yaml`, but only
   `description`, `start_year`, `horizon_years`, and the legacy block/area/age/
-  exclude expressions plus the additional stratification fragment bindings are
-  live in exporter behavior at this stage;
+  exclude expressions plus the additional stratification fragment bindings and
+  the `treat_inel` treatment-eligibility review flag are live in exporter
+  behavior at this stage;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.

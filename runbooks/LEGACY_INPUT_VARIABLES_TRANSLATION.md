@@ -26,6 +26,8 @@ Live exporter fields:
   drives ForestModel `input.age` and exported fragments `F_AGE`
 - `staged.additional_stratification_columns`
   drive exported fragments `status`, `au_1`, `auf`, `oper`, `ct`, and `aux`
+- `staged.treatment_eligibility_expression`
+  drives exported fragments `treat_inel` as `Y` when true and `N` when false
 
 These workbook-derived values now affect exporter behavior in this slice.
 When the live expressions reference checkpoint source columns such as
@@ -34,7 +36,10 @@ checkpoint and are passed through into the exported fragments surface.
 The live additional-stratification bindings use the same rule. The workbook
 key `au` is written as fragment field `au_1` so it does not collide with the
 base required `AU` fragments field that already exists in the Patchworks
-fragments schema.
+fragments schema. The live treatment-eligibility seam is currently narrower
+than the legacy SPS XML builder: it evaluates the workbook expression against
+the live additional stratification bindings plus the translated legacy
+constants surface and writes the result to the review field `treat_inel`.
 
 ## What remains staged only
 
@@ -42,7 +47,6 @@ The translated config also preserves legacy workbook seams that are **not yet
 live**:
 
 - `max_inventory_age`
-- treatment-eligibility expression
 - legacy include-fragment hooks
 - legacy matrix-builder constants
 
@@ -63,6 +67,7 @@ layout semantics from workbook-authored expressions.
 
 - This slice does not make the full legacy workbook live.
 - This slice does not publish the workbook itself into the instance.
-- This slice does not activate treatment eligibility, include hooks, or
-  constants.
+- This slice does not rebuild the legacy unmanaged-track select logic.
+- This slice does not activate include hooks or the broader matrix-builder
+  constants seam.
 - This slice does not claim a runnable MKRF rebuild contract.

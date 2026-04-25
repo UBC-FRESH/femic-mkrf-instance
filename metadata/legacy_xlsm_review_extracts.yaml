@@ -61,10 +61,10 @@ legacy_xlsm_review_extracts:
       role: supporting_transition_review_extract
 
   current_boundary:
-    next_bounded_step: operationalize_treatment_eligibility_expression
+    next_bounded_step: operationalize_matrix_builder_constants_seam
     notes:
       - The review extracts live in the parent FEMIC repo and are referenced here as lineage evidence.
       - The first translated config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml with lineage/status tracked in metadata/legacy_input_variables_translation.yaml.
-      - The live exporter seam now covers description/year/horizon plus the legacy block/area/age/exclude expressions and the additional stratification fragment bindings.
+      - The live exporter seam now covers description/year/horizon plus the legacy block/area/age/exclude expressions, the additional stratification fragment bindings, and the treatment-eligibility review flag.
       - No workbook payload was copied into the instance by this slice.
       - No VBA reimplementation or runnable rebuild claim is made by this slice.
