@@ -83,8 +83,8 @@ Important boundary:
   by `metadata/legacy_xlsm_review_extracts.yaml`;
 - the first MKRF-first translated `Input Variables` config now lives at
   `config/legacy_xml_builder/input_variables.mkrf.yaml`, but only
-  `description`, `start_year`, and `horizon_years` are live in exporter
-  behavior at this stage;
+  `description`, `start_year`, `horizon_years`, and the legacy block/area/age/
+  exclude expressions are live in exporter behavior at this stage;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.

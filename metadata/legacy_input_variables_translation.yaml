@@ -52,29 +52,33 @@ legacy_input_variables_translation:
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_max_age.review.yaml
       rationale: Current checkpoint-first exporter does not yet derive its curve eval span from this legacy workbook field.
     - field: staged.exclude_expression
-      status: staged_only
+      status: live_export
       workbook_label: Exclude expression
       legacy_range_name: exclude
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_exclude.review.yaml
-      rationale: Current fragments export derives exclusion from checkpoint/block contracts rather than legacy matrix-builder expressions.
+      exporter_binding: forestmodel.input.exclude
+      rationale: The opt-in MKRF exporter now emits this expression into ForestModel XML and requires any referenced checkpoint source columns to be present in fragments export.
     - field: staged.unique_record_label_expression
-      status: staged_only
+      status: live_export
       workbook_label: Unique record label
       legacy_range_name: blockKey
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_block_key.review.yaml
-      rationale: Current exporter already assumes checkpoint-derived BLOCK/fragment ids instead of workbook-authored record-label expressions.
+      exporter_binding: forestmodel.input.block and fragments.BLOCK
+      rationale: The opt-in MKRF exporter now uses this expression for ForestModel input binding and for the exported fragments BLOCK field.
     - field: staged.polygon_area_expression
-      status: staged_only
+      status: live_export
       workbook_label: Polygon area
       legacy_range_name: areaExpr
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_area_expr.review.yaml
-      rationale: Current exporter reads area from checkpoint geometry rather than workbook-authored matrix-builder expressions.
+      exporter_binding: forestmodel.input.area and fragments.AREA_HA
+      rationale: The opt-in MKRF exporter now uses this expression for ForestModel input binding and for the exported fragments AREA_HA field.
     - field: staged.stand_age_expression
-      status: staged_only
+      status: live_export
       workbook_label: Stand age
       legacy_range_name: ageExpr
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_age_expr.review.yaml
-      rationale: Current exporter reads stand age from checkpoint columns rather than workbook-authored matrix-builder expressions.
+      exporter_binding: forestmodel.input.age and fragments.F_AGE
+      rationale: The opt-in MKRF exporter now uses this expression for ForestModel input binding and for the exported fragments F_AGE field.
     - field: staged.additional_stratification_columns
       status: staged_only
       workbook_label: Additional stratification columns
@@ -135,12 +139,12 @@ legacy_input_variables_translation:
       - description
       - start_year
       - horizon_years
-    staged_only_fields:
-      - staged.max_inventory_age
       - staged.exclude_expression
       - staged.unique_record_label_expression
       - staged.polygon_area_expression
       - staged.stand_age_expression
+    staged_only_fields:
+      - staged.max_inventory_age
       - staged.additional_stratification_columns
       - staged.treatment_eligibility_expression
       - staged.include_fragments.before_curves
@@ -152,6 +156,7 @@ legacy_input_variables_translation:
       - staged.constants
     notes:
       - The translated config is MKRF-first and opt-in; it does not affect K3Z or TSA29 defaults.
-      - Live export wiring is intentionally limited to ForestModel description/year/horizon semantics.
-      - Legacy expressions, include hooks, and constants are preserved as lineage evidence but are not yet activated by the current exporter.
-    next_bounded_step: extend_staged_input_variables_into_export_contract
+      - Live export wiring now covers ForestModel description/year/horizon plus the legacy block/area/age/exclude expressions.
+      - Live legacy expressions require the referenced checkpoint source columns to be present so fragments export can preserve those values alongside the XML contract.
+      - Additional stratification columns, treatment eligibility, include hooks, and constants are preserved as lineage evidence but are not yet activated by the current exporter.
+    next_bounded_step: operationalize_additional_stratification_columns
