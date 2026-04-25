@@ -77,14 +77,14 @@ artifacts:
     path: "config/legacy_xml_builder/input_variables.mkrf.yaml"
     class: "translated_config"
     published: true
-    notes: "MKRF-first FEMIC-native translation of the legacy workbook Input Variables surface, including the live block/area/age/exclude export seam and the additional stratification fragment bindings."
+    notes: "MKRF-first FEMIC-native translation of the legacy workbook Input Variables surface, including the live block/area/age/exclude export seam, the additional stratification fragment bindings, and the treatment-eligibility review flag."
   - artifact_id: "legacy_input_variables_translation_yaml"
     path: "metadata/legacy_input_variables_translation.yaml"
     class: "reference_metadata"
     published: true
-    notes: "Machine-readable lineage/status map for the MKRF Input Variables translation, including the live block-layout/export contract and additional stratification fragment bindings."
+    notes: "Machine-readable lineage/status map for the MKRF Input Variables translation, including the live block-layout/export contract, the additional stratification fragment bindings, and the treatment-eligibility review flag."
   - artifact_id: "legacy_input_variables_translation_note"
     path: "runbooks/LEGACY_INPUT_VARIABLES_TRANSLATION.md"
     class: "reference_metadata"
     published: true
-    notes: "Instance-local note documenting the live-vs-staged boundary for the first MKRF Input Variables translation, the live block-layout/export contract, and the live additional stratification fragment bindings."
+    notes: "Instance-local note documenting the live-vs-staged boundary for the first MKRF Input Variables translation, the live block-layout/export contract, the live additional stratification fragment bindings, and the treatment-eligibility review flag."
