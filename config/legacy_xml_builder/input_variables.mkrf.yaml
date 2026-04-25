@@ -1,0 +1,37 @@
+description: "Base TFL26"
+start_year: 2020
+horizon_years: 300
+
+staged:
+  max_inventory_age: 350
+  exclude_expression: "CONTCLAS eq 'X'"
+  unique_record_label_expression: "Int(RES_KEY)"
+  polygon_area_expression: "area()/10000"
+  stand_age_expression: "Int(AGE_2020)"
+  additional_stratification_columns:
+    - key: "status"
+      source_expression: "CONTCLAS"
+    - key: "au"
+      source_expression: "string(AU_EX)"
+    - key: "auf"
+      source_expression: "string(AU_FU)"
+    - key: "oper"
+      source_expression: "Operabilit"
+    - key: "ct"
+      source_expression: "CT_eligib"
+    - key: "aux"
+      source_expression: "AU_EX"
+  treatment_eligibility_expression: "status in unmanaged"
+  include_fragments:
+    before_curves: "Curves.xml"
+    after_curves: null
+    after_retention: null
+    after_unmanaged: null
+    after_stratum: null
+    after_attributes: null
+  constants:
+    managed: "'C'"
+    unmanaged: "'N'"
+    frd: "=2.7/100"
+    operable: "'Operable'"
+    lowoper: "'Low Operability'"
