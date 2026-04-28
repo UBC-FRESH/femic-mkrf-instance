@@ -86,7 +86,8 @@ Important boundary:
   `description`, `start_year`, `horizon_years`, and the legacy block/area/age/
   exclude expressions plus the additional stratification fragment bindings and
   the `treat_inel` treatment-eligibility review flag are live in exporter
-  behavior at this stage;
+  behavior at this stage, with `managed`, `unmanaged`, `operable`, and
+  `lowoper` available through the explicit scalar constants contract;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.

@@ -40,8 +40,9 @@ sequence are ready to publish.
      `runbooks/LEGACY_INPUT_VARIABLES_TRANSLATION.md` as the source of truth
      for the first live-vs-staged Input Variables translation, including the
      live block/area/age/exclude export contract, the live additional
-     stratification fragment bindings, and the live treatment-eligibility
-     review flag;
+     stratification fragment bindings, the live treatment-eligibility review
+     flag, and the explicit scalar constants contract for legacy expression
+     symbol resolution;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as

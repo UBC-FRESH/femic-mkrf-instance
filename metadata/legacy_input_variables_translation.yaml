@@ -98,7 +98,7 @@ legacy_input_variables_translation:
       legacy_range_name: treatmentEligibility
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_treatment_eligibility.review.yaml
       exporter_binding: fragments.treat_inel <- treatment_eligibility_expression (Y when true, N when false)
-      rationale: The opt-in MKRF exporter now evaluates the legacy workbook expression against the live additional stratification bindings plus the translated legacy constants surface and materializes the result as fragments field `treat_inel`.
+      rationale: The opt-in MKRF exporter now evaluates the legacy workbook expression against the live additional stratification bindings plus constants allowed by staged.constant_contract and materializes the result as fragments field `treat_inel`.
     - field: staged.include_fragments.before_curves
       status: staged_only
       workbook_label: Include before curves
@@ -136,11 +136,45 @@ legacy_input_variables_translation:
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_after_attributes.review.yaml
       rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
     - field: staged.constants
-      status: staged_only
+      status: mixed_contract
       workbook_label: Matrix builder constants
       legacy_range_name: inpConstants
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_constants.review.csv
-      rationale: Current exporter only consumes a narrow subset of the translated constants surface for treatment-eligibility symbol resolution; the broader legacy constants seam does not yet drive FEMIC-native export or builder behavior directly.
+      rationale: Constants remain preserved as translated workbook evidence, while staged.constant_contract now classifies which individual constants are live expression symbols versus deferred review metadata.
+    - field: staged.constant_contract.managed
+      status: live_export
+      workbook_label: Matrix builder constants
+      legacy_range_name: inpConstants
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_constants.review.csv
+      exporter_binding: legacy expression symbol resolution
+      rationale: Scalar status-class constant available to opt-in MKRF legacy expressions.
+    - field: staged.constant_contract.unmanaged
+      status: live_export
+      workbook_label: Matrix builder constants
+      legacy_range_name: inpConstants
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_constants.review.csv
+      exporter_binding: legacy treatment-eligibility symbol resolution
+      rationale: Current treatment_eligibility_expression resolves unmanaged for status in unmanaged.
+    - field: staged.constant_contract.operable
+      status: live_export
+      workbook_label: Matrix builder constants
+      legacy_range_name: inpConstants
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_constants.review.csv
+      exporter_binding: legacy expression symbol resolution
+      rationale: Scalar operability constant available to opt-in MKRF legacy expressions.
+    - field: staged.constant_contract.lowoper
+      status: live_export
+      workbook_label: Matrix builder constants
+      legacy_range_name: inpConstants
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_constants.review.csv
+      exporter_binding: legacy expression symbol resolution
+      rationale: Scalar operability constant available to opt-in MKRF legacy expressions.
+    - field: staged.constant_contract.frd
+      status: deferred
+      workbook_label: Matrix builder constants
+      legacy_range_name: inpConstants
+      source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_constants.review.csv
+      rationale: Formula-like value is preserved as workbook evidence until a live builder consumer is identified.
 
   current_boundary:
     current_live_export_fields:
@@ -153,6 +187,10 @@ legacy_input_variables_translation:
       - staged.stand_age_expression
       - staged.additional_stratification_columns
       - staged.treatment_eligibility_expression
+      - staged.constant_contract.managed
+      - staged.constant_contract.unmanaged
+      - staged.constant_contract.operable
+      - staged.constant_contract.lowoper
     staged_only_fields:
       - staged.max_inventory_age
       - staged.include_fragments.before_curves
@@ -161,12 +199,13 @@ legacy_input_variables_translation:
       - staged.include_fragments.after_unmanaged
       - staged.include_fragments.after_stratum
       - staged.include_fragments.after_attributes
-      - staged.constants
+      - staged.constant_contract.frd
     notes:
       - The translated config is MKRF-first and opt-in; it does not affect K3Z or TSA29 defaults.
       - Live export wiring now covers ForestModel description/year/horizon plus the legacy block/area/age/exclude expressions, the additional stratification fragment bindings, and the translated treatment-eligibility review flag.
       - Live legacy expressions and additional stratification bindings require the referenced checkpoint source columns to be present so fragments export can preserve those values alongside the XML contract.
       - Workbook key `au` is written as fragments field `au_1` to avoid colliding with the base required `AU` fragments field.
       - The live treatment-eligibility seam currently materializes as fragments field `treat_inel` and is intentionally narrower than a full legacy unmanaged-track rebuild.
-      - Include hooks and the broader matrix-builder constants seam remain preserved as lineage evidence but are not yet activated by the current exporter.
-    next_bounded_step: operationalize_matrix_builder_constants_seam
+      - The explicit constants contract now makes managed, unmanaged, operable, and lowoper available as live expression symbols while keeping formula-like frd deferred.
+      - Include hooks and broader matrix-builder semantics remain preserved as lineage evidence but are not yet activated by the current exporter.
+    next_bounded_step: review_max_inventory_age_or_include_hooks_without_broadening_into_netdown_or_treat

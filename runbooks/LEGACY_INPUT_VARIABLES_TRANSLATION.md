@@ -28,6 +28,9 @@ Live exporter fields:
   drive exported fragments `status`, `au_1`, `auf`, `oper`, `ct`, and `aux`
 - `staged.treatment_eligibility_expression`
   drives exported fragments `treat_inel` as `Y` when true and `N` when false
+- `staged.constant_contract`
+  controls which translated matrix-builder constants are available as live
+  legacy expression symbols
 
 These workbook-derived values now affect exporter behavior in this slice.
 When the live expressions reference checkpoint source columns such as
@@ -38,8 +41,13 @@ key `au` is written as fragment field `au_1` so it does not collide with the
 base required `AU` fragments field that already exists in the Patchworks
 fragments schema. The live treatment-eligibility seam is currently narrower
 than the legacy SPS XML builder: it evaluates the workbook expression against
-the live additional stratification bindings plus the translated legacy
-constants surface and writes the result to the review field `treat_inel`.
+the live additional stratification bindings plus constants allowed by
+`staged.constant_contract` and writes the result to the review field
+`treat_inel`.
+The live constants contract currently exposes only scalar legacy values:
+`managed`, `unmanaged`, `operable`, and `lowoper`. Formula-like workbook values
+such as `frd` remain preserved but deferred, so they cannot silently become
+live expression inputs before a builder consumer is identified.
 
 ## What remains staged only
 
@@ -48,7 +56,8 @@ live**:
 
 - `max_inventory_age`
 - legacy include-fragment hooks
-- legacy matrix-builder constants
+- formula-like or otherwise unclaimed legacy matrix-builder constants such as
+  `frd`
 
 Those fields remain staged because the current FEMIC exporter is checkpoint-
 first and already assumes bundle/context inputs rather than rebuilding matrix
@@ -69,5 +78,5 @@ layout semantics from workbook-authored expressions.
 - This slice does not publish the workbook itself into the instance.
 - This slice does not rebuild the legacy unmanaged-track select logic.
 - This slice does not activate include hooks or the broader matrix-builder
-  constants seam.
+  semantics beyond the explicit scalar constants contract.
 - This slice does not claim a runnable MKRF rebuild contract.
