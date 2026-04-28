@@ -42,7 +42,8 @@ sequence are ready to publish.
      live block/area/age/exclude export contract, the live additional
      stratification fragment bindings, the live treatment-eligibility review
      flag, and the explicit scalar constants contract for legacy expression
-     symbol resolution;
+     symbol resolution, plus the P55.14 inactive-field classification for
+     `max_inventory_age` and include-fragment hooks;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as

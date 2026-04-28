@@ -88,6 +88,9 @@ Important boundary:
   the `treat_inel` treatment-eligibility review flag are live in exporter
   behavior at this stage, with `managed`, `unmanaged`, `operable`, and
   `lowoper` available through the explicit scalar constants contract;
+- `max_inventory_age` and blank include-fragment hooks are preserved as review
+  metadata, while `before_curves` remains blocked until the Curve Library
+  contract is translated;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.

@@ -49,13 +49,19 @@ The live constants contract currently exposes only scalar legacy values:
 such as `frd` remain preserved but deferred, so they cannot silently become
 live expression inputs before a builder consumer is identified.
 
-## What remains staged only
+## What remains inactive
 
 The translated config also preserves legacy workbook seams that are **not yet
 live**:
 
 - `max_inventory_age`
-- legacy include-fragment hooks
+  preserved as review metadata; the current exporter derives curve evaluation
+  spans from `horizon_years` and source curve ages
+- `before_curves`
+  blocked because the workbook value points at generated `Curves.xml`; this
+  requires the Curve Library review-to-build contract before activation
+- blank include-fragment hooks
+  preserved as review metadata
 - formula-like or otherwise unclaimed legacy matrix-builder constants such as
   `frd`
 
@@ -79,4 +85,5 @@ layout semantics from workbook-authored expressions.
 - This slice does not rebuild the legacy unmanaged-track select logic.
 - This slice does not activate include hooks or the broader matrix-builder
   semantics beyond the explicit scalar constants contract.
+- This slice does not treat generated `Curves.xml` as editable source.
 - This slice does not claim a runnable MKRF rebuild contract.

@@ -46,11 +46,11 @@ legacy_input_variables_translation:
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_horizon.review.yaml
       exporter_binding: forestmodel.horizon
     - field: staged.max_inventory_age
-      status: staged_only
+      status: review_metadata
       workbook_label: Maximum inventory age
       legacy_range_name: maxAge
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_max_age.review.yaml
-      rationale: Current checkpoint-first exporter does not yet derive its curve eval span from this legacy workbook field.
+      rationale: Current checkpoint-first exporter derives curve evaluation spans from horizon_years and source curve ages, not this legacy workbook field.
     - field: staged.exclude_expression
       status: live_export
       workbook_label: Exclude expression
@@ -100,41 +100,41 @@ legacy_input_variables_translation:
       exporter_binding: fragments.treat_inel <- treatment_eligibility_expression (Y when true, N when false)
       rationale: The opt-in MKRF exporter now evaluates the legacy workbook expression against the live additional stratification bindings plus constants allowed by staged.constant_contract and materializes the result as fragments field `treat_inel`.
     - field: staged.include_fragments.before_curves
-      status: staged_only
+      status: blocked
       workbook_label: Include before curves
       legacy_range_name: beforeCurves
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_before_curves.review.yaml
-      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+      rationale: Workbook value is Curves.xml, a generated curve XML fragment; activation requires the P55.15 Curve Library review-to-build contract.
     - field: staged.include_fragments.after_curves
-      status: staged_only
+      status: review_metadata
       workbook_label: Include after curves
       legacy_range_name: afterCurves
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_after_curves.review.yaml
-      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+      rationale: Workbook range is blank; preserve the inactive hook as review metadata.
     - field: staged.include_fragments.after_retention
-      status: staged_only
+      status: review_metadata
       workbook_label: Include after retention
       legacy_range_name: afterRetention
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_after_retention.review.yaml
-      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+      rationale: Workbook range is blank; preserve the inactive hook as review metadata.
     - field: staged.include_fragments.after_unmanaged
-      status: staged_only
+      status: review_metadata
       workbook_label: Include after unmanaged
       legacy_range_name: afterUnmanaged
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_after_unmanaged.review.yaml
-      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+      rationale: Workbook range is blank; preserve the inactive hook as review metadata.
     - field: staged.include_fragments.after_stratum
-      status: staged_only
+      status: review_metadata
       workbook_label: Include after stratum
       legacy_range_name: afterStratum
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_after_stratum.review.yaml
-      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+      rationale: Workbook range is blank; preserve the inactive hook as review metadata.
     - field: staged.include_fragments.after_attributes
-      status: staged_only
+      status: review_metadata
       workbook_label: Include after attributes
       legacy_range_name: afterAttributes
       source_extract: metadata/mkrf_xlsm_review/ranges/input_variables_after_attributes.review.yaml
-      rationale: Legacy XML entity/include hooks are preserved for lineage but are not activated by the current exporter.
+      rationale: Workbook range is blank; preserve the inactive hook as review metadata.
     - field: staged.constants
       status: mixed_contract
       workbook_label: Matrix builder constants
@@ -191,15 +191,16 @@ legacy_input_variables_translation:
       - staged.constant_contract.unmanaged
       - staged.constant_contract.operable
       - staged.constant_contract.lowoper
-    staged_only_fields:
+    review_metadata_fields:
       - staged.max_inventory_age
-      - staged.include_fragments.before_curves
       - staged.include_fragments.after_curves
       - staged.include_fragments.after_retention
       - staged.include_fragments.after_unmanaged
       - staged.include_fragments.after_stratum
       - staged.include_fragments.after_attributes
       - staged.constant_contract.frd
+    blocked_fields:
+      - staged.include_fragments.before_curves
     notes:
       - The translated config is MKRF-first and opt-in; it does not affect K3Z or TSA29 defaults.
       - Live export wiring now covers ForestModel description/year/horizon plus the legacy block/area/age/exclude expressions, the additional stratification fragment bindings, and the translated treatment-eligibility review flag.
@@ -207,5 +208,7 @@ legacy_input_variables_translation:
       - Workbook key `au` is written as fragments field `au_1` to avoid colliding with the base required `AU` fragments field.
       - The live treatment-eligibility seam currently materializes as fragments field `treat_inel` and is intentionally narrower than a full legacy unmanaged-track rebuild.
       - The explicit constants contract now makes managed, unmanaged, operable, and lowoper available as live expression symbols while keeping formula-like frd deferred.
-      - Include hooks and broader matrix-builder semantics remain preserved as lineage evidence but are not yet activated by the current exporter.
-    next_bounded_step: review_max_inventory_age_or_include_hooks_without_broadening_into_netdown_or_treat
+      - Max inventory age remains review metadata because the current exporter derives curve evaluation spans from horizon_years and source curve ages.
+      - The only nonblank include hook is beforeCurves -> Curves.xml; it remains blocked until the Curve Library contract is translated.
+      - Blank include hooks remain preserved as review metadata and are not activated by the current exporter.
+    next_bounded_step: translate_curve_library_review_to_build_contract

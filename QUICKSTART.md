@@ -23,7 +23,8 @@
    `config/legacy_xml_builder/input_variables.mkrf.yaml`, including the live
    block/area/age/exclude export seam and the live additional stratification
    fragment bindings, treatment-eligibility review flag, and scalar constants
-   contract.
+   contract, plus the inactive-field classification for `max_inventory_age`
+   and include-fragment hooks.
 13. Inspect the copied archival control layer in
    `data/legacy_mkrf/compiled_controls/`.
 14. Inspect the copied archival track tables in

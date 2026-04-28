@@ -4,6 +4,10 @@ horizon_years: 300
 
 staged:
   max_inventory_age: 350
+  max_inventory_age_contract:
+    status: "review_metadata"
+    consumer: null
+    rationale: "The current checkpoint-first exporter derives curve evaluation spans from horizon_years and source curve ages, not this legacy workbook field."
   exclude_expression: "CONTCLAS eq 'X'"
   unique_record_label_expression: "Int(RES_KEY)"
   polygon_area_expression: "area()/10000"
@@ -29,6 +33,43 @@ staged:
     after_unmanaged: null
     after_stratum: null
     after_attributes: null
+  include_fragment_contract:
+    - key: "before_curves"
+      legacy_range_name: "beforeCurves"
+      value: "Curves.xml"
+      status: "blocked"
+      consumer: null
+      rationale: "Points to generated curve XML; activation requires the P55.15 Curve Library review-to-build contract."
+    - key: "after_curves"
+      legacy_range_name: "afterCurves"
+      value: null
+      status: "review_metadata"
+      consumer: null
+      rationale: "Workbook range is blank; preserved to document the inactive include hook."
+    - key: "after_retention"
+      legacy_range_name: "afterRetention"
+      value: null
+      status: "review_metadata"
+      consumer: null
+      rationale: "Workbook range is blank; preserved to document the inactive include hook."
+    - key: "after_unmanaged"
+      legacy_range_name: "afterUnmanaged"
+      value: null
+      status: "review_metadata"
+      consumer: null
+      rationale: "Workbook range is blank; preserved to document the inactive include hook."
+    - key: "after_stratum"
+      legacy_range_name: "afterStratum"
+      value: null
+      status: "review_metadata"
+      consumer: null
+      rationale: "Workbook range is blank; preserved to document the inactive include hook."
+    - key: "after_attributes"
+      legacy_range_name: "afterAttributes"
+      value: null
+      status: "review_metadata"
+      consumer: null
+      rationale: "Workbook range is blank; preserved to document the inactive include hook."
   constants:
     managed: "'C'"
     unmanaged: "'N'"
