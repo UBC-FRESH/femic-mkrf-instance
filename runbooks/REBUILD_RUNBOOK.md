@@ -82,6 +82,10 @@ sequence are ready to publish.
      `runbooks/LEGACY_SOURCE_INPUT_PUBLICATION_BOUNDARY.md` as the source of
      truth for the P56.5 fragments/topology, raw-source reproducibility, and
      identity-caveat publication boundary;
+   - use `metadata/legacy_rebuild_readiness_criteria.yaml` and
+     `runbooks/LEGACY_REBUILD_READINESS_CRITERIA.md` as the source of truth
+     for the P56.6 metadata-recovery complete / runnable-rebuild no-go
+     criteria;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` and

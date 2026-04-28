@@ -177,9 +177,9 @@ go_no_go:
       the next recovery phase, not as substitute raw/source inputs.
 
 next_bounded_step:
-  recommendation: publish_rebuild_readiness_milestone_criteria
-  roadmap_task: P56.6
+  recommendation: implement_first_builder_activation_gate
+  roadmap_task: future_phase
   description:
-    Publish the rebuild-readiness criteria tying legacy evidence, source-input
-    publication, future FEMIC XML emission, and matrix-build proof together
-    before any runnable rebuild claim.
+    Phase 56 closed with rebuild-readiness criteria published. The next phase
+    should implement the first selected builder activation gate before any
+    matrix-build execution or runnable rebuild claim.

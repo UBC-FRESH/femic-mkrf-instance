@@ -160,5 +160,5 @@ remaining_gaps:
     reconciliation, but remains a P56.5 reproducibility-boundary question.
 
 next_bounded_step:
-  recommendation: publish_rebuild_readiness_milestone_criteria
-  roadmap_task: P56.6
+  recommendation: implement_first_builder_activation_gate
+  roadmap_task: future_phase

@@ -57,6 +57,7 @@ Instance-local reference surfaces:
 - `metadata/legacy_compiled_track_evidence_reconciliation.yaml`
 - `metadata/legacy_builder_activation_plan.yaml`
 - `metadata/legacy_source_input_publication_boundary.yaml`
+- `metadata/legacy_rebuild_readiness_criteria.yaml`
 - `config/legacy_xml_builder/input_variables.mkrf.yaml`
 - `config/legacy_xml_builder/curve_library.mkrf.yaml`
 - `config/legacy_xml_builder/netdown.mkrf.yaml`
@@ -145,6 +146,9 @@ Important boundary:
   inputs required for a future matrix-build candidate, separates compiled
   runtime evidence from raw source reproducibility, and keeps the `Base TFL26`
   literal-description mismatch visible;
+- the P56.6 rebuild-readiness criteria close Phase 56 with metadata recovery
+  complete and runnable rebuild readiness still no-go pending future builder,
+  XML, source-input, matrix-build, output-comparison, and identity gates;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.

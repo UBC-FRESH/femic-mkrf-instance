@@ -59,3 +59,6 @@ user-facing runnable rebuild claim.
 P56.5 did not ingest mapping data, outputs, roads, or workbook payloads; did
 not generate XML; did not regenerate fragments; and did not run Patchworks
 matrix build.
+
+P56.6 published rebuild-readiness criteria and closed Phase 56 with metadata
+recovery complete but runnable rebuild readiness still no-go.

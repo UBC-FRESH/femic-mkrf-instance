@@ -203,3 +203,13 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local P56.5 note documenting the source-input publication boundary without ingesting mapping data, roads, outputs, workbook payloads, or running matrix build."
+  - artifact_id: "legacy_rebuild_readiness_criteria_yaml"
+    path: "metadata/legacy_rebuild_readiness_criteria.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable P56.6 rebuild-readiness criteria and go/no-go gates for moving from metadata recovery to runnable MKRF rebuild candidate."
+  - artifact_id: "legacy_rebuild_readiness_criteria_note"
+    path: "runbooks/LEGACY_REBUILD_READINESS_CRITERIA.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local P56.6 note documenting runnable rebuild no-go criteria, required future gates, and Phase 56 closeout."
