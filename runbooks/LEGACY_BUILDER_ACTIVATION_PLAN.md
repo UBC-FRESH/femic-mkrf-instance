@@ -39,9 +39,10 @@ fragments/topology/source inputs.
 
 ## Next Boundary
 
-P56.5 must resolve the real MKRF source-input publication boundary, including
+P56.5 resolved the real MKRF source-input publication boundary, including
 fragments, checkpoint/boundary requirements, and the `Base TFL26` literal
-description mismatch.
+description mismatch. P56.6 must publish the rebuild-readiness milestone
+criteria before any runnable rebuild claim.
 
 P56.4 did not generate ForestModel XML, regenerate fragments, run Patchworks
 matrix build, import compiled track payloads, or introduce a runnable rebuild

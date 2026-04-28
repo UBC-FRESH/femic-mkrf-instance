@@ -1,0 +1,152 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+boundary_id: legacy_source_input_publication_boundary
+phase: P56.5
+status: publication_boundary_resolved_no_payload_intake
+
+decision:
+  source_input_publication_boundary: resolved_for_next_readiness_gate
+  payload_intake: not_started
+  matrix_build: not_run
+  builder_activation: not_started
+  runnable_rebuild_claim: no_go
+
+required_for_future_matrix_build_candidate:
+  compiled_runtime_inputs:
+    fragments:
+      legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/fragments.*
+      instance_glob: data/legacy_mkrf/compiled_spatial/fragments.*
+      publication_status: requires_git_annex_for_instance_publication
+      role: Patchworks block geometry input for matrix/runtime validation
+      readable_legacy_source:
+        feature_count: 1763
+        geometry_type: Polygon
+        crs: EPSG:3005
+        required_fields:
+          - RES_KEY
+          - CONTCLAS
+          - AGE_2020
+          - AU_EX
+          - AU_FU
+          - Operabilit
+          - CT_eligib
+      source_files:
+        fragments.shp:
+          size_bytes: 3456392
+          sha256: fd16cd5444bb46f322e77dde182aaf7596759ddf110edaa160c79c02d583caf1
+        fragments.dbf:
+          size_bytes: 231275
+          sha256: 82fcca7ad499c3e25a1ea0fe16df237be5099971f7155451f57d7252a6782944
+        fragments.shx:
+          size_bytes: 14204
+          sha256: dd35bdd10f790d8baea195a0d238b8c6a15bb5ba07f60fca3063f196e288be8d
+        fragments.prj:
+          size_bytes: 466
+          sha256: 4dc6a252b4e1e9468f9489c04fc559230f6d8b3f6ad8a79f02ba365a593636f5
+        fragments.cpg:
+          size_bytes: 5
+          sha256: 3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824
+    topology:
+      legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/topo_frag100.csv
+      instance_path: data/legacy_mkrf/compiled_spatial/topo_frag100.csv
+      publication_status: instance_archival_reference_available
+      row_count_including_header: 12483
+      columns:
+        - BLOCK1
+        - BLOCK2
+        - DISTANCE
+        - LENGTH
+      size_bytes: 241993
+      sha256: 9d5460ebf7af0a073073c99f9adea02e83d0cdee3e6f2159fb710e3adb16a2fd
+    patchworks_log:
+      legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/patchworksLog.csv
+      publication_status: deferred_review_metadata
+      row_count_including_header: 2
+      sha256: a38ac71438ea10d9595c0f71585530fc826ec7b1ad09c4957d156176fc0028b2
+      note: Records the legacy ProximalTopology command used to create topo_frag100.csv.
+
+field_contract:
+  base_mkrf_xml_input:
+    block: Int(RES_KEY)
+    area: area()/10000
+    age: Int(AGE_2020)
+    exclude: CONTCLAS eq 'X'
+  additional_stratification:
+    status: CONTCLAS
+    au: string(AU_EX)
+    auf: string(AU_FU)
+    oper: Operabilit
+    ct: CT_eligib
+    aux: AU_EX
+  treatment_eligibility:
+    expression: status in unmanaged
+    required_bound_field: status
+
+publication_lanes:
+  archival_runtime_candidate_lane:
+    status: blocked_pending_git_annex_for_fragments
+    purpose:
+      - Publish legacy compiled fragments/topology as archival runtime evidence
+        for future matrix-build comparison.
+      - Keep this lane distinct from raw source reconstruction.
+  raw_source_reproducibility_lane:
+    status: deferred_to_later_phase_or_task
+    required_families_if_full_reproducibility_is_claimed:
+      - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/Source.gdb
+      - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/Resultant.gdb
+      - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/Resultant_info_v1.xlsx
+      - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/03_Yields/VDYP/*
+    purpose:
+      - Reconstruct or audit the origin of fragments/checkpoint inputs from
+        upstream mapping and yield-prep data.
+  current_femic_run_profile_lane:
+    status: template_not_runnable_source_boundary
+    run_profile: config/run_profile.mkrf.yaml
+    finding:
+      - The current run profile selects tsa=mkrf and does not publish a real
+        boundary_path or source checkpoint input yet.
+
+explicit_non_requirements_for_next_gate:
+  roads:
+    status: not_required_for_current_legacy_pin
+    rationale:
+      - baseMKRF.pin sets useRoutes=false.
+      - Road files under ../roads/ are referenced only inside the useRoutes
+        branch and are not required before the next readiness gate.
+  outputs:
+    status: not_required_as_source_input
+    rationale:
+      - Outputs are validation/report evidence, not source inputs for XML
+        emission or matrix build.
+  direct_workbook_publication:
+    status: not_required_for_current_femic_contract
+    rationale:
+      - Workbook-owned values are already represented by tracked review
+        extracts and translated FEMIC config contracts.
+      - Direct workbook publication may still be revisited for provenance, but
+        it is not required before designing rebuild-readiness criteria.
+
+identity_boundary:
+  generated_xml_literal_description: Base TFL26
+  accepted_case_identity: mkrf_legacy_2016
+  status: mismatch_recorded_not_accepted_identity
+  decision:
+    - Preserve `Base TFL26` as a literal legacy artifact value.
+    - Do not use `Base TFL26` as the MKRF case identity.
+    - Carry the mismatch into rebuild-readiness criteria as a required caveat
+      or correction before any user-facing runnable claim.
+
+scope_boundary:
+  - No 03_MappingAnalysisData payload was ingested.
+  - No Outputs payload was ingested.
+  - No roads payload was discovered or ingested.
+  - No direct workbook payload was published.
+  - No ForestModel XML was generated.
+  - No fragments were regenerated.
+  - No Patchworks matrix build was run.
+  - No runnable FEMIC/Patchworks rebuild claim is introduced.
+
+next_bounded_step:
+  recommendation: publish_rebuild_readiness_milestone_criteria
+  roadmap_task: P56.6

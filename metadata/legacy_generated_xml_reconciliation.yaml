@@ -160,5 +160,5 @@ remaining_gaps:
     reconciliation, but remains a P56.5 reproducibility-boundary question.
 
 next_bounded_step:
-  recommendation: resolve_real_mkrf_source_input_publication_boundary
-  roadmap_task: P56.5
+  recommendation: publish_rebuild_readiness_milestone_criteria
+  roadmap_task: P56.6

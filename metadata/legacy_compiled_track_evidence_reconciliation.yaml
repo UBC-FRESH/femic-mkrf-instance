@@ -146,5 +146,5 @@ scope_boundary:
   - No runnable FEMIC/Patchworks rebuild claim is introduced.
 
 next_bounded_step:
-  recommendation: resolve_real_mkrf_source_input_publication_boundary
-  roadmap_task: P56.5
+  recommendation: publish_rebuild_readiness_milestone_criteria
+  roadmap_task: P56.6

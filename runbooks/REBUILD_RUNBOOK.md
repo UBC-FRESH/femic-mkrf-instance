@@ -78,6 +78,10 @@ sequence are ready to publish.
    - use `metadata/legacy_builder_activation_plan.yaml` and
      `runbooks/LEGACY_BUILDER_ACTIVATION_PLAN.md` as the source of truth for
      the P56.4 design-only builder activation and matrix-build handoff order;
+   - use `metadata/legacy_source_input_publication_boundary.yaml` and
+     `runbooks/LEGACY_SOURCE_INPUT_PUBLICATION_BOUNDARY.md` as the source of
+     truth for the P56.5 fragments/topology, raw-source reproducibility, and
+     identity-caveat publication boundary;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` and

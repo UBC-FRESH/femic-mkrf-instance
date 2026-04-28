@@ -177,9 +177,9 @@ go_no_go:
       the next recovery phase, not as substitute raw/source inputs.
 
 next_bounded_step:
-  recommendation: resolve_real_mkrf_source_input_publication_boundary
-  roadmap_task: P56.5
+  recommendation: publish_rebuild_readiness_milestone_criteria
+  roadmap_task: P56.6
   description:
-    Resolve the real MKRF fragments/checkpoint/boundary source-input
-    publication boundary before any builder activation, matrix-build execution,
-    or runnable rebuild claim.
+    Publish the rebuild-readiness criteria tying legacy evidence, source-input
+    publication, future FEMIC XML emission, and matrix-build proof together
+    before any runnable rebuild claim.

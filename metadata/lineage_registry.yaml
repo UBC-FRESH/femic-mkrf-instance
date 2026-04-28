@@ -193,3 +193,13 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local P56.4 builder activation and matrix-build handoff plan preserving the legacy-evidence versus future-regenerated-output boundary."
+  - artifact_id: "legacy_source_input_publication_boundary_yaml"
+    path: "metadata/legacy_source_input_publication_boundary.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable P56.5 source-input publication boundary for fragments/topology, raw-source reproducibility, roads/outputs/workbook non-requirements, and the Base TFL26 identity caveat."
+  - artifact_id: "legacy_source_input_publication_boundary_note"
+    path: "runbooks/LEGACY_SOURCE_INPUT_PUBLICATION_BOUNDARY.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local P56.5 note documenting the source-input publication boundary without ingesting mapping data, roads, outputs, workbook payloads, or running matrix build."
