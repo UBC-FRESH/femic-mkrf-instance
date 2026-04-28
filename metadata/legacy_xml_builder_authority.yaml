@@ -38,11 +38,13 @@ femic_translation_direction:
   - Refactor workbook tables and named ranges into FEMIC-native config and table surfaces.
 
 current_boundary:
-  next_bounded_step: translate_curve_library_review_to_build_contract
+  next_bounded_step: translate_netdown_review_to_build_contract
   notes:
     - This review resolves the editable-source authority seam at the metadata level.
     - Parent-side tracked review extracts now live under metadata/mkrf_xlsm_review/ and are referenced by metadata/legacy_xlsm_review_extracts.yaml.
     - The first translated config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml and now makes description/year/horizon plus the legacy block/area/age/exclude expressions, the additional stratification fragment bindings, the treatment-eligibility review flag, and the explicit scalar constants contract live in exporter behavior.
     - The P55.14 Input Variables classification keeps max_inventory_age as review metadata, blocks beforeCurves until the Curve Library contract is translated, and preserves the blank include hooks as review metadata.
+    - The P55.15 Curve Library translation now lives at config/legacy_xml_builder/curve_library.mkrf.yaml and preserves the workbook curve identifiers, Age axis, and nonblank points as a review-to-build contract.
+    - The beforeCurves hook remains inactive until generated Curves.xml fragment reconciliation is explicitly scheduled.
     - No workbook payload has been copied into the instance by this slice.
     - No runnable XML rebuild path is claimed yet.

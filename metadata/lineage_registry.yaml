@@ -88,3 +88,18 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local note documenting the live-vs-staged boundary for the first MKRF Input Variables translation, the live block-layout/export contract, the live additional stratification fragment bindings, the treatment-eligibility review flag, the explicit scalar constants contract, and the inactive-field classification for max_inventory_age and include hooks."
+  - artifact_id: "legacy_curve_library_translation_config"
+    path: "config/legacy_xml_builder/curve_library.mkrf.yaml"
+    class: "translated_config"
+    published: true
+    notes: "MKRF-first FEMIC-native review-to-build contract for the legacy workbook Curve Library surface, preserving curve identifiers, Age-axis coordinates, and nonblank point values while keeping beforeCurves inactive."
+  - artifact_id: "legacy_curve_library_translation_yaml"
+    path: "metadata/legacy_curve_library_translation.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable lineage/status map for the MKRF Curve Library translation and its live-vs-deferred generated Curves.xml boundary."
+  - artifact_id: "legacy_curve_library_translation_note"
+    path: "runbooks/LEGACY_CURVE_LIBRARY_TRANSLATION.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local note documenting the P55.15 Curve Library review-to-build contract and the deferred beforeCurves activation boundary."

@@ -1,0 +1,73 @@
+schema_version: 1
+
+translation:
+  case_id: mkrf_legacy_2016
+  source_surface: Curve Library
+  source_named_range: curveNames
+  translated_config: config/legacy_xml_builder/curve_library.mkrf.yaml
+  status: review_to_build_contract
+
+source_evidence:
+  workbook: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+  parent_review_extracts:
+    - metadata/mkrf_xlsm_review/curve_library.review.csv
+    - metadata/mkrf_xlsm_review/ranges/curve_names.review.csv
+  generated_reference:
+    artifact: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/Curves.xml
+    generator: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/001_makeCurves_XML.py
+    generator_input: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/CSV/CURVE_TABLE.csv
+    status: generated_reference_only
+
+disposition:
+  live_exporter_input:
+    status: false
+    reason:
+      - The current FEMIC MKRF Patchworks export path does not yet consume the
+        legacy Curve Library contract directly.
+      - The workbook-owned curve table is now explicit enough for a later
+        ForestModel curve-emission implementation, but P55.15 does not claim
+        generated XML equivalence.
+  preserved_review_metadata:
+    - age_axis
+    - workbook_curve_ids
+    - nonblank_curve_points
+    - generated_curves_xml_reference
+  deferred:
+    - beforeCurves include activation
+    - Curves.xml fragment equivalence comparison
+    - direct generated XML publication
+
+curve_registry:
+  - curve_id: zero
+    status: review_to_build_candidate
+    nonblank_point_count: 1
+  - curve_id: age
+    status: review_to_build_candidate
+    nonblank_point_count: 2
+  - curve_id: le10
+    status: review_to_build_candidate
+    nonblank_point_count: 2
+  - curve_id: lt20
+    status: review_to_build_candidate
+    nonblank_point_count: 2
+  - curve_id: gt60
+    status: review_to_build_candidate
+    nonblank_point_count: 2
+  - curve_id: lt80
+    status: review_to_build_candidate
+    nonblank_point_count: 2
+  - curve_id: gt250
+    status: review_to_build_candidate
+    nonblank_point_count: 2
+
+current_boundary:
+  next_bounded_step: translate_netdown_review_to_build_contract
+  notes:
+    - The legacy Curve Library workbook surface is now translated into a
+      FEMIC-native review-to-build contract.
+    - The translated contract preserves the workbook curve identifiers, Age
+      axis, and nonblank point coordinates.
+    - Blank workbook cells remain absent points and are not interpreted as
+      zero-valued curve points.
+    - The beforeCurves hook remains inactive until generated Curves.xml
+      fragment reconciliation is explicitly scheduled.

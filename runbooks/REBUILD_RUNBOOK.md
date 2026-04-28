@@ -44,6 +44,11 @@ sequence are ready to publish.
      flag, and the explicit scalar constants contract for legacy expression
      symbol resolution, plus the P55.14 inactive-field classification for
      `max_inventory_age` and include-fragment hooks;
+   - use `config/legacy_xml_builder/curve_library.mkrf.yaml`,
+     `metadata/legacy_curve_library_translation.yaml`, and
+     `runbooks/LEGACY_CURVE_LIBRARY_TRANSLATION.md` as the source of truth for
+     the P55.15 Curve Library review-to-build contract, while keeping
+     `beforeCurves` inactive pending generated `Curves.xml` reconciliation;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as

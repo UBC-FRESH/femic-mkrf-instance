@@ -38,6 +38,8 @@ surface_summary:
       - dumpCurves
     candidate_femic_home:
       - data/legacy_mkrf/curve_tables/curve_library.csv
+      - config/legacy_xml_builder/curve_library.mkrf.yaml
+      - metadata/legacy_curve_library_translation.yaml
 
   - sheet: Netdown
     role: aspatial netdown criteria and factor surface
@@ -82,11 +84,13 @@ registry_mismatch_note:
     confirmed tab-level surfaces.
 
 current_boundary:
-  next_bounded_step: translate_curve_library_review_to_build_contract
+  next_bounded_step: translate_netdown_review_to_build_contract
   notes:
     - Parent-side tracked review extracts now exist under metadata/mkrf_xlsm_review/ and are referenced by metadata/legacy_xlsm_review_extracts.yaml.
     - The first translated Input Variables config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml with lineage/status tracked in metadata/legacy_input_variables_translation.yaml.
     - The live exporter seam now covers description/year/horizon plus the legacy block/area/age/exclude expressions, the additional stratification fragment bindings, the treatment-eligibility review flag, and the explicit scalar constants contract.
     - The P55.14 Input Variables classification keeps max_inventory_age and blank include hooks as review metadata and blocks beforeCurves until Curve Library translation.
+    - The P55.15 Curve Library translation now lives at config/legacy_xml_builder/curve_library.mkrf.yaml with lineage tracked in metadata/legacy_curve_library_translation.yaml.
+    - beforeCurves remains inactive pending a later generated Curves.xml fragment-equivalence pass.
     - No workbook payload has been copied into the instance.
     - No VBA reimplementation is claimed yet.

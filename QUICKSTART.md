@@ -17,22 +17,27 @@
    `runbooks/LEGACY_XLSM_SURFACE_MAP.md`.
 10. Review the current Input Variables translation note in
    `runbooks/LEGACY_INPUT_VARIABLES_TRANSLATION.md`.
-11. Review the parent-side workbook review extract pointer in
+11. Review the current Curve Library translation note in
+   `runbooks/LEGACY_CURVE_LIBRARY_TRANSLATION.md`.
+12. Review the parent-side workbook review extract pointer in
    `metadata/legacy_xlsm_review_extracts.yaml`.
-12. Review the translated Input Variables config in
+13. Review the translated Input Variables config in
    `config/legacy_xml_builder/input_variables.mkrf.yaml`, including the live
    block/area/age/exclude export seam and the live additional stratification
    fragment bindings, treatment-eligibility review flag, and scalar constants
    contract, plus the inactive-field classification for `max_inventory_age`
    and include-fragment hooks.
-13. Inspect the copied archival control layer in
+14. Review the translated Curve Library contract in
+   `config/legacy_xml_builder/curve_library.mkrf.yaml`; it is review-to-build
+   metadata only and does not activate `beforeCurves`.
+15. Inspect the copied archival control layer in
    `data/legacy_mkrf/compiled_controls/`.
-14. Inspect the copied archival track tables in
+16. Inspect the copied archival track tables in
    `data/legacy_mkrf/compiled_tracks/`.
-15. Inspect the copied archival spatial runtime files in
+17. Inspect the copied archival spatial runtime files in
    `data/legacy_mkrf/compiled_spatial/`.
-16. Add case-specific instructions to `runbooks/REBUILD_RUNBOOK.md`.
-17. Add/edit `config/tipsy/tsamkrf.yaml`.
-18. Use `femic prep validate-case --run-config config/run_profile.mkrf.yaml`
+18. Add case-specific instructions to `runbooks/REBUILD_RUNBOOK.md`.
+19. Add/edit `config/tipsy/tsamkrf.yaml`.
+20. Use `femic prep validate-case --run-config config/run_profile.mkrf.yaml`
    only after the real MKRF boundary and checkpoint inputs have been published
    into this instance.

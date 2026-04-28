@@ -61,11 +61,13 @@ legacy_xlsm_review_extracts:
       role: supporting_transition_review_extract
 
   current_boundary:
-    next_bounded_step: translate_curve_library_review_to_build_contract
+    next_bounded_step: translate_netdown_review_to_build_contract
     notes:
       - The review extracts live in the parent FEMIC repo and are referenced here as lineage evidence.
       - The first translated config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml with lineage/status tracked in metadata/legacy_input_variables_translation.yaml.
       - The live exporter seam now covers description/year/horizon plus the legacy block/area/age/exclude expressions, the additional stratification fragment bindings, the treatment-eligibility review flag, and the explicit scalar constants contract.
       - The P55.14 Input Variables classification keeps max_inventory_age and blank include hooks as review metadata and blocks beforeCurves until Curve Library translation.
+      - The P55.15 Curve Library translation now maps the curveNames range into config/legacy_xml_builder/curve_library.mkrf.yaml and metadata/legacy_curve_library_translation.yaml.
+      - The translated curve contract is review-to-build metadata only; no generated XML include hook is active yet.
       - No workbook payload was copied into the instance by this slice.
       - No VBA reimplementation or runnable rebuild claim is made by this slice.

@@ -1,0 +1,143 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+contract_id: legacy_curve_library_review_to_build
+contract_status: review_to_build_contract
+
+source:
+  workbook: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+  sheet: Curve Library
+  named_range: curveNames
+  parent_review_extracts:
+    sheet_extract: metadata/mkrf_xlsm_review/curve_library.review.csv
+    range_extract: metadata/mkrf_xlsm_review/ranges/curve_names.review.csv
+  generated_reference:
+    artifact: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/Curves.xml
+    generator: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/001_makeCurves_XML.py
+    generator_input: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/CSV/CURVE_TABLE.csv
+    status: generated_reference_only
+
+build_boundary:
+  before_curves_hook_status: blocked_pending_generated_fragment_acceptance
+  live_exporter_input: false
+  notes:
+    - The workbook curve library is accepted as the governing reviewed curve
+      table surface for future MKRF ForestModel curve emission.
+    - The checked-in generated Curves.xml family is lineage evidence only in
+      this slice and is not a live FEMIC source table.
+    - No generated XML include hook is activated until a later task compares
+      this review-to-build contract against the generated fragment contract.
+
+field_map:
+  curve_id:
+    source: nonblank workbook header cells after Age
+    femic_field: curve_id
+    status: accepted
+  age_axis:
+    source: Age column
+    femic_field: age
+    status: accepted
+  curve_value:
+    source: nonblank curve value cells
+    femic_field: value
+    status: accepted
+  blank_cells:
+    source: blank curve value cells
+    femic_field: null_point
+    status: ignored_not_zero
+
+age_axis:
+  source_column: Age
+  observed_values:
+    - -1000
+    - 0
+    - 1
+    - 9
+    - 10
+    - 11
+    - 19
+    - 20
+    - 21
+    - 39
+    - 40
+    - 41
+    - 60
+    - 61
+    - 79
+    - 80
+    - 81
+    - 100
+    - 101
+    - 120
+    - 121
+    - 139
+    - 140
+    - 141
+    - 250
+    - 251
+    - 1000
+
+curves:
+  - curve_id: zero
+    status: review_to_build_candidate
+    points:
+      - age: 0
+        value: 0
+  - curve_id: age
+    status: review_to_build_candidate
+    points:
+      - age: -1000
+        value: -1000
+      - age: 1000
+        value: 1000
+  - curve_id: le10
+    status: review_to_build_candidate
+    points:
+      - age: 10
+        value: 1
+      - age: 11
+        value: 0
+  - curve_id: lt20
+    status: review_to_build_candidate
+    points:
+      - age: 19
+        value: 1
+      - age: 20
+        value: 0
+  - curve_id: gt60
+    status: review_to_build_candidate
+    points:
+      - age: 60
+        value: 0
+      - age: 61
+        value: 1
+  - curve_id: lt80
+    status: review_to_build_candidate
+    points:
+      - age: 79
+        value: 1
+      - age: 80
+        value: 0
+  - curve_id: gt250
+    status: review_to_build_candidate
+    points:
+      - age: 250
+        value: 0
+      - age: 251
+        value: 1
+
+validation_contract:
+  required_curve_ids:
+    - zero
+    - age
+    - le10
+    - lt20
+    - gt60
+    - lt80
+    - gt250
+  required_checks:
+    - Preserve the workbook curve IDs exactly.
+    - Preserve the Age-axis coordinates used by every nonblank point.
+    - Treat blank cells as absent points, not numeric zeroes.
+    - Keep beforeCurves inactive until the generated Curves.xml fragment
+      contract is reconciled in a later task.
