@@ -51,9 +51,6 @@ Before claiming a runnable FEMIC/Patchworks rebuild, the next phase must:
 
 - reconcile generated `baseMKRF.xml`;
 - reconcile generated `Curves.xml` and/or `CSV/CURVE_TABLE.csv`;
-- import or verify existing legacy compiled `curves.csv`, `features.csv`, and
-  `products.csv` as archival evidence without treating them as regenerated
-  FEMIC outputs;
 - implement and validate FEMIC-native curve, retention, attribute, and stratum
   builders;
 - define the matrix-build handoff that will later produce FEMIC-generated track

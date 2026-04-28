@@ -54,6 +54,7 @@ Instance-local reference surfaces:
 - `metadata/legacy_treat_translation.yaml`
 - `metadata/legacy_workbook_compiled_reconciliation.yaml`
 - `metadata/legacy_generated_xml_reconciliation.yaml`
+- `metadata/legacy_compiled_track_evidence_reconciliation.yaml`
 - `config/legacy_xml_builder/input_variables.mkrf.yaml`
 - `config/legacy_xml_builder/curve_library.mkrf.yaml`
 - `config/legacy_xml_builder/netdown.mkrf.yaml`
@@ -131,6 +132,10 @@ Important boundary:
   `baseMKRF.xml` and `CSV/CURVE_TABLE.csv`, matches the base XML to translated
   Input Variables and Curve Library contracts, and matches located `Curves.xml`
   to `CURVE_TABLE.csv` by curve identifier, age, and value;
+- the P56.3 compiled track evidence reconciliation records that legacy
+  `curves.csv`, `features.csv`, and `products.csv` are readable compiled-output
+  evidence in the planning corpus, while current instance paths remain pointer
+  files pending git-annex availability;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.

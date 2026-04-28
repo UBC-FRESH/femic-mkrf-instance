@@ -71,6 +71,10 @@ sequence are ready to publish.
      `runbooks/LEGACY_GENERATED_XML_RECONCILIATION.md` as the source of truth
      for the P56.2 generated XML review artifacts and the still-blocked
      `beforeCurves` / XML-builder activation boundary;
+   - use `metadata/legacy_compiled_track_evidence_reconciliation.yaml` and
+     `runbooks/LEGACY_COMPILED_TRACK_EVIDENCE_RECONCILIATION.md` as the source
+     of truth for the P56.3 existing legacy compiled curves/features/products
+     track evidence and the git-annex publication boundary;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` and

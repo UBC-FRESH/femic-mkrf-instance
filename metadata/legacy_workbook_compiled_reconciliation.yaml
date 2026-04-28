@@ -149,12 +149,11 @@ compiled_output_evidence:
         as instance-local archival reference payloads.
       - These existing legacy compiled outputs are evidence for P56.3 review,
         not FEMIC-regenerated matrix-build outputs.
+      - The P56.3 detailed evidence boundary now lives at
+        metadata/legacy_compiled_track_evidence_reconciliation.yaml.
 
 remaining_gaps:
   required_before_runnable_rebuild_claim:
-    - Import or verify existing legacy compiled Tracks/curves.csv,
-      features.csv, and products.csv as archival evidence without treating
-      them as FEMIC-regenerated outputs.
     - Implement and validate FEMIC-native builders for curve, retention,
       attribute, and stratum emission.
     - Define the matrix-build handoff that will later produce FEMIC-generated
@@ -178,9 +177,9 @@ go_no_go:
       the next recovery phase, not as substitute raw/source inputs.
 
 next_bounded_step:
-  recommendation: import_or_verify_existing_legacy_compiled_track_table_evidence
-  roadmap_task: P56.3
+  recommendation: design_builder_activation_and_matrix_build_handoff_order
+  roadmap_task: P56.4
   description:
-    Confirm readable legacy source CSVs for curves/features/products and only
-    publish them as archival instance evidence if DataLad/git-annex can track
-    them correctly; do not run matrix build or claim FEMIC-regenerated outputs.
+    Design the order for activating curve, retention, attribute, stratum, full
+    XML emission, and matrix-build handoff surfaces while keeping archival
+    legacy evidence separate from future FEMIC-regenerated outputs.

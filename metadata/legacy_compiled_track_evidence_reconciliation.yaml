@@ -1,0 +1,150 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+reconciliation_id: legacy_compiled_track_evidence_boundary
+phase: P56.3
+status: legacy_source_available_instance_publication_blocked
+
+decision:
+  legacy_compiled_track_evidence: available_in_planning_corpus
+  instance_publication: blocked_pending_git_annex
+  matrix_build: not_run
+  femic_regenerated_outputs: not_claimed
+  runnable_rebuild_claim: no_go
+
+tooling_boundary:
+  git_annex: unavailable_in_active_shell
+  implication:
+    - Large compiled track CSVs must not be committed as normal Git blobs.
+    - P56.3 records the readable legacy source evidence and leaves instance
+      payload publication blocked until DataLad/git-annex is available.
+
+source_tables:
+  curves_csv:
+    legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Tracks/curves.csv
+    instance_path: data/legacy_mkrf/compiled_tracks/curves.csv
+    source_status: legacy_source_available
+    instance_status: instance_pointer_only
+    publication_status: requires_git_annex_for_instance_publication
+    size_bytes: 4767897
+    sha256: 1b441d39661a099c56994f233d6350be341540e800d065ae6d9cbe7927362ac2
+    columns:
+      - CURVE
+      - X
+      - Y
+    row_count: 283654
+    unique_curve_count: 10172
+    points_per_curve:
+      minimum: 1
+      maximum: 36
+    x_axis:
+      unique_value_count: 78
+      minimum: 0
+      maximum: 651
+  features_csv:
+    legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Tracks/features.csv
+    instance_path: data/legacy_mkrf/compiled_tracks/features.csv
+    source_status: legacy_source_available
+    instance_status: instance_pointer_only
+    publication_status: requires_git_annex_for_instance_publication
+    size_bytes: 1177960
+    sha256: 23e1848ca426e0cc3f13d0f47732c5277ffad6cd01ee7ce7a36d0f35e6019144
+    columns:
+      - TRACK
+      - LABEL
+      - CURVE
+    row_count: 29364
+    unique_track_count: 2116
+    unique_label_count: 38
+    observed_key_labels:
+      feature.area.retention.total:
+        row_count: 422
+      feature.area.unmanaged.seral.le10:
+        row_count: 682
+      feature.area.managed.seral.le10:
+        row_count: 1434
+      feature.yield.managed.total:
+        row_count: 1434
+      feature.yield.unmanaged.total:
+        row_count: 682
+  products_csv:
+    legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Tracks/products.csv
+    instance_path: data/legacy_mkrf/compiled_tracks/products.csv
+    source_status: legacy_source_available
+    instance_status: instance_pointer_only
+    publication_status: requires_git_annex_for_instance_publication
+    size_bytes: 1321697
+    sha256: 9fa131d51b64b449cafa00260b01a0be7ea2e9e5c0db10ac1201219155cea7c9
+    columns:
+      - TRACK
+      - TREATMENT
+      - LABEL
+      - FUTURE
+      - ADJUST
+      - CURVE
+    row_count: 28336
+    unique_track_count: 1434
+    unique_label_count: 22
+    treatment_row_counts:
+      CC: 20076
+      CT: 8260
+    adjust_modes:
+      CC:
+        R: 20076
+      CT:
+        R: 8260
+    observed_key_labels:
+      product.area.managed.treat.CC:
+        row_count: 1434
+      product.area.managed.treat.CT:
+        row_count: 590
+      product.yield.managed.treat.CC:
+        row_count: 1434
+      product.yield.managed.treat.CT:
+        row_count: 590
+      product.area.managed.total:
+        row_count: 2024
+      product.yield.managed.total:
+        row_count: 2024
+
+contract_surface_reconciliation:
+  curve_library:
+    status: legacy_compiled_curve_evidence_available
+    findings:
+      - curves.csv preserves compiled numeric curve identifiers and point
+        tables, not workbook Curve Library symbolic IDs.
+      - The table is compiled matrix evidence for later builder validation, not
+        a source table to substitute for the translated Curve Library contract.
+  attributes:
+    status: compiled_feature_labels_support_attribute_surface
+    findings:
+      - features.csv carries managed/unmanaged area and yield label families
+        that correspond to the translated Attrib review-to-build surface.
+      - Full attribute equivalence remains a later builder-validation task
+        because this slice does not regenerate XML or matrix outputs.
+  treat:
+    status: compiled_product_labels_support_treat_surface
+    findings:
+      - products.csv carries CC and CT treatment product labels that correspond
+        to the translated Treat review-to-build surface.
+      - The compiled product rows are archival evidence only, not proof of a
+        FEMIC-regenerated treatment builder.
+  accounts:
+    status: compiled_track_evidence_supports_account_surface
+    findings:
+      - Observed feature/product labels align with account names already
+        recorded from accounts.csv and protoaccounts.csv.
+      - Existing compiled evidence remains separate from future FEMIC-generated
+        tracks produced by XML emission plus Patchworks matrix build.
+
+scope_boundary:
+  - No ForestModel XML was generated.
+  - No fragments were regenerated.
+  - No Patchworks matrix build was run.
+  - No compiled track payloads were imported into the instance in this slice.
+  - No future FEMIC-regenerated track outputs are claimed.
+  - No runnable FEMIC/Patchworks rebuild claim is introduced.
+
+next_bounded_step:
+  recommendation: design_builder_activation_and_matrix_build_handoff_order
+  roadmap_task: P56.4

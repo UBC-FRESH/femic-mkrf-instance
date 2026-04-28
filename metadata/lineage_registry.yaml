@@ -173,3 +173,13 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local P56.2 generated XML reconciliation note documenting materialized review artifacts and remaining builder/track/source-input blockers."
+  - artifact_id: "legacy_compiled_track_evidence_reconciliation_yaml"
+    path: "metadata/legacy_compiled_track_evidence_reconciliation.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable P56.3 reconciliation of existing legacy compiled curves/features/products track-table evidence and the git-annex publication boundary."
+  - artifact_id: "legacy_compiled_track_evidence_reconciliation_note"
+    path: "runbooks/LEGACY_COMPILED_TRACK_EVIDENCE_RECONCILIATION.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local P56.3 compiled track evidence note documenting readable legacy source CSVs, pointer-only instance paths, and no matrix-build execution."
