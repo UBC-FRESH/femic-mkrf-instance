@@ -56,8 +56,10 @@ by curve identifier, age, and value.
 and its CSV generator input are now reviewable, but it does not decide or
 activate a live include/emission path.
 
-The next bounded move is P56.3: materialize or resolve pointer-only compiled
-track tables (`curves.csv`, `features.csv`, and `products.csv`).
+The next bounded move is P56.3: import or verify existing legacy compiled
+track-table evidence (`curves.csv`, `features.csv`, and `products.csv`). These
+tables already exist in the legacy planning corpus; P56.3 must not regenerate
+them through XML emission, fragment rebuild, or Patchworks matrix build.
 
 P56.2 did not ingest upstream mapping data, roads, outputs, direct workbook
 payloads, or new raw/source inputs.

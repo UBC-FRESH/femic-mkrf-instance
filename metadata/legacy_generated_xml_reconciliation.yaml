@@ -152,13 +152,13 @@ remaining_gaps:
     a live include/emission contract.
   - P56.2 does not implement FEMIC-native XML emission for curves, retention,
     attributes, strata, or the full ForestModel.
-  - P56.2 does not materialize pointer-only compiled track tables; that remains
-    scheduled under P56.3.
+  - P56.2 does not import or verify the existing legacy compiled
+    curves/features/products track tables; that remains scheduled under P56.3.
   - P56.2 does not decide the real source-input publication boundary; that
     remains scheduled under P56.5.
   - Direct workbook publication is not required for this generated-artifact
     reconciliation, but remains a P56.5 reproducibility-boundary question.
 
 next_bounded_step:
-  recommendation: materialize_or_resolve_pointer_only_compiled_track_tables
+  recommendation: import_or_verify_existing_legacy_compiled_track_table_evidence
   roadmap_task: P56.3

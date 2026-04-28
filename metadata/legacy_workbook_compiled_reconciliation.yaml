@@ -83,13 +83,35 @@ compiled_output_evidence:
         rows: 3183
       groups.csv:
         rows: 1763
-    pointer_only_tables:
+    legacy_source_tables:
       curves.csv:
-        status: annex_pointer_not_materialized
+        legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Tracks/curves.csv
+        status: legacy_source_available
+        size_bytes: 4767897
+        row_count: 283654
       features.csv:
-        status: annex_pointer_not_materialized
+        legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Tracks/features.csv
+        status: legacy_source_available
+        size_bytes: 1177960
+        row_count: 29364
       products.csv:
-        status: annex_pointer_not_materialized
+        legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Tracks/products.csv
+        status: legacy_source_available
+        size_bytes: 1321697
+        row_count: 28336
+    instance_pointer_only_tables:
+      curves.csv:
+        instance_path: data/legacy_mkrf/compiled_tracks/curves.csv
+        status: instance_pointer_only
+        publication_status: requires_git_annex_for_instance_publication
+      features.csv:
+        instance_path: data/legacy_mkrf/compiled_tracks/features.csv
+        status: instance_pointer_only
+        publication_status: requires_git_annex_for_instance_publication
+      products.csv:
+        instance_path: data/legacy_mkrf/compiled_tracks/products.csv
+        status: instance_pointer_only
+        publication_status: requires_git_annex_for_instance_publication
     observed_contract:
       accounts:
         total_rows: 60
@@ -120,15 +142,23 @@ compiled_output_evidence:
         account naming signals at the contract-surface level.
       - Copied treatments support the translated CC/CT treatment labels,
         retention values, and absolute/relative adjustment modes.
-      - Pointer-only curves/features/products tables block full matrix-level
-        reconciliation in this slice.
+      - Legacy source curves/features/products tables are available as
+        readable compiled-output evidence in the planning corpus.
+      - Current instance curves/features/products paths are pointer files and
+        require git-annex/DataLad materialization before they can be published
+        as instance-local archival reference payloads.
+      - These existing legacy compiled outputs are evidence for P56.3 review,
+        not FEMIC-regenerated matrix-build outputs.
 
 remaining_gaps:
   required_before_runnable_rebuild_claim:
-    - Materialize pointer-only compiled Tracks/curves.csv, features.csv, and
-      products.csv or document why they are intentionally unavailable.
+    - Import or verify existing legacy compiled Tracks/curves.csv,
+      features.csv, and products.csv as archival evidence without treating
+      them as FEMIC-regenerated outputs.
     - Implement and validate FEMIC-native builders for curve, retention,
       attribute, and stratum emission.
+    - Define the matrix-build handoff that will later produce FEMIC-generated
+      track outputs from FEMIC XML plus valid fragments/source inputs.
     - Reconcile generated ForestModel XML output against the translated
       workbook contracts and compiled track surfaces.
     - Publish real MKRF boundary/checkpoint inputs required by the run profile.
@@ -148,8 +178,9 @@ go_no_go:
       the next recovery phase, not as substitute raw/source inputs.
 
 next_bounded_step:
-  recommendation: materialize_or_resolve_pointer_only_compiled_track_tables
+  recommendation: import_or_verify_existing_legacy_compiled_track_table_evidence
   roadmap_task: P56.3
   description:
-    Resolve the remaining pointer-only compiled track tables before any
-    builder activation or runnable rebuild claim.
+    Confirm readable legacy source CSVs for curves/features/products and only
+    publish them as archival instance evidence if DataLad/git-annex can track
+    them correctly; do not run matrix build or claim FEMIC-regenerated outputs.
