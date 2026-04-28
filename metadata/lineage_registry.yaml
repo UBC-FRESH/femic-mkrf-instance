@@ -103,3 +103,18 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local note documenting the P55.15 Curve Library review-to-build contract and the deferred beforeCurves activation boundary."
+  - artifact_id: "legacy_netdown_translation_config"
+    path: "config/legacy_xml_builder/netdown.mkrf.yaml"
+    class: "translated_config"
+    published: true
+    notes: "MKRF-first FEMIC-native review-to-build contract for the legacy workbook Netdown surface, preserving the two complete proportional reassignment rules and retaining incomplete tail values as review metadata."
+  - artifact_id: "legacy_netdown_translation_yaml"
+    path: "metadata/legacy_netdown_translation.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable lineage/status map for the MKRF Netdown translation and its deferred dumpRetention/exporter activation boundary."
+  - artifact_id: "legacy_netdown_translation_note"
+    path: "runbooks/LEGACY_NETDOWN_TRANSLATION.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local note documenting the P55.16 Netdown review-to-build contract and the review-only disposition of incomplete workbook tail values."

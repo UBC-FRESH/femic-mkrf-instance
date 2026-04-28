@@ -1,0 +1,116 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+contract_id: legacy_netdown_review_to_build
+contract_status: review_to_build_contract
+
+source:
+  workbook: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+  sheet: Netdown
+  named_ranges:
+    criteria: netdownCriteria
+    feature_names: netdownNames
+    feature_factors: netdownFactors
+  parent_review_extracts:
+    sheet_extract: metadata/mkrf_xlsm_review/netdown.review.csv
+    criteria_range: metadata/mkrf_xlsm_review/ranges/netdown_criteria.review.csv
+    feature_names_range: metadata/mkrf_xlsm_review/ranges/netdown_names.review.csv
+    feature_factors_range: metadata/mkrf_xlsm_review/ranges/netdown_factors.review.csv
+
+build_boundary:
+  live_exporter_input: false
+  dump_retention_status: blocked_pending_retention_builder_acceptance
+  notes:
+    - The workbook Netdown surface is accepted as the governing reviewed
+      aspatial-retention rule surface for future MKRF ForestModel retention
+      emission.
+    - The current FEMIC MKRF exporter does not split matching polygons into
+      retained and remaining area from this legacy Netdown table.
+    - No compiled spatial or track artifact is substituted for missing raw
+      source-field context in this slice.
+
+field_map:
+  selection_expression:
+    source: netdownCriteria first column
+    femic_field: selection_expression
+    status: accepted_when_complete
+  reassignment_field:
+    source: netdownCriteria reassignment header
+    femic_field: reassignment.field
+    status: accepted_when_complete
+  reassignment_value:
+    source: nonblank netdownCriteria reassignment cell
+    femic_field: reassignment.value
+    status: accepted_when_complete
+  netdown_proportion:
+    source: netdownCriteria Netdown column
+    femic_field: netdown_proportion
+    status: accepted_when_complete
+  feature_name:
+    source: netdownNames
+    femic_field: feature_assignments.feature
+    status: accepted_when_complete
+  feature_factor:
+    source: netdownFactors
+    femic_field: feature_assignments.value
+    status: accepted_when_complete
+  orphan_values:
+    source: incomplete rows with factors but no selection expression
+    femic_field: review_only.incomplete_rows
+    status: preserved_review_metadata
+
+rules:
+  - rule_id: managed_operable_to_unmanaged_retention
+    status: review_to_build_candidate
+    selection_expression: status in managed and oper in operable
+    required_live_symbols:
+      - managed
+      - operable
+    reassignment:
+      field: status
+      value: unmanaged
+    netdown_proportion: 0.1
+    feature_assignments:
+      - feature: feature.area.retention.total
+        value: 1
+  - rule_id: managed_lowoper_to_unmanaged_retention
+    status: review_to_build_candidate
+    selection_expression: status in managed and oper in lowoper
+    required_live_symbols:
+      - managed
+      - lowoper
+    reassignment:
+      field: status
+      value: unmanaged
+    netdown_proportion: 0.2
+    feature_assignments:
+      - feature: feature.area.retention.total
+        value: 1
+
+review_only:
+  incomplete_feature_factor_rows:
+    - source_range: netdownFactors
+      row_offset: 3
+      value: 1
+      reason: No matching nonblank netdownCriteria selection row is present.
+  incomplete_netdown_factor_tail:
+    source_range: netdownCriteria
+    value: 0.07
+    count: 85
+    reason: Values appear in the Netdown column without matching selection,
+      reassignment, or feature-factor rows.
+
+validation_contract:
+  required_rule_ids:
+    - managed_operable_to_unmanaged_retention
+    - managed_lowoper_to_unmanaged_retention
+  required_feature_names:
+    - feature.area.retention.total
+  required_checks:
+    - Preserve the two complete workbook Netdown rules exactly.
+    - Preserve reassignment to unmanaged status for both complete rules.
+    - Preserve netdown proportions 0.1 and 0.2 for the complete rules.
+    - Preserve feature.area.retention.total factor value 1 for both complete
+      rules.
+    - Keep orphan 0.07 Netdown values and unmatched factor rows as review-only
+      metadata until their source-field context is resolved.

@@ -19,25 +19,30 @@
    `runbooks/LEGACY_INPUT_VARIABLES_TRANSLATION.md`.
 11. Review the current Curve Library translation note in
    `runbooks/LEGACY_CURVE_LIBRARY_TRANSLATION.md`.
-12. Review the parent-side workbook review extract pointer in
+12. Review the current Netdown translation note in
+   `runbooks/LEGACY_NETDOWN_TRANSLATION.md`.
+13. Review the parent-side workbook review extract pointer in
    `metadata/legacy_xlsm_review_extracts.yaml`.
-13. Review the translated Input Variables config in
+14. Review the translated Input Variables config in
    `config/legacy_xml_builder/input_variables.mkrf.yaml`, including the live
    block/area/age/exclude export seam and the live additional stratification
    fragment bindings, treatment-eligibility review flag, and scalar constants
    contract, plus the inactive-field classification for `max_inventory_age`
    and include-fragment hooks.
-14. Review the translated Curve Library contract in
+15. Review the translated Curve Library contract in
    `config/legacy_xml_builder/curve_library.mkrf.yaml`; it is review-to-build
    metadata only and does not activate `beforeCurves`.
-15. Inspect the copied archival control layer in
+16. Review the translated Netdown contract in
+   `config/legacy_xml_builder/netdown.mkrf.yaml`; it is review-to-build
+   metadata only and does not activate `dumpRetention`.
+17. Inspect the copied archival control layer in
    `data/legacy_mkrf/compiled_controls/`.
-16. Inspect the copied archival track tables in
+18. Inspect the copied archival track tables in
    `data/legacy_mkrf/compiled_tracks/`.
-17. Inspect the copied archival spatial runtime files in
+19. Inspect the copied archival spatial runtime files in
    `data/legacy_mkrf/compiled_spatial/`.
-18. Add case-specific instructions to `runbooks/REBUILD_RUNBOOK.md`.
-19. Add/edit `config/tipsy/tsamkrf.yaml`.
-20. Use `femic prep validate-case --run-config config/run_profile.mkrf.yaml`
+20. Add case-specific instructions to `runbooks/REBUILD_RUNBOOK.md`.
+21. Add/edit `config/tipsy/tsamkrf.yaml`.
+22. Use `femic prep validate-case --run-config config/run_profile.mkrf.yaml`
    only after the real MKRF boundary and checkpoint inputs have been published
    into this instance.

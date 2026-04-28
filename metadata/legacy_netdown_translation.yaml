@@ -1,0 +1,62 @@
+schema_version: 1
+
+translation:
+  case_id: mkrf_legacy_2016
+  source_surface: Netdown
+  source_named_ranges:
+    - netdownCriteria
+    - netdownNames
+    - netdownFactors
+  translated_config: config/legacy_xml_builder/netdown.mkrf.yaml
+  status: review_to_build_contract
+
+source_evidence:
+  workbook: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+  parent_review_extracts:
+    - metadata/mkrf_xlsm_review/netdown.review.csv
+    - metadata/mkrf_xlsm_review/ranges/netdown_criteria.review.csv
+    - metadata/mkrf_xlsm_review/ranges/netdown_names.review.csv
+    - metadata/mkrf_xlsm_review/ranges/netdown_factors.review.csv
+
+disposition:
+  live_exporter_input:
+    status: false
+    reason:
+      - The current MKRF exporter does not consume the legacy Netdown contract
+        to split/reassign fragment area.
+      - The two complete rules are review-to-build candidates, but activating
+        them requires a retention builder that can preserve the legacy
+        proportional split semantics.
+  preserved_review_metadata:
+    - workbook_selection_expressions
+    - reassignment_to_unmanaged
+    - netdown_proportions
+    - feature.area.retention.total assignments
+    - incomplete trailing 0.07 values
+    - unmatched feature-factor row
+  deferred:
+    - dumpRetention emission
+    - live proportional polygon split/reassignment
+    - reconciliation against compiled track accounts
+
+rule_registry:
+  - rule_id: managed_operable_to_unmanaged_retention
+    status: review_to_build_candidate
+    selection_expression: status in managed and oper in operable
+    netdown_proportion: 0.1
+  - rule_id: managed_lowoper_to_unmanaged_retention
+    status: review_to_build_candidate
+    selection_expression: status in managed and oper in lowoper
+    netdown_proportion: 0.2
+
+current_boundary:
+  next_bounded_step: translate_attrib_review_to_build_contract
+  notes:
+    - The legacy Netdown workbook surface is now translated into a FEMIC-native
+      review-to-build contract.
+    - The translated contract preserves the two complete rules and their
+      reassignment, netdown-proportion, and feature-factor semantics.
+    - Incomplete tail values remain review metadata and do not become live
+      retention behavior.
+    - No compiled spatial or track artifact is substituted for missing source
+      context.
