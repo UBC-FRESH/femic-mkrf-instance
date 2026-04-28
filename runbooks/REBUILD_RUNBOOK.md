@@ -64,6 +64,9 @@ sequence are ready to publish.
      `runbooks/LEGACY_TREAT_TRANSLATION.md` as the source of truth for the
      P55.18 Treat stratum-bundle review-to-build contract, while keeping
      `dumpStratum` inactive pending stratum builder/reconciliation work;
+   - use `metadata/legacy_workbook_compiled_reconciliation.yaml` and
+     `runbooks/LEGACY_REBUILD_READINESS_REVIEW.md` as the source of truth for
+     the P55.19 metadata-recovery go / runnable-rebuild no-go decision;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as

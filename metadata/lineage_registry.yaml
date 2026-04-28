@@ -148,3 +148,13 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local note documenting the P55.18 Treat review-to-build contract and the archival compiled-track cross-check boundary."
+  - artifact_id: "legacy_workbook_compiled_reconciliation_yaml"
+    path: "metadata/legacy_workbook_compiled_reconciliation.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable P55.19 reconciliation of the translated workbook-derived ForestModel contract against available compiled legacy outputs, including the no-go runnable rebuild readiness decision."
+  - artifact_id: "legacy_rebuild_readiness_review_note"
+    path: "runbooks/LEGACY_REBUILD_READINESS_REVIEW.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local P55.19 rebuild readiness note documenting contract-level findings, blocking gaps, and the metadata-recovery go / runnable-rebuild no-go decision."

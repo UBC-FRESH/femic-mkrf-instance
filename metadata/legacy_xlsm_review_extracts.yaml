@@ -61,7 +61,7 @@ legacy_xlsm_review_extracts:
       role: supporting_transition_review_extract
 
   current_boundary:
-    next_bounded_step: reconcile_workbook_contract_against_compiled_outputs
+    next_bounded_step: plan_post_p55_mkrf_rebuild_gap_closure
     notes:
       - The review extracts live in the parent FEMIC repo and are referenced here as lineage evidence.
       - The first translated config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml with lineage/status tracked in metadata/legacy_input_variables_translation.yaml.
@@ -75,5 +75,6 @@ legacy_xlsm_review_extracts:
       - The translated Attrib contract is review-to-build metadata only; no dumpAttributes behavior is active yet.
       - The P55.18 Treat translation now maps the stratumCriteria, stratumSuccession, stratumFeatures, stratumTreatments, stratumFactors, and stratumProducts ranges into config/legacy_xml_builder/strata/treat.mkrf.yaml and metadata/legacy_treat_translation.yaml.
       - The translated Treat contract is review-to-build metadata only; no dumpStratum behavior is active yet.
+      - The P55.19 reconciliation now records that the translated contracts are enough for metadata recovery but not enough for a runnable rebuild claim.
       - No workbook payload was copied into the instance by this slice.
       - No VBA reimplementation or runnable rebuild claim is made by this slice.

@@ -90,7 +90,7 @@ registry_mismatch_note:
     confirmed tab-level surfaces.
 
 current_boundary:
-  next_bounded_step: reconcile_workbook_contract_against_compiled_outputs
+  next_bounded_step: plan_post_p55_mkrf_rebuild_gap_closure
   notes:
     - Parent-side tracked review extracts now exist under metadata/mkrf_xlsm_review/ and are referenced by metadata/legacy_xlsm_review_extracts.yaml.
     - The first translated Input Variables config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml with lineage/status tracked in metadata/legacy_input_variables_translation.yaml.
@@ -104,5 +104,6 @@ current_boundary:
     - dumpAttributes remains inactive pending a later attribute builder/exporter activation task.
     - The P55.18 Treat translation now lives at config/legacy_xml_builder/strata/treat.mkrf.yaml with lineage tracked in metadata/legacy_treat_translation.yaml.
     - dumpStratum remains inactive pending later stratum builder/reconciliation work.
+    - The P55.19 reconciliation now lives at metadata/legacy_workbook_compiled_reconciliation.yaml and records the remaining generated-XML, compiled-track, builder, and upstream-input gaps.
     - No workbook payload has been copied into the instance.
     - No VBA reimplementation is claimed yet.

@@ -1,0 +1,147 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+reconciliation_id: legacy_workbook_contract_vs_compiled_outputs
+status: rebuild_readiness_review
+decision: no_go_for_runnable_rebuild
+
+translated_contracts:
+  input_variables:
+    config: config/legacy_xml_builder/input_variables.mkrf.yaml
+    status: partially_live_export_contract
+  curve_library:
+    config: config/legacy_xml_builder/curve_library.mkrf.yaml
+    status: review_to_build_contract
+  netdown:
+    config: config/legacy_xml_builder/netdown.mkrf.yaml
+    status: review_to_build_contract
+  attributes:
+    config: config/legacy_xml_builder/attributes.mkrf.yaml
+    status: review_to_build_contract
+  treat:
+    config: config/legacy_xml_builder/strata/treat.mkrf.yaml
+    status: review_to_build_contract
+
+compiled_output_evidence:
+  pin_entrypoint:
+    path: data/legacy_mkrf/compiled_controls/entrypoints/baseMKRF.pin
+    status: available_archival_reference
+    observed_contract:
+      periods: 30
+      period_width_years: 10
+      horizon_years: 300
+      tracks_path_prefix: Tracks/
+      block_shape: Spatial/fragments.shp
+      block_key: RES_KEY
+      use_routes: false
+      use_patches: true
+      topology_file: Spatial/topo_frag100.csv
+      patch_target_accounts:
+        - product.area.managed.treat.CC
+        - feature.area.managed.seral.le10
+    reconciliation:
+      - Horizon width matches the translated Input Variables horizon_years.
+      - Block key aligns with the translated unique record label source.
+      - Patch target accounts align with translated Treat and Attrib candidate
+        surfaces, but no live builder activation is implied.
+  generated_xml_artifacts:
+    base_mkrf_xml:
+      path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/baseMKRF.xml
+      status: not_tracked_in_instance
+    curves_xml:
+      path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/Curves.xml
+      status: not_tracked_in_instance
+    reconciliation:
+      - The generated XML artifacts are known lineage evidence but are not
+        available as tracked instance artifacts for byte/content comparison.
+      - beforeCurves remains blocked until Curves.xml or its generator input is
+        explicitly reconciled.
+  track_tables:
+    materialized_tables:
+      accounts.csv:
+        rows: 60
+      protoaccounts.csv:
+        rows: 60
+      strata.csv:
+        rows: 2116
+      treatments.csv:
+        rows: 2024
+      tracknames.csv:
+        rows: 2116
+      blocks.csv:
+        rows: 3183
+      groups.csv:
+        rows: 1763
+    pointer_only_tables:
+      curves.csv:
+        status: annex_pointer_not_materialized
+      features.csv:
+        status: annex_pointer_not_materialized
+      products.csv:
+        status: annex_pointer_not_materialized
+    observed_contract:
+      accounts:
+        total_rows: 60
+        managed_rows: 42
+        unmanaged_rows: 18
+        treatment_account_rows:
+          - product.area.managed.treat.CC
+          - product.area.managed.treat.CT
+          - product.yield.managed.treat.CC
+          - product.yield.managed.treat.CT
+      treatments:
+        total_rows: 2024
+        treatment_counts:
+          CC: 1434
+          CT: 590
+        observed_adjust_modes:
+          CC:
+            - A
+          CT:
+            - R
+        observed_retain_values:
+          CC:
+            - 0
+          CT:
+            - 20
+    reconciliation:
+      - Copied accounts/protoaccounts support the translated Attrib and Treat
+        account naming signals at the contract-surface level.
+      - Copied treatments support the translated CC/CT treatment labels,
+        retention values, and absolute/relative adjustment modes.
+      - Pointer-only curves/features/products tables block full matrix-level
+        reconciliation in this slice.
+
+remaining_gaps:
+  required_before_runnable_rebuild_claim:
+    - Materialize or otherwise reconcile generated baseMKRF.xml.
+    - Materialize or otherwise reconcile generated Curves.xml and/or
+      CSV/CURVE_TABLE.csv.
+    - Materialize pointer-only compiled Tracks/curves.csv, features.csv, and
+      products.csv or document why they are intentionally unavailable.
+    - Implement and validate FEMIC-native builders for curve, retention,
+      attribute, and stratum emission.
+    - Reconcile generated ForestModel XML output against the translated
+      workbook contracts and compiled track surfaces.
+    - Publish real MKRF boundary/checkpoint inputs required by the run profile.
+    - Resolve whether 03_MappingAnalysisData, road-network inputs, report
+      outputs, or direct workbook publication are required for reproducibility.
+
+go_no_go:
+  rebuild_claim: no_go
+  metadata_recovery_claim: go
+  rationale:
+    - Phase 55 recovered the workbook-owned source contract into FEMIC-ready
+      metadata surfaces.
+    - The current instance is not a runnable legacy Patchworks rebuild because
+      generated XML fragments, builder activation, and several compiled matrix
+      tables remain unreconciled.
+    - Compiled archival outputs are sufficient as review evidence for planning
+      the next recovery phase, not as substitute raw/source inputs.
+
+next_bounded_step:
+  recommendation: plan_post_p55_mkrf_rebuild_gap_closure
+  description:
+    Plan the next MKRF recovery phase from this no-go readiness review before
+    ingesting upstream mapping data, generated XML payloads, or direct workbook
+    artifacts.

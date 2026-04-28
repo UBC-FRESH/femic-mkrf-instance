@@ -42,6 +42,7 @@ Instance-local reference surfaces:
 - `runbooks/LEGACY_NETDOWN_TRANSLATION.md`
 - `runbooks/LEGACY_ATTRIBUTES_TRANSLATION.md`
 - `runbooks/LEGACY_TREAT_TRANSLATION.md`
+- `runbooks/LEGACY_REBUILD_READINESS_REVIEW.md`
 - `metadata/legacy_compiled_package_reference.yaml`
 - `metadata/legacy_xml_builder_authority.yaml`
 - `metadata/legacy_xlsm_surface_map.yaml`
@@ -51,6 +52,7 @@ Instance-local reference surfaces:
 - `metadata/legacy_netdown_translation.yaml`
 - `metadata/legacy_attributes_translation.yaml`
 - `metadata/legacy_treat_translation.yaml`
+- `metadata/legacy_workbook_compiled_reconciliation.yaml`
 - `config/legacy_xml_builder/input_variables.mkrf.yaml`
 - `config/legacy_xml_builder/curve_library.mkrf.yaml`
 - `config/legacy_xml_builder/netdown.mkrf.yaml`
@@ -115,6 +117,9 @@ Important boundary:
 - the Treat stratum bundle is now translated into a review-to-build contract
   that preserves the CC/CT treatment definitions and default succession rule
   while keeping feature/product template rows and `dumpStratum` inactive;
+- the P55.19 reconciliation records a metadata-recovery go decision and a
+  runnable-rebuild no-go decision pending generated XML, builder, compiled
+  track, and upstream-input gap closure;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.
@@ -153,27 +158,29 @@ Policy:
    `runbooks/LEGACY_ATTRIBUTES_TRANSLATION.md`
 10. Review the Treat translation note:
    `runbooks/LEGACY_TREAT_TRANSLATION.md`
-11. Review the parent-side workbook review extract pointer:
+11. Review the rebuild readiness review:
+   `runbooks/LEGACY_REBUILD_READINESS_REVIEW.md`
+12. Review the parent-side workbook review extract pointer:
    `metadata/legacy_xlsm_review_extracts.yaml`
-12. Review the translated Input Variables config:
+13. Review the translated Input Variables config:
    `config/legacy_xml_builder/input_variables.mkrf.yaml`
-13. Review the translated Curve Library contract:
+14. Review the translated Curve Library contract:
    `config/legacy_xml_builder/curve_library.mkrf.yaml`
-14. Review the translated Netdown contract:
+15. Review the translated Netdown contract:
    `config/legacy_xml_builder/netdown.mkrf.yaml`
-15. Review the translated Attributes contract:
+16. Review the translated Attributes contract:
    `config/legacy_xml_builder/attributes.mkrf.yaml`
-16. Review the translated Treat contract:
+17. Review the translated Treat contract:
    `config/legacy_xml_builder/strata/treat.mkrf.yaml`
-17. Inspect the copied archival control layer under:
+18. Inspect the copied archival control layer under:
    `data/legacy_mkrf/compiled_controls/`
-18. Inspect the copied archival track tables under:
+19. Inspect the copied archival track tables under:
    `data/legacy_mkrf/compiled_tracks/`
-19. Inspect the copied archival spatial runtime files under:
+20. Inspect the copied archival spatial runtime files under:
    `data/legacy_mkrf/compiled_spatial/`
-20. If this is a thin clone, materialize the annex smoke artifact:
+21. If this is a thin clone, materialize the annex smoke artifact:
    `python -m datalad get data/annex_smoke/mkrf_bootstrap_smoke.bin`
-21. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
+22. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
    only after the real MKRF boundary and checkpoint inputs are published.
 
 See `runbooks/REBUILD_RUNBOOK.md` for the current thin-baseline boundary.
