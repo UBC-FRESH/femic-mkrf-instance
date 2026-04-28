@@ -1,0 +1,42 @@
+/*
+ * These commands will export a CBM-CFS3 input data set according to the following recipe.
+ */
+
+param2 = new String[] {
+    "au"};
+
+param5 = new String[] {
+    "feature.yield.managed.indsp.Ba", 
+    "feature.yield.managed.indsp.Cw", 
+    "feature.yield.managed.indsp.Fd", 
+    "feature.yield.managed.indsp.Hw", 
+    "feature.yield.managed.indsp.Ot", 
+    "feature.yield.managed.indsp.Pl", 
+    "feature.yield.managed.indsp.Yc", 
+    "feature.yield.unmanaged.indsp.Ba", 
+    "feature.yield.unmanaged.indsp.Cw", 
+    "feature.yield.unmanaged.indsp.Fd", 
+    "feature.yield.unmanaged.indsp.Hw", 
+    "feature.yield.unmanaged.indsp.Ot", 
+    "feature.yield.unmanaged.indsp.Pl", 
+    "feature.yield.unmanaged.indsp.Yc"};
+
+param6 = new String[] {
+    "feature.yield.managed.indsp.De", 
+    "feature.yield.managed.indsp.Dr", 
+    "feature.yield.unmanaged.indsp.De", 
+    "feature.yield.unmanaged.indsp.Dr"};
+
+
+control.cbmExport("true", // reselect
+     param2, // classifiers
+     "'Fire'", // historic disturbance
+     "if(int(Strata.au) < 1000,'CC','Fire')", // last disturbance
+     param5, // conifer yield attributes
+     param6, // hardwood yield attributes
+     "feature.yield.*managed.indsp.(.*)", // species code extraction pattern
+     100,  // species code evaluation year
+     false, // use text format
+     true, // use CSV format
+     "../Outputs/_tmp_CBM_001_base/001_base.zip" // output file
+);

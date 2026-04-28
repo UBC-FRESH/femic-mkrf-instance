@@ -1,0 +1,32 @@
+// Route reports
+reportWriter.addReport(control.getRouteCostReport("Routes/routeCostCRB",
+                  "Cost of route to CRB",
+                  "Destination.CRB"));
+        
+categories1 = new Comparable[] {
+"E100",
+"E70",
+"E50",
+"E30",
+"PROP"
+};
+
+report1 = new PeriodCategoryReport("Routes/routeActive", // filename
+    "Active Road", // title
+    "Km", // units
+    control.getRouteTable("Destination.CRB"), // attributeStore
+    "VOLUME>0", // reselectExpression
+    Horizon.periodList, // periods
+    false, // annualize
+    "", // HTMLText
+    false, // percent
+    "LENGTH/1000", // valueExpression
+    "RD_CLASS", // categoryExpression
+    categories1 // categories
+);
+reportWriter.addReport(report1);
+
+reportWriter.addReport(new StandardReport("Routes/routeCostCRB_ratio",
+            "Cost of noFIRE route to CRB", 
+            "$/m3", control.getTargetTable(),
+            "route.ratio.", "CURRENT/10000", "", false));

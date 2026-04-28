@@ -86,11 +86,18 @@ sequence are ready to publish.
      `runbooks/LEGACY_REBUILD_READINESS_CRITERIA.md` as the source of truth
      for the P56.6 metadata-recovery complete / runnable-rebuild no-go
      criteria;
+   - use `metadata/legacy_runtime_model_layout.yaml` and
+     `runbooks/LEGACY_RUNTIME_MODEL_LAYOUT.md` as the source of truth for the
+     P57.2 materialized runtime scaffold, copied spatial/control inputs, and
+     unresolved `InitialTargets` / XML / tracks gaps;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` and
      `data/legacy_mkrf/generated_xml/` as inert archival references, not as an
      approved runnable rebuild surface;
+   - treat `models/mkrf_patchworks_model/` as a partial runtime scaffold only
+     until XML emission, tracks generation, runtime wiring, and launch proof
+     are completed;
    - finalize the real run profile, silviculture surface, and TIPSY rules;
    - publish the real MKRF boundary and checkpoint inputs required by `femic prep validate-case`;
    - classify bulky payload families in `.gitattributes`;

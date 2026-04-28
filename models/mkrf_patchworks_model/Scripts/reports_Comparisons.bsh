@@ -1,0 +1,100 @@
+//=========== THLB Growing Stock ==============
+paths4 = new String[] {
+    "targets/feature_yield_managed_total.csv"};
+
+columns5 = new String[] {
+    "CURRENT"};
+
+report1 = new CompareReport("Grow_stock", // filename
+    "Grow_stock", // title
+    reportWriter, // reportWriter
+    comparisonWriter, // comparisonWriter
+    paths4, // paths
+    columns5, // columns
+    "" // HTMLText
+);
+comparisonWriter.addReport(report1);
+ 
+//=========== Harvested Volume ==============
+paths4 = new String[] {
+    "targets/product_yield_managed_total.csv"};
+
+columns5 = new String[] {
+    "CURRENT"};
+
+report1 = new CompareReport("Harv_vol", // filename
+    "Harv_vol", // title
+    reportWriter, // reportWriter
+    comparisonWriter, // comparisonWriter
+    paths4, // paths
+    columns5, // columns
+    "" // HTMLText
+);
+comparisonWriter.addReport(report1);
+
+//=========== Merch Growing Stock ==============
+paths4 = new String[] {
+    "targets/feature_yield_managed_merch_total.csv"};
+
+columns5 = new String[] {
+    "CURRENT"};
+
+report1 = new CompareReport("Merch_GS", // filename
+    "Merch_GS", // title
+    reportWriter, // reportWriter
+    comparisonWriter, // comparisonWriter
+    paths4, // paths
+    columns5, // columns
+    "" // HTMLText
+);
+comparisonWriter.addReport(report1);
+
+//=========== area THLB ============
+paths4 = new String[] {
+    "targets/feature_area_managed_total.csv"};
+
+columns5 = new String[] {
+    "CURRENT"};
+
+report1 = new CompareReport("area_THLB", // filename
+    "area_THLB", // title
+    reportWriter, // reportWriter
+    comparisonWriter, // comparisonWriter
+    paths4, // paths
+    columns5, // columns
+    "" // HTMLText
+);
+comparisonWriter.addReport(report1);
+
+//=========== Harvest Averages ============
+paths4 = new String[] {
+    "Harvest_Attributes/Averages/avAge.csv"};
+
+columns5 = new String[] {
+    "AvAge"};
+
+report1 = new CompareReport("AVRG_Harv_Age", // filename
+    "AVRG_Harv_Age", // title
+    reportWriter, // reportWriter
+    comparisonWriter, // comparisonWriter
+    paths4, // paths
+    columns5, // columns
+    "" // HTMLText
+);
+comparisonWriter.addReport(report1);
+
+paths4 = new String[] {
+    "Harvest_Attributes/Averages/avVPH.csv"};
+
+columns5 = new String[] {
+    "VPH"};
+
+report1 = new CompareReport("AVRG_Harv_Vol", // filename
+    "AVRG_Harv_Vol", // title
+    reportWriter, // reportWriter
+    comparisonWriter, // comparisonWriter
+    paths4, // paths
+    columns5, // columns
+    "" // HTMLText
+);
+comparisonWriter.addReport(report1);

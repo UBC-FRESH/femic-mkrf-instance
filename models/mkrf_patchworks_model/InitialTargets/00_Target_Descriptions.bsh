@@ -1,0 +1,14 @@
+/*
+ * P57.2 runtime scaffold placeholder.
+ *
+ * The legacy compiled control slice did not recover the ScenarioSet target
+ * description file. This placeholder fails fast so the missing target
+ * definitions remain explicit until a later task replaces it with recovered or
+ * FEMIC-native scenario-target semantics.
+ */
+
+throw new RuntimeException(
+    "MKRF runtime scaffold is missing InitialTargets/00_Target_Descriptions.bsh "
+    + "semantics. Do not run ScenarioSet.bsh until a later phase resolves the "
+    + "target-description lane."
+);

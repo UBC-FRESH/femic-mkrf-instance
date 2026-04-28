@@ -1,0 +1,111 @@
+//Index report
+reportWriter.addReport(new IndexReport("NonTimber_Objectives/index",
+    "NonTimber_Objectives","",reportWriter.getReports()));
+
+//========= Colour format ========
+// cellFormats1 = new RangeLabel[] {
+    // new RangeLabel("background-color:#1a9850", 0,95), 
+    // new RangeLabel("background-color:#d9ef8b", 95.0001,99.9999), 
+    // new RangeLabel("background-color:#fc8d59", 100.0, 105.0), 
+    // new RangeLabel("background-color:#d73027", 105.001, 99999.0)};
+    
+cellFormats1 = new RangeLabel[] {
+    new RangeLabel("background-color:#FF8A8A", 0,80), 
+    new RangeLabel("background-color:#FBB25A", 80.0001,94.9999), 
+    new RangeLabel("background-color:#26DBA3", 95.0, 105.0), 
+    new RangeLabel("background-color:#095D48", 105.001, 9999999.0)};
+
+//========= Green up ========
+report1 = new ColumnSummaryReport("NonTimber_Objectives/grn", // filename
+    "Green Up Overview", // title
+    "%", // units
+    control.getTargetTable(), // attributeStore
+    "startsWith(TARGET,'feature.ratio.grn.')", // reselectExpression
+    "TARGET", // label
+    "if(ACTIVE,if(CURRENT eq 0, -1,100*(MAXIMUM/CURRENT)),-1)", // expression
+    "if(ACTIVE,if(CURRENT eq 0, -1,100*(MAXIMUM/CURRENT)),-1)", // formatExpression
+    cellFormats1, // cellFormats
+    "Green-Up Targets (Max % under 3m height), showing the percent achieved and highlighting cells where target was not met. \n Due to the spatial harvest allocation it is sometimes difficult to select polygons of the right size to perfectly balance the limits at the target levels. \n A small tolerance of error should be allowed on these targets so that they do not overly bind the solution to finding the perfect packing of polygon sizes, rather than meeting the overall intent of the forest management goals.\n" // HTMLText
+);
+reportWriter.addReport(report1);
+
+//Green-up target limit reports
+reportWriter.addReport(new TargetLimitReport ("NonTimber_Objectives/grn_target", "Green Up Target_Control",
+        control.getTargetTable(),"% x 10,000","Landscape Unit","Current Value","feature.ratio.grn.*", false, ""))
+        .addDefaultParam("chart.width","1000");
+
+//========= CWS ========
+report1 = new ColumnSummaryReport("NonTimber_Objectives/cws", // filename
+    "CWS Overview", // title
+    "%", // units
+    control.getTargetTable(), // attributeStore
+    "startsWith(TARGET,'feature.ratio.wat.')", // reselectExpression
+    "TARGET", // label
+    "if(ACTIVE,if(CURRENT eq 0, -1,100*(MAXIMUM/CURRENT)),-1)", // expression
+    "if(ACTIVE,if(CURRENT eq 0, -1,100*(MAXIMUM/CURRENT)),-1)", // formatExpression
+    cellFormats1, // cellFormats
+    "Community Watershed Targets (Max % under 5m height), showing the percent achieved and highlighting cells where target was not met. \n Due to the spatial harvest allocation it is sometimes difficult to select polygons of the right size to perfectly balance the limits at the target levels. \n A small tolerance of error should be allowed on these targets so that they do not overly bind the solution to finding the perfect packing of polygon sizes, rather than meeting the overall intent of the forest management goals.\n" // HTMLText
+);
+reportWriter.addReport(report1);
+
+//CWS target limit reports
+reportWriter.addReport(new TargetLimitReport ("NonTimber_Objectives/cws_target", "CWS Target_Control",
+        control.getTargetTable(),"% x 10,000","CWS","Current Value","feature.ratio.wat.*", false, ""))
+        .addDefaultParam("chart.width","1000");
+
+//========= VQO ========
+report1 = new ColumnSummaryReport("NonTimber_Objectives/vqo", // filename
+    "VQO Overview", // title
+    "%", // units
+    control.getTargetTable(), // attributeStore
+    "startsWith(TARGET,'feature.ratio.vqo.')", // reselectExpression
+    "TARGET", // label
+    "if(ACTIVE,if(CURRENT eq 0, -1,100*(MAXIMUM/CURRENT)),-1)", // expression
+    "if(ACTIVE,if(CURRENT eq 0, -1,100*(MAXIMUM/CURRENT)),-1)", // formatExpression
+    cellFormats1, // cellFormats
+    "VQO Targets (Max % under Veg height - each VLI id different Veg height based on slope and p2p ratio), showing the percent achieved and highlighting cells where target was not met. \n Due to the spatial harvest allocation it is sometimes difficult to select polygons of the right size to perfectly balance the limits at the target levels. \n A small tolerance of error should be allowed on these targets so that they do not overly bind the solution to finding the perfect packing of polygon sizes, rather than meeting the overall intent of the forest management goals.\n" // HTMLText
+);
+reportWriter.addReport(report1);
+
+//VQO target limit reports
+reportWriter.addReport(new TargetLimitReport ("NonTimber_Objectives/vqo_target", "VQO Target_Control",
+        control.getTargetTable(),"% x 10,000","VAC_VQO_VLIid","Current Value","feature.ratio.vqo.*", false, ""))
+        .addDefaultParam("chart.width","1000");
+		
+//========= VQO proposed ========
+report1 = new ColumnSummaryReport("NonTimber_Objectives/vqop", // filename
+    "VQO Proposed Overview", // title
+    "%", // units
+    control.getTargetTable(), // attributeStore
+    "startsWith(TARGET,'feature.ratio.vqop.')", // reselectExpression
+    "TARGET", // label
+    "if(ACTIVE,if(CURRENT eq 0, -1,100*(MAXIMUM/CURRENT)),-1)", // expression
+    "if(ACTIVE,if(CURRENT eq 0, -1,100*(MAXIMUM/CURRENT)),-1)", // formatExpression
+    cellFormats1, // cellFormats
+    "VQO Proposed Targets (Max % under Veg height - each VLI id different Veg height based on slope and p2p ratio), showing the percent achieved and highlighting cells where target was not met. \n Due to the spatial harvest allocation it is sometimes difficult to select polygons of the right size to perfectly balance the limits at the target levels. \n A small tolerance of error should be allowed on these targets so that they do not overly bind the solution to finding the perfect packing of polygon sizes, rather than meeting the overall intent of the forest management goals.\n" // HTMLText
+);
+reportWriter.addReport(report1);
+
+//VQO proposed target limit reports
+reportWriter.addReport(new TargetLimitReport ("NonTimber_Objectives/vqop_target", "VQO Proposed Target_Control",
+        control.getTargetTable(),"% x 10,000","VAC_VQO_VLIid","Current Value","feature.ratio.vqop.*", false, ""))
+        .addDefaultParam("chart.width","2000");
+
+//========= Biodiversity ========
+report1 = new ColumnSummaryReport("NonTimber_Objectives/biod", // filename
+    "Biodiversity Overview", // title
+    "%", // units
+    control.getTargetTable(), // attributeStore
+    "startsWith(TARGET,'feature.ratio.biod.')", // reselectExpression
+    "TARGET", // label
+    "if(ACTIVE,100*(CURRENT/MINIMUM),-1)", // expression
+    "if(ACTIVE,100*(CURRENT/MINIMUM),-1)", // formatExpression
+    cellFormats1, // cellFormats
+    "Biodiversity Targets (min % old seral (>140yrs in NDT3, >250yrs all else)), showing the percent achieved and highlighting cells where target was not met. \n Due to the spatial harvest allocation it is sometimes difficult to select polygons of the right size to perfectly balance the limits at the target levels. \n A small tolerance of error should be allowed on these targets so that they do not overly bind the solution to finding the perfect packing of polygon sizes, rather than meeting the overall intent of the forest management goals.\n" // HTMLText
+);
+reportWriter.addReport(report1);
+
+//Biodiversity target limit reports
+reportWriter.addReport(new TargetLimitReport ("NonTimber_Objectives/biod_target", "Biodiversity Target_Control",
+        control.getTargetTable(),"% x 10,000","LU_BEO_NDT_BEC","Current Value","feature.ratio.biod.*", false, ""))
+        .addDefaultParam("chart.width","2000");

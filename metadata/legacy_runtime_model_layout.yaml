@@ -1,0 +1,105 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+layout_id: legacy_minimal_runnable_runtime_model_directory
+phase: P57.2
+status: runtime_model_directory_materialized_pre_xml
+
+decision:
+  runtime_model_directory: materialized
+  accepted_runtime_input_lane: legacy_compiled_spatial_and_controls
+  spatial_payload_source: local_planning_corpus_compiled_runtime_copy
+  archival_annex_remote_materialization: blocked_in_active_shell
+  xml_emission: not_started
+  matrix_build: not_run
+  launch_proof: not_run
+  runnable_rebuild_claim: no_go
+
+model_layout:
+  model_root: models/mkrf_patchworks_model
+  analysis_root: models/mkrf_patchworks_model/analysis
+  xml_root: models/mkrf_patchworks_model/XML
+  spatial_root: models/mkrf_patchworks_model/Spatial
+  tracks_root: models/mkrf_patchworks_model/Tracks
+  scripts_root: models/mkrf_patchworks_model/Scripts
+  targets_root: models/mkrf_patchworks_model/Targets
+  initial_targets_root: models/mkrf_patchworks_model/InitialTargets
+
+materialized_inputs:
+  analysis_pin:
+    archival_source: data/legacy_mkrf/compiled_controls/entrypoints/baseMKRF.pin
+    runtime_path: models/mkrf_patchworks_model/analysis/base.pin
+    sanitizations:
+      - normalized the home-directory comment to remove the legacy install path
+      - redirected `Tracks/`, `Spatial/`, and `Scripts/` references to
+        analysis-relative runtime paths
+  scenario_launcher:
+    archival_source: data/legacy_mkrf/compiled_controls/entrypoints/runME.bsh
+    runtime_path: models/mkrf_patchworks_model/analysis/runME.bsh
+    status: copied_verbatim
+  scenario_controller:
+    archival_source: data/legacy_mkrf/compiled_controls/entrypoints/ScenarioSet.bsh
+    runtime_path: models/mkrf_patchworks_model/analysis/ScenarioSet.bsh
+    sanitizations:
+      - redirected `InitialTargets/00_Target_Descriptions.bsh` to the
+        model-root-relative `../InitialTargets/00_Target_Descriptions.bsh`
+    known_gap:
+      - the legacy target-description file was not recovered in the compiled
+        control slice and is represented by a fail-fast placeholder
+  runtime_scripts:
+    archival_source_root: data/legacy_mkrf/compiled_controls/scripts
+    runtime_root: models/mkrf_patchworks_model/Scripts
+    sanitizations:
+      - normalized absolute legacy paths in `00_Build_Matrix.bsh`
+      - normalized absolute legacy paths in `01_Topology_fragments.bsh`
+      - normalized absolute road/build paths in `02_build_roads.bsh`
+      - normalized the CBM export output path in `02_export_toCBM.bsh`
+  target_scripts:
+    archival_source_root: data/legacy_mkrf/compiled_controls/targets
+    runtime_root: models/mkrf_patchworks_model/Targets
+    status: copied_verbatim
+  spatial_runtime:
+    runtime_root: models/mkrf_patchworks_model/Spatial
+    source_lane: local_planning_corpus_compiled_runtime_copy
+    copied_files:
+      - fragments.cpg
+      - fragments.dbf
+      - fragments.prj
+      - fragments.sbn
+      - fragments.sbx
+      - fragments.shp
+      - fragments.shp.xml
+      - fragments.shx
+      - topo_frag100.csv
+    contract:
+      crs: EPSG:3005
+      feature_count: 1763
+      block_key: RES_KEY
+
+future_output_staging:
+  xml_root:
+    path: models/mkrf_patchworks_model/XML
+    producer: P57.3_femic_opt_in_mkrf_xml_emission
+  tracks_root:
+    path: models/mkrf_patchworks_model/Tracks
+    producer: P57.6_patchworks_matrix_build
+
+known_gaps:
+  - "The archived `data/legacy_mkrf/compiled_spatial/` annex payload could not
+    be materialized from the configured remote in the active shell."
+  - "`InitialTargets/00_Target_Descriptions.bsh` was not present in the
+    recovered compiled control slice and currently fails fast by design."
+  - "`XML/baseMKRF.xml` is not emitted in the runtime model directory yet."
+  - "`Tracks/*.csv` are not generated in the runtime model directory yet."
+
+scope_boundary:
+  - "No FEMIC-generated ForestModel XML was written into the runtime model directory."
+  - "No legacy compiled track tables were copied into runtime `Tracks/` as generated output."
+  - "No Patchworks runtime config was rewired."
+  - "No Patchworks matrix build was run."
+  - "No Patchworks launch proof was run."
+  - "No runnable FEMIC/Patchworks rebuild claim is introduced."
+
+next_bounded_step:
+  recommendation: implement_opt_in_mkrf_xml_emission
+  roadmap_task: P57.3

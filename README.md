@@ -58,6 +58,7 @@ Instance-local reference surfaces:
 - `metadata/legacy_builder_activation_plan.yaml`
 - `metadata/legacy_source_input_publication_boundary.yaml`
 - `metadata/legacy_rebuild_readiness_criteria.yaml`
+- `metadata/legacy_runtime_model_layout.yaml`
 - `config/legacy_xml_builder/input_variables.mkrf.yaml`
 - `config/legacy_xml_builder/curve_library.mkrf.yaml`
 - `config/legacy_xml_builder/netdown.mkrf.yaml`
@@ -67,6 +68,7 @@ Instance-local reference surfaces:
 - `data/legacy_mkrf/compiled_tracks/`
 - `data/legacy_mkrf/compiled_spatial/`
 - `data/legacy_mkrf/generated_xml/`
+- `models/mkrf_patchworks_model/`
 
 These surfaces summarize the discovered compiled package anatomy:
 
@@ -149,6 +151,12 @@ Important boundary:
 - the P56.6 rebuild-readiness criteria close Phase 56 with metadata recovery
   complete and runnable rebuild readiness still no-go pending future builder,
   XML, source-input, matrix-build, output-comparison, and identity gates;
+- the P57.2 runtime model layout now materializes
+  `models/mkrf_patchworks_model/` with a sanitized `analysis/base.pin`,
+  copied compiled spatial runtime inputs, copied control scripts, and staging
+  directories for future XML/tracks output, but it still does not generate XML,
+  populate runtime tracks, or resolve the missing `InitialTargets` scenario
+  target-definition lane;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.

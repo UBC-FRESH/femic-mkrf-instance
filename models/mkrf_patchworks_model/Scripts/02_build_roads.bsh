@@ -1,0 +1,15 @@
+/*
+ * These commands will build output road segments according to the following recipe.
+ */
+
+
+AppChooser.invoke("ca.spatial.gis.vector.OutputSegments", new String[] {
+   new String[] {"../roads/access.shp"}, // Road data sets
+   "ROAD_ID", // Road label column
+   "../Spatial/fragments.shp", // Block data set
+   "RES_KEY", // Block label column
+   "../roads/mills.shp", // Mill dataset
+   "HAUL", // Cost type
+   10000.0, // Search threshold
+   "../roads" // Output file
+});

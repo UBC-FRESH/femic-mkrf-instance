@@ -213,3 +213,18 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local P56.6 note documenting runnable rebuild no-go criteria, required future gates, and Phase 56 closeout."
+  - artifact_id: "legacy_runtime_model_layout_yaml"
+    path: "metadata/legacy_runtime_model_layout.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable P57.2 record of the materialized MKRF runtime model directory, accepted spatial/control input lane, and unresolved InitialTargets/XML/tracks gaps."
+  - artifact_id: "legacy_runtime_model_layout_note"
+    path: "runbooks/LEGACY_RUNTIME_MODEL_LAYOUT.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local P57.2 note documenting the runtime model directory scaffold, copied compiled spatial inputs, sanitized control paths, and remaining scenario-target gap."
+  - artifact_id: "runtime_model_directory"
+    path: "models/mkrf_patchworks_model/"
+    class: "runtime_scaffold"
+    published: true
+    notes: "P57.2 materialized MKRF runtime scaffold containing the analysis PIN, copied spatial inputs, copied control scripts, and future XML/tracks staging directories without any runnable claim yet."
