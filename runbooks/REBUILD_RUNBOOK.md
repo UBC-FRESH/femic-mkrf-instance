@@ -67,10 +67,15 @@ sequence are ready to publish.
    - use `metadata/legacy_workbook_compiled_reconciliation.yaml` and
      `runbooks/LEGACY_REBUILD_READINESS_REVIEW.md` as the source of truth for
      the P55.19 metadata-recovery go / runnable-rebuild no-go decision;
+   - use `metadata/legacy_generated_xml_reconciliation.yaml` and
+     `runbooks/LEGACY_GENERATED_XML_RECONCILIATION.md` as the source of truth
+     for the P56.2 generated XML review artifacts and the still-blocked
+     `beforeCurves` / XML-builder activation boundary;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
-     `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as
-     an approved runnable rebuild surface;
+     `data/legacy_mkrf/compiled_spatial/` and
+     `data/legacy_mkrf/generated_xml/` as inert archival references, not as an
+     approved runnable rebuild surface;
    - finalize the real run profile, silviculture surface, and TIPSY rules;
    - publish the real MKRF boundary and checkpoint inputs required by `femic prep validate-case`;
    - classify bulky payload families in `.gitattributes`;

@@ -53,5 +53,6 @@ current_boundary:
     - The P55.18 Treat translation now lives at config/legacy_xml_builder/strata/treat.mkrf.yaml and preserves the CC/CT treatment definitions plus the default succession rule as review-to-build candidates.
     - dumpStratum remains inactive pending later stratum builder/reconciliation work.
     - The P55.19 reconciliation now lives at metadata/legacy_workbook_compiled_reconciliation.yaml and records a metadata-recovery go / runnable-rebuild no-go decision.
+    - The P56.2 generated XML reconciliation now lives at metadata/legacy_generated_xml_reconciliation.yaml and materializes baseMKRF.xml plus CSV/CURVE_TABLE.csv as inert review artifacts while reconciling Curves.xml from the legacy planning corpus.
     - No workbook payload has been copied into the instance by this slice.
     - No runnable XML rebuild path is claimed yet.

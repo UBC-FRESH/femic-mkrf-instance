@@ -34,8 +34,11 @@ disposition:
     - generated_curves_xml_reference
   deferred:
     - beforeCurves include activation
-    - Curves.xml fragment equivalence comparison
     - direct generated XML publication
+  reconciled_after_p55_15:
+    - P56.2 materialized CSV/CURVE_TABLE.csv as an inert review artifact,
+      reconciled located Curves.xml from the legacy planning corpus, and
+      matched them by curve identifier, age, and value.
 
 curve_registry:
   - curve_id: zero
@@ -69,5 +72,6 @@ current_boundary:
       axis, and nonblank point coordinates.
     - Blank workbook cells remain absent points and are not interpreted as
       zero-valued curve points.
-    - The beforeCurves hook remains inactive until generated Curves.xml
-      fragment reconciliation is explicitly scheduled.
+    - P56.2 reconciled generated Curves.xml against CSV/CURVE_TABLE.csv, but
+      the beforeCurves hook remains inactive until a later builder activation
+      task adopts a live include/emission contract.

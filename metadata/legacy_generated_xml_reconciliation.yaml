@@ -1,0 +1,164 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+reconciliation_id: legacy_generated_xml_artifacts_reconciliation
+phase: P56.2
+status: generated_review_artifacts_materialized
+
+decision:
+  generated_xml_review_artifacts: base_xml_and_curve_table_materialized_for_review
+  before_curves_activation: blocked
+  xml_builder_activation: not_started
+  runnable_rebuild_claim: no_go
+
+source_artifacts:
+  base_mkrf_xml:
+    legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/baseMKRF.xml
+    instance_path: data/legacy_mkrf/generated_xml/baseMKRF.xml
+    status: available_generated_review_artifact
+    size_bytes: 301632
+    sha256: 4e331de1a1957ddc7c4a281979e349ecc75116994b1287b0ff743c487a5c1e86
+    encoding: ISO-8859-1
+  curves_xml:
+    legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/Curves.xml
+    instance_path: null
+    status: located_and_reconciled_from_legacy_path_not_copied
+    size_bytes: 1376774
+    sha256: 187edab1c1ab46590426ab4d46d4041a36a4606b8ca2583f319849b8da60cb0b
+    encoding: ISO-8859-1
+  curve_table_csv:
+    legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/CSV/CURVE_TABLE.csv
+    instance_path: data/legacy_mkrf/generated_xml/CSV/CURVE_TABLE.csv
+    status: available_generated_review_artifact
+    size_bytes: 919428
+    sha256: e1e3d840d220c39fb54383c28a4949ba1d72ba4eca7269b23679d55e2c139aa4
+    encoding: utf-8-sig
+
+base_mkrf_xml_contract:
+  forest_model:
+    generated_literal_description: Base TFL26
+    horizon_years: 300
+    start_year: 2020
+    max_inventory_age: 350
+    match: multi
+  identity_check:
+    case_id: mkrf_legacy_2016
+    status: legacy_description_mismatch_recorded
+    findings:
+      - The generated XML literal description is `Base TFL26`.
+      - That literal is preserved as source evidence, not accepted as the MKRF
+        case identity.
+      - The mismatch remains a metadata/reproducibility question for the later
+        source-input publication and rebuild-readiness criteria tasks.
+  input:
+    block: Int(RES_KEY)
+    area: area()/10000
+    age: Int(AGE_2020)
+    exclude: CONTCLAS eq 'X'
+  output_tables:
+    messages: messages.csv
+    blocks: blocks.csv
+    features: features.csv
+    products: products.csv
+    treatments: treatments.csv
+    curves: curves.csv
+    tracknames: tracknames.csv
+  stratification_defines:
+    status: CONTCLAS
+    au: string(AU_EX)
+    auf: string(AU_FU)
+    oper: Operabilit
+    ct: CT_eligib
+    aux: AU_EX
+    treatment: null
+  constants:
+    managed: "'C'"
+    unmanaged: "'N'"
+    frd: "0.027"
+    operable: "'Operable'"
+    lowoper: "'Low Operability'"
+  include_fragments:
+    before_curves_entity: Curves.xml
+    before_curves_reference_present: true
+  base_curve_ids:
+    - one
+    - zero
+    - age
+    - le10
+    - lt20
+    - gt60
+    - lt80
+    - gt250
+
+translated_contract_reconciliation:
+  input_variables:
+    config: config/legacy_xml_builder/input_variables.mkrf.yaml
+    status: matched_generated_base_xml
+    findings:
+      - The translated literal description, start_year, horizon_years, and
+        max_inventory_age match the generated ForestModel attributes.
+      - The generated literal description `Base TFL26` remains flagged as a
+        source-description mismatch, not as the accepted MKRF case identity.
+      - block, area, age, and exclude expressions match the generated input
+        element.
+      - additional stratification source expressions match the generated
+        define elements; the live FEMIC fragments export still renames the
+        workbook `au` binding to `au_1` to avoid colliding with required `AU`.
+      - managed, unmanaged, operable, and lowoper constants match the generated
+        define elements.
+      - frd is numerically equivalent to the workbook formula value 2.7/100,
+        but remains deferred because no live builder consumer has been adopted.
+  curve_library:
+    config: config/legacy_xml_builder/curve_library.mkrf.yaml
+    status: matched_generated_base_xml_builtin_curves
+    findings:
+      - Generated base XML carries the workbook Curve Library curves `zero`,
+        `age`, `le10`, `lt20`, `gt60`, `lt80`, and `gt250` with matching
+        point coordinates.
+      - Generated base XML also carries built-in curve `one`; that curve is
+        generator scaffolding, not part of the workbook Curve Library contract.
+      - The generated `beforeCurves` entity points to `Curves.xml`, but the
+        include hook remains inactive in FEMIC.
+
+curves_xml_reconciliation:
+  generator_input: data/legacy_mkrf/generated_xml/CSV/CURVE_TABLE.csv
+  generated_fragment: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/Curves.xml
+  curve_count: 1049
+  point_count: 37764
+  points_per_curve: 36
+  age_axis:
+    count: 36
+    minimum: 0
+    maximum: 350
+    step: 10
+  curve_table_csv:
+    row_count: 37764
+    curve_count: 1049
+  equivalence:
+    status: matched_by_curve_age_value_sets
+    findings:
+      - Every `CURVE_TABLE.csv` row is represented in `Curves.xml` by matching
+        curve identifier, age coordinate, and numeric value.
+      - The curve identifier sets match exactly between `CURVE_TABLE.csv` and
+        `Curves.xml`.
+      - Row order is not treated as a contract surface; the comparison is by
+        curve identifier, age, and value.
+
+remaining_gaps:
+  - Curves.xml is reconciled from the legacy planning corpus but is not copied
+    into the instance in P56.2 because CSV/CURVE_TABLE.csv is sufficient to
+    preserve the generated curve-fragment contract for this bounded slice.
+  - beforeCurves remains inactive until a later builder activation task adopts
+    a live include/emission contract.
+  - P56.2 does not implement FEMIC-native XML emission for curves, retention,
+    attributes, strata, or the full ForestModel.
+  - P56.2 does not materialize pointer-only compiled track tables; that remains
+    scheduled under P56.3.
+  - P56.2 does not decide the real source-input publication boundary; that
+    remains scheduled under P56.5.
+  - Direct workbook publication is not required for this generated-artifact
+    reconciliation, but remains a P56.5 reproducibility-boundary question.
+
+next_bounded_step:
+  recommendation: materialize_or_resolve_pointer_only_compiled_track_tables
+  roadmap_task: P56.3

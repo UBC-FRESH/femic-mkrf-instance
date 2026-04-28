@@ -158,3 +158,18 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local P55.19 rebuild readiness note documenting contract-level findings, blocking gaps, and the metadata-recovery go / runnable-rebuild no-go decision."
+  - artifact_id: "legacy_generated_xml_reference_payload"
+    path: "data/legacy_mkrf/generated_xml/"
+    class: "archival_reference"
+    published: true
+    notes: "Copied inert generated XML review artifacts for P56.2: baseMKRF.xml and CSV/CURVE_TABLE.csv. Curves.xml was located and reconciled from the legacy planning corpus but not copied."
+  - artifact_id: "legacy_generated_xml_reconciliation_yaml"
+    path: "metadata/legacy_generated_xml_reconciliation.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable P56.2 reconciliation of generated XML artifacts against the translated workbook-derived contracts."
+  - artifact_id: "legacy_generated_xml_reconciliation_note"
+    path: "runbooks/LEGACY_GENERATED_XML_RECONCILIATION.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local P56.2 generated XML reconciliation note documenting materialized review artifacts and remaining builder/track/source-input blockers."

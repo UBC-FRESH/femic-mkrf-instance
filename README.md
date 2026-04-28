@@ -53,6 +53,7 @@ Instance-local reference surfaces:
 - `metadata/legacy_attributes_translation.yaml`
 - `metadata/legacy_treat_translation.yaml`
 - `metadata/legacy_workbook_compiled_reconciliation.yaml`
+- `metadata/legacy_generated_xml_reconciliation.yaml`
 - `config/legacy_xml_builder/input_variables.mkrf.yaml`
 - `config/legacy_xml_builder/curve_library.mkrf.yaml`
 - `config/legacy_xml_builder/netdown.mkrf.yaml`
@@ -61,6 +62,7 @@ Instance-local reference surfaces:
 - `data/legacy_mkrf/compiled_controls/`
 - `data/legacy_mkrf/compiled_tracks/`
 - `data/legacy_mkrf/compiled_spatial/`
+- `data/legacy_mkrf/generated_xml/`
 
 These surfaces summarize the discovered compiled package anatomy:
 
@@ -84,6 +86,11 @@ Copied archival track tables now present in-instance:
 Copied archival spatial runtime files now present in-instance:
 
 - `data/legacy_mkrf/compiled_spatial/`
+
+Copied generated XML review artifacts now present in-instance:
+
+- `data/legacy_mkrf/generated_xml/baseMKRF.xml`
+- `data/legacy_mkrf/generated_xml/CSV/CURVE_TABLE.csv`
 
 Important boundary:
 
@@ -120,6 +127,10 @@ Important boundary:
 - the P55.19 reconciliation records a metadata-recovery go decision and a
   runnable-rebuild no-go decision pending generated XML, builder, compiled
   track, and upstream-input gap closure;
+- the P56.2 generated XML reconciliation materializes inert review copies of
+  `baseMKRF.xml` and `CSV/CURVE_TABLE.csv`, matches the base XML to translated
+  Input Variables and Curve Library contracts, and matches located `Curves.xml`
+  to `CURVE_TABLE.csv` by curve identifier, age, and value;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.

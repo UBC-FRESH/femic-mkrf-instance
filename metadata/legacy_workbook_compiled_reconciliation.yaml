@@ -47,15 +47,26 @@ compiled_output_evidence:
   generated_xml_artifacts:
     base_mkrf_xml:
       path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/baseMKRF.xml
-      status: not_tracked_in_instance
+      instance_path: data/legacy_mkrf/generated_xml/baseMKRF.xml
+      status: available_generated_review_artifact_after_p56_2
     curves_xml:
       path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/Curves.xml
-      status: not_tracked_in_instance
+      instance_path: null
+      status: located_and_reconciled_from_legacy_path_not_copied_after_p56_2
+    curve_table_csv:
+      path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/CSV/CURVE_TABLE.csv
+      instance_path: data/legacy_mkrf/generated_xml/CSV/CURVE_TABLE.csv
+      status: available_generated_review_artifact_after_p56_2
     reconciliation:
-      - The generated XML artifacts are known lineage evidence but are not
-        available as tracked instance artifacts for byte/content comparison.
-      - beforeCurves remains blocked until Curves.xml or its generator input is
-        explicitly reconciled.
+      - P56.2 materialized baseMKRF.xml and CSV/CURVE_TABLE.csv in the
+        instance for byte/content comparison.
+      - The generated base XML matches the translated Input Variables contract
+        and the workbook Curve Library built-in curve contract at the reviewed
+        surface level.
+      - Located Curves.xml and tracked CSV/CURVE_TABLE.csv match by curve
+        identifier, age, and numeric value.
+      - beforeCurves remains blocked until a later builder activation task
+        adopts a live include/emission contract.
   track_tables:
     materialized_tables:
       accounts.csv:
@@ -114,9 +125,6 @@ compiled_output_evidence:
 
 remaining_gaps:
   required_before_runnable_rebuild_claim:
-    - Materialize or otherwise reconcile generated baseMKRF.xml.
-    - Materialize or otherwise reconcile generated Curves.xml and/or
-      CSV/CURVE_TABLE.csv.
     - Materialize pointer-only compiled Tracks/curves.csv, features.csv, and
       products.csv or document why they are intentionally unavailable.
     - Implement and validate FEMIC-native builders for curve, retention,
@@ -140,8 +148,8 @@ go_no_go:
       the next recovery phase, not as substitute raw/source inputs.
 
 next_bounded_step:
-  recommendation: plan_post_p55_mkrf_rebuild_gap_closure
+  recommendation: materialize_or_resolve_pointer_only_compiled_track_tables
+  roadmap_task: P56.3
   description:
-    Plan the next MKRF recovery phase from this no-go readiness review before
-    ingesting upstream mapping data, generated XML payloads, or direct workbook
-    artifacts.
+    Resolve the remaining pointer-only compiled track tables before any
+    builder activation or runnable rebuild claim.
