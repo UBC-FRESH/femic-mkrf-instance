@@ -118,3 +118,18 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local note documenting the P55.16 Netdown review-to-build contract and the review-only disposition of incomplete workbook tail values."
+  - artifact_id: "legacy_attributes_translation_config"
+    path: "config/legacy_xml_builder/attributes.mkrf.yaml"
+    class: "translated_config"
+    published: true
+    notes: "MKRF-first FEMIC-native review-to-build contract for the legacy workbook Attrib surface, preserving 16 rows with nonblank Attribute Name values and classifying formula dependencies and incomplete template rows."
+  - artifact_id: "legacy_attributes_translation_yaml"
+    path: "metadata/legacy_attributes_translation.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable lineage/status map for the MKRF Attrib translation and its deferred dumpAttributes/exporter activation boundary."
+  - artifact_id: "legacy_attributes_translation_note"
+    path: "runbooks/LEGACY_ATTRIBUTES_TRANSLATION.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local note documenting the P55.17 Attrib review-to-build contract and the explicit formula/dependency blockers."

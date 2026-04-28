@@ -56,6 +56,8 @@ surface_summary:
       - dumpAttributes
     candidate_femic_home:
       - config/legacy_xml_builder/general_attributes.csv
+      - config/legacy_xml_builder/attributes.mkrf.yaml
+      - metadata/legacy_attributes_translation.yaml
 
   - sheet: Treat
     role: active stratum bundle with criteria, features, succession, products, and treatments
@@ -86,7 +88,7 @@ registry_mismatch_note:
     confirmed tab-level surfaces.
 
 current_boundary:
-  next_bounded_step: translate_attrib_review_to_build_contract
+  next_bounded_step: translate_treat_review_to_build_contract
   notes:
     - Parent-side tracked review extracts now exist under metadata/mkrf_xlsm_review/ and are referenced by metadata/legacy_xlsm_review_extracts.yaml.
     - The first translated Input Variables config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml with lineage/status tracked in metadata/legacy_input_variables_translation.yaml.
@@ -96,5 +98,7 @@ current_boundary:
     - beforeCurves remains inactive pending a later generated Curves.xml fragment-equivalence pass.
     - The P55.16 Netdown translation now lives at config/legacy_xml_builder/netdown.mkrf.yaml with lineage tracked in metadata/legacy_netdown_translation.yaml.
     - dumpRetention remains inactive pending a later retention builder/exporter activation task.
+    - The P55.17 Attrib translation now lives at config/legacy_xml_builder/attributes.mkrf.yaml with lineage tracked in metadata/legacy_attributes_translation.yaml.
+    - dumpAttributes remains inactive pending a later attribute builder/exporter activation task.
     - No workbook payload has been copied into the instance.
     - No VBA reimplementation is claimed yet.

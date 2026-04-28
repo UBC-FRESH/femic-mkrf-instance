@@ -1,0 +1,258 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+contract_id: legacy_attributes_review_to_build
+contract_status: review_to_build_contract
+
+source:
+  workbook: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+  sheet: Attrib
+  named_range: attributes
+  parent_review_extracts:
+    sheet_extract: metadata/mkrf_xlsm_review/attrib.review.csv
+    range_extract: metadata/mkrf_xlsm_review/ranges/attrib_attributes.review.csv
+
+build_boundary:
+  live_exporter_input: false
+  dump_attributes_status: blocked_pending_attribute_builder_acceptance
+  notes:
+    - The workbook Attrib surface is accepted as the governing reviewed
+      general-attribute surface for future MKRF ForestModel attribute emission.
+    - No Attrib row is live exporter/build behavior in this slice.
+    - Formula-like expressions remain declarative review evidence until their
+      dependencies are translated and an attribute builder can evaluate or
+      serialize them explicitly.
+
+field_map:
+  applies_to:
+    source: Applies to
+    femic_field: applies_to
+    status: accepted
+  curve_or_expression:
+    source: Curve or Expression
+    femic_field: curve_or_expression
+    status: accepted_as_review_expression
+  attribute_name:
+    source: Attribute Name
+    femic_field: attribute_name
+    status: accepted_when_nonblank
+  factor:
+    source: Factor
+    femic_field: factor_expression
+    status: accepted_as_review_expression
+  future:
+    source: Future
+    femic_field: future
+    status: accepted
+  cycle:
+    source: Cycle
+    femic_field: cycle
+    status: accepted
+  ignore:
+    source: Ignore
+    femic_field: ignore
+    status: accepted
+  output:
+    source: Output
+    femic_field: output
+    status: accepted
+  scale:
+    source: Scale
+    femic_field: scale
+    status: accepted
+  selection_expression:
+    source: trailing criteria column
+    femic_field: selection_expression
+    status: accepted_when_nonblank
+
+row_summary:
+  complete_attribute_rows: 16
+  incomplete_template_rows: 143
+  rows_with_frd_dependency: 14
+  rows_with_yield_curve_dependency: 11
+  rows_with_lookup_table_dependency: 8
+  rows_with_attribute_reference_dependency: 1
+  rows_with_curve_library_dependency: 1
+
+row_families:
+  - family_id: area_accounting
+    status: review_only_deferred_formula
+    row_offsets:
+      - 1
+      - 2
+      - 3
+    dependencies:
+      - frd
+      - au
+      - aux
+      - treatment
+      - dynamic_attribute_name_expression
+    reason: Uses deferred formula-like frd and dynamic state/treatment naming.
+  - family_id: yield_aggregate
+    status: review_only_deferred_formula
+    row_offsets:
+      - 5
+      - 6
+      - 7
+    dependencies:
+      - frd
+      - treatment
+      - yield_curve_registry
+      - dynamic_attribute_name_expression
+    reason: Uses curveId Yield_* expressions and deferred frd/treatment logic.
+  - family_id: merchantable_yield
+    status: review_to_build_candidate_blocked_by_attribute_dependency
+    row_offsets:
+      - 9
+    dependencies:
+      - managed
+      - operable
+      - attribute_reference
+    reason: Uses operable(attribute(...)) and depends on prior yield attribute emission.
+  - family_id: individual_species_yield
+    status: review_only_deferred_lookup_formula
+    row_offsets:
+      - 11
+      - 12
+      - 13
+      - 14
+      - 15
+      - 16
+      - 17
+      - 18
+    dependencies:
+      - frd
+      - treatment
+      - yield_curve_registry
+      - LookupTable(Lookups!SPP_COMP)
+    reason: Uses workbook lookup formulas and Yield_* curve references.
+  - family_id: seral_area_le10
+    status: review_to_build_candidate
+    row_offsets:
+      - 21
+    dependencies:
+      - curve_library.le10
+      - status
+    reason: Uses the translated Curve Library le10 curve and a direct status selection expression.
+
+attribute_rows:
+  - row_offset: 1
+    family_id: area_accounting
+    applies_to: both
+    attribute_name: "%f.area.%m.total"
+    status: review_only_deferred_formula
+  - row_offset: 2
+    family_id: area_accounting
+    applies_to: both
+    attribute_name: "'%f.area.%m.state.' + dynamic_state_class"
+    status: review_only_deferred_formula
+  - row_offset: 3
+    family_id: area_accounting
+    applies_to: product
+    attribute_name: "'%f.area.%m.treat.' + treatment"
+    status: review_only_deferred_formula
+  - row_offset: 5
+    family_id: yield_aggregate
+    applies_to: both
+    attribute_name: "%f.yield.%m.total"
+    status: review_only_deferred_formula
+  - row_offset: 6
+    family_id: yield_aggregate
+    applies_to: both
+    attribute_name: "'%f.yield.%m.state.' + dynamic_state_class"
+    status: review_only_deferred_formula
+  - row_offset: 7
+    family_id: yield_aggregate
+    applies_to: product
+    attribute_name: "'%f.yield.%m.treat.' + treatment"
+    status: review_only_deferred_formula
+  - row_offset: 9
+    family_id: merchantable_yield
+    applies_to: feature
+    attribute_name: "%f.yield.%m.merch.total"
+    selection_expression: status in managed
+    status: review_to_build_candidate_blocked_by_attribute_dependency
+  - row_offset: 11
+    family_id: individual_species_yield
+    applies_to: both
+    attribute_name: "%f.yield.%m.indsp.Ba"
+    status: review_only_deferred_lookup_formula
+  - row_offset: 12
+    family_id: individual_species_yield
+    applies_to: both
+    attribute_name: "%f.yield.%m.indsp.Cw"
+    status: review_only_deferred_lookup_formula
+  - row_offset: 13
+    family_id: individual_species_yield
+    applies_to: both
+    attribute_name: "%f.yield.%m.indsp.Dec"
+    status: review_only_deferred_lookup_formula
+  - row_offset: 14
+    family_id: individual_species_yield
+    applies_to: both
+    attribute_name: "%f.yield.%m.indsp.Fd"
+    status: review_only_deferred_lookup_formula
+  - row_offset: 15
+    family_id: individual_species_yield
+    applies_to: both
+    attribute_name: "%f.yield.%m.indsp.Hw"
+    status: review_only_deferred_lookup_formula
+  - row_offset: 16
+    family_id: individual_species_yield
+    applies_to: both
+    attribute_name: "%f.yield.%m.indsp.Oth"
+    status: review_only_deferred_lookup_formula
+  - row_offset: 17
+    family_id: individual_species_yield
+    applies_to: both
+    attribute_name: "%f.yield.%m.indsp.Dr"
+    status: review_only_deferred_lookup_formula
+  - row_offset: 18
+    family_id: individual_species_yield
+    applies_to: both
+    attribute_name: "%f.yield.%m.indsp.Yc"
+    status: review_only_deferred_lookup_formula
+  - row_offset: 21
+    family_id: seral_area_le10
+    applies_to: feature
+    curve_or_expression: le10
+    attribute_name: "%f.area.%m.seral.le10"
+    factor_expression: "1"
+    selection_expression: "status ne 'X'"
+    status: review_to_build_candidate
+
+review_only:
+  incomplete_template_rows:
+    count: 143
+    row_offsets:
+      - 4
+      - 8
+      - 10
+      - 19
+      - 20
+      - 22-159
+    reason: Rows preserve workbook template/default values but have no
+      Attribute Name and therefore are not attribute definitions.
+
+validation_contract:
+  required_complete_attribute_row_count: 16
+  required_incomplete_template_row_count: 143
+  required_attribute_names:
+    - "%f.area.%m.total"
+    - "%f.yield.%m.total"
+    - "%f.yield.%m.merch.total"
+    - "%f.yield.%m.indsp.Ba"
+    - "%f.yield.%m.indsp.Cw"
+    - "%f.yield.%m.indsp.Dec"
+    - "%f.yield.%m.indsp.Fd"
+    - "%f.yield.%m.indsp.Hw"
+    - "%f.yield.%m.indsp.Oth"
+    - "%f.yield.%m.indsp.Dr"
+    - "%f.yield.%m.indsp.Yc"
+    - "%f.area.%m.seral.le10"
+  required_checks:
+    - Preserve the 16 workbook rows with nonblank Attribute Name values.
+    - Preserve the direct le10 seral area candidate without activating it.
+    - Keep frd, LookupTable, Yield_*, treatment, and attribute-reference
+      formulas as review metadata until their dependencies are translated.
+    - Keep rows with blank Attribute Name values as incomplete template rows.

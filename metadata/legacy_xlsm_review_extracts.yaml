@@ -61,7 +61,7 @@ legacy_xlsm_review_extracts:
       role: supporting_transition_review_extract
 
   current_boundary:
-    next_bounded_step: translate_attrib_review_to_build_contract
+    next_bounded_step: translate_treat_review_to_build_contract
     notes:
       - The review extracts live in the parent FEMIC repo and are referenced here as lineage evidence.
       - The first translated config now lives at config/legacy_xml_builder/input_variables.mkrf.yaml with lineage/status tracked in metadata/legacy_input_variables_translation.yaml.
@@ -71,5 +71,7 @@ legacy_xlsm_review_extracts:
       - The translated curve contract is review-to-build metadata only; no generated XML include hook is active yet.
       - The P55.16 Netdown translation now maps the netdownCriteria, netdownNames, and netdownFactors ranges into config/legacy_xml_builder/netdown.mkrf.yaml and metadata/legacy_netdown_translation.yaml.
       - The translated Netdown contract is review-to-build metadata only; no dumpRetention or proportional area-split behavior is active yet.
+      - The P55.17 Attrib translation now maps the attributes range into config/legacy_xml_builder/attributes.mkrf.yaml and metadata/legacy_attributes_translation.yaml.
+      - The translated Attrib contract is review-to-build metadata only; no dumpAttributes behavior is active yet.
       - No workbook payload was copied into the instance by this slice.
       - No VBA reimplementation or runnable rebuild claim is made by this slice.

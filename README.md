@@ -40,6 +40,7 @@ Instance-local reference surfaces:
 - `runbooks/LEGACY_INPUT_VARIABLES_TRANSLATION.md`
 - `runbooks/LEGACY_CURVE_LIBRARY_TRANSLATION.md`
 - `runbooks/LEGACY_NETDOWN_TRANSLATION.md`
+- `runbooks/LEGACY_ATTRIBUTES_TRANSLATION.md`
 - `metadata/legacy_compiled_package_reference.yaml`
 - `metadata/legacy_xml_builder_authority.yaml`
 - `metadata/legacy_xlsm_surface_map.yaml`
@@ -47,9 +48,11 @@ Instance-local reference surfaces:
 - `metadata/legacy_input_variables_translation.yaml`
 - `metadata/legacy_curve_library_translation.yaml`
 - `metadata/legacy_netdown_translation.yaml`
+- `metadata/legacy_attributes_translation.yaml`
 - `config/legacy_xml_builder/input_variables.mkrf.yaml`
 - `config/legacy_xml_builder/curve_library.mkrf.yaml`
 - `config/legacy_xml_builder/netdown.mkrf.yaml`
+- `config/legacy_xml_builder/attributes.mkrf.yaml`
 - `data/legacy_mkrf/compiled_controls/`
 - `data/legacy_mkrf/compiled_tracks/`
 - `data/legacy_mkrf/compiled_spatial/`
@@ -103,6 +106,9 @@ Important boundary:
 - the Netdown surface is now translated into a review-to-build contract that
   preserves the two complete proportional reassignment rules while keeping
   incomplete tail values as review metadata and `dumpRetention` inactive;
+- the Attrib surface is now translated into a review-to-build contract that
+  preserves 16 rows with nonblank `Attribute Name` values while keeping formula
+  dependencies and `dumpAttributes` inactive;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
 - this does not make the instance runnable as a legacy Patchworks rebuild.
@@ -137,23 +143,27 @@ Policy:
    `runbooks/LEGACY_CURVE_LIBRARY_TRANSLATION.md`
 8. Review the Netdown translation note:
    `runbooks/LEGACY_NETDOWN_TRANSLATION.md`
-9. Review the parent-side workbook review extract pointer:
+9. Review the Attributes translation note:
+   `runbooks/LEGACY_ATTRIBUTES_TRANSLATION.md`
+10. Review the parent-side workbook review extract pointer:
    `metadata/legacy_xlsm_review_extracts.yaml`
-10. Review the translated Input Variables config:
+11. Review the translated Input Variables config:
    `config/legacy_xml_builder/input_variables.mkrf.yaml`
-11. Review the translated Curve Library contract:
+12. Review the translated Curve Library contract:
    `config/legacy_xml_builder/curve_library.mkrf.yaml`
-12. Review the translated Netdown contract:
+13. Review the translated Netdown contract:
    `config/legacy_xml_builder/netdown.mkrf.yaml`
-13. Inspect the copied archival control layer under:
+14. Review the translated Attributes contract:
+   `config/legacy_xml_builder/attributes.mkrf.yaml`
+15. Inspect the copied archival control layer under:
    `data/legacy_mkrf/compiled_controls/`
-14. Inspect the copied archival track tables under:
+16. Inspect the copied archival track tables under:
    `data/legacy_mkrf/compiled_tracks/`
-15. Inspect the copied archival spatial runtime files under:
+17. Inspect the copied archival spatial runtime files under:
    `data/legacy_mkrf/compiled_spatial/`
-16. If this is a thin clone, materialize the annex smoke artifact:
+18. If this is a thin clone, materialize the annex smoke artifact:
    `python -m datalad get data/annex_smoke/mkrf_bootstrap_smoke.bin`
-17. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
+19. Run full `femic prep validate-case --run-config config/run_profile.mkrf.yaml --tipsy-config-dir config/tipsy`
    only after the real MKRF boundary and checkpoint inputs are published.
 
 See `runbooks/REBUILD_RUNBOOK.md` for the current thin-baseline boundary.

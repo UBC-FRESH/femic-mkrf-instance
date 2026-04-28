@@ -54,6 +54,11 @@ sequence are ready to publish.
      `runbooks/LEGACY_NETDOWN_TRANSLATION.md` as the source of truth for the
      P55.16 Netdown review-to-build contract, while keeping `dumpRetention`
      inactive pending retention builder/exporter activation;
+   - use `config/legacy_xml_builder/attributes.mkrf.yaml`,
+     `metadata/legacy_attributes_translation.yaml`, and
+     `runbooks/LEGACY_ATTRIBUTES_TRANSLATION.md` as the source of truth for the
+     P55.17 Attrib review-to-build contract, while keeping `dumpAttributes`
+     inactive pending attribute builder/exporter activation;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as

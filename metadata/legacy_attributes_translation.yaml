@@ -1,0 +1,52 @@
+schema_version: 1
+
+translation:
+  case_id: mkrf_legacy_2016
+  source_surface: Attrib
+  source_named_range: attributes
+  translated_config: config/legacy_xml_builder/attributes.mkrf.yaml
+  status: review_to_build_contract
+
+source_evidence:
+  workbook: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+  parent_review_extracts:
+    - metadata/mkrf_xlsm_review/attrib.review.csv
+    - metadata/mkrf_xlsm_review/ranges/attrib_attributes.review.csv
+
+disposition:
+  live_exporter_input:
+    status: false
+    reason:
+      - The current MKRF exporter does not consume the legacy Attrib contract
+        to emit general Patchworks attributes.
+      - Most complete rows depend on workbook formula evaluation, deferred
+        frd semantics, Yield_* curve references, Treat/treatment semantics, or
+        Lookups!SPP_COMP.
+  review_to_build_candidates:
+    - row_offset: 9
+      attribute_name: "%f.yield.%m.merch.total"
+      blocker: Requires prior yield attribute emission and attribute-reference semantics.
+    - row_offset: 21
+      attribute_name: "%f.area.%m.seral.le10"
+      blocker: Requires an accepted attribute builder even though le10 is now translated.
+  preserved_review_metadata:
+    - frd-dependent area and yield accounting rows
+    - dynamic state and treatment attribute-name expressions
+    - Yield_* curveId expressions
+    - LookupTable(Lookups!SPP_COMP) species-share formulas
+    - incomplete template/default rows with blank Attribute Name values
+  deferred:
+    - dumpAttributes emission
+    - formula evaluator or serializer acceptance
+    - Treat/treatment dependency resolution
+    - Lookups surface translation
+
+current_boundary:
+  next_bounded_step: translate_treat_review_to_build_contract
+  notes:
+    - The legacy Attrib workbook surface is now translated into a FEMIC-native
+      review-to-build contract.
+    - The translated contract preserves 16 rows with nonblank Attribute Name
+      values and classifies 143 rows as incomplete template/default rows.
+    - No Attrib row is live exporter/build behavior in this slice.
+    - Formula dependencies remain explicit and blocked until later tasks.
