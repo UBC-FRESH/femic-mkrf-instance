@@ -90,14 +90,19 @@ sequence are ready to publish.
      `runbooks/LEGACY_RUNTIME_MODEL_LAYOUT.md` as the source of truth for the
      P57.2 materialized runtime scaffold, copied spatial/control inputs, and
      unresolved `InitialTargets` / XML / tracks gaps;
+   - use `metadata/legacy_runtime_xml_emission.yaml` and
+     `runbooks/LEGACY_RUNTIME_XML_EMISSION.md` as the source of truth for the
+     P57.3 emitted `models/mkrf_patchworks_model/XML/baseMKRF.xml` runtime
+     input candidate and the still-blocked Attrib passthrough / no-run
+     boundary;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` and
      `data/legacy_mkrf/generated_xml/` as inert archival references, not as an
      approved runnable rebuild surface;
    - treat `models/mkrf_patchworks_model/` as a partial runtime scaffold only
-     until XML emission, tracks generation, runtime wiring, and launch proof
-     are completed;
+     until Attrib passthrough, tracks generation, runtime wiring, and launch
+     proof are completed;
    - finalize the real run profile, silviculture surface, and TIPSY rules;
    - publish the real MKRF boundary and checkpoint inputs required by `femic prep validate-case`;
    - classify bulky payload families in `.gitattributes`;

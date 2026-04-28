@@ -228,3 +228,18 @@ artifacts:
     class: "runtime_scaffold"
     published: true
     notes: "P57.2 materialized MKRF runtime scaffold containing the analysis PIN, copied spatial inputs, copied control scripts, and future XML/tracks staging directories without any runnable claim yet."
+  - artifact_id: "legacy_runtime_xml_emission_yaml"
+    path: "metadata/legacy_runtime_xml_emission.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable P57.3 record of the first FEMIC-managed MKRF runtime XML emission, including the contract inputs, emitted structure counts, and the still-blocked passthrough/matrix-build boundary."
+  - artifact_id: "legacy_runtime_xml_emission_note"
+    path: "runbooks/LEGACY_RUNTIME_XML_EMISSION.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local P57.3 note documenting the emitted MKRF runtime XML, its contract inputs, and the remaining no-run boundary."
+  - artifact_id: "runtime_model_xml"
+    path: "models/mkrf_patchworks_model/XML/baseMKRF.xml"
+    class: "runtime_generated_xml"
+    published: true
+    notes: "P57.3 emitted MKRF runtime ForestModel XML containing recovered input/output bindings, legacy define/constants, Curve Library curves, inlined generated Yield_* curves, Netdown rules, unmanaged track, and Treat track definitions."
