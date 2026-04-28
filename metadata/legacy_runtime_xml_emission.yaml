@@ -2,14 +2,14 @@ schema_version: 1
 
 case_id: mkrf_legacy_2016
 emission_id: legacy_minimal_runnable_runtime_xml
-phase: P57.3
-status: runtime_xml_emitted_pre_passthrough
+phase: P57.4
+status: runtime_xml_emitted_with_attribute_passthrough
 
 decision:
   runtime_xml_emission: materialized
   emission_mode: opt_in_mkrf_contract_builder
   generated_yield_curves: inlined_from_curve_table_csv
-  attribute_passthrough: not_started
+  attribute_passthrough: materialized_via_compatibility_contract
   matrix_build: not_run
   launch_proof: not_run
   runnable_rebuild_claim: no_go
@@ -19,20 +19,22 @@ inputs:
   curve_library_config: config/legacy_xml_builder/curve_library.mkrf.yaml
   netdown_config: config/legacy_xml_builder/netdown.mkrf.yaml
   treat_config: config/legacy_xml_builder/strata/treat.mkrf.yaml
+  attributes_config: config/legacy_xml_builder/attributes.mkrf.yaml
+  legacy_base_xml_passthrough_source: data/legacy_mkrf/generated_xml/baseMKRF.xml
   generated_curve_table_csv: data/legacy_mkrf/generated_xml/CSV/CURVE_TABLE.csv
 
 emitted_artifact:
   path: models/mkrf_patchworks_model/XML/baseMKRF.xml
-  sha256: a79bff2325338c6d573aa2971122042ff6909f583abc24f2d0e6dda588e81de8
+  sha256: a67ed39a1e0efb774a50cb359b8572322ae56ea59e3d2d2577531b8f6f5890fe
   forest_model:
     description: Base TFL26
     horizon_years: 300
     start_year: 2020
     match: multi
   structure_counts:
-    defines: 11
+    defines: 12
     curves: 1057
-    selects: 6
+    selects: 11
     retentions: 2
     treatments: 2
 
@@ -62,6 +64,7 @@ emitted_contract:
     - unmanaged
     - operable
     - lowoper
+    - frd
   builtin_curves:
     - one
     - zero
@@ -81,14 +84,19 @@ emitted_contract:
     - <default succession>
     - status in managed
     - status in managed and oper in operable and ct eq 'Y' and not startswith(au,'t')
+    - <attrib passthrough feature area/yield block>
+    - status in managed
+    - <attrib passthrough individual species yield block>
+    - status ne 'X'
+    - <attrib passthrough product block>
 
 scope_boundary:
-  - No Attrib compatibility-passthrough XML blocks were emitted by P57.3.
-  - No runtime Patchworks config was rewired by P57.3.
-  - No Patchworks matrix build was run by P57.3.
-  - No Patchworks launch proof was run by P57.3.
-  - No runnable FEMIC/Patchworks rebuild claim is introduced by P57.3.
+  - Attrib formula-heavy blocks are still sourced through a compatibility passthrough, not a fully native FEMIC attribute builder.
+  - No runtime Patchworks config was rewired by P57.4.
+  - No Patchworks matrix build was run by P57.4.
+  - No Patchworks launch proof was run by P57.4.
+  - No runnable FEMIC/Patchworks rebuild claim is introduced by P57.4.
 
 next_bounded_step:
-  recommendation: implement_attrib_compatibility_passthrough
-  roadmap_task: P57.4
+  recommendation: wire_runtime_config_to_generated_model_directory
+  roadmap_task: P57.5

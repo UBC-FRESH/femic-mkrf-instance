@@ -60,6 +60,7 @@ Instance-local reference surfaces:
 - `metadata/legacy_rebuild_readiness_criteria.yaml`
 - `metadata/legacy_runtime_model_layout.yaml`
 - `metadata/legacy_runtime_xml_emission.yaml`
+- `metadata/legacy_attribute_passthrough.yaml`
 - `config/legacy_xml_builder/input_variables.mkrf.yaml`
 - `config/legacy_xml_builder/curve_library.mkrf.yaml`
 - `config/legacy_xml_builder/netdown.mkrf.yaml`
@@ -71,6 +72,7 @@ Instance-local reference surfaces:
 - `data/legacy_mkrf/generated_xml/`
 - `models/mkrf_patchworks_model/`
 - `models/mkrf_patchworks_model/XML/baseMKRF.xml`
+- `runbooks/LEGACY_ATTRIBUTE_PASSTHROUGH.md`
 
 These surfaces summarize the discovered compiled package anatomy:
 

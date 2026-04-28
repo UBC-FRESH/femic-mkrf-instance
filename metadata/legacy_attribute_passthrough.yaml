@@ -1,0 +1,90 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+passthrough_id: legacy_attrib_formula_compatibility_contract
+phase: P57.4
+status: attribute_passthrough_materialized_for_runtime_xml
+
+decision:
+  passthrough_mode: extracted_legacy_select_blocks
+  source_of_truth: data/legacy_mkrf/generated_xml/baseMKRF.xml
+  native_attribute_builder: not_implemented
+  compatibility_constant_dependencies: materialized
+  matrix_build: not_run
+  launch_proof: not_run
+  runnable_rebuild_claim: no_go
+
+inputs:
+  attributes_config: config/legacy_xml_builder/attributes.mkrf.yaml
+  legacy_base_xml: data/legacy_mkrf/generated_xml/baseMKRF.xml
+  emitted_runtime_xml: models/mkrf_patchworks_model/XML/baseMKRF.xml
+
+compatibility_contract:
+  extracted_select_block_count: 5
+  validated_dependencies:
+    define_fields:
+      - status
+      - au
+      - aux
+      - treatment
+      - managed
+      - frd
+    curve_ids:
+      - one
+      - le10
+    generated_curve_family: Yield_*
+    required_attribute_labels:
+      - "%f.area.%m.total"
+      - "%f.yield.%m.total"
+      - "%f.yield.%m.merch.total"
+      - "%f.yield.%m.indsp.Ba"
+      - "%f.yield.%m.indsp.Cw"
+      - "%f.yield.%m.indsp.Dec"
+      - "%f.yield.%m.indsp.Fd"
+      - "%f.yield.%m.indsp.Hw"
+      - "%f.yield.%m.indsp.Oth"
+      - "%f.yield.%m.indsp.Dr"
+      - "%f.yield.%m.indsp.Yc"
+      - "%f.area.%m.seral.le10"
+  extracted_blocks:
+    - block_id: feature_area_and_total_yield
+      statement: ""
+      feature_attribute_count: 4
+      product_attribute_count: 0
+      notes:
+        - uses emitted Yield_* curves and legacy state-label formulas
+    - block_id: merchantable_total_yield
+      statement: status in managed
+      feature_attribute_count: 1
+      product_attribute_count: 0
+      notes:
+        - depends on emitted feature total-yield attribute and operable() compatibility behavior
+    - block_id: individual_species_yield
+      statement: ""
+      feature_attribute_count: 8
+      product_attribute_count: 0
+      notes:
+        - uses lookupTable expressions with emitted Yield_* curves
+    - block_id: seral_le10_area
+      statement: status ne 'X'
+      feature_attribute_count: 1
+      product_attribute_count: 0
+      notes:
+        - depends on emitted le10 curve
+    - block_id: product_area_and_yield_family
+      statement: ""
+      feature_attribute_count: 0
+      product_attribute_count: 14
+      notes:
+        - carries product-facing area, yield, treatment, and species surfaces through compatibility passthrough
+
+scope_boundary:
+  - The deferred Attrib formulas are not yet reimplemented as native FEMIC metadata/builder logic.
+  - The passthrough is acceptable only for the minimal runnable phase sequence.
+  - No runtime Patchworks config was rewired.
+  - No Patchworks matrix build was run.
+  - No Patchworks launch proof was run.
+
+next_bounded_step:
+  recommendation: wire_runtime_config_to_generated_model_directory
+  roadmap_task: P57.5

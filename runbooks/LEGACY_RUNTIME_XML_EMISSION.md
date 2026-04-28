@@ -1,7 +1,7 @@
 # Legacy Runtime XML Emission
 
-This note records the `P57.3` emission of the first FEMIC-managed MKRF runtime
-ForestModel XML.
+This note records the `P57.3` / `P57.4` emission of the FEMIC-managed MKRF
+runtime ForestModel XML.
 
 ## Decision
 
@@ -17,12 +17,16 @@ It is emitted from the recovered MKRF contracts:
 - `data/legacy_mkrf/generated_xml/CSV/CURVE_TABLE.csv`
 
 The emitted XML carries the recovered input/output contract, stratification
-defines, live scalar constants, Curve Library curves, inlined generated
-`Yield_*` curves, Netdown retention rules, unmanaged catch-track, default
-succession, and `CC` / `CT` treatments.
+defines, live scalar constants plus the compatibility-required `frd` constant,
+Curve Library curves, inlined generated `Yield_*` curves, Netdown retention
+rules, unmanaged catch-track, default succession, `CC` / `CT` treatments, and
+the explicit deferred-Attrib compatibility passthrough blocks.
 
 ## Current Boundary
 
-`P57.3` does not emit Attrib compatibility-passthrough blocks, does not rewire
-runtime config, and does not run matrix build or launch proof. The emitted XML
-is a runtime input candidate, not yet a runnable rebuild claim.
+The Attrib formula-heavy blocks still arrive via compatibility passthrough from
+the reconciled archival `baseMKRF.xml`, not through a native FEMIC builder.
+
+`P57.4` still does not rewire runtime config or run matrix build or launch
+proof. The emitted XML remains a runtime input candidate, not yet a runnable
+rebuild claim.
