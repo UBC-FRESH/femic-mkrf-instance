@@ -177,9 +177,9 @@ go_no_go:
       the next recovery phase, not as substitute raw/source inputs.
 
 next_bounded_step:
-  recommendation: design_builder_activation_and_matrix_build_handoff_order
-  roadmap_task: P56.4
+  recommendation: resolve_real_mkrf_source_input_publication_boundary
+  roadmap_task: P56.5
   description:
-    Design the order for activating curve, retention, attribute, stratum, full
-    XML emission, and matrix-build handoff surfaces while keeping archival
-    legacy evidence separate from future FEMIC-regenerated outputs.
+    Resolve the real MKRF fragments/checkpoint/boundary source-input
+    publication boundary before any builder activation, matrix-build execution,
+    or runnable rebuild claim.

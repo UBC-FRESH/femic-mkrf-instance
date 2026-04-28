@@ -41,9 +41,10 @@ FEMIC-regenerated outputs and were not produced by this slice.
 
 ## Remaining Boundary
 
-P56.4 must design the builder activation and matrix-build handoff order that
-will eventually produce future FEMIC-generated XML and track outputs. That
-future proof remains separate from the archival legacy evidence reviewed here.
+P56.4 designed the builder activation and matrix-build handoff order that will
+eventually produce future FEMIC-generated XML and track outputs. P56.5 must now
+resolve the source-input publication boundary before any activation or matrix
+build can proceed.
 
 P56.3 did not generate ForestModel XML, regenerate fragments, run Patchworks
 matrix build, ingest upstream mapping data, publish direct workbook payloads,

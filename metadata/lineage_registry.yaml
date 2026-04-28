@@ -183,3 +183,13 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local P56.3 compiled track evidence note documenting readable legacy source CSVs, pointer-only instance paths, and no matrix-build execution."
+  - artifact_id: "legacy_builder_activation_plan_yaml"
+    path: "metadata/legacy_builder_activation_plan.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable P56.4 design-only activation order for MKRF curve, retention, attribute, stratum, XML emission, and matrix-build handoff surfaces."
+  - artifact_id: "legacy_builder_activation_plan_note"
+    path: "runbooks/LEGACY_BUILDER_ACTIVATION_PLAN.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local P56.4 builder activation and matrix-build handoff plan preserving the legacy-evidence versus future-regenerated-output boundary."

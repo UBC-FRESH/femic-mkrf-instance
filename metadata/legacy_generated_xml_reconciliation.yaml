@@ -160,5 +160,5 @@ remaining_gaps:
     reconciliation, but remains a P56.5 reproducibility-boundary question.
 
 next_bounded_step:
-  recommendation: design_builder_activation_and_matrix_build_handoff_order
-  roadmap_task: P56.4
+  recommendation: resolve_real_mkrf_source_input_publication_boundary
+  roadmap_task: P56.5
