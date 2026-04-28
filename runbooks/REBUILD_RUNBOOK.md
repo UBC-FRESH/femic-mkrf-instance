@@ -59,6 +59,11 @@ sequence are ready to publish.
      `runbooks/LEGACY_ATTRIBUTES_TRANSLATION.md` as the source of truth for the
      P55.17 Attrib review-to-build contract, while keeping `dumpAttributes`
      inactive pending attribute builder/exporter activation;
+   - use `config/legacy_xml_builder/strata/treat.mkrf.yaml`,
+     `metadata/legacy_treat_translation.yaml`, and
+     `runbooks/LEGACY_TREAT_TRANSLATION.md` as the source of truth for the
+     P55.18 Treat stratum-bundle review-to-build contract, while keeping
+     `dumpStratum` inactive pending stratum builder/reconciliation work;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` as inert archival references, not as

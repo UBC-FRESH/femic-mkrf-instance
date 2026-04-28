@@ -133,3 +133,18 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local note documenting the P55.17 Attrib review-to-build contract and the explicit formula/dependency blockers."
+  - artifact_id: "legacy_treat_translation_config"
+    path: "config/legacy_xml_builder/strata/treat.mkrf.yaml"
+    class: "translated_config"
+    published: true
+    notes: "MKRF-first FEMIC-native review-to-build contract for the legacy workbook Treat stratum bundle, preserving the CC/CT treatment definitions and default succession rule while keeping feature/product template rows review-only."
+  - artifact_id: "legacy_treat_translation_yaml"
+    path: "metadata/legacy_treat_translation.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable lineage/status map for the MKRF Treat translation and its deferred dumpStratum/exporter activation boundary."
+  - artifact_id: "legacy_treat_translation_note"
+    path: "runbooks/LEGACY_TREAT_TRANSLATION.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local note documenting the P55.18 Treat review-to-build contract and the archival compiled-track cross-check boundary."

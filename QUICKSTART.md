@@ -23,31 +23,36 @@
    `runbooks/LEGACY_NETDOWN_TRANSLATION.md`.
 13. Review the current Attributes translation note in
    `runbooks/LEGACY_ATTRIBUTES_TRANSLATION.md`.
-14. Review the parent-side workbook review extract pointer in
+14. Review the current Treat translation note in
+   `runbooks/LEGACY_TREAT_TRANSLATION.md`.
+15. Review the parent-side workbook review extract pointer in
    `metadata/legacy_xlsm_review_extracts.yaml`.
-15. Review the translated Input Variables config in
+16. Review the translated Input Variables config in
    `config/legacy_xml_builder/input_variables.mkrf.yaml`, including the live
    block/area/age/exclude export seam and the live additional stratification
    fragment bindings, treatment-eligibility review flag, and scalar constants
    contract, plus the inactive-field classification for `max_inventory_age`
    and include-fragment hooks.
-16. Review the translated Curve Library contract in
+17. Review the translated Curve Library contract in
    `config/legacy_xml_builder/curve_library.mkrf.yaml`; it is review-to-build
    metadata only and does not activate `beforeCurves`.
-17. Review the translated Netdown contract in
+18. Review the translated Netdown contract in
    `config/legacy_xml_builder/netdown.mkrf.yaml`; it is review-to-build
    metadata only and does not activate `dumpRetention`.
-18. Review the translated Attributes contract in
+19. Review the translated Attributes contract in
    `config/legacy_xml_builder/attributes.mkrf.yaml`; it is review-to-build
    metadata only and does not activate `dumpAttributes`.
-19. Inspect the copied archival control layer in
+20. Review the translated Treat contract in
+   `config/legacy_xml_builder/strata/treat.mkrf.yaml`; it is review-to-build
+   metadata only and does not activate `dumpStratum`.
+21. Inspect the copied archival control layer in
    `data/legacy_mkrf/compiled_controls/`.
-20. Inspect the copied archival track tables in
+22. Inspect the copied archival track tables in
    `data/legacy_mkrf/compiled_tracks/`.
-21. Inspect the copied archival spatial runtime files in
+23. Inspect the copied archival spatial runtime files in
    `data/legacy_mkrf/compiled_spatial/`.
-22. Add case-specific instructions to `runbooks/REBUILD_RUNBOOK.md`.
-23. Add/edit `config/tipsy/tsamkrf.yaml`.
-24. Use `femic prep validate-case --run-config config/run_profile.mkrf.yaml`
+24. Add case-specific instructions to `runbooks/REBUILD_RUNBOOK.md`.
+25. Add/edit `config/tipsy/tsamkrf.yaml`.
+26. Use `femic prep validate-case --run-config config/run_profile.mkrf.yaml`
    only after the real MKRF boundary and checkpoint inputs have been published
    into this instance.

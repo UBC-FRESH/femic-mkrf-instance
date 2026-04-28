@@ -1,0 +1,64 @@
+schema_version: 1
+
+translation:
+  case_id: mkrf_legacy_2016
+  source_surface: Treat
+  source_named_ranges:
+    - stratumCriteria
+    - stratumSuccession
+    - stratumFeatures
+    - stratumTreatments
+    - stratumFactors
+    - stratumProducts
+  translated_config: config/legacy_xml_builder/strata/treat.mkrf.yaml
+  status: review_to_build_contract
+
+source_evidence:
+  workbook: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+  parent_review_extracts:
+    - metadata/mkrf_xlsm_review/treat.review.csv
+    - metadata/mkrf_xlsm_review/ranges/treat_stratum_criteria.review.csv
+    - metadata/mkrf_xlsm_review/ranges/treat_stratum_succession.review.csv
+    - metadata/mkrf_xlsm_review/ranges/treat_stratum_features.review.csv
+    - metadata/mkrf_xlsm_review/ranges/treat_stratum_treatments.review.csv
+    - metadata/mkrf_xlsm_review/ranges/treat_stratum_factors.review.csv
+    - metadata/mkrf_xlsm_review/ranges/treat_stratum_products.review.csv
+  archival_crosscheck:
+    - data/legacy_mkrf/compiled_tracks/treatments.csv
+    - data/legacy_mkrf/compiled_tracks/protoaccounts.csv
+    - data/legacy_mkrf/compiled_tracks/accounts.csv
+
+disposition:
+  live_exporter_input:
+    status: false
+    reason:
+      - The current MKRF exporter does not consume the legacy Treat contract to
+        emit Patchworks stratum treatment definitions.
+      - Activating CC/CT requires a stratum builder that can preserve workbook
+        treatment selection, renewal, retention, and product/account semantics.
+  review_to_build_candidates:
+    - stratum default-scope criteria
+    - default succession rule
+    - CC treatment definition
+    - CT treatment definition
+  preserved_review_metadata:
+    - feature template rows with blank Feature Name values
+    - product template rows with blank Product Name values
+    - treatment factor cells for CC and CT
+    - compiled track cross-check counts
+  deferred:
+    - dumpStratum emission
+    - live treatment activation
+    - product/account activation from stratumProducts
+    - reconciliation against compiled treatment tracks
+
+current_boundary:
+  next_bounded_step: reconcile_workbook_contract_against_compiled_outputs
+  notes:
+    - The legacy Treat workbook surface is now translated into a FEMIC-native
+      review-to-build contract.
+    - The translated contract preserves the CC and CT treatment definitions,
+      the default succession rule, and the review-only disposition of unnamed
+      feature/product rows.
+    - No Treat row is live exporter/build behavior in this slice.
+    - Copied compiled track tables are archival cross-check evidence only.

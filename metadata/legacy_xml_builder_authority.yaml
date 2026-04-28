@@ -38,7 +38,7 @@ femic_translation_direction:
   - Refactor workbook tables and named ranges into FEMIC-native config and table surfaces.
 
 current_boundary:
-  next_bounded_step: translate_treat_review_to_build_contract
+  next_bounded_step: reconcile_workbook_contract_against_compiled_outputs
   notes:
     - This review resolves the editable-source authority seam at the metadata level.
     - Parent-side tracked review extracts now live under metadata/mkrf_xlsm_review/ and are referenced by metadata/legacy_xlsm_review_extracts.yaml.
@@ -50,5 +50,7 @@ current_boundary:
     - dumpRetention remains inactive pending a later retention builder/exporter activation task.
     - The P55.17 Attrib translation now lives at config/legacy_xml_builder/attributes.mkrf.yaml and preserves 16 rows with nonblank Attribute Name values while keeping formula dependencies blocked.
     - dumpAttributes remains inactive pending a later attribute builder/exporter activation task.
+    - The P55.18 Treat translation now lives at config/legacy_xml_builder/strata/treat.mkrf.yaml and preserves the CC/CT treatment definitions plus the default succession rule as review-to-build candidates.
+    - dumpStratum remains inactive pending later stratum builder/reconciliation work.
     - No workbook payload has been copied into the instance by this slice.
     - No runnable XML rebuild path is claimed yet.

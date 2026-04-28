@@ -1,0 +1,156 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+contract_id: legacy_treat_stratum_review_to_build
+contract_status: review_to_build_contract
+
+source:
+  workbook: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/XML/002_base.xlsm
+  sheet: Treat
+  named_ranges:
+    criteria: stratumCriteria
+    succession: stratumSuccession
+    features: stratumFeatures
+    treatments: stratumTreatments
+    factors: stratumFactors
+    products: stratumProducts
+  parent_review_extracts:
+    sheet_extract: metadata/mkrf_xlsm_review/treat.review.csv
+    criteria_range: metadata/mkrf_xlsm_review/ranges/treat_stratum_criteria.review.csv
+    succession_range: metadata/mkrf_xlsm_review/ranges/treat_stratum_succession.review.csv
+    features_range: metadata/mkrf_xlsm_review/ranges/treat_stratum_features.review.csv
+    treatments_range: metadata/mkrf_xlsm_review/ranges/treat_stratum_treatments.review.csv
+    factors_range: metadata/mkrf_xlsm_review/ranges/treat_stratum_factors.review.csv
+    products_range: metadata/mkrf_xlsm_review/ranges/treat_stratum_products.review.csv
+  archival_track_crosscheck:
+    treatments_table: data/legacy_mkrf/compiled_tracks/treatments.csv
+    protoaccounts_table: data/legacy_mkrf/compiled_tracks/protoaccounts.csv
+    accounts_table: data/legacy_mkrf/compiled_tracks/accounts.csv
+    status: archival_crosscheck_only
+
+build_boundary:
+  live_exporter_input: false
+  dump_stratum_status: blocked_pending_stratum_builder_acceptance
+  notes:
+    - The workbook Treat surface is accepted as the governing reviewed active
+      stratum-bundle surface for future MKRF ForestModel stratum emission.
+    - No Treat row is live exporter/build behavior in this slice.
+    - Copied compiled track tables are used only as cross-check evidence and
+      are not substituted for workbook source semantics or raw upstream inputs.
+
+stratum:
+  stratum_id: Treat
+  selection_criteria:
+    status: empty
+    interpretation: applies_to_default_scope_pending_builder_review
+  succession:
+    status: review_to_build_candidate_default_rule
+    breakup_at: 999
+    renewal_age: 0
+  feature_rows:
+    status: review_only_template_rows
+    row_count: 43
+    named_feature_count: 0
+    reason: Rows preserve default factor/cycle/output values but have no Feature Name.
+  product_rows:
+    status: review_only_template_rows
+    row_count: 106
+    named_product_count: 0
+    reason: Rows preserve default product settings but have no Product Name.
+  factor_rows:
+    status: review_only_partial_treatment_factor_rows
+    nonblank_factor_cells:
+      - treatment: CC
+        value: 1
+      - treatment: CT
+        value: 1
+    reason: Factors align with the named treatment columns but have no active
+      product rows in this workbook extract.
+
+treatments:
+  - treatment_id: CC
+    status: review_to_build_candidate_blocked_by_stratum_builder
+    selection:
+      status: managed
+    minimum_operable_age_expression: if(oper in operable, 60, 150)
+    maximum_operable_age: null
+    renew:
+      au: auf
+    age_after_treatment: 0
+    age_after_treatment_mode: absolute
+    retention: 0
+    scheduling_method: null
+    dependencies:
+      - managed
+      - operable
+      - au
+      - auf
+      - oper
+  - treatment_id: CT
+    status: review_to_build_candidate_blocked_by_stratum_builder
+    selection:
+      status: managed
+      additional_expressions:
+        - oper in operable
+        - ct eq 'Y'
+        - not startswith(au,'t')
+    minimum_operable_age: 40
+    maximum_operable_age: 150
+    renew:
+      au: "'thn_'+au"
+    age_after_treatment: 0
+    age_after_treatment_mode: relative
+    retention: 20
+    scheduling_method: null
+    dependencies:
+      - managed
+      - operable
+      - ct
+      - au
+
+compiled_track_crosscheck:
+  treatments_csv:
+    row_count: 2024
+    treatment_counts:
+      CC: 1434
+      CT: 590
+    observed_adjust_modes:
+      CC:
+        - A
+      CT:
+        - R
+    observed_retain_values:
+      CC:
+        - 0
+      CT:
+        - 20
+    interpretation:
+      - The compiled treatment table confirms that CC and CT are materialized
+        treatment labels in the archived runtime family.
+      - The compiled table does not by itself authorize live builder behavior
+        or replace the workbook-owned Treat source contract.
+  accounts_crosscheck:
+    observed_treatment_accounts:
+      - product.area.managed.treat.CC
+      - product.area.managed.treat.CT
+      - product.yield.managed.treat.CC
+      - product.yield.managed.treat.CT
+    interpretation:
+      - Treatment-labelled accounts are present in copied archival accounts and
+        protoaccounts tables.
+      - Product rows remain review-only in this slice because the workbook
+        stratumProducts extract has no Product Name values.
+
+validation_contract:
+  required_treatment_ids:
+    - CC
+    - CT
+  required_checks:
+    - Preserve empty stratum criteria as an explicit default-scope candidate,
+      not as an implicit live filter.
+    - Preserve the default succession rule with breakup_at 999 and renewal_age 0.
+    - Preserve CC and CT treatment definitions and their age, renewal, and
+      retention settings.
+    - Keep feature and product template rows review-only because they have no
+      Feature Name or Product Name values.
+    - Use copied compiled track tables only as archival cross-check evidence.
