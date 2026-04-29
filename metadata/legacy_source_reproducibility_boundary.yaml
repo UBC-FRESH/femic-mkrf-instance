@@ -1,0 +1,99 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+boundary_id: legacy_source_reproducibility_boundary
+phase: P58.3c
+status: reproducibility_boundary_published_no_source_faithful_claim
+
+decision:
+  raw_source_publication_boundary: published
+  source_faithful_rebuild_claim: not_permitted_yet
+  compiled_runtime_substitution: rejected
+  checkpoint_substitution: rejected
+  matrix_build_dependency: unchanged
+  runnable_minimal_claim: unchanged
+
+raw_source_lane:
+  authoritative_upstream_families:
+    - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/Source.gdb
+    - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/Resultant.gdb
+    - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/Resultant_info_v1.xlsx
+    - MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/03_Yields/VDYP/*
+  reconstructed_publication_contract:
+    direct_runtime_precursor:
+      path: MKRF_Cosmin_Model/MKRF/03_MappingAnalysisData/Resultant.gdb/Resultant
+      feature_count: 1873
+      geometry_type: MultiPolygon
+    published_runtime_target:
+      path_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/fragments.*
+      feature_count: 1763
+      geometry_type: Polygon
+      filter_expression: CONTCLAS != 'X'
+      excluded_feature_count: 110
+    field_projection:
+      - source: Operability
+        published: Operabilit
+      - source: Shape_Length
+        published: Shape_Leng
+      - source: Shape_Area
+        published: Shape_Area
+      - source: CONTCLAS
+        published: CONTCLAS
+      - source: AGE_2020
+        published: AGE_2020
+      - source: AU_EX
+        published: AU_EX
+      - source: AU_FU
+        published: AU_FU
+      - source: RES_KEY
+        published: RES_KEY
+      - source: CT_eligib
+        published: CT_eligib
+  interpretation:
+    - Runtime `fragments.*` is a published derivative of the upstream mapping lane.
+    - The current phase reconstructed that publication contract but did not rerun it.
+
+rejected_substitutes:
+  compiled_runtime:
+    status: not_raw_source
+    surfaces:
+      - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/fragments.*
+      - MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/topo_frag100.csv
+      - data/legacy_mkrf/compiled_spatial/fragments.*
+      - data/legacy_mkrf/compiled_spatial/topo_frag100.csv
+    rationale:
+      - These files are runtime publications or archival copies of runtime publications.
+      - They are valid for matrix-build, launch, and comparison work, not for raw-source provenance claims.
+  checkpoint_derived:
+    status: not_raw_source
+    classes:
+      - instance-local restart checkpoints
+      - resume/debug boundary artifacts
+      - derivative fragment exports produced from already-compiled runtime lanes
+    rationale:
+      - Checkpoints are derived intermediates.
+      - They may support debugging or resume workflows without answering source-faithful reconstruction questions.
+
+claim_boundary:
+  allowed_now:
+    - minimally_runnable_patchworks_instance_from_femic_managed_xml_plus_accepted_compiled_spatial_inputs
+    - raw_source_publication_boundary_reconstructed_at_contract_level
+  not_allowed_yet:
+    - source_faithful_mkrf_rebuild
+    - claim_that_runtime_fragments_or_topology_were_regenerated_from_upstream_mapping_inputs
+    - claim_that_checkpoint_or_compiled_runtime_surfaces_are_equivalent_to_raw_source
+  required_future_gates_for_source_faithful_claim:
+    - materialize_or_link_the_authoritative_upstream_source_families_in_a_reviewable_way
+    - document_the_transformation_from_upstream_source_to_Resultant
+    - reproduce_or_audit_the_Resultant_to_fragments publication step
+    - preserve_identity_boundary_caveats_in_any_user-facing claim
+
+scope_boundary:
+  - P58.3c did not ingest upstream raw-source payload into the instance.
+  - P58.3c did not regenerate fragments or topology.
+  - P58.3c did not rerun matrix build or launch proof.
+  - P58.3c did not upgrade the current minimal-runnable claim into a source-faithful rebuild claim.
+
+next_bounded_step:
+  recommendation: broaden_runtime_and_scenario_validation_beyond_minimal_launch
+  roadmap_task: P58.4

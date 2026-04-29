@@ -203,6 +203,16 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local P56.5 note documenting the source-input publication boundary without ingesting mapping data, roads, outputs, workbook payloads, or running matrix build."
+  - artifact_id: "legacy_source_reproducibility_boundary_yaml"
+    path: "metadata/legacy_source_reproducibility_boundary.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable P58.3c reproducibility boundary distinguishing raw-source reconstruction from compiled runtime and checkpoint-derived substitutes."
+  - artifact_id: "legacy_source_reproducibility_boundary_note"
+    path: "runbooks/LEGACY_SOURCE_REPRODUCIBILITY_BOUNDARY.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local P58.3c note documenting what the current MKRF minimal-runnable claim does and does not say about source-faithful reconstruction."
   - artifact_id: "legacy_rebuild_readiness_criteria_yaml"
     path: "metadata/legacy_rebuild_readiness_criteria.yaml"
     class: "reference_metadata"
