@@ -62,3 +62,46 @@ matrix build.
 
 P56.6 published rebuild-readiness criteria and closed Phase 56 with metadata
 recovery complete but runnable rebuild readiness still no-go.
+
+## P58.3a Update: Raw-Source to Runtime Fragments Boundary
+
+Phase 58 revisited the deferred raw-source lane to identify the exact upstream
+publication contract behind the compiled runtime fragments.
+
+The recovered boundary is:
+
+1. source feature class:
+   `03_MappingAnalysisData/Resultant.gdb/Resultant`
+2. filter:
+   `CONTCLAS != 'X'`
+3. published runtime fields:
+   - `Operability -> Operabilit`
+   - `Shape_Length -> Shape_Leng`
+   - `Shape_Area`
+   - `CONTCLAS`
+   - `AGE_2020`
+   - `AU_EX`
+   - `AU_FU`
+   - `RES_KEY`
+   - `CT_eligib`
+4. geometry normalization:
+   single-part `MultiPolygon` source geometries written through shapefile
+   `Polygon` storage
+
+Observed counts:
+
+- `Resultant`: 1,873 features
+- published runtime `fragments.*`: 1,763 features
+- excluded rows: 110
+
+All 110 excluded rows are `CONTCLAS='X'` non-forest records. Their netdown
+split is:
+
+- `2_11_Non_Forest`: 97
+- `2_10_Roads`: 13
+
+Across the 1,763 shared `RES_KEY` rows, no value drift was observed in the
+runtime field subset.
+
+This update reconstructs the publication boundary only. It does not claim that
+the full upstream mapping workflow has been re-run or reproduced inside FEMIC.
