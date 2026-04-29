@@ -1,7 +1,8 @@
 # Legacy Runtime XML Emission
 
 This note records the `P57.3` / `P57.4` emission of the FEMIC-managed MKRF
-runtime ForestModel XML.
+runtime ForestModel XML and its later use in the Phase 57 minimally runnable
+proof.
 
 ## Decision
 
@@ -27,6 +28,12 @@ the explicit deferred-Attrib compatibility passthrough blocks.
 The Attrib formula-heavy blocks still arrive via compatibility passthrough from
 the reconciled archival `baseMKRF.xml`, not through a native FEMIC builder.
 
-`P57.4` still does not rewire runtime config or run matrix build or launch
-proof. The emitted XML remains a runtime input candidate, not yet a runnable
-rebuild claim.
+This XML now participates in the minimally runnable MKRF claim when paired with
+the accepted compiled spatial inputs, the generated runtime `Tracks/*.csv`
+outputs, and the proven launch surface from the generated runtime directory.
+
+It does not by itself claim:
+
+- raw-source reconstruction from `03_MappingAnalysisData/*`;
+- exact legacy compiled equivalence; or
+- completion of the native FEMIC Attrib builder.

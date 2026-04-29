@@ -20,5 +20,7 @@ Current boundary:
 
 - the Attrib formula-heavy blocks remain compatibility passthrough, not native
   FEMIC attribute-builder output;
-- no runtime `Tracks/*.csv` outputs are generated here yet; and
-- this XML alone is not yet a runnable FEMIC/Patchworks rebuild claim.
+- this XML now feeds a successful matrix-build plus launch-proof runtime lane
+  when paired with the accepted compiled spatial inputs; and
+- this XML alone still does not claim raw-source reconstruction or exact
+  legacy-equivalent behavior.

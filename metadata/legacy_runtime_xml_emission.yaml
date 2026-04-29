@@ -3,16 +3,16 @@ schema_version: 1
 case_id: mkrf_legacy_2016
 emission_id: legacy_minimal_runnable_runtime_xml
 phase: P57.4
-status: runtime_xml_emitted_with_attribute_passthrough
+status: runtime_xml_emitted_with_attribute_passthrough_for_minimal_runnable
 
 decision:
   runtime_xml_emission: materialized
   emission_mode: opt_in_mkrf_contract_builder
   generated_yield_curves: inlined_from_curve_table_csv
   attribute_passthrough: materialized_via_compatibility_contract
-  matrix_build: not_run
-  launch_proof: not_run
-  runnable_rebuild_claim: no_go
+  matrix_build: passed
+  launch_proof: passed
+  runnable_rebuild_claim: minimal_runnable
 
 inputs:
   input_variables_config: config/legacy_xml_builder/input_variables.mkrf.yaml
@@ -25,11 +25,12 @@ inputs:
 
 emitted_artifact:
   path: models/mkrf_patchworks_model/XML/baseMKRF.xml
-  sha256: a67ed39a1e0efb774a50cb359b8572322ae56ea59e3d2d2577531b8f6f5890fe
+  sha256: f4a052c9c633b2b9c3da281120c61dde312dd316bb5785eb2a2a0daa5dbf2533
   forest_model:
     description: Base TFL26
     horizon_years: 300
     start_year: 2020
+    max_age: 350
     match: multi
   structure_counts:
     defines: 12
@@ -41,7 +42,7 @@ emitted_artifact:
 emitted_contract:
   input:
     block: Int(RES_KEY)
-    area: area()/10000
+    area: Shape_Area/10000
     age: Int(AGE_2020)
     exclude: CONTCLAS eq 'X'
   output_tables:
@@ -92,11 +93,10 @@ emitted_contract:
 
 scope_boundary:
   - Attrib formula-heavy blocks are still sourced through a compatibility passthrough, not a fully native FEMIC attribute builder.
-  - No runtime Patchworks config was rewired by P57.4.
-  - No Patchworks matrix build was run by P57.4.
-  - No Patchworks launch proof was run by P57.4.
-  - No runnable FEMIC/Patchworks rebuild claim is introduced by P57.4.
+  - The runtime XML now participates in a minimally runnable claim only when paired with the accepted compiled spatial inputs, generated runtime tracks, and the proven launch surface.
+  - Raw-source reconstruction is still out of scope for the minimal runnable claim.
+  - Exact legacy compiled equivalence is still not claimed from XML emission alone.
 
 next_bounded_step:
-  recommendation: wire_runtime_config_to_generated_model_directory
-  roadmap_task: P57.5
+  recommendation: plan_post_minimal_runnable_phase_sequence
+  roadmap_task: phase_58_planning

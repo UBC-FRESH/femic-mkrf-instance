@@ -62,6 +62,7 @@ Instance-local reference surfaces:
 - `metadata/legacy_runtime_xml_emission.yaml`
 - `metadata/legacy_attribute_passthrough.yaml`
 - `metadata/legacy_runtime_config_wiring.yaml`
+- `metadata/legacy_runtime_track_reconciliation.yaml`
 - `config/legacy_xml_builder/input_variables.mkrf.yaml`
 - `config/legacy_xml_builder/curve_library.mkrf.yaml`
 - `config/legacy_xml_builder/netdown.mkrf.yaml`
@@ -75,6 +76,7 @@ Instance-local reference surfaces:
 - `models/mkrf_patchworks_model/XML/baseMKRF.xml`
 - `runbooks/LEGACY_ATTRIBUTE_PASSTHROUGH.md`
 - `runbooks/LEGACY_RUNTIME_CONFIG_WIRING.md`
+- `runbooks/LEGACY_RUNTIME_TRACK_RECONCILIATION.md`
 
 These surfaces summarize the discovered compiled package anatomy:
 
@@ -163,13 +165,21 @@ Important boundary:
   directories for future XML/tracks output, but it still does not generate XML,
   populate runtime tracks, or resolve the missing `InitialTargets` scenario
   target-definition lane;
-- the P57.3 runtime XML emission now materializes
+- the P57.3/P57.4 runtime XML emission now materializes
   `models/mkrf_patchworks_model/XML/baseMKRF.xml` from the recovered Input
   Variables, Curve Library, Netdown, Treat, and generated curve-table
-  contracts without any Attrib compatibility-passthrough or runnable claim;
+  contracts together with the deferred Attrib compatibility passthrough;
+- the P57.6/P57.7 runtime reconciliation now records successful generated
+  `Tracks/*.csv` output generation and an accepted non-blocking merchantable-
+  tail variance (`500/501` generated versus `650/651` legacy) for very-old-
+  stand behavior;
+- the P57.8 launch proof now confirms that the generated runtime model opens
+  from `models/mkrf_patchworks_model/analysis/base.pin` through the Patchworks
+  runtime seam;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
-- this does not make the instance runnable as a legacy Patchworks rebuild.
+- this instance is now a minimally runnable MKRF Patchworks rebuild surface,
+  not a raw-source reconstruction or exact legacy-equivalence claim.
 
 ## DataLad dataset policy
 

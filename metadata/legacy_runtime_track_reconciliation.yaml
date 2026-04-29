@@ -1,0 +1,89 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+reconciliation_id: minimal_runnable_runtime_track_reconciliation
+phase: P57.6-P57.8
+status: minimal_runnable_tracks_reconciled_and_launch_proven
+
+decision:
+  matrix_build: passed
+  generated_tracks: materialized
+  track_smoke_reconciliation: completed
+  exact_legacy_equivalence: not_required_for_minimal_runnable
+  accepted_variance: merchantable_tail_extension_500_vs_650
+  launch_proof: passed
+  runnable_rebuild_claim: minimal_runnable
+
+runtime_evidence:
+  runtime_xml: models/mkrf_patchworks_model/XML/baseMKRF.xml
+  generated_tracks_root: models/mkrf_patchworks_model/Tracks
+  accepted_spatial_inputs:
+    fragments: models/mkrf_patchworks_model/Spatial/fragments.dbf
+    topology: models/mkrf_patchworks_model/Spatial/topo_frag100.csv
+  patchworks_log: models/mkrf_patchworks_model/patchworksLog.csv
+  launch_proof:
+    launch_surface: models/mkrf_patchworks_model/analysis/base.pin
+    runtime_config: config/patchworks.runtime.windows.yaml
+    status: launched_from_generated_runtime_directory
+    observed_on: 2026-04-29
+    note: run-headless reached the generated runtime surface and the developer confirmed that Patchworks opened successfully from the generated model directory.
+
+generated_outputs:
+  required_track_tables:
+    - curves.csv
+    - features.csv
+    - products.csv
+    - treatments.csv
+    - accounts.csv
+    - blocks.csv
+  additional_track_tables:
+    - protoaccounts.csv
+    - tracknames.csv
+    - strata.csv
+    - groups.csv
+    - packages.csv
+    - packageSequences.csv
+    - messages.csv
+
+comparison_summary:
+  legacy_reference_lane: planning_corpus_compiled_tracks
+  representative_track_identity:
+    track_id: 2
+    tracknames_match: true
+    strata_match: true
+    blocks_match: true
+    block_row_count: 51
+  smoke_matches:
+    features_row_count_match: true
+    products_row_count_match: true
+    features_label_set_match: true
+    products_label_set_match: true
+    representative_total_yield_curve_shape_match: true
+  non_blocking_variance:
+    variance_id: merchantable_total_yield_tail_extension
+    affected_surface: feature.yield.managed.merch.total
+    common_managed_track_count: 1434
+    generated_terminal_tail:
+      hold_age: 500
+      zero_age: 501
+    legacy_terminal_tail:
+      hold_age: 650
+      zero_age: 651
+    interpretation:
+      - Generated and legacy merch curves share the same pre-tail yield shape.
+      - The remaining divergence is a terminal extension age, not a cohort or total-yield mismatch.
+    acceptance_rationale:
+      - Developer-approved as non-blocking for the minimal runnable phase.
+      - Most initial MKRF stands are materially younger than 500 years because of the 1868 fire history.
+      - Exact 650-year merchantable-tail preservation is deferred unless a later phase requires legacy-faithful very-old-stand behavior.
+
+scope_boundary:
+  - Raw-source reconstruction is still out of scope for the minimal runnable claim.
+  - Exact legacy compiled curve-id preservation is not required for the minimal runnable claim.
+  - The accepted merchantable-tail variance remains a documented caveat for very-old-stand behavior.
+  - Formula-heavy Attrib logic still depends on the compatibility passthrough rather than a fully native FEMIC builder.
+  - Broader scenario/runtime validation remains out of scope for the minimal runnable claim.
+
+next_bounded_step:
+  recommendation: plan_post_minimal_runnable_phase_sequence
+  roadmap_task: phase_58_planning

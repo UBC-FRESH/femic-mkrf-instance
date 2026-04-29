@@ -11,13 +11,15 @@ Included now:
   compiled runtime inputs;
 - `Scripts/*.bsh` and `Targets/*.bsh` copied into instance-relative runtime
   homes; and
-- placeholder `XML/` and `Tracks/` directories for future FEMIC-generated XML
-  and Patchworks matrix-build outputs.
+- generated `XML/baseMKRF.xml` plus generated `Tracks/*.csv` outputs from the
+  minimally runnable Phase 57 proof.
 
 Current boundary:
 
-- `XML/baseMKRF.xml` is not generated here yet;
-- `Tracks/*.csv` in this directory are not generated yet;
 - `analysis/ScenarioSet.bsh` still depends on unresolved target-description
-  semantics under `InitialTargets/00_Target_Descriptions.bsh`; and
-- this scaffold is not yet a runnable FEMIC/Patchworks rebuild claim.
+  semantics under `InitialTargets/00_Target_Descriptions.bsh`;
+- formula-heavy Attrib logic still arrives via compatibility passthrough;
+- the accepted merch-tail variance remains documented for very-old-stand
+  behavior; and
+- this directory now represents a minimally runnable MKRF Patchworks runtime
+  surface, not a raw-source reconstruction or exact legacy-equivalence claim.
