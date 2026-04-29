@@ -1,0 +1,46 @@
+schema_version: 1
+
+case_id: mkrf_legacy_2016
+runtime_wiring_id: minimal_runnable_patchworks_runtime_wiring
+phase: P57.5
+status: runtime_config_wired_and_preflight_validated
+
+decision:
+  runtime_config_wiring: materialized
+  variant_registration: builtin_registry_updated
+  preflight: passed
+  matrix_build: not_run
+  launch_proof: not_run
+  runnable_rebuild_claim: no_go
+
+runtime_surfaces:
+  runtime_config: config/patchworks.runtime.windows.yaml
+  analysis_pin: models/mkrf_patchworks_model/analysis/base.pin
+  fragments_path: models/mkrf_patchworks_model/Spatial/fragments.dbf
+  forestmodel_xml_path: models/mkrf_patchworks_model/XML/baseMKRF.xml
+  tracks_output_dir: models/mkrf_patchworks_model/Tracks
+  builtin_variant:
+    variant_id: mkrf.base
+    instance_id: mkrf
+    analysis_pin: external/femic-mkrf-instance/models/mkrf_patchworks_model/analysis/base.pin
+    runtime_config: external/femic-mkrf-instance/config/patchworks.runtime.windows.yaml
+
+preflight_result:
+  command: femic patchworks preflight --config external/femic-mkrf-instance/config/patchworks.runtime.windows.yaml
+  status: passed
+  jar_path: C:/Program Files/Spatial Planning Systems/Patchworks/patchworks.jar
+  launcher_executable: C:/Program Files/Eclipse Adoptium/jdk-8.0.452.9-hotspot/bin/java.EXE
+  license_env: SPS_LICENSE_SERVER
+  license_value_source: environment
+  license_host: auth.spatial.ca
+  spshome: C:/Program Files/Spatial Planning Systems/Patchworks
+
+scope_boundary:
+  - No Patchworks matrix build was run.
+  - No runtime Tracks/*.csv outputs were generated.
+  - No Patchworks launch proof was run.
+  - No runnable FEMIC/Patchworks rebuild claim is introduced by P57.5.
+
+next_bounded_step:
+  recommendation: run_matrix_build_against_emitted_xml_and_accepted_spatial_inputs
+  roadmap_task: P57.6

@@ -98,13 +98,17 @@ sequence are ready to publish.
      `runbooks/LEGACY_ATTRIBUTE_PASSTHROUGH.md` as the source of truth for the
      explicit deferred-Attrib compatibility contract carried through the
      generated runtime XML;
+   - use `metadata/legacy_runtime_config_wiring.yaml` and
+     `runbooks/LEGACY_RUNTIME_CONFIG_WIRING.md` as the source of truth for the
+     MKRF Patchworks runtime config wiring, builtin variant registration, and
+     the passed preflight gate;
    - treat `data/legacy_mkrf/compiled_controls/` and
      `data/legacy_mkrf/compiled_tracks/` and
      `data/legacy_mkrf/compiled_spatial/` and
      `data/legacy_mkrf/generated_xml/` as inert archival references, not as an
      approved runnable rebuild surface;
    - treat `models/mkrf_patchworks_model/` as a partial runtime scaffold only
-     until runtime wiring, tracks generation, and launch proof are completed;
+     until tracks generation and launch proof are completed;
    - finalize the real run profile, silviculture surface, and TIPSY rules;
    - publish the real MKRF boundary and checkpoint inputs required by `femic prep validate-case`;
    - classify bulky payload families in `.gitattributes`;

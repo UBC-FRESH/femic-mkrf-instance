@@ -248,6 +248,21 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local P57.4 note documenting the extracted legacy Attrib passthrough blocks, their validated dependencies, and the runnable-minimum caveat."
+  - artifact_id: "legacy_runtime_config_wiring_yaml"
+    path: "metadata/legacy_runtime_config_wiring.yaml"
+    class: "reference_metadata"
+    published: true
+    notes: "Machine-readable P57.5 record of the MKRF runtime config rewiring, builtin variant registration, and the passed Patchworks preflight gate."
+  - artifact_id: "legacy_runtime_config_wiring_note"
+    path: "runbooks/LEGACY_RUNTIME_CONFIG_WIRING.md"
+    class: "reference_metadata"
+    published: true
+    notes: "Instance-local P57.5 note documenting the MKRF runtime config paths, the registered mkrf.base launch surface, and the passed preflight result."
+  - artifact_id: "runtime_config_windows"
+    path: "config/patchworks.runtime.windows.yaml"
+    class: "runtime_config"
+    published: true
+    notes: "MKRF Patchworks runtime config wired in P57.5 to the generated runtime XML, accepted fragments, and runtime Tracks/ output directory."
   - artifact_id: "runtime_model_xml"
     path: "models/mkrf_patchworks_model/XML/baseMKRF.xml"
     class: "runtime_generated_xml"
