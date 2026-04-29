@@ -105,3 +105,29 @@ runtime field subset.
 
 This update reconstructs the publication boundary only. It does not claim that
 the full upstream mapping workflow has been re-run or reproduced inside FEMIC.
+
+## P58.3b Update: Raw Source Is Not Runtime or Checkpoint
+
+Phase 58 then made the substitute boundary explicit.
+
+Raw source means the upstream `03_MappingAnalysisData/*` surfaces that feed the
+published `Resultant.gdb/Resultant` layer. It does not mean:
+
+- compiled runtime `Spatial/fragments.*`
+- compiled runtime `Spatial/topo_frag100.csv`
+- instance archival copies under `data/legacy_mkrf/compiled_spatial/*`
+- restart/checkpoint artifacts created for resume, debugging, or later-stage
+  experimentation
+
+Those surfaces remain useful, but for different questions:
+
+- compiled runtime files answer runtime validation and historical comparison
+  questions;
+- checkpoint-derived artifacts answer resume/debug questions; and
+- upstream mapping/yield-prep surfaces answer raw-source provenance and
+  source-faithful reconstruction questions.
+
+For MKRF, a future source-faithful rebuild claim must start from the upstream
+source lane or from a fully documented reproduction of it. It cannot silently
+substitute compiled runtime files or checkpoint-derived artifacts for that raw
+source boundary.
