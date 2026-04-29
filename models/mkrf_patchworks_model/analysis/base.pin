@@ -147,10 +147,10 @@ int PatchWorks_Init() {
 
    /*
     * Set up the initial harvest targets
-    * Uncomment and edit these lines if required
+    * Load the accepted legacy benchmark target checkpoint for the PoC lane.
     */
-   // control.loadTargetSummary("initialTargetSummary.csv");
-   // control.loadTargetStatus("initialTargetStatus.csv");
+   control.loadTargetSummary("initialTargetSummary.csv");
+   control.loadTargetStatus("initialTargetStatus.csv");
 
    /*
     * Establish the initial timing constraints

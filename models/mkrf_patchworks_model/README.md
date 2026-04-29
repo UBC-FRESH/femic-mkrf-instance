@@ -17,7 +17,14 @@ Included now:
 Current boundary:
 
 - `analysis/ScenarioSet.bsh` still depends on unresolved target-description
-  semantics under `InitialTargets/00_Target_Descriptions.bsh`;
+  semantics under `InitialTargets/00_Target_Descriptions.bsh`, including the
+  absent legacy helper names `THLB4070(...)` and `UWR(...)`;
+- for the PoC benchmark lane, `analysis/base.pin` now loads the legacy
+  `initialTargetSummary.csv` and `initialTargetStatus.csv` checkpoint surfaces
+  copied from the known-good `Outputs/001_Base/scenario/` run instead of
+  waiting for full helper-library reconstruction;
+- the representative PoC runtime proof is the active-target Patchworks GUI run
+  saved under `analysis/scenarios/foo`;
 - formula-heavy Attrib logic still arrives via compatibility passthrough;
 - the accepted merch-tail variance remains documented for very-old-stand
   behavior; and
