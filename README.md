@@ -60,7 +60,7 @@ Instance-local reference surfaces:
 - `metadata/legacy_rebuild_readiness_criteria.yaml`
 - `metadata/legacy_runtime_model_layout.yaml`
 - `metadata/legacy_runtime_xml_emission.yaml`
-- `metadata/legacy_attribute_passthrough.yaml`
+- `metadata/legacy_attribute_passthrough.yaml` (historical P57.4 record)
 - `metadata/legacy_runtime_config_wiring.yaml`
 - `metadata/legacy_runtime_track_reconciliation.yaml`
 - `config/legacy_xml_builder/input_variables.mkrf.yaml`
@@ -165,10 +165,11 @@ Important boundary:
   directories for future XML/tracks output, but it still does not generate XML,
   populate runtime tracks, or resolve the missing `InitialTargets` scenario
   target-definition lane;
-- the P57.3/P57.4 runtime XML emission now materializes
+- the P57.3/P58.2 runtime XML emission now materializes
   `models/mkrf_patchworks_model/XML/baseMKRF.xml` from the recovered Input
   Variables, Curve Library, Netdown, Treat, and generated curve-table
-  contracts together with the deferred Attrib compatibility passthrough;
+  contracts together with a native FEMIC Attrib builder driven by reviewed
+  workbook extracts;
 - the P57.6/P57.7 runtime reconciliation now records successful generated
   `Tracks/*.csv` output generation and an accepted non-blocking merchantable-
   tail variance (`500/501` generated versus `650/651` legacy) for very-old-

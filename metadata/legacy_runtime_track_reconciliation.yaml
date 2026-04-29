@@ -2,7 +2,7 @@ schema_version: 1
 
 case_id: mkrf_legacy_2016
 reconciliation_id: minimal_runnable_runtime_track_reconciliation
-phase: P57.6-P57.8
+phase: P57.6-P57.8_and_P58.2
 status: minimal_runnable_tracks_reconciled_and_launch_proven
 
 decision:
@@ -81,9 +81,8 @@ scope_boundary:
   - Raw-source reconstruction is still out of scope for the minimal runnable claim.
   - Exact legacy compiled curve-id preservation is not required for the minimal runnable claim.
   - The accepted merchantable-tail variance remains a documented caveat for very-old-stand behavior.
-  - Formula-heavy Attrib logic still depends on the compatibility passthrough rather than a fully native FEMIC builder.
   - Broader scenario/runtime validation remains out of scope for the minimal runnable claim.
 
 next_bounded_step:
-  recommendation: plan_post_minimal_runnable_phase_sequence
-  roadmap_task: phase_58_planning
+  recommendation: reconstruct_raw_source_input_lane
+  roadmap_task: P58.3

@@ -49,4 +49,6 @@ very-old-stand merchantable-yield behavior.
 This closeout still does not claim raw-source reconstruction or exact legacy
 compiled equivalence. The minimally runnable claim is limited to FEMIC-managed
 XML emission, successful matrix build, accepted smoke reconciliation, and a
-proven Patchworks launch from the generated runtime directory.
+proven Patchworks launch from the generated runtime directory. As of `P58.2`,
+the runtime XML portion of that claim now uses the native FEMIC Attrib builder
+rather than the historical passthrough.

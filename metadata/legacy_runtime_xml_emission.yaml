@@ -2,14 +2,14 @@ schema_version: 1
 
 case_id: mkrf_legacy_2016
 emission_id: legacy_minimal_runnable_runtime_xml
-phase: P57.4
-status: runtime_xml_emitted_with_attribute_passthrough_for_minimal_runnable
+phase: P58.2
+status: runtime_xml_emitted_with_native_attribute_builder
 
 decision:
   runtime_xml_emission: materialized
   emission_mode: opt_in_mkrf_contract_builder
   generated_yield_curves: inlined_from_curve_table_csv
-  attribute_passthrough: materialized_via_compatibility_contract
+  native_attribute_builder: materialized
   matrix_build: passed
   launch_proof: passed
   runnable_rebuild_claim: minimal_runnable
@@ -20,12 +20,13 @@ inputs:
   netdown_config: config/legacy_xml_builder/netdown.mkrf.yaml
   treat_config: config/legacy_xml_builder/strata/treat.mkrf.yaml
   attributes_config: config/legacy_xml_builder/attributes.mkrf.yaml
-  legacy_base_xml_passthrough_source: data/legacy_mkrf/generated_xml/baseMKRF.xml
+  attribute_review_extract: metadata/mkrf_xlsm_review/ranges/attrib_attributes.review.csv
+  species_lookup_review_extract: metadata/mkrf_xlsm_review/ranges/lookups_spp_comp.review.csv
   generated_curve_table_csv: data/legacy_mkrf/generated_xml/CSV/CURVE_TABLE.csv
 
 emitted_artifact:
   path: models/mkrf_patchworks_model/XML/baseMKRF.xml
-  sha256: f4a052c9c633b2b9c3da281120c61dde312dd316bb5785eb2a2a0daa5dbf2533
+  sha256: 18b22086c44faa9dcd61ddfcf71156d15efee7b7bdcf09b9c7a27cf6bc1cb6e7
   forest_model:
     description: Base TFL26
     horizon_years: 300
@@ -85,18 +86,17 @@ emitted_contract:
     - <default succession>
     - status in managed
     - status in managed and oper in operable and ct eq 'Y' and not startswith(au,'t')
-    - <attrib passthrough feature area/yield block>
+    - <native attrib feature area/yield block>
     - status in managed
-    - <attrib passthrough individual species yield block>
+    - <native attrib individual species yield block>
     - status ne 'X'
-    - <attrib passthrough product block>
+    - <native attrib product block>
 
 scope_boundary:
-  - Attrib formula-heavy blocks are still sourced through a compatibility passthrough, not a fully native FEMIC attribute builder.
   - The runtime XML now participates in a minimally runnable claim only when paired with the accepted compiled spatial inputs, generated runtime tracks, and the proven launch surface.
   - Raw-source reconstruction is still out of scope for the minimal runnable claim.
   - Exact legacy compiled equivalence is still not claimed from XML emission alone.
 
 next_bounded_step:
-  recommendation: plan_post_minimal_runnable_phase_sequence
-  roadmap_task: phase_58_planning
+  recommendation: reconstruct_raw_source_input_lane
+  roadmap_task: P58.3
