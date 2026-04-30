@@ -12,7 +12,7 @@ entrypoints:
   pin:
     legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/baseMKRF.pin
     role: primary_compiled_model_entrypoint
-    candidate_femic_home: models/mkrf_patchworks_model/analysis/baseMKRF.pin
+    candidate_femic_home: models/mkrf_patchworks_model_poc/analysis/baseMKRF.pin
     archival_copy_path: data/legacy_mkrf/compiled_controls/entrypoints/baseMKRF.pin
   launcher:
     legacy_path: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/runME.bsh
@@ -29,7 +29,7 @@ compiled_package_families:
   - family_id: tracks
     legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Tracks/*.csv
     role: compiled_matrix_runtime_tables
-    candidate_femic_home: models/mkrf_patchworks_model/tracks/
+    candidate_femic_home: models/mkrf_patchworks_model_poc/tracks/
     imported_now: archival_copy
     archival_copy_root: data/legacy_mkrf/compiled_tracks/
   - family_id: fragments
@@ -41,13 +41,13 @@ compiled_package_families:
   - family_id: topology
     legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Spatial/topo_frag100.csv
     role: spatial_topology_sidecar
-    candidate_femic_home: models/mkrf_patchworks_model/blocks/topology_fragments.csv
+    candidate_femic_home: models/mkrf_patchworks_model_poc/blocks/topology_fragments.csv
     imported_now: archival_copy
     archival_copy_path: data/legacy_mkrf/compiled_spatial/topo_frag100.csv
   - family_id: target_scripts
     legacy_glob: MKRF_Cosmin_Model/MKRF/04_Models/PW_MKRF/Targets/*.bsh
     role: target_control_scripts
-    candidate_femic_home: models/mkrf_patchworks_model/targets/
+    candidate_femic_home: models/mkrf_patchworks_model_poc/targets/
     imported_now: archival_copy
     archival_copy_root: data/legacy_mkrf/compiled_controls/targets/
   - family_id: runtime_scripts
@@ -91,3 +91,4 @@ current_boundary:
     - Upstream mapping-analysis and reporting families remain deferred.
     - patchworksLog.csv remains outside the current archival slice.
     - This slice still does not publish runnable legacy artifacts.
+

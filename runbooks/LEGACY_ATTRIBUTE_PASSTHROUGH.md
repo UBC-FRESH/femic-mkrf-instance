@@ -5,7 +5,7 @@ for the deferred formula-heavy MKRF Attrib blocks.
 
 ## Decision
 
-The runtime XML at `models/mkrf_patchworks_model/XML/baseMKRF.xml` now carries
+The runtime XML at `models/mkrf_patchworks_model_poc/XML/baseMKRF.xml` now carries
 five extracted legacy `<select>` blocks copied from the reconciled archival
 `data/legacy_mkrf/generated_xml/baseMKRF.xml`.
 
@@ -35,3 +35,4 @@ to proceed to runtime config wiring in the next bounded move.
 No Patchworks runtime config was rewired here. No matrix build or Patchworks
 launch proof was run here. The minimal runnable claim remains blocked until
 later Phase 57 gates complete.
+

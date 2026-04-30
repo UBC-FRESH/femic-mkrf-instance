@@ -9,9 +9,9 @@ matrix build.
 The instance runtime config at `config/patchworks.runtime.windows.yaml` now
 points at:
 
-- `models/mkrf_patchworks_model/Spatial/fragments.dbf`
-- `models/mkrf_patchworks_model/XML/baseMKRF.xml`
-- `models/mkrf_patchworks_model/Tracks`
+- `models/mkrf_patchworks_model_poc/Spatial/fragments.dbf`
+- `models/mkrf_patchworks_model_poc/XML/baseMKRF.xml`
+- `models/mkrf_patchworks_model_poc/Tracks`
 
 The builtin Patchworks registry now exposes `mkrf.base` as the minimal MKRF
 launch surface for later launch proof.
@@ -34,3 +34,4 @@ The validated runtime used:
 `P57.5` does not run matrix build and does not prove Patchworks launch. It
 only confirms that the runtime config and local Patchworks installation resolve
 cleanly enough to proceed to the matrix-build gate.
+

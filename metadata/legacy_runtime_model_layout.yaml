@@ -16,30 +16,30 @@ decision:
   runnable_rebuild_claim: no_go
 
 model_layout:
-  model_root: models/mkrf_patchworks_model
-  analysis_root: models/mkrf_patchworks_model/analysis
-  xml_root: models/mkrf_patchworks_model/XML
-  spatial_root: models/mkrf_patchworks_model/Spatial
-  tracks_root: models/mkrf_patchworks_model/Tracks
-  scripts_root: models/mkrf_patchworks_model/Scripts
-  targets_root: models/mkrf_patchworks_model/Targets
-  initial_targets_root: models/mkrf_patchworks_model/InitialTargets
+  model_root: models/mkrf_patchworks_model_poc
+  analysis_root: models/mkrf_patchworks_model_poc/analysis
+  xml_root: models/mkrf_patchworks_model_poc/XML
+  spatial_root: models/mkrf_patchworks_model_poc/Spatial
+  tracks_root: models/mkrf_patchworks_model_poc/Tracks
+  scripts_root: models/mkrf_patchworks_model_poc/Scripts
+  targets_root: models/mkrf_patchworks_model_poc/Targets
+  initial_targets_root: models/mkrf_patchworks_model_poc/InitialTargets
 
 materialized_inputs:
   analysis_pin:
     archival_source: data/legacy_mkrf/compiled_controls/entrypoints/baseMKRF.pin
-    runtime_path: models/mkrf_patchworks_model/analysis/base.pin
+    runtime_path: models/mkrf_patchworks_model_poc/analysis/base.pin
     sanitizations:
       - normalized the home-directory comment to remove the legacy install path
       - redirected `Tracks/`, `Spatial/`, and `Scripts/` references to
         analysis-relative runtime paths
   scenario_launcher:
     archival_source: data/legacy_mkrf/compiled_controls/entrypoints/runME.bsh
-    runtime_path: models/mkrf_patchworks_model/analysis/runME.bsh
+    runtime_path: models/mkrf_patchworks_model_poc/analysis/runME.bsh
     status: copied_verbatim
   scenario_controller:
     archival_source: data/legacy_mkrf/compiled_controls/entrypoints/ScenarioSet.bsh
-    runtime_path: models/mkrf_patchworks_model/analysis/ScenarioSet.bsh
+    runtime_path: models/mkrf_patchworks_model_poc/analysis/ScenarioSet.bsh
     sanitizations:
       - redirected `InitialTargets/00_Target_Descriptions.bsh` to the
         model-root-relative `../InitialTargets/00_Target_Descriptions.bsh`
@@ -48,7 +48,7 @@ materialized_inputs:
         control slice and is represented by a fail-fast placeholder
   runtime_scripts:
     archival_source_root: data/legacy_mkrf/compiled_controls/scripts
-    runtime_root: models/mkrf_patchworks_model/Scripts
+    runtime_root: models/mkrf_patchworks_model_poc/Scripts
     sanitizations:
       - normalized absolute legacy paths in `00_Build_Matrix.bsh`
       - normalized absolute legacy paths in `01_Topology_fragments.bsh`
@@ -56,10 +56,10 @@ materialized_inputs:
       - normalized the CBM export output path in `02_export_toCBM.bsh`
   target_scripts:
     archival_source_root: data/legacy_mkrf/compiled_controls/targets
-    runtime_root: models/mkrf_patchworks_model/Targets
+    runtime_root: models/mkrf_patchworks_model_poc/Targets
     status: copied_verbatim
   spatial_runtime:
-    runtime_root: models/mkrf_patchworks_model/Spatial
+    runtime_root: models/mkrf_patchworks_model_poc/Spatial
     source_lane: local_planning_corpus_compiled_runtime_copy
     copied_files:
       - fragments.cpg
@@ -78,10 +78,10 @@ materialized_inputs:
 
 future_output_staging:
   xml_root:
-    path: models/mkrf_patchworks_model/XML
+    path: models/mkrf_patchworks_model_poc/XML
     producer: P57.3_femic_opt_in_mkrf_xml_emission
   tracks_root:
-    path: models/mkrf_patchworks_model/Tracks
+    path: models/mkrf_patchworks_model_poc/Tracks
     producer: P57.6_patchworks_matrix_build
 
 known_gaps:
@@ -103,3 +103,4 @@ scope_boundary:
 next_bounded_step:
   recommendation: implement_opt_in_mkrf_xml_emission
   roadmap_task: P57.3
+

@@ -72,8 +72,8 @@ Instance-local reference surfaces:
 - `data/legacy_mkrf/compiled_tracks/`
 - `data/legacy_mkrf/compiled_spatial/`
 - `data/legacy_mkrf/generated_xml/`
-- `models/mkrf_patchworks_model/`
-- `models/mkrf_patchworks_model/XML/baseMKRF.xml`
+- `models/mkrf_patchworks_model_poc/`
+- `models/mkrf_patchworks_model_poc/XML/baseMKRF.xml`
 - `runbooks/LEGACY_ATTRIBUTE_PASSTHROUGH.md`
 - `runbooks/LEGACY_RUNTIME_CONFIG_WIRING.md`
 - `runbooks/LEGACY_RUNTIME_TRACK_RECONCILIATION.md`
@@ -160,13 +160,13 @@ Important boundary:
   complete and runnable rebuild readiness still no-go pending future builder,
   XML, source-input, matrix-build, output-comparison, and identity gates;
 - the P57.2 runtime model layout now materializes
-  `models/mkrf_patchworks_model/` with a sanitized `analysis/base.pin`,
+  `models/mkrf_patchworks_model_poc/` with a sanitized `analysis/base.pin`,
   copied compiled spatial runtime inputs, copied control scripts, and staging
   directories for future XML/tracks output, but it still does not generate XML,
   populate runtime tracks, or resolve the missing `InitialTargets` scenario
   target-definition lane;
 - the P57.3/P58.2 runtime XML emission now materializes
-  `models/mkrf_patchworks_model/XML/baseMKRF.xml` from the recovered Input
+  `models/mkrf_patchworks_model_poc/XML/baseMKRF.xml` from the recovered Input
   Variables, Curve Library, Netdown, Treat, and generated curve-table
   contracts together with a native FEMIC Attrib builder driven by reviewed
   workbook extracts;
@@ -175,7 +175,7 @@ Important boundary:
   tail variance (`500/501` generated versus `650/651` legacy) for very-old-
   stand behavior;
 - the P57.8 launch proof now confirms that the generated runtime model opens
-  from `models/mkrf_patchworks_model/analysis/base.pin` through the Patchworks
+  from `models/mkrf_patchworks_model_poc/analysis/base.pin` through the Patchworks
   runtime seam;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
@@ -242,3 +242,4 @@ Policy:
    only after the real MKRF boundary and checkpoint inputs are published.
 
 See `runbooks/REBUILD_RUNBOOK.md` for the current thin-baseline boundary.
+

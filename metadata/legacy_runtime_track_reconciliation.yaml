@@ -15,14 +15,14 @@ decision:
   runnable_rebuild_claim: minimal_runnable
 
 runtime_evidence:
-  runtime_xml: models/mkrf_patchworks_model/XML/baseMKRF.xml
-  generated_tracks_root: models/mkrf_patchworks_model/Tracks
+  runtime_xml: models/mkrf_patchworks_model_poc/XML/baseMKRF.xml
+  generated_tracks_root: models/mkrf_patchworks_model_poc/Tracks
   accepted_spatial_inputs:
-    fragments: models/mkrf_patchworks_model/Spatial/fragments.dbf
-    topology: models/mkrf_patchworks_model/Spatial/topo_frag100.csv
-  patchworks_log: models/mkrf_patchworks_model/patchworksLog.csv
+    fragments: models/mkrf_patchworks_model_poc/Spatial/fragments.dbf
+    topology: models/mkrf_patchworks_model_poc/Spatial/topo_frag100.csv
+  patchworks_log: models/mkrf_patchworks_model_poc/patchworksLog.csv
   launch_proof:
-    launch_surface: models/mkrf_patchworks_model/analysis/base.pin
+    launch_surface: models/mkrf_patchworks_model_poc/analysis/base.pin
     runtime_config: config/patchworks.runtime.windows.yaml
     status: launched_from_generated_runtime_directory
     observed_on: 2026-04-29
@@ -86,3 +86,4 @@ scope_boundary:
 next_bounded_step:
   recommendation: reconstruct_raw_source_input_lane
   roadmap_task: P58.3
+

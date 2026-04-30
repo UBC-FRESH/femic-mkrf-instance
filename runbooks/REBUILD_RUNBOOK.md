@@ -92,7 +92,7 @@ sequence are ready to publish.
      unresolved `InitialTargets` / XML / tracks gaps;
    - use `metadata/legacy_runtime_xml_emission.yaml` and
      `runbooks/LEGACY_RUNTIME_XML_EMISSION.md` as the source of truth for the
-     P57.3 / P57.4 emitted `models/mkrf_patchworks_model/XML/baseMKRF.xml`
+     P57.3 / P57.4 emitted `models/mkrf_patchworks_model_poc/XML/baseMKRF.xml`
      runtime input candidate and the still-blocked no-run boundary;
    - use `metadata/legacy_attribute_passthrough.yaml` and
      `runbooks/LEGACY_ATTRIBUTE_PASSTHROUGH.md` as the source of truth for the
@@ -107,7 +107,7 @@ sequence are ready to publish.
      `data/legacy_mkrf/compiled_spatial/` and
      `data/legacy_mkrf/generated_xml/` as inert archival references, not as an
      approved runnable rebuild surface;
-   - treat `models/mkrf_patchworks_model/` as a partial runtime scaffold only
+   - treat `models/mkrf_patchworks_model_poc/` as a partial runtime scaffold only
      until tracks generation and launch proof are completed;
    - finalize the real run profile, silviculture surface, and TIPSY rules;
    - publish the real MKRF boundary and checkpoint inputs required by `femic prep validate-case`;
@@ -120,3 +120,4 @@ sequence are ready to publish.
 1. `git annex enableremote arbutus-s3`
 2. `python -m datalad get data/annex_smoke/mkrf_bootstrap_smoke.bin`
 3. `git annex whereis data/annex_smoke/mkrf_bootstrap_smoke.bin`
+

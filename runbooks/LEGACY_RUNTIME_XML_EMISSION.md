@@ -7,7 +7,7 @@ proof.
 ## Decision
 
 The runtime XML now exists at
-`models/mkrf_patchworks_model/XML/baseMKRF.xml`.
+`models/mkrf_patchworks_model_poc/XML/baseMKRF.xml`.
 
 It is emitted from the recovered MKRF contracts:
 
@@ -36,3 +36,4 @@ It does not by itself claim:
 - exact legacy compiled equivalence; or
 - broader post-minimal-runnable hardening beyond the current native Attrib
   replacement.
+

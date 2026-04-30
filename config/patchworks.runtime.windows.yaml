@@ -7,9 +7,10 @@ patchworks:
   use_xvfb: false
 
 matrix_builder:
-  fragments_path: ../models/mkrf_patchworks_model/Spatial/fragments.dbf
-  output_dir: ../models/mkrf_patchworks_model/Tracks
-  forestmodel_xml_path: ../models/mkrf_patchworks_model/XML/baseMKRF.xml
+  fragments_path: ../models/mkrf_patchworks_model_poc/Spatial/fragments.dbf
+  output_dir: ../models/mkrf_patchworks_model_poc/Tracks
+  forestmodel_xml_path: ../models/mkrf_patchworks_model_poc/XML/baseMKRF.xml
   auto_close_window_on_success: true
   auto_close_settle_seconds: 2.0
   auto_close_timeout_seconds: 10.0
+

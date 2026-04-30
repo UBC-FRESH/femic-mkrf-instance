@@ -15,14 +15,14 @@ decision:
 
 runtime_surfaces:
   runtime_config: config/patchworks.runtime.windows.yaml
-  analysis_pin: models/mkrf_patchworks_model/analysis/base.pin
-  fragments_path: models/mkrf_patchworks_model/Spatial/fragments.dbf
-  forestmodel_xml_path: models/mkrf_patchworks_model/XML/baseMKRF.xml
-  tracks_output_dir: models/mkrf_patchworks_model/Tracks
+  analysis_pin: models/mkrf_patchworks_model_poc/analysis/base.pin
+  fragments_path: models/mkrf_patchworks_model_poc/Spatial/fragments.dbf
+  forestmodel_xml_path: models/mkrf_patchworks_model_poc/XML/baseMKRF.xml
+  tracks_output_dir: models/mkrf_patchworks_model_poc/Tracks
   builtin_variant:
     variant_id: mkrf.base
     instance_id: mkrf
-    analysis_pin: external/femic-mkrf-instance/models/mkrf_patchworks_model/analysis/base.pin
+    analysis_pin: external/femic-mkrf-instance/models/mkrf_patchworks_model_poc/analysis/base.pin
     runtime_config: external/femic-mkrf-instance/config/patchworks.runtime.windows.yaml
 
 preflight_result:
@@ -44,3 +44,4 @@ scope_boundary:
 next_bounded_step:
   recommendation: run_matrix_build_against_emitted_xml_and_accepted_spatial_inputs
   roadmap_task: P57.6
+

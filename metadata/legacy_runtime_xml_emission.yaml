@@ -25,7 +25,7 @@ inputs:
   generated_curve_table_csv: data/legacy_mkrf/generated_xml/CSV/CURVE_TABLE.csv
 
 emitted_artifact:
-  path: models/mkrf_patchworks_model/XML/baseMKRF.xml
+  path: models/mkrf_patchworks_model_poc/XML/baseMKRF.xml
   sha256: 18b22086c44faa9dcd61ddfcf71156d15efee7b7bdcf09b9c7a27cf6bc1cb6e7
   forest_model:
     description: Base TFL26
@@ -100,3 +100,4 @@ scope_boundary:
 next_bounded_step:
   recommendation: reconstruct_raw_source_input_lane
   roadmap_task: P58.3
+

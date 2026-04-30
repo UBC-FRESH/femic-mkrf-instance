@@ -234,7 +234,7 @@ artifacts:
     published: true
     notes: "Instance-local P57.2 note documenting the runtime model directory scaffold, copied compiled spatial inputs, sanitized control paths, and remaining scenario-target gap."
   - artifact_id: "runtime_model_directory"
-    path: "models/mkrf_patchworks_model/"
+    path: "models/mkrf_patchworks_model_poc/"
     class: "runtime_scaffold"
     published: true
     notes: "P57.2 materialized the MKRF runtime scaffold containing the analysis PIN, copied spatial inputs, copied control scripts, and XML/tracks staging directories. This scaffold now serves as the minimally runnable P57.6-P57.8 runtime surface."
@@ -274,7 +274,7 @@ artifacts:
     published: true
     notes: "MKRF Patchworks runtime config wired in P57.5 to the generated runtime XML, accepted fragments, and runtime Tracks/ output directory."
   - artifact_id: "runtime_model_xml"
-    path: "models/mkrf_patchworks_model/XML/baseMKRF.xml"
+    path: "models/mkrf_patchworks_model_poc/XML/baseMKRF.xml"
     class: "runtime_generated_xml"
     published: true
     notes: "P57.3 through P58.2 emitted MKRF runtime ForestModel XML containing recovered input/output bindings, legacy define/constants, inlined Yield_* curves, Netdown rules, Treat track definitions, and a native Attrib builder driven by reviewed workbook extracts. This XML participates in the minimal-runnable proof when paired with accepted compiled spatial inputs and generated tracks."
@@ -288,3 +288,4 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local P57.6-P57.8 note documenting generated track-table evidence, launch proof, and the accepted minimal-runnable merch-tail caveat."
+

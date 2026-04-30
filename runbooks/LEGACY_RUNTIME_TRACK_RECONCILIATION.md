@@ -7,7 +7,7 @@ runtime track tables against the legacy compiled track evidence, plus the
 ## Decision
 
 Patchworks matrix build now writes real generated track tables under
-`models/mkrf_patchworks_model/Tracks/`.
+`models/mkrf_patchworks_model_poc/Tracks/`.
 
 The minimal-runnable smoke comparison is good enough to move forward:
 
@@ -22,7 +22,7 @@ The minimal-runnable smoke comparison is good enough to move forward:
 
 Patchworks launch is also now proven from the generated runtime directory:
 
-- generated launch surface: `models/mkrf_patchworks_model/analysis/base.pin`;
+- generated launch surface: `models/mkrf_patchworks_model_poc/analysis/base.pin`;
 - runtime config surface: `config/patchworks.runtime.windows.yaml`; and
 - observed result: the developer confirmed that the generated model opened in
   Patchworks from the generated runtime directory on 2026-04-29.
@@ -52,3 +52,4 @@ XML emission, successful matrix build, accepted smoke reconciliation, and a
 proven Patchworks launch from the generated runtime directory. As of `P58.2`,
 the runtime XML portion of that claim now uses the native FEMIC Attrib builder
 rather than the historical passthrough.
+
