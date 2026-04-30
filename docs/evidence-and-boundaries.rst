@@ -104,6 +104,32 @@ The practical reading is:
   source lane and does not get to claim source-faithful status merely because
   the PoC is runnable.
 
+Benchmark/Reference Evidence vs. Canonical Rebuild Contract
+-----------------------------------------------------------
+
+For the current MKRF docs lane, treat the following as benchmark/reference
+evidence:
+
+- archival legacy compiled package surfaces under ``data/legacy_mkrf/``;
+- the current PoC runtime package under
+  ``models/mkrf_patchworks_model_poc/``;
+- the accepted benchmark saved stage and report-pair KPI surface; and
+- the reviewed workbook/builder translations that explain the current PoC
+  emission/runtime contract.
+
+Treat the following as belonging to the later canonical rebuild contract
+instead:
+
+- source-faithful raw-input reconstruction from ``03_MappingAnalysisData/*``;
+- final target/control architecture decisions;
+- any future canonical runtime package path distinct from the PoC package; and
+- any stronger claim of identity with the original legacy model than the
+  accepted PoC benchmark claim.
+
+That distinction is deliberate. The PoC lane is meant to preserve evidence,
+runtime intuition, and benchmark leverage. It is not meant to lock the future
+architecture in place.
+
 Reference Runbooks
 ------------------
 

@@ -81,3 +81,25 @@ The following items remain intentionally outside the PoC QA contract:
 - unexplained legacy seams such as ``THLB4070(...)`` and ``UWR(...)``;
 - exact compiled-curve parity; and
 - a raw-source-to-runtime rebuild claim from the upstream mapping-analysis lane.
+
+Why This Separation Matters
+---------------------------
+
+If the team treats benchmark/reference evidence as though it were already the
+canonical rebuild contract, it will overfit the later MKRF rebuild to the
+legacy compiled package and its unexplained seams.
+
+The current PoC lane should instead provide:
+
+- a runnable benchmark package;
+- accepted benchmark comparison surfaces;
+- operator-facing explanation of what the PoC does and does not prove; and
+- preserved evidence for the next rebuild phase to evaluate critically.
+
+The later canonical rebuild phase should decide:
+
+- what architecture to keep from the PoC because it is justified;
+- what legacy behavior to re-implement because source evidence or benchmark
+  necessity requires it; and
+- what legacy seams to leave behind because they are not part of the desired
+  FEMIC-native structure.
