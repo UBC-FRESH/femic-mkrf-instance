@@ -13,6 +13,32 @@ The current MKRF PoC lane relies on:
   ``config/legacy_xml_builder/``; and
 - archival legacy compiled-package evidence under ``data/legacy_mkrf/``.
 
+Accepted Runtime Package Surface
+--------------------------------
+
+The current accepted runnable package is the PoC package root:
+
+- ``models/mkrf_patchworks_model_poc/``
+
+The operator-important sub-surfaces inside that package are:
+
+- runtime PIN / launch surface:
+  ``models/mkrf_patchworks_model_poc/analysis/base.pin``
+- generated runtime XML:
+  ``models/mkrf_patchworks_model_poc/XML/baseMKRF.xml``
+- generated runtime tracks:
+  ``models/mkrf_patchworks_model_poc/Tracks/*.csv``
+- accepted runtime spatial lane:
+  ``models/mkrf_patchworks_model_poc/Spatial/fragments.*`` and
+  ``models/mkrf_patchworks_model_poc/Spatial/topo_frag100.csv``
+- checkpoint target-control lane used by the PoC operator surface:
+  ``models/mkrf_patchworks_model_poc/analysis/initialTargetSummary.csv`` and
+  ``models/mkrf_patchworks_model_poc/analysis/initialTargetStatus.csv``
+
+These are the surfaces a user/operator should treat as the current PoC runtime
+package. They are the right place to look when the question is "what does the
+current FEMIC-managed MKRF package actually run with?"
+
 Legacy Analyst Boundary Context
 -------------------------------
 
@@ -72,6 +98,8 @@ The practical reading is:
 
 - the PoC preserves enough of the legacy compiled/runtime contract to benchmark
   and reason about model behavior;
+- the current generated XML/tracks plus accepted spatial lane are the active
+  PoC runtime surface;
 - the later from-scratch rebuild must still start from the reviewed upstream
   source lane and does not get to claim source-faithful status merely because
   the PoC is runnable.

@@ -9,11 +9,36 @@ The accepted benchmark comparison used:
 - legacy summary-report outputs under ``Outputs/001_Base/``
 - PoC headless saved-stage outputs from the FEMIC runtime lane
 
+Representative Scenario Surfaces
+--------------------------------
+
+Legacy benchmark scenario surface:
+
+- legacy scripted scenario/run package:
+  ``Outputs/001_Base/``
+- original scripted run settings recorded in:
+  ``Analyze_safe.txt`` and ``ScenarioSet.bsh``
+
+PoC benchmark scenario surface:
+
+- FEMIC headless run from:
+  ``models/mkrf_patchworks_model_poc/analysis/base.pin``
+- saved PoC stage used for the accepted benchmark:
+  ``runtime/logs/headless_stage/p58_6_poc_smoke_r4/``
+
+The accepted PoC comparison was the stabilized ``r4`` run, not the earlier
+shorter smoke runs.
+
 Primary report pairs:
 
 - ``Forest_Attributes/yield.csv``
 - ``Harvest_Attributes/harvestVolumeControls.csv``
 - ``Harvest_Attributes/yield_treat.csv``
+
+Those report pairs are the representative benchmark scenario surfaces for the
+current PoC docs lane. They are the surfaces operators should reuse when they
+want to answer "does the PoC still generally behave like the accepted legacy
+baseline?"
 
 Why These KPIs
 --------------
