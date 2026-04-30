@@ -130,6 +130,23 @@ That distinction is deliberate. The PoC lane is meant to preserve evidence,
 runtime intuition, and benchmark leverage. It is not meant to lock the future
 architecture in place.
 
+Handoff to the Canonical Rebuild
+--------------------------------
+
+The next architecture-defining lane is the from-scratch MKRF rebuild under
+parent issue ``#173`` and FEMIC roadmap Phase 60.
+
+That later lane should inherit this PoC docs set only as:
+
+- benchmark/reference evidence;
+- a record of accepted PoC variances;
+- a runtime/operator baseline for comparison; and
+- a checklist of seams that still require source-faithful replacement.
+
+It should not inherit this PoC package as the final target architecture by
+default. Any behavior carried forward into the canonical rebuild must still be
+justified by source evidence or benchmark necessity.
+
 Reference Runbooks
 ------------------
 

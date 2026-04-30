@@ -71,3 +71,6 @@ For the current PoC lane:
   trail; and
 - the later canonical rebuild phase should inherit this docs set as reference
   material, not as an architecture lock-in.
+
+The concrete handoff target for that later lane is the from-scratch MKRF
+rebuild under parent issue ``#173`` and FEMIC roadmap Phase 60.
