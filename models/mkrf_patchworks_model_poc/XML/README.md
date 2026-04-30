@@ -3,6 +3,9 @@
 `P57.3` through `P58.2` emit the FEMIC-managed MKRF runtime XML at
 `XML/baseMKRF.xml`.
 
+This XML belongs to the current **MKRF PoC benchmark/intermediate** package,
+not the final canonical rebuild.
+
 Included now:
 
 - `baseMKRF.xml` with the recovered Input Variables contract;
@@ -20,5 +23,5 @@ Current boundary:
 
 - this XML now feeds a successful matrix-build plus launch-proof runtime lane
   when paired with the accepted compiled spatial inputs; and
-- this XML alone still does not claim raw-source reconstruction or exact
-  legacy-equivalent behavior.
+- this XML alone still does not claim raw-source reconstruction, exact
+  legacy-equivalent behavior, or final rebuild status.

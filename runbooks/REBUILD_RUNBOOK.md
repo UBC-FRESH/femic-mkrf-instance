@@ -1,8 +1,9 @@
 # MKRF Rebuild Runbook
 
 This repository is intentionally a thin private-first baseline. Use this file
-as the operator-facing boundary until the real MKRF payload and runtime
-sequence are ready to publish.
+as the operator-facing boundary for the current **MKRF PoC benchmark lane**
+until the real from-scratch MKRF payload and runtime sequence are ready to
+publish.
 
 ## Thin-baseline checks
 
@@ -107,8 +108,8 @@ sequence are ready to publish.
      `data/legacy_mkrf/compiled_spatial/` and
      `data/legacy_mkrf/generated_xml/` as inert archival references, not as an
      approved runnable rebuild surface;
-   - treat `models/mkrf_patchworks_model_poc/` as a partial runtime scaffold only
-     until tracks generation and launch proof are completed;
+   - treat `models/mkrf_patchworks_model_poc/` as the current PoC benchmark /
+     intermediate runtime package, not the final canonical rebuild path;
    - finalize the real run profile, silviculture surface, and TIPSY rules;
    - publish the real MKRF boundary and checkpoint inputs required by `femic prep validate-case`;
    - classify bulky payload families in `.gitattributes`;

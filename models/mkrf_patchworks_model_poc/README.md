@@ -1,7 +1,7 @@
-# MKRF Patchworks Runtime Scaffold
+# MKRF Patchworks PoC Runtime Scaffold
 
-This directory is the P57.2 materialized runtime scaffold for the first
-minimally runnable MKRF Patchworks model.
+This directory is the P57.2+ materialized runtime scaffold for the current
+MKRF **PoC benchmark/intermediate** Patchworks model.
 
 Included now:
 
@@ -28,5 +28,13 @@ Current boundary:
 - formula-heavy Attrib logic still arrives via compatibility passthrough;
 - the accepted merch-tail variance remains documented for very-old-stand
   behavior; and
-- this directory now represents a minimally runnable MKRF Patchworks runtime
-  surface, not a raw-source reconstruction or exact legacy-equivalence claim.
+- this directory now represents a minimally runnable **MKRF PoC** runtime
+  surface, not a raw-source reconstruction, exact legacy-equivalence claim, or
+  the final canonical rebuild package.
+
+Future boundary:
+
+- the later source-faithful MKRF rebuild is expected to live alongside this
+  PoC package in the same instance repository; and
+- this directory should therefore be treated as benchmark/reference evidence
+  only, not as the target architecture contract for the later rebuild.

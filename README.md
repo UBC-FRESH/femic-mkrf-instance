@@ -1,11 +1,13 @@
 # femic-mkrf-instance
 
-Private standalone **MKRF FEMIC instance** for bootstrap, contract hardening,
-and later publication of the real MKRF model payload.
+Private standalone **MKRF FEMIC instance** for bootstrap, PoC benchmarking,
+contract hardening, and later publication of the real from-scratch MKRF model
+payload.
 
 ## Current status
 
-This repository is intentionally a **thin baseline**.
+This repository is intentionally a **thin baseline built around the current
+MKRF PoC intermediate**.
 
 Included now:
 
@@ -21,11 +23,20 @@ Included now:
 - one non-sensitive annex-backed smoke artifact used to validate publication
   and cold-clone materialization.
 
+The checked-in runtime package under
+`models/mkrf_patchworks_model_poc/` is the current **PoC benchmark/intermediate
+surface**. It is suitable for benchmark comparison, reverse-engineering,
+runtime smoke, and operator-facing documentation. It is **not** the final
+canonical MKRF rebuild package.
+
 Not included yet:
 
 - the real MKRF bulky data/model payload;
 - public/docs-hosted student-facing documentation; and
 - packaged built-in registration in the parent FEMIC repo.
+
+The later canonical rebuild remains a separate roadmap lane under the
+from-scratch MKRF rebuild phase in the parent FEMIC repository.
 
 ## Legacy Compiled Package Reference
 
@@ -179,8 +190,9 @@ Important boundary:
   runtime seam;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
-- this instance is now a minimally runnable MKRF Patchworks rebuild surface,
-  not a raw-source reconstruction or exact legacy-equivalence claim.
+- this instance now carries a minimally runnable **MKRF PoC** Patchworks
+  surface, not a raw-source reconstruction, exact legacy-equivalence claim, or
+  the final canonical rebuild.
 
 ## DataLad dataset policy
 
