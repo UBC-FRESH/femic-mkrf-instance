@@ -61,6 +61,22 @@ Before treating the MKRF docs as releasable:
 - user-local or machine-specific private paths must not leak into the published
   pages.
 
+Current Sufficiency Reading
+---------------------------
+
+For the current PoC lane, this docs set is now intended to be sufficient for:
+
+- operator orientation to the accepted runtime package;
+- interpretation of the accepted benchmark/KPI comparison surface;
+- review of the accepted claim boundary and deferred seams; and
+- handoff into the later canonical rebuild lane without re-opening PoC
+  archaeology by default.
+
+That is the standard for "good enough" in the current lane. It does not mean
+the PoC is the final architecture. It means the benchmark/intermediate surface
+is now documented well enough that the team can stop treating it as
+under-documented.
+
 Versioning and Handoff
 ----------------------
 
