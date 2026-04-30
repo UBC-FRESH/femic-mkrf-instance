@@ -6,6 +6,9 @@
  *
  */
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 /*************************************************************
  *
  * Set global variables in this section
@@ -25,6 +28,93 @@ Horizon.setHorizon(periods, 10);
  */
 boolean useRoutes = false;
 boolean usePatches = true;
+
+/*
+ * FEMIC unattended runtime helper state. The BeanShell launcher passes:
+ *   0: pinPath
+ *   1: "__femic_headless__"
+ *   2: stageLabel
+ *   3: iterations
+ *   4: improvement
+ *   5: traceLogPath
+ *   6: scenarioMode
+ *   7: scenarioTarget
+ *   8: scenarioMinAnnual
+ */
+boolean femicHeadless = false;
+String femicStageLabel = "";
+int femicIterations = 0;
+double femicImprovement = 0d;
+String femicTraceLogPath = "";
+String femicScenarioMode = "none";
+String femicScenarioTarget = "";
+String femicScenarioMinAnnual = "";
+
+if (args != null && args.length >= 6 && "__femic_headless__".equals(args[1])) {
+   femicHeadless = true;
+   femicStageLabel = args[2];
+   femicIterations = Integer.parseInt(args[3]);
+   femicImprovement = Double.parseDouble(args[4]);
+   femicTraceLogPath = args[5];
+   if (args.length >= 7)
+      femicScenarioMode = args[6];
+   if (args.length >= 8)
+      femicScenarioTarget = args[7];
+   if (args.length >= 9)
+      femicScenarioMinAnnual = args[8];
+}
+
+void femicTrace(String message) {
+   String line = message;
+   if (!line.endsWith("\n"))
+      line = line + "\n";
+   print(line);
+   if (femicTraceLogPath != null && femicTraceLogPath.length() > 0) {
+      PrintWriter out = null;
+      try {
+         out = new PrintWriter(new FileWriter(femicTraceLogPath, true));
+         out.print(line);
+      } finally {
+         if (out != null)
+            out.close();
+      }
+   }
+}
+
+void femicConfigureHeadlessTargets() {
+   if (!"max-even-flow-smoke".equals(femicScenarioMode))
+      return;
+
+   if (femicScenarioTarget != null && femicScenarioTarget.length() > 0) {
+      t = control.getTarget(femicScenarioTarget);
+      if (t != null) {
+         t.setActive(true);
+         femicTrace("[FEMIC headless] activated target: " + femicScenarioTarget);
+      } else {
+         femicTrace("[FEMIC headless] target not found: " + femicScenarioTarget);
+      }
+   }
+}
+
+void femicRunHeadlessStage() {
+   try {
+      femicTrace("[FEMIC headless] starting stage");
+      femicTrace("[FEMIC headless] scenarioMode=" + femicScenarioMode);
+      femicTrace("[FEMIC headless] scenarioTarget=" + femicScenarioTarget);
+      femicTrace("[FEMIC headless] iterations=" + femicIterations);
+      femicTrace("[FEMIC headless] improvement=" + femicImprovement);
+      femicTrace("[FEMIC headless] stageLabel=" + femicStageLabel);
+
+      femicConfigureHeadlessTargets();
+      control.waitForIterations(femicIterations);
+      control.suspend();
+      reportWriter.saveStage(femicStageLabel);
+      femicTrace("[FEMIC headless] saveStage completed");
+   } catch (Exception ex) {
+      femicTrace("[FEMIC headless] stage failed: " + ex.toString());
+      throw ex;
+   }
+}
 
 
 
@@ -142,7 +232,8 @@ int PatchWorks_Init() {
    /*
     * Load the default user interface
     */
-   classic_GUI(control);
+   if (!femicHeadless)
+      classic_GUI(control);
 
 
    /*
@@ -271,6 +362,8 @@ int PatchWorks_Init() {
     */
 	source("../Scripts/reports_Comparisons.bsh");
 
+   if (femicHeadless)
+      femicRunHeadlessStage();
 
    /*
     * Return 1 to signal that everything is ok.
