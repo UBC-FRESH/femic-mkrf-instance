@@ -1,0 +1,8 @@
+{
+  "status": "blocked",
+  "reason": "missing_btc_runtime",
+  "message": "Could not resolve BatchTIPSY BTC executable. Checked: C:\\Program Files\\TIPSY 4.7\\BTC\\TIPSYbtc.exe. Set FEMIC_BATCHTIPSY_EXE or pass an explicit path.",
+  "msyt_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\managed_au_msyt.csv",
+  "bootstrap_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\managed_au_bootstrap_table.csv",
+  "included_au_count": 4
+}
