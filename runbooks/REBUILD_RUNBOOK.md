@@ -5,6 +5,10 @@ as the operator-facing boundary for the current **MKRF PoC benchmark lane**
 until the real from-scratch MKRF payload and runtime sequence are ready to
 publish.
 
+For the current PoC lane, the canonical standalone operator docs live under
+``docs/``. Use this runbook as the rebuild-boundary and artifact-contract
+companion to that docs surface, not as a replacement for it.
+
 ## Thin-baseline checks
 
 1. `femic instance validate-spec --spec config/rebuild.spec.yaml`

@@ -19,6 +19,7 @@ Included now:
   archival control layer plus archival track tables for the stable 2016
   `PW_MKRF` package, plus the archival spatial runtime family;
 - `runbooks/REBUILD_RUNBOOK.md`;
+- standalone Sphinx docs under `docs/` for the current MKRF PoC benchmark lane;
 - metadata ledgers for provenance and checksum tracking; and
 - one non-sensitive annex-backed smoke artifact used to validate publication
   and cold-clone materialization.
@@ -32,11 +33,21 @@ canonical MKRF rebuild package.
 Not included yet:
 
 - the real MKRF bulky data/model payload;
-- public/docs-hosted student-facing documentation; and
 - packaged built-in registration in the parent FEMIC repo.
 
 The later canonical rebuild remains a separate roadmap lane under the
 from-scratch MKRF rebuild phase in the parent FEMIC repository.
+
+## Canonical PoC Docs Surface
+
+For the current PoC benchmark/intermediate lane, the canonical operator-facing
+docs surface is:
+
+- `docs/index.rst`
+
+Use the standalone docs tree first for operator guidance and accepted claim
+boundaries. Use this README and `runbooks/REBUILD_RUNBOOK.md` as the
+repository-level orientation and rebuild-boundary companions to that docs set.
 
 ## Legacy Compiled Package Reference
 
