@@ -21,5 +21,6 @@ canonical MKRF rebuild package.
    caveats-and-deferred-seams
    metadata-and-lineage
    operator-runbook
+   docs-ownership-and-release
    rebuild-and-qa
    troubleshooting

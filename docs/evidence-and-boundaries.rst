@@ -26,6 +26,10 @@ statement of analyst intent for:
 - low-operability retention;
 - and the future roads/trails/landings reduction logic.
 
+Primary legacy narrative reference:
+
+- :download:`reference/MKRF_Modeling_Notes.pdf`
+
 In particular, the legacy notes document:
 
 - a low-operability retention rule of ``20%``;

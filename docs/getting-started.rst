@@ -20,6 +20,10 @@ GIS resultant and Patchworks forest estate model. Its stated purpose was to
 support estimation of a sustainable harvest flow for Malcolm Knapp Research
 Forest and to inform eventual annual allowable cut reconsideration.
 
+The original legacy narrative is now carried in this private instance repo as:
+
+- :download:`reference/MKRF_Modeling_Notes.pdf`
+
 That framing matters for the PoC: the current FEMIC-hosted package is meant to
 preserve and benchmark that baseline modeling intent, not to replace it with a
 fully redesigned architecture yet.
