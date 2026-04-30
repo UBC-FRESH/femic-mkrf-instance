@@ -24,6 +24,9 @@ plots/*
 !plots/
 !plots/strata-tsamkrf.png
 !plots/strata-tsamkrf.pdf
+!plots/vdyp_lmh_tsamkrf-*.png
+!plots/vdyp_fitdiag_tsamkrf-*.png
+!plots/tipsy_vdyp_tsamkrf-*.png
 docs/_build/
 
 # Legacy intermediate artifacts
