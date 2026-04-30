@@ -56,10 +56,25 @@ Required Publication Checks
 Before treating the MKRF docs as releasable:
 
 - the standalone docs build must be warning-clean;
+- the instance repo GitHub Pages workflow must be able to rebuild the
+  standalone docs from `main` pushes;
 - the parent FEMIC docs contract checks must still pass if parent docs changed;
 - the docs text must stay explicit that the current package is PoC-only; and
 - user-local or machine-specific private paths must not leak into the published
   pages.
+
+Publication Channels
+--------------------
+
+The standalone MKRF PoC docs now carry two publication/build contracts:
+
+- `.github/workflows/docs-pages.yml` for GitHub Pages publication on `main`
+  pushes in the instance repo; and
+- `.readthedocs.yaml` as the repo-local standalone Sphinx build contract.
+
+The GitHub Pages workflow is the expected public publication path for the
+standalone instance docs. The Read the Docs config remains a portable build
+contract and secondary hosting option.
 
 Current Sufficiency Reading
 ---------------------------
