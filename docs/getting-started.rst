@@ -11,6 +11,19 @@ Purpose
 - PoC benchmark/runtime comparison; and
 - handoff into the later from-scratch MKRF rebuild.
 
+Original Legacy Model Intent
+----------------------------
+
+The original legacy MKRF model was prepared by Forsite for the University of
+British Columbia Master of Sustainable Forest Management program as a baseline
+GIS resultant and Patchworks forest estate model. Its stated purpose was to
+support estimation of a sustainable harvest flow for Malcolm Knapp Research
+Forest and to inform eventual annual allowable cut reconsideration.
+
+That framing matters for the PoC: the current FEMIC-hosted package is meant to
+preserve and benchmark that baseline modeling intent, not to replace it with a
+fully redesigned architecture yet.
+
 Current Runtime Surface
 -----------------------
 
@@ -37,6 +50,23 @@ Primary files:
 - spatial runtime:
   ``models/mkrf_patchworks_model_poc/Spatial/``
 
+Original Study Area and Legacy Baseline Context
+-----------------------------------------------
+
+The legacy notes describe MKRF as a volume-based private forest estate north of
+Maple Ridge and adjacent to Golden Ears Provincial Park, overlapping the
+Coastal Western Hemlock zone. The legacy baseline land-base summary used in the
+original model was:
+
+- gross area: ``5,126 ha``
+- productive forest land base: ``4,811 ha``
+- timber harvesting land base: ``4,121 ha``
+- long-term THLB after WTP assumptions: ``3,653 ha``
+
+Those numbers are useful orientation values for operators reading the PoC
+runtime package. They explain the scale of the benchmark model even though the
+current FEMIC package is not yet the later source-faithful rebuild.
+
 Recommended first reads:
 
 - ``README.md``
@@ -54,3 +84,5 @@ This guide documents the current MKRF PoC benchmark lane:
 - what benchmark evidence was accepted;
 - what boundaries and caveats still exist; and
 - how this PoC relates to the later from-scratch rebuild lane.
+
+It does not attempt to present the PoC as the final canonical MKRF instance.

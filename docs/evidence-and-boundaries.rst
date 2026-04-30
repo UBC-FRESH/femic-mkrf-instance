@@ -13,6 +13,29 @@ The current MKRF PoC lane relies on:
   ``config/legacy_xml_builder/``; and
 - archival legacy compiled-package evidence under ``data/legacy_mkrf/``.
 
+Legacy Analyst Boundary Context
+-------------------------------
+
+The original modeling notes are explicit that the baseline model was built from
+an upstream resultant/data-preparation lane and then carried into a Patchworks
+estate model. The land-base logic in those notes is still the most direct
+statement of analyst intent for:
+
+- productive forest land base versus THLB;
+- exclusions for roads, non-forest, reserves, and riparian areas;
+- low-operability retention;
+- and the future roads/trails/landings reduction logic.
+
+In particular, the legacy notes document:
+
+- a low-operability retention rule of ``20%``;
+- wildlife tree patch retention of ``10%`` in Operable areas and ``20%`` in Low
+  Operability areas; and
+- a ``2.7%`` future roads/trails/landings netdown based on the developed THLB.
+
+Those are legacy analyst assumptions that the PoC preserves as benchmark
+context, not newly invented FEMIC behavior.
+
 Important Boundaries
 --------------------
 
@@ -40,6 +63,14 @@ The current claim boundary is not:
 - source-faithful rebuild
 - exact legacy-equivalence
 - final canonical MKRF model architecture
+
+The practical reading is:
+
+- the PoC preserves enough of the legacy compiled/runtime contract to benchmark
+  and reason about model behavior;
+- the later from-scratch rebuild must still start from the reviewed upstream
+  source lane and does not get to claim source-faithful status merely because
+  the PoC is runnable.
 
 Reference Runbooks
 ------------------
