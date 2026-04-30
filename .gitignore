@@ -26,4 +26,3 @@ docs/_build/
 # Legacy intermediate artifacts
 data/*.feather
 data/*.pkl
-data/model_input_bundle/
