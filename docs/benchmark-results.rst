@@ -92,3 +92,16 @@ good enough for benchmark/reference use and reverse-engineering handoff, but it
 does not claim exact legacy-equivalence over the full horizon.
 
 That is the accepted PoC claim boundary.
+
+What This Benchmark Does Not Settle
+-----------------------------------
+
+The accepted benchmark does not settle:
+
+- unresolved target-helper seams such as ``THLB4070(...)`` and ``UWR(...)``;
+- exact compiled-curve identity/parity;
+- the missing legacy ``00_Target_Descriptions.bsh`` wrapper layer; or
+- whether the current package qualifies as a source-faithful rebuild.
+
+Those are explicitly outside the benchmark claim and remain inputs to the later
+from-scratch rebuild lane.

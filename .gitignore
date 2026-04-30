@@ -21,6 +21,7 @@ data/bc/
 output/
 releases/
 plots/
+docs/_build/
 
 # Legacy intermediate artifacts
 data/*.feather

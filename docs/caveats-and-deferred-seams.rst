@@ -11,6 +11,24 @@ The current PoC lane accepts several non-blocking variances:
 - exact compiled curve-id parity is not required
 - longer-horizon benchmark divergence is larger than early-period divergence
 
+Accepted Benchmark Variances
+----------------------------
+
+The accepted benchmark interpretation for the current PoC is:
+
+- initial total growing stock should line up essentially exactly;
+- early-period growing stock can be modestly high in the PoC;
+- early-period harvested volume can be modestly low in the PoC; and
+- longer-horizon divergence can be materially larger without invalidating the
+  PoC benchmark claim.
+
+Concretely, the currently accepted comparison surface records:
+
+- early-period total growing stock roughly ``+1%`` to ``+4%`` high; and
+- early-period harvested volume roughly ``-5%`` to ``-8%`` low.
+
+Those are accepted PoC variances, not open defects for the benchmark lane.
+
 These caveats are accepted because the PoC is being used as:
 
 - a benchmark/reference surface;
@@ -28,6 +46,23 @@ The following seams remain intentionally unresolved in the PoC lane:
 - missing legacy ``00_Target_Descriptions.bsh`` helper library
 - unresolved helper families such as ``THLB4070(...)`` and ``UWR(...)``
 - broader source-faithful target/control reconstruction
+
+Current Claim Boundary
+----------------------
+
+Given the accepted benchmark variances and the unresolved helper seams, the
+current PoC can claim:
+
+- runnable FEMIC-managed MKRF benchmark package;
+- generated runtime XML and generated runtime tracks;
+- accepted benchmark-level behavioral similarity to the legacy baseline; and
+- operator-facing value as a reverse-engineering stepping stone.
+
+It cannot claim:
+
+- exact legacy-equivalence;
+- full recovery of the original target-helper/control layer; or
+- source-faithful reconstruction from raw upstream source inputs.
 
 What We Know About Those Seams
 ------------------------------
