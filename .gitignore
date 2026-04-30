@@ -20,7 +20,10 @@ data/bc/
 # Generated model outputs
 output/
 releases/
-plots/
+plots/*
+!plots/
+!plots/strata-tsamkrf.png
+!plots/strata-tsamkrf.pdf
 docs/_build/
 
 # Legacy intermediate artifacts
