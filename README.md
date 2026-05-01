@@ -14,7 +14,7 @@ Included now:
 - standard FEMIC instance scaffold;
 - `config/rebuild.spec.yaml` and `config/rebuild.allowlist.yaml`;
 - `config/run_profile.mkrf.yaml`, `config/silviculture.mkrf.yaml`, and
-  `config/tipsy/tsamkrf.yaml` starter surfaces;
+  `config/tipsy/tsamkrf.yaml` rebuild surfaces;
 - instance-local legacy compiled-package reference metadata plus a copied
   archival control layer plus archival track tables for the stable 2016
   `PW_MKRF` package, plus the archival spatial runtime family;
@@ -37,6 +37,17 @@ Not included yet:
 
 The later canonical rebuild remains a separate roadmap lane under the
 from-scratch MKRF rebuild phase in the parent FEMIC repository.
+
+## Current managed-lane contract
+
+The current managed/planted AU compile now treats:
+
+- `AGE_2020 >= 80` as `fire_origin`; and
+- `AGE_2020 < 80` as `logging_origin`.
+
+`config/tipsy/tsamkrf.yaml` is the active first-pass authority for managed
+regen density, species mix, and CT/clearcut metadata during the current AU
+compile phase. It is no longer just a placeholder template.
 
 ## Canonical PoC Docs Surface
 

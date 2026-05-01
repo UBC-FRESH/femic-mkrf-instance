@@ -1,13 +1,13 @@
 {
   "status": "completed",
-  "msyt_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\managed_au_msyt.csv",
-  "bootstrap_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\managed_au_bootstrap_table.csv",
-  "curves_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\managed_au_curves.csv",
-  "included_au_count": 4,
-  "curve_au_count": 4,
-  "btc_manifest_path": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\runtime\\logs\\managed_au_btc\\btc_manifest-mkrf_managed_au_curves.json",
-  "btc_stdout_log_path": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\runtime\\logs\\managed_au_btc\\btc_stdout-mkrf_managed_au_curves.log",
-  "btc_stderr_log_path": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\runtime\\logs\\managed_au_btc\\btc_stderr-mkrf_managed_au_curves.log",
-  "btc_output_csv_path": "C:\\Users\\gep\\Projects\\femic\\tipsy_io\\scratch\\btc-mkrf_managed_au_curves\\work\\managed_au_msyt_output.csv",
-  "btc_error_csv_path": "C:\\Users\\gep\\Projects\\femic\\tipsy_io\\scratch\\btc-mkrf_managed_au_curves\\work\\managed_au_msyt_error.csv"
+  "msyt_csv": "external/femic-mkrf-instance/data/model_input_bundle/managed_au_msyt.csv",
+  "bootstrap_csv": "external/femic-mkrf-instance/data/model_input_bundle/managed_au_bootstrap_table.csv",
+  "curves_csv": "external/femic-mkrf-instance/data/model_input_bundle/managed_au_curves.csv",
+  "included_au_count": 31,
+  "curve_au_count": 31,
+  "btc_manifest_path": "external/femic-mkrf-instance/runtime/logs/managed_au_btc/btc_manifest-mkrf_managed_au_curves.json",
+  "btc_stdout_log_path": "external/femic-mkrf-instance/runtime/logs/managed_au_btc/btc_stdout-mkrf_managed_au_curves.log",
+  "btc_stderr_log_path": "external/femic-mkrf-instance/runtime/logs/managed_au_btc/btc_stderr-mkrf_managed_au_curves.log",
+  "btc_output_csv_path": "tipsy_io/scratch/btc-mkrf_managed_au_curves/work/managed_au_msyt_output.csv",
+  "btc_error_csv_path": "tipsy_io/scratch/btc-mkrf_managed_au_curves/work/managed_au_msyt_error.csv"
 }

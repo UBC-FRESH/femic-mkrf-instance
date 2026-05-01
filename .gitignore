@@ -6,6 +6,7 @@ __pycache__/
 *.pyc
 
 # Runtime logs and manifests
+runtime/logs/
 tipsy_io/logs/*.log
 tipsy_io/logs/*.json
 tipsy_io/scratch/
