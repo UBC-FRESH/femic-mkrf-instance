@@ -6,10 +6,10 @@ Purpose
 
 ``femic-mkrf-instance`` is the private standalone MKRF FEMIC instance used for:
 
-- bootstrap and contract hardening;
-- legacy reverse-engineering;
+- canonical runtime/package generation;
+- legacy reverse-engineering and evidence retention;
 - PoC benchmark/runtime comparison; and
-- handoff into the later from-scratch MKRF rebuild.
+- closeout of the from-scratch MKRF rebuild lane.
 
 Original Legacy Model Intent
 ----------------------------
@@ -24,19 +24,22 @@ The original legacy narrative is now carried in this private instance repo as:
 
 - :download:`reference/MKRF_Modeling_Notes.pdf`
 
-That framing matters for the PoC: the current FEMIC-hosted package is meant to
-preserve and benchmark that baseline modeling intent, not to replace it with a
-fully redesigned architecture yet.
+That framing still matters for the retained PoC/legacy evidence surfaces, but
+the active FEMIC-hosted runtime package is now the canonical rebuild lane.
 
 Current Runtime Surface
 -----------------------
 
-The checked-in Patchworks package is:
+The active checked-in Patchworks package is:
+
+- ``models/mkrf_patchworks_model/``
+
+The retained benchmark/reference package is:
 
 - ``models/mkrf_patchworks_model_poc/``
 
-This is the current PoC benchmark/intermediate surface. It is not the final
-canonical rebuild package.
+Use the canonical package for current runtime/package work. Use the PoC package
+only for benchmark/reference comparison.
 
 Quick Operator Surface
 ----------------------
@@ -44,15 +47,15 @@ Quick Operator Surface
 Primary files:
 
 - runtime config:
-  ``config/patchworks.runtime.windows.yaml``
-- Patchworks PIN:
-  ``models/mkrf_patchworks_model_poc/analysis/base.pin``
+  ``config/patchworks.runtime.mkrf_rebuild.windows.yaml``
 - runtime XML:
-  ``models/mkrf_patchworks_model_poc/XML/baseMKRF.xml``
+  ``models/mkrf_patchworks_model/xml/forestmodel.xml``
 - runtime tracks:
-  ``models/mkrf_patchworks_model_poc/Tracks/``
+  ``models/mkrf_patchworks_model/tracks/``
 - spatial runtime:
-  ``models/mkrf_patchworks_model_poc/Spatial/``
+  ``models/mkrf_patchworks_model/spatial/``
+- retained benchmark/reference PIN:
+  ``models/mkrf_patchworks_model_poc/analysis/base.pin``
 
 Original Study Area and Legacy Baseline Context
 -----------------------------------------------
@@ -67,9 +70,8 @@ original model was:
 - timber harvesting land base: ``4,121 ha``
 - long-term THLB after WTP assumptions: ``3,653 ha``
 
-Those numbers are useful orientation values for operators reading the PoC
-runtime package. They explain the scale of the benchmark model even though the
-current FEMIC package is not yet the later source-faithful rebuild.
+Those numbers are useful orientation values for operators reading the retained
+benchmark/reference materials and the canonical rebuild package.
 
 Recommended first reads:
 
@@ -81,12 +83,12 @@ Recommended first reads:
 What This Guide Covers
 ----------------------
 
-This guide documents the current MKRF PoC benchmark lane:
+This guide documents the current MKRF instance surfaces:
 
 - what the instance contains;
-- how the runtime package is wired;
-- what benchmark evidence was accepted;
+- how the canonical runtime package is wired;
+- what benchmark/reference evidence was retained;
 - what boundaries and caveats still exist; and
-- how this PoC relates to the later from-scratch rebuild lane.
+- how the canonical rebuild lane differs from the retained PoC package.
 
-It does not attempt to present the PoC as the final canonical MKRF instance.
+It does not treat the PoC package as the final canonical MKRF instance.

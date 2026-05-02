@@ -21,6 +21,8 @@ data/bc/
 # Generated model outputs
 output/
 releases/
+models/*/patchworksLog.csv
+models/*/tracks/accounts_backup_*.csv
 plots/*
 !plots/
 !plots/strata-tsamkrf.png

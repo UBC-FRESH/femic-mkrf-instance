@@ -1,13 +1,13 @@
 # femic-mkrf-instance
 
-Private standalone **MKRF FEMIC instance** for bootstrap, PoC benchmarking,
-contract hardening, and later publication of the real from-scratch MKRF model
-payload.
+Private standalone **MKRF FEMIC instance** for the canonical from-scratch
+rebuild lane, with retained PoC and legacy evidence surfaces kept alongside it
+for benchmark/reference comparison.
 
 ## Current status
 
-This repository is intentionally a **thin baseline built around the current
-MKRF PoC intermediate**.
+This repository now carries the canonical MKRF rebuild runtime package plus the
+retained PoC benchmark package.
 
 Included now:
 
@@ -19,24 +19,25 @@ Included now:
   archival control layer plus archival track tables for the stable 2016
   `PW_MKRF` package, plus the archival spatial runtime family;
 - `runbooks/REBUILD_RUNBOOK.md`;
-- standalone Sphinx docs under `docs/` for the current MKRF PoC benchmark lane;
+- standalone Sphinx docs under `docs/` for the current MKRF canonical rebuild
+  lane and retained benchmark/reference boundary;
 - metadata ledgers for provenance and checksum tracking; and
 - one non-sensitive annex-backed smoke artifact used to validate publication
   and cold-clone materialization.
 
-The checked-in runtime package under
-`models/mkrf_patchworks_model_poc/` is the current **PoC benchmark/intermediate
-surface**. It is suitable for benchmark comparison, reverse-engineering,
-runtime smoke, and operator-facing documentation. It is **not** the final
-canonical MKRF rebuild package.
+The active canonical runtime package now lives under
+`models/mkrf_patchworks_model/`.
+
+The retained benchmark/reference package remains under
+`models/mkrf_patchworks_model_poc/`.
 
 Not included yet:
 
 - the real MKRF bulky data/model payload;
 - packaged built-in registration in the parent FEMIC repo.
 
-The later canonical rebuild remains a separate roadmap lane under the
-from-scratch MKRF rebuild phase in the parent FEMIC repository.
+The remaining active lane in the parent FEMIC repository is now closeout/docs
+work for the completed canonical rebuild runtime surface.
 
 ## Current managed-lane contract
 
@@ -49,16 +50,25 @@ The current managed/planted AU compile now treats:
 regen density, species mix, and CT/clearcut metadata during the current AU
 compile phase. It is no longer just a placeholder template.
 
-## Canonical PoC Docs Surface
+## Canonical Docs Surface
 
-For the current PoC benchmark/intermediate lane, the canonical operator-facing
-docs surface is:
+For the current canonical rebuild lane, the canonical operator-facing docs
+surface is:
 
 - `docs/index.rst`
 
 Use the standalone docs tree first for operator guidance and accepted claim
 boundaries. Use this README and `runbooks/REBUILD_RUNBOOK.md` as the
 repository-level orientation and rebuild-boundary companions to that docs set.
+
+Current primary runtime/package references:
+
+- canonical rebuild package:
+  `models/mkrf_patchworks_model/`
+- canonical Patchworks config:
+  `config/patchworks.runtime.mkrf_rebuild.windows.yaml`
+- retained PoC benchmark package:
+  `models/mkrf_patchworks_model_poc/`
 
 ## Legacy Compiled Package Reference
 
@@ -105,6 +115,7 @@ Instance-local reference surfaces:
 - `data/legacy_mkrf/compiled_tracks/`
 - `data/legacy_mkrf/compiled_spatial/`
 - `data/legacy_mkrf/generated_xml/`
+- `models/mkrf_patchworks_model/`
 - `models/mkrf_patchworks_model_poc/`
 - `models/mkrf_patchworks_model_poc/XML/baseMKRF.xml`
 - `runbooks/LEGACY_ATTRIBUTE_PASSTHROUGH.md`
@@ -212,9 +223,9 @@ Important boundary:
   runtime seam;
 - `Spatial/patchworksLog.csv`, output, and upstream mapping-analysis payloads
   are still deferred; and
-- this instance now carries a minimally runnable **MKRF PoC** Patchworks
-  surface, not a raw-source reconstruction, exact legacy-equivalence claim, or
-  the final canonical rebuild.
+- this instance now carries a source-faithful canonical rebuild runtime
+  surface under `models/mkrf_patchworks_model/`, while retaining the older PoC
+  and legacy control/runtime families as benchmark/reference evidence only.
 
 ## DataLad dataset policy
 

@@ -17,7 +17,7 @@ questions:
 
 - what source or archival surface exists;
 - what claim that surface supports; and
-- what still belongs to a later rebuild lane rather than the current PoC lane.
+- what still belongs outside the canonical rebuild claim boundary.
 
 Primary Human-Readable Runbooks
 -------------------------------
@@ -36,15 +36,18 @@ the YAML ledgers when they need exact artifact/claim/status details.
 Lineage Summary
 ---------------
 
-The current MKRF PoC package was assembled from:
+The current canonical MKRF package was assembled from:
 
 - workbook-reviewed builder contracts;
-- accepted archival compiled runtime evidence;
-- FEMIC-native runtime XML emission; and
-- Patchworks matrix-build regeneration of the runtime track package.
+- source-faithful runtime spatial publication from upstream mapping-analysis
+  inputs;
+- FEMIC-native runtime XML/package emission; and
+- Patchworks matrix-build regeneration of the canonical runtime track package.
 
-This lineage is sufficient for a PoC benchmark/intermediate claim. It is not
-yet the later source-faithful from-scratch rebuild contract.
+This lineage is sufficient for the canonical runtime/package rebuild claim.
+
+The retained PoC package remains a separate benchmark/reference lineage surface
+under ``models/mkrf_patchworks_model_poc/``.
 
 Claim Ladder
 ------------
@@ -54,13 +57,18 @@ The current lineage surfaces support the following claim ladder:
 1. archival legacy package evidence exists and is inventoried;
 2. workbook/builder authority was reviewed and translated into explicit FEMIC
    contract surfaces;
-3. FEMIC emits a runtime XML package and rebuilds the Patchworks track package;
-4. the resulting runtime package launches and supports benchmark comparison;
-5. therefore the current instance qualifies as a PoC benchmark/intermediate.
+3. FEMIC emits a canonical runtime/package surface and rebuilds the Patchworks
+   track package from that surface;
+4. the resulting canonical package launches/builds cleanly and supports
+   runtime-surface comparison against the accepted PoC package; and
+5. therefore the current instance qualifies as a source-faithful canonical
+   runtime/package rebuild with explicit retained benchmark/reference evidence.
 
 The lineage surfaces explicitly do **not** support the stronger claim that the
-current package is already a source-faithful rebuild from raw
-``03_MappingAnalysisData/*`` inputs.
+current instance has already rebuilt the legacy control/entrypoint helper lane.
+Accepted legacy-only seams such as ``THLB4070(...)``, ``UWR(...)``, and
+``InitialTargets/00_Target_Descriptions.bsh`` remain outside that claim
+boundary.
 
 How To Read `lineage_registry.yaml`
 -----------------------------------
@@ -76,6 +84,7 @@ class of thing each artifact is:
 
 That is the quickest way to distinguish:
 
-- what is authoritative for the current PoC lane;
+- what is authoritative for the current canonical rebuild lane;
+- what is benchmark/reference evidence from the retained PoC lane;
 - what is only historical evidence; and
-- what still needs replacement in the later canonical rebuild.
+- what still remains outside the canonical rebuild claim boundary.

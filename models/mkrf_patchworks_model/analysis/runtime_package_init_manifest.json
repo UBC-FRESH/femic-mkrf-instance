@@ -1,0 +1,55 @@
+{
+  "counts": {
+    "bad_curve_flagged_au_count": 8,
+    "first_growth_curve_au_count": 20,
+    "first_growth_missing_au_count": 11,
+    "managed_curve_au_count": 31,
+    "managed_only_runtime_au_count": 6,
+    "selected_au_count": 31
+  },
+  "curve_policy": {
+    "first_growth_borrowing_allowed": false,
+    "first_growth_curve_family": "smoothed_bin_pchip",
+    "managed_only_runtime_units_allowed": true
+  },
+  "managed_only_runtime_policy": {
+    "insufficient_support_borrowing": "forbidden",
+    "insufficient_support_fallback_generation": "forbidden",
+    "insufficient_support_requires_first_growth_curve": false
+  },
+  "managed_run_summary": {
+    "curve_au_count": 31,
+    "included_au_count": 31,
+    "status": "completed"
+  },
+  "package_root": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model",
+  "runtime_au_normalization": {
+    "remapped_forest_cover_id_count": 83,
+    "remapped_source_au_count": 35,
+    "selected_passthrough_count": 31
+  },
+  "runtime_generation_status": "initialized_only",
+  "schema_version": 1,
+  "source_contracts": {
+    "analysis_au_curve_refs_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\analysis\\au_curve_refs.csv",
+    "analysis_au_runtime_status_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\analysis\\au_runtime_status.csv",
+    "analysis_pin": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\analysis\\base.pin",
+    "bad_curve_audit_summary_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\bad_curve_audit_summary.csv",
+    "first_growth_curves_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\first_growth_au_curves.csv",
+    "first_growth_diagnostics_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\first_growth_au_fit_diagnostics.csv",
+    "flow_targets_bsh": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\scripts\\targets\\flowtargets.bsh",
+    "forestmodel_xml": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\xml\\forestmodel.xml",
+    "headless_runtime_common_bsh": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\analysis\\headless_runtime_common.bsh",
+    "managed_bootstrap_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\managed_au_bootstrap_table.csv",
+    "managed_curves_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\managed_au_curves.csv",
+    "managed_run_manifest_json": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\managed_au_run_manifest.json",
+    "runtime_au_remap_audit_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\analysis\\runtime_au_remap_audit.csv",
+    "runtime_curve_bank_xml": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\xml\\runtime_curve_bank.xml",
+    "runtime_curve_contract_xml": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\xml\\runtime_curve_contract.xml",
+    "runtime_curve_status_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\analysis\\runtime_curve_status.csv",
+    "runtime_species_share_audit_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\analysis\\runtime_species_share_audit.csv",
+    "selected_au_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\selected_au_table.csv",
+    "stand_au_assignment_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\stand_au_assignment.csv",
+    "stand_origin_assignment_csv": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\model_input_bundle\\stand_origin_assignment.csv"
+  }
+}

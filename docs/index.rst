@@ -1,13 +1,14 @@
-MKRF PoC User Guide
-===================
+MKRF User Guide
+===============
 
 This documentation site is the standalone operator guide for the
 ``femic-mkrf-instance`` repository.
 
-The current runtime package under ``models/mkrf_patchworks_model_poc/`` is a
-PoC benchmark/intermediate surface. It is suitable for runtime smoke,
-benchmark comparison, and reverse-engineering handoff. It is not the final
-canonical MKRF rebuild package.
+The active canonical runtime package now lives under
+``models/mkrf_patchworks_model/``.
+
+The retained PoC benchmark/reference package remains under
+``models/mkrf_patchworks_model_poc/``.
 
 .. toctree::
    :maxdepth: 2
