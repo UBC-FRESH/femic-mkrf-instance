@@ -1,0 +1,56 @@
+{
+  "excluded_feature_count": 110,
+  "excluded_reason_counts": {
+    "X": 110
+  },
+  "field_projection": [
+    {
+      "source": "FOREST_COVER_ID",
+      "target": "FOREST_COV"
+    },
+    {
+      "source": "Operability",
+      "target": "Operabilit"
+    },
+    {
+      "source": "Shape_Length",
+      "target": "Shape_Leng"
+    },
+    {
+      "source": "Shape_Area",
+      "target": "Shape_Area"
+    },
+    {
+      "source": "CONTCLAS",
+      "target": "CONTCLAS"
+    },
+    {
+      "source": "AGE_2020",
+      "target": "AGE_2020"
+    },
+    {
+      "source": "AU_EX",
+      "target": "AU_EX"
+    },
+    {
+      "source": "AU_FU",
+      "target": "AU_FU"
+    },
+    {
+      "source": "RES_KEY",
+      "target": "RES_KEY"
+    },
+    {
+      "source": "CT_eligib",
+      "target": "CT_eligib"
+    }
+  ],
+  "fragments_path": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model\\spatial\\fragments.shp",
+  "package_root": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model",
+  "publication_rule": "CONTCLAS != 'X'",
+  "published_feature_count": 1763,
+  "schema_version": 1,
+  "source_feature_count": 1873,
+  "source_layer": "Resultant",
+  "source_resultant_gdb": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\data\\source\\03_MappingAnalysisData\\Resultant.gdb"
+}

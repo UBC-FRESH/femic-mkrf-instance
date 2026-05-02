@@ -4,9 +4,11 @@ Evidence and Boundaries
 Accepted Evidence Surfaces
 --------------------------
 
-The current MKRF PoC lane relies on:
+The current MKRF instance relies on two distinct evidence families:
 
-- generated runtime XML and tracks under
+- canonical rebuild runtime outputs under
+  ``models/mkrf_patchworks_model/``;
+- retained PoC benchmark/reference outputs under
   ``models/mkrf_patchworks_model_poc/``;
 - accepted compiled spatial runtime evidence;
 - workbook-reviewed contract translations under
@@ -16,28 +18,36 @@ The current MKRF PoC lane relies on:
 Accepted Runtime Package Surface
 --------------------------------
 
-The current accepted runnable package is the PoC package root:
+The current accepted canonical runtime package is:
+
+- ``models/mkrf_patchworks_model/``
+
+The retained benchmark/reference package is:
 
 - ``models/mkrf_patchworks_model_poc/``
 
-The operator-important sub-surfaces inside that package are:
+The operator-important sub-surfaces inside the canonical package are:
+
+- generated runtime XML:
+  ``models/mkrf_patchworks_model/xml/forestmodel.xml``
+- generated runtime tracks:
+  ``models/mkrf_patchworks_model/tracks/*.csv``
+- canonical runtime spatial lane:
+  ``models/mkrf_patchworks_model/spatial/fragments.*``
+
+The retained operator-important benchmark/reference sub-surfaces inside the PoC
+package are:
 
 - runtime PIN / launch surface:
   ``models/mkrf_patchworks_model_poc/analysis/base.pin``
-- generated runtime XML:
-  ``models/mkrf_patchworks_model_poc/XML/baseMKRF.xml``
-- generated runtime tracks:
-  ``models/mkrf_patchworks_model_poc/Tracks/*.csv``
-- accepted runtime spatial lane:
-  ``models/mkrf_patchworks_model_poc/Spatial/fragments.*`` and
-  ``models/mkrf_patchworks_model_poc/Spatial/topo_frag100.csv``
 - checkpoint target-control lane used by the PoC operator surface:
   ``models/mkrf_patchworks_model_poc/analysis/initialTargetSummary.csv`` and
   ``models/mkrf_patchworks_model_poc/analysis/initialTargetStatus.csv``
 
-These are the surfaces a user/operator should treat as the current PoC runtime
-package. They are the right place to look when the question is "what does the
-current FEMIC-managed MKRF package actually run with?"
+These are the surfaces a user/operator should treat as:
+
+- the current canonical rebuild runtime package; and
+- the retained benchmark/reference control lane.
 
 Legacy Analyst Boundary Context
 -------------------------------
@@ -82,27 +92,26 @@ Compiled runtime evidence:
 
 Generated runtime package:
 
+- ``models/mkrf_patchworks_model/``
 - ``models/mkrf_patchworks_model_poc/``
 
 The current claim boundary is:
 
-- minimally runnable PoC benchmark/intermediate
+- source-faithful canonical runtime/package rebuild plus accepted
+  benchmark/reference comparison boundaries
 
 The current claim boundary is not:
 
-- source-faithful rebuild
 - exact legacy-equivalence
-- final canonical MKRF model architecture
+- source-faithful reconstruction of the control/entrypoint helper lane
 
 The practical reading is:
 
-- the PoC preserves enough of the legacy compiled/runtime contract to benchmark
-  and reason about model behavior;
-- the current generated XML/tracks plus accepted spatial lane are the active
-  PoC runtime surface;
-- the later from-scratch rebuild must still start from the reviewed upstream
-  source lane and does not get to claim source-faithful status merely because
-  the PoC is runnable.
+- the canonical package is now the active MKRF runtime/package surface;
+- the PoC preserves enough of the older compiled/runtime contract to benchmark
+  and reason about model behavior; and
+- the retained PoC control lane does not become a canonical rebuild claim just
+  because it remains useful for benchmark/reference comparison.
 
 Benchmark/Reference Evidence vs. Canonical Rebuild Contract
 -----------------------------------------------------------
@@ -117,35 +126,40 @@ evidence:
 - the reviewed workbook/builder translations that explain the current PoC
   emission/runtime contract.
 
-Treat the following as belonging to the later canonical rebuild contract
-instead:
+Treat the following as belonging to the active canonical rebuild contract:
 
 - source-faithful raw-input reconstruction from ``03_MappingAnalysisData/*``;
-- final target/control architecture decisions;
-- any future canonical runtime package path distinct from the PoC package; and
-- any stronger claim of identity with the original legacy model than the
-  accepted PoC benchmark claim.
+- canonical runtime package generation under
+  ``models/mkrf_patchworks_model/``; and
+- accepted runtime-surface parity against the PoC benchmark package.
 
-That distinction is deliberate. The PoC lane is meant to preserve evidence,
-runtime intuition, and benchmark leverage. It is not meant to lock the future
-architecture in place.
+Accepted Legacy-Only Control Seams
+----------------------------------
+
+The following control seams remain accepted legacy-only benchmark/reference
+evidence unless a later task explicitly reopens source-faithful control-lane
+rebuild:
+
+- ``THLB4070(...)``
+- ``UWR(...)``
+- ``InitialTargets/00_Target_Descriptions.bsh``
 
 Handoff to the Canonical Rebuild
 --------------------------------
 
-The next architecture-defining lane is the from-scratch MKRF rebuild under
-parent issue ``#173`` and FEMIC roadmap Phase 60.
+The next architecture-defining work is closeout of the canonical rebuild claim
+boundary under parent issue ``#173`` and FEMIC roadmap Phase 60.
 
-That later lane should inherit this PoC docs set only as:
+That closeout lane should inherit the retained PoC docs/control surfaces only
+as:
 
 - benchmark/reference evidence;
 - a record of accepted PoC variances;
 - a runtime/operator baseline for comparison; and
 - a checklist of seams that still require source-faithful replacement.
 
-It should not inherit this PoC package as the final target architecture by
-default. Any behavior carried forward into the canonical rebuild must still be
-justified by source evidence or benchmark necessity.
+It should not reinterpret the retained PoC control lane as part of the
+canonical source-faithful claim boundary by default.
 
 Reference Runbooks
 ------------------

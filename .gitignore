@@ -6,6 +6,7 @@ __pycache__/
 *.pyc
 
 # Runtime logs and manifests
+runtime/logs/
 tipsy_io/logs/*.log
 tipsy_io/logs/*.json
 tipsy_io/scratch/
@@ -20,10 +21,17 @@ data/bc/
 # Generated model outputs
 output/
 releases/
-plots/
+models/*/patchworksLog.csv
+models/*/tracks/accounts_backup_*.csv
+plots/*
+!plots/
+!plots/strata-tsamkrf.png
+!plots/strata-tsamkrf.pdf
+!plots/vdyp_lmh_tsamkrf-*.png
+!plots/vdyp_fitdiag_tsamkrf-*.png
+!plots/tipsy_vdyp_tsamkrf-*.png
 docs/_build/
 
 # Legacy intermediate artifacts
 data/*.feather
 data/*.pkl
-data/model_input_bundle/

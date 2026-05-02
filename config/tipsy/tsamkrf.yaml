@@ -1,91 +1,55 @@
-# MKRF onboarding template for FEMIC TIPSY rule configuration.
-# The filename keeps the legacy tsa* pattern for compatibility even though
-# MKRF is a named FMU rather than a numeric TSA.
-
 schema_version: 1
-tsa_code: "mkrf"  # legacy key name; use as the case/FMU code where applicable
+case_code: "mkrf"
 
 metadata:
-  source_tsr:
-    - title: ""
-      year: null
-      url: ""
-      notes: ""
-  author: ""
-  created_utc: ""
-  notes: ""
+  authority: "mkrf planning guidance from Anna Tobiasz"
+  notes:
+    - "Use AGE_2020 >= 80 as the fire-origin threshold for the first-growth lane."
+    - "Use AGE_2020 < 80 as the logging-origin threshold for the managed/planted lane."
+    - "Treat these planting specifications as a first-pass compile surface, not the final silviculture contract."
+    - "High-elevation vm2 refinement remains deferred until the AU key carries an elevation discriminator."
 
-defaults:
-  e:
-    OAF2: 0.95
-    FIZ: "I"
-    Regen_Method: "P"
-    Proportion: 1
-  f:
-    OAF2: 0.95
-    FIZ: "I"
-    Regen_Method: "P"
-    Proportion: 1
-    SI_c1: 1.0
-    SI_c2: 0.0
+origin_rules:
+  fire_origin_min_age: 80
 
-# Rule order is first-match-wins.
-rules:
-  - id: "example_softwood_rule"
-    when:
-      leading_species_in: ["S", "SB", "SE", "SN", "SS", "SW", "SX"]
-      bec_in: ["SBS", "ESSF"]
-      forest_type_in: [1]
-      min_operable_years_gte: 50
-      min_volume_gte: 140
-      min_si_quantile_gte: 10
-    assign:
-      e:
-        Regen_Delay: 2
-        Density: 1400
-        SPP_1: "SW"
-        PCT_1: 100
-        Util_DBH_cm: 17.5
-      f:
-        Regen_Delay: 1
-        Density: 1400
-        SI_c1: 1.0
-        SI_c2: 0.0
-        SPP_1: "SW"
-        PCT_1: 100
-        Util_DBH_cm: 17.5
-    notes: "Replace with production MKRF rules from local planning evidence."
+managed_defaults:
+  density_total: 1500
+  regen_delay: 1
+  oaf1: 1.0
+  oaf2: 0.95
+  planted_percent: 100
+  baseline_system: "clearcut"
+  ct_eligible: true
+  ct_target_age: 40
+  ct_on_fire_origin: false
 
-required_fields:
-  - AU
-  - TBLno
-  - BEC
-  - Proportion
-  - Regen_Delay
-  - SI
-  - OAF1
-  - OAF2
-  - FIZ
-  - Regen_Method
-  - Density
-  - SPP_1
-  - PCT_1
-  - SPP_2
-  - PCT_2
-  - SPP_3
-  - PCT_3
-  - SPP_4
-  - PCT_4
-  - SPP_5
-  - PCT_5
-  - GW_1
-  - GW_2
-  - GW_3
-  - GW_4
-  - GW_5
-  - GW_age_1
-  - GW_age_2
-  - GW_age_3
-  - GW_age_4
-  - GW_age_5
-  - Util_DBH_cm
+families:
+  cwh_dm_x:
+    bec_zone: "cwh"
+    bec_subzone: "dm"
+    bec_variant: "x"
+    species_mix:
+      FD: 45
+      CW: 45
+      PW: 10
+    notes: "dm expert default: FDC 45, CW 45, PW 10 at 1500 sph."
+  cwh_vm_1:
+    bec_zone: "cwh"
+    bec_subzone: "vm"
+    bec_variant: "1"
+    species_mix:
+      FD: 45
+      CW: 45
+      PW: 10
+    notes: "vm1 expert default: FDC 45, CW 45, PW 10 at 1500 sph."
+  cwh_vm_2:
+    bec_zone: "cwh"
+    bec_subzone: "vm"
+    bec_variant: "2"
+    species_mix:
+      CW: 70
+      FD: 15
+      PW: 5
+      BA: 5
+      SS: 5
+    notes: "vm2 first-pass default: CW 70, FD 15, PW 5, BA 5, SS 5; later high-elevation split may replace FD with YC."

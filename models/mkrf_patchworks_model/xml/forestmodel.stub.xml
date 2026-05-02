@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://www.spatial.ca/ForestModel.xsd"?>
+<ForestModel description="MKRF canonical rebuild stub" horizon="300" year="2020" match="multi">
+  <!--Stub only. This is not a runnable Patchworks ForestModel yet.-->
+  <!--Curve contract: runtime_curve_contract.xml; curve bank: runtime_curve_bank.xml-->
+  <curve id="unity">
+    <point x="0" y="1" />
+  </curve>
+  <input block="BLOCK_ID" area="AREA_HA" age="AGE" />
+  <output selected_au_count="31" first_growth_curve_au_count="20" managed_curve_au_count="31" managed_only_runtime_au_count="6" />
+  <select statement="stub_reference_only">
+    <features curve_contract_xml="runtime_curve_contract.xml" curve_bank_xml="runtime_curve_bank.xml" curve_status_csv="runtime_curve_status.csv" />
+  </select>
+</ForestModel>

@@ -1,0 +1,18 @@
+schema_version: "1.0"
+
+source_inputs:
+  resultant_gdb:
+    required: true
+    canonical_instance_path: "data/source/03_MappingAnalysisData/Resultant.gdb"
+    canonical_feature_class: "Resultant"
+    upstream_source_layer: "03_MappingAnalysisData/Resultant.gdb/Resultant"
+    filter: "CONTCLAS != 'X'"
+    publisher_command: "femic instance mkrf-publish-runtime-spatial"
+    generated_outputs:
+      - "models/mkrf_patchworks_model/spatial/fragments.shp"
+      - "models/mkrf_patchworks_model/spatial/runtime_spatial_manifest.json"
+    substitute_inputs_forbidden:
+      - "data/legacy_mkrf/compiled_spatial/*"
+      - "models/mkrf_patchworks_model_poc/Spatial/*"
+      - "checkpoint-derived geometry artifacts"
+    current_status: "missing_until_materialized"
