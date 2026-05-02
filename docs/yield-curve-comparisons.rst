@@ -14,6 +14,11 @@ Use this page when you want to answer questions such as:
 - whether the currently published managed-curve story looks plausible at a
   quick visual level.
 
+For the underlying logic behind those figures, use:
+
+- :doc:`analysis-units-and-yield-curves`
+- :doc:`treatments-and-state-logic`
+
 How To Read These Figures
 -------------------------
 
@@ -142,6 +147,8 @@ Where These Figures Come From
   ``docs/_static/mkrf-figures/`` in this instance checkout;
 - the overlays on this page are copied from the checked-in MKRF treated
   comparison artifacts for standalone docs publication;
+- the canonical AU selection and non-top-N runtime remap logic behind those
+  overlays is explained in :doc:`analysis-units-and-yield-curves`;
 - the broader strata/VDYP catalog is rendered in :doc:`figure-appendix`; and
 - rebuild/QA guidance for the canonical release lane lives in
   :doc:`rebuild-and-qa` and :doc:`operator-runbook`.

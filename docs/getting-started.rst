@@ -93,6 +93,21 @@ This guide documents the current MKRF instance surfaces:
 
 It does not treat the PoC package as the final canonical MKRF instance.
 
+Read These First For Model Logic
+--------------------------------
+
+For the current canonical model behavior, start with:
+
+- :doc:`treatments-and-state-logic`
+- :doc:`analysis-units-and-yield-curves`
+
+Those two pages explain the actual runtime logic behind:
+
+- ``CC`` and ``CT``;
+- managed/unmanaged versus natural/treated semantics;
+- the selected top-N AU rule; and
+- runtime AU remap/imputation for non-top-N strata.
+
 Recommended figure surfaces:
 
 - :doc:`yield-curve-comparisons` for the current treated TIPSY-vs-VDYP overlay

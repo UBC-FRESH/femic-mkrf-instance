@@ -5,6 +5,11 @@ This appendix renders the current checked-in MKRF figure set inline for direct
 review in the standalone docs. Filenames are retained in captions for
 traceability.
 
+For the model logic behind these figures, use:
+
+- :doc:`analysis-units-and-yield-curves`
+- :doc:`treatments-and-state-logic`
+
 Strata Distribution Figure
 --------------------------
 
@@ -195,3 +200,8 @@ Rendered Figure Sources
 - ``docs/_static/mkrf-figures/vdyp_lmh_tsamkrf-*.png``
 - ``docs/_static/mkrf-figures/vdyp_fitdiag_tsamkrf-*.png`` (selected representative subset shown)
 - ``docs/_static/mkrf-figures/tipsy_vdyp_tsamkrf-*.png`` via :doc:`yield-curve-comparisons`
+
+These figures represent the published canonical AU/yield surfaces and should be
+read together with :doc:`analysis-units-and-yield-curves`, especially for the
+selected top-N AU subset and the runtime remap/imputation treatment of
+non-top-N raw AUs.

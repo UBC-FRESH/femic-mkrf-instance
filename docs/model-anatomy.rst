@@ -120,6 +120,18 @@ release lane. The PoC runtime entrypoints remain valid benchmark/operator
 surfaces, but they are not the active architecture contract for the canonical
 release.
 
+Logic References
+----------------
+
+This page is primarily about package anatomy, not detailed runtime behavior.
+
+For the current canonical model logic, use:
+
+- :doc:`treatments-and-state-logic` for ``CC``/``CT``, state families, and the
+  managed/unmanaged versus natural/treated split; and
+- :doc:`analysis-units-and-yield-curves` for the stratification -> AU ->
+  selected-AU -> runtime remap/yield-curve mapping chain.
+
 Original Modeling Assumptions That Shape This Anatomy
 -----------------------------------------------------
 
@@ -147,5 +159,8 @@ it is no longer the package this page is teaching as current.
 
 Current figure references:
 
+- treatment and AU/yield logic:
+  :doc:`treatments-and-state-logic` and
+  :doc:`analysis-units-and-yield-curves`
 - student/operator-facing treated overlay gallery: :doc:`yield-curve-comparisons`
 - broader strata and yield diagnostics appendix: :doc:`figure-appendix`

@@ -88,3 +88,32 @@ That is the quickest way to distinguish:
 - what is benchmark/reference evidence from the retained PoC lane;
 - what is only historical evidence; and
 - what still remains outside the canonical rebuild claim boundary.
+
+Runtime AU and species-share audit surfaces
+-------------------------------------------
+
+The most important current technical lookup surfaces for the canonical runtime
+are:
+
+- ``data/model_input_bundle/selected_au_table.csv``
+- ``data/model_input_bundle/stand_origin_assignment.csv``
+- ``data/model_input_bundle/stand_au_assignment.csv``
+- ``models/mkrf_patchworks_model/analysis/runtime_au_remap_audit.csv``
+- ``models/mkrf_patchworks_model/analysis/runtime_species_share_audit.csv``
+
+Use them for different questions:
+
+- ``selected_au_table.csv``:
+  what canonical top-N AU subset was retained for runtime publication?
+- ``stand_au_assignment.csv``:
+  what raw AU did the underlying stand evidence support?
+- ``stand_origin_assignment.csv``:
+  what origin class did that stand receive under the current runtime rule?
+- ``runtime_au_remap_audit.csv``:
+  what canonical selected AU did runtime actually use after non-top-N AU
+  normalization/remap?
+- ``runtime_species_share_audit.csv``:
+  what species-share surface was published for that canonical AU/origin lane?
+
+This is the main technical evidence behind the concise operator explanation in
+:doc:`analysis-units-and-yield-curves`.

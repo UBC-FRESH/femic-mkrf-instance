@@ -24,6 +24,11 @@ Minimal Operator Path
    - Matrix Builder rebuild validation; and
    - operator-facing canonical runtime review.
 
+   For the current model logic behind that package, read:
+
+   - :doc:`treatments-and-state-logic`
+   - :doc:`analysis-units-and-yield-curves`
+
 5. For canonical scenario smoke validation, use the canonical base lane and do
    not rely on very short scheduler samples:
 
@@ -89,6 +94,22 @@ For this instance, the reviewed runtime origin rule is:
 
 That semantic split is now part of the accepted operator contract for the
 canonical rebuild package.
+
+Canonical treatment logic
+-------------------------
+
+The current canonical runtime includes both:
+
+- ``CC``; and
+- ``CT``.
+
+Use :doc:`treatments-and-state-logic` for the exact current behavior,
+including:
+
+- ``CC`` minimum age and post-treatment transition;
+- ``CT`` eligibility, age window, retention, and post-treatment ``THN`` state;
+  and
+- the current thinning factor used in emitted yield/product logic.
 
 What the current ``v0`` smoke proves
 ------------------------------------
