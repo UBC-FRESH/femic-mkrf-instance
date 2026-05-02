@@ -21,7 +21,8 @@ The canonical MKRF rebuild treats these concepts separately:
 
 - ``managed`` / ``unmanaged`` means treatment eligibility only;
 - ``natural`` / ``treated`` means yield-curve provenance only; and
-- retention may move area from managed to unmanaged without changing origin.
+- the ``<retention>`` XML element may move area from managed to unmanaged
+  without changing origin.
 
 For this instance, origin is currently classified from the reviewed 2020 age
 rule:
@@ -50,10 +51,12 @@ Canonical ``CC`` behavior is:
 
 - available on ``status in managed``;
 - minimum age is ``if(oper in operable, 60, 150)``; and
-- the transition sets:
-  - ``au = auf``
-  - ``origin = treated``
-  - ``statecode = FM``
+- after treatment, the post-treatment stratum is rewritten as follows:
+
+  - ``au = auf``: use the post-treatment AU for subsequent lookup;
+  - ``origin = treated``: move regenerated area onto the treated-origin yield
+    lane; and
+  - ``statecode = FM``: mark the post-clearcut managed state.
 
 This means ``CC`` is the regeneration event that explicitly moves post-harvest
 area onto the treated-origin yield lane.
@@ -67,10 +70,12 @@ Canonical ``CT`` behavior is:
   ``status in managed and oper in operable and ct eq 'Y' and statecode ne 'THN'``;
 - minimum age ``40``;
 - maximum age ``150``;
-- retention ``20``; and
-- the transition sets:
-  - ``au = auf``
-  - ``statecode = THN``
+- uses the treatment ``retain="20"`` attribute, which acts here as a 20-year
+  post-treatment re-entry lock for automated scheduling; and
+- after treatment, the post-treatment stratum is rewritten as follows:
+
+  - ``au = auf``: use the post-treatment AU for subsequent lookup; and
+  - ``statecode = THN``: mark the area as being in the thinned state.
 
 Unlike ``CC``, the current ``CT`` transition does not reset origin. It leaves
 the stand on the same canonical AU and marks the post-treatment state as
