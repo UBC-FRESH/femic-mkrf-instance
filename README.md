@@ -70,6 +70,21 @@ Current primary runtime/package references:
 - retained PoC benchmark package:
   `models/mkrf_patchworks_model_poc/`
 
+## Project Communication Surfaces
+
+High-level MKRF project planning and team communication also lives in Basecamp.
+These URLs are safe to publish here because they still require Basecamp
+authentication to access.
+
+- Basecamp project:
+  `https://3.basecamp.com/3683983/projects/41175753`
+- Basecamp message board for release/project updates:
+  `https://3.basecamp.com/3683983/buckets/41175753/message_boards/8352987126`
+
+When posting release or milestone announcements from another development
+environment, use the GitHub release/discussion surfaces first and mirror the
+same summary into the Basecamp message board.
+
 ## Legacy Compiled Package Reference
 
 This instance now carries a **metadata-only intake** of the stable compiled
