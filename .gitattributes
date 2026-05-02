@@ -9,3 +9,4 @@
 *.sha256 annex.largefiles=nothing
 *.bsh annex.largefiles=nothing
 *.pin annex.largefiles=nothing
+docs/_static/mkrf-figures/*.png annex.largefiles=nothing
