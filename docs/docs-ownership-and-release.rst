@@ -4,9 +4,9 @@ Docs Ownership and Release
 Purpose
 -------
 
-This page defines who owns the MKRF PoC docs set, how publication should be
-validated, and how docs changes relate to the current PoC benchmark package and
-the later canonical rebuild lane.
+This page defines who owns the MKRF instance docs set, how publication should
+be validated, and how docs changes relate to the active canonical release lane
+and the retained PoC benchmark/reference package.
 
 Ownership Matrix
 ----------------
@@ -26,17 +26,16 @@ Ownership Matrix
 Current Release Reading
 -----------------------
 
-The current published docs describe the MKRF PoC benchmark/intermediate package
-under ``models/mkrf_patchworks_model_poc/``.
+The current published docs describe the canonical MKRF release lane under
+``models/mkrf_patchworks_model/``.
 
-They do not describe:
+They also retain benchmark/reference explanation for:
 
-- a final canonical MKRF rebuild release; or
-- a source-faithful rebuild from raw upstream source inputs.
+- ``models/mkrf_patchworks_model_poc/``; and
+- selected legacy-only evidence/control surfaces that remain outside the
+  canonical claim boundary.
 
-Any later publication for the canonical rebuild should either replace this docs
-surface deliberately or live as a distinct release contract with its own claim
-boundary.
+They should not teach the PoC package as the active runtime/package lane.
 
 Update Cadence
 --------------
@@ -59,14 +58,15 @@ Before treating the MKRF docs as releasable:
 - the instance repo GitHub Pages workflow must be able to rebuild the
   standalone docs from `main` pushes;
 - the parent FEMIC docs contract checks must still pass if parent docs changed;
-- the docs text must stay explicit that the current package is PoC-only; and
+- the docs text must stay explicit that the canonical package is current and
+  that the PoC package is benchmark/reference evidence only; and
 - user-local or machine-specific private paths must not leak into the published
   pages.
 
 Publication Channels
 --------------------
 
-The standalone MKRF PoC docs now carry two publication/build contracts:
+The standalone MKRF docs now carry two publication/build contracts:
 
 - `.github/workflows/docs-pages.yml` for GitHub Pages publication on `main`
   pushes in the instance repo; and
@@ -79,29 +79,32 @@ contract and secondary hosting option.
 Current Sufficiency Reading
 ---------------------------
 
-For the current PoC lane, this docs set is now intended to be sufficient for:
+For the current canonical release lane, this docs set is now intended to be
+sufficient for:
 
-- operator orientation to the accepted runtime package;
-- interpretation of the accepted benchmark/KPI comparison surface;
-- review of the accepted claim boundary and deferred seams; and
-- handoff into the later canonical rebuild lane without re-opening PoC
+- operator orientation to the active runtime package;
+- interpretation of the accepted benchmark/KPI comparison surface against the
+  retained PoC lane;
+- review of the accepted canonical claim boundary and deferred seams; and
+- handoff into later post-release canonical iterations without re-opening PoC
   archaeology by default.
 
-That is the standard for "good enough" in the current lane. It does not mean
-the PoC is the final architecture. It means the benchmark/intermediate surface
-is now documented well enough that the team can stop treating it as
-under-documented.
+That is the standard for "good enough" in the current lane. It means the active
+canonical release is documented well enough for operator/developer use while
+the retained PoC benchmark/reference surface remains clearly separated.
 
 Versioning and Handoff
 ----------------------
 
-For the current PoC lane:
+For the current canonical lane:
 
-- docs changes track the PoC benchmark package and its accepted interpretation;
+- docs changes track the active canonical package and its accepted claim
+  boundary;
 - significant docs milestones should be reflected in the governing GitHub issue
   trail; and
-- the later canonical rebuild phase should inherit this docs set as reference
-  material, not as an architecture lock-in.
+- the retained PoC benchmark package should remain documented as reference
+  material, not as the active architecture.
 
-The concrete handoff target for that later lane is the from-scratch MKRF
-rebuild under parent issue ``#173`` and FEMIC roadmap Phase 60.
+The concrete next handoff target after the `v0.0.1a1` release is the
+post-release docs cleanup and later archival/reference publication work tracked
+from the canonical rebuild closeout.

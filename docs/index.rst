@@ -18,6 +18,8 @@ The retained PoC benchmark/reference package remains under
    model-anatomy
    data-package-crosswalk
    benchmark-results
+   yield-curve-comparisons
+   figure-appendix
    evidence-and-boundaries
    caveats-and-deferred-seams
    metadata-and-lineage

@@ -92,3 +92,10 @@ This guide documents the current MKRF instance surfaces:
 - how the canonical rebuild lane differs from the retained PoC package.
 
 It does not treat the PoC package as the final canonical MKRF instance.
+
+Recommended figure surfaces:
+
+- :doc:`yield-curve-comparisons` for the current treated TIPSY-vs-VDYP overlay
+  gallery; and
+- :doc:`figure-appendix` for the strata distribution plus the broader VDYP
+  envelope and fit-diagnostic figure set.
