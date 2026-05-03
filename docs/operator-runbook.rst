@@ -107,9 +107,11 @@ Use :doc:`treatments-and-state-logic` for the exact current behavior,
 including:
 
 - ``CC`` minimum age and post-treatment transition;
-- ``CT`` eligibility, age window, retention, and post-treatment ``THN`` state;
-  and
-- the current thinning factor used in emitted yield/product logic.
+- ``CT`` eligibility, age window, retained re-entry lock, and explicit
+  ``thn_`` transition; and
+- the legacy-parity proportional split now used in emitted logic:
+  ``0.4`` treatment-year CT extraction and ``0.6`` post-thin THN standing
+  yield.
 
 What the current ``v0`` smoke proves
 ------------------------------------

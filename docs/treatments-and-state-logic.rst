@@ -64,33 +64,54 @@ area onto the treated-origin yield lane.
 Commercial Thinning (``CT``)
 ----------------------------
 
-Canonical ``CT`` behavior is:
+Legacy source and PoC benchmark CT behavior is:
 
 - available on
-  ``status in managed and oper in operable and ct eq 'Y' and statecode ne 'THN'``;
+  ``status in managed and oper in operable and ct eq 'Y' and not startswith(au,'t')``;
 - minimum age ``40``;
 - maximum age ``150``;
 - uses the treatment ``retain="20"`` attribute, which acts here as a 20-year
   post-treatment re-entry lock for automated scheduling; and
+- transitions to a thinned AU lane via ``au = 'thn_' + au``.
+
+That legacy/PoC contract uses a constant proportional commercial-thinning
+split:
+
+- treatment-year extracted harvest/product signal = ``0.4 * base curve``; and
+- post-thin standing THN signal for later ages = ``0.6 * base curve(x)``.
+
+This is not a constant absolute gap model of the form
+``f(x) - 0.4 * f(x_ct)``.
+
+Canonical ``CT`` behavior now matches that legacy/PoC contract:
+
+- available on
+  ``status in managed and oper in operable and ct eq 'Y' and not startswith(au,'thn_')``;
+- minimum age ``40``;
+- maximum age ``150``;
+- uses the treatment ``retain="20"`` attribute as the same 20-year
+  post-treatment re-entry lock; and
 - after treatment, the post-treatment stratum is rewritten as follows:
 
-  - ``au = auf``: use the post-treatment AU for subsequent lookup; and
-  - ``statecode = THN``: mark the area as being in the thinned state.
+  - ``au = 'thn_' + au``: move the stand onto the explicit thinned AU lane.
 
-Unlike ``CC``, the current ``CT`` transition does not reset origin. It leaves
-the stand on the same canonical AU and marks the post-treatment state as
-thinned.
+Unlike ``CC``, ``CT`` does not reset origin. It preserves the current natural
+or treated origin lane and marks THN from the thinned AU identity.
 
 Current Thinning Yield Logic
 ----------------------------
 
-The canonical runtime currently uses a simple thinning factor in the generated
-yield/product logic:
+The canonical runtime now splits CT standing and CT extracted volume the same
+way the legacy and PoC XML do:
 
-- ``if(treatment eq 'CT' or statecode eq 'THN', 0.6, 1)``
+- standing yield/features on thinned AUs:
+  ``if(startswith(au,'thn_'), 0.6, 1)``
+- treatment-year CT harvested products:
+  ``if(treatment eq 'CT', 0.4, 1)``
 
-That factor is applied to the active origin-driven yield lane, so the thinning
-adjustment is separate from the natural-versus-treated curve choice.
+Both expressions are applied on top of the active origin-driven yield lane, so
+the thinning adjustment stays separate from the natural-versus-treated curve
+choice.
 
 State Families
 --------------
@@ -104,7 +125,7 @@ The canonical runtime publishes the familiar state-family surface:
 
 In the current canonical lane:
 
-- ``THN`` is the explicit post-``CT`` thinned state;
+- ``THN`` is driven from the explicit post-``CT`` ``thn_`` AU lane;
 - ``FM`` is the post-``CC`` managed treated state; and
 - the remaining non-``THN`` states are derived from explicit origin and runtime
   state semantics rather than from first-growth-curve availability.
@@ -128,6 +149,8 @@ Primary evidence surfaces:
 
 - ``models/mkrf_patchworks_model/analysis/base.pin``
 - ``models/mkrf_patchworks_model/xml/forestmodel.xml``
+- ``data/legacy_mkrf/generated_xml/baseMKRF.xml``
+- ``models/mkrf_patchworks_model_poc/XML/baseMKRF.xml``
 
 Where To Read Next
 ------------------

@@ -145,8 +145,9 @@ canonical rebuild and the retained PoC benchmark:
 - two silvicultural systems:
 
   - clearcut with reserves; and
-  - commercial thinning with a 20-year post-treatment re-entry lock before the
-    area becomes eligible again under the broader treatment logic;
+  - commercial thinning with a 20-year post-treatment re-entry lock plus the
+    legacy proportional split of ``0.4`` extracted CT volume and ``0.6``
+    residual THN standing volume;
 - minimum harvest ages driven by operability and treatment type.
 
 Those assumptions explain why the active canonical package is centered on:
