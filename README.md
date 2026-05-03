@@ -87,8 +87,15 @@ same summary into the Basecamp message board.
 
 ## Legacy Compiled Package Reference
 
-This instance now carries a **metadata-only intake** of the stable compiled
+This instance now carries the repo-local archival/reference lane for the stable
 legacy MKRF Patchworks package.
+
+Use the legacy archive for record, traceability, and comparative debugging.
+Do not use it as the active runtime lane.
+
+Primary legacy archive guide:
+
+- `docs/legacy-archive-reference.rst`
 
 Instance-local reference surfaces:
 

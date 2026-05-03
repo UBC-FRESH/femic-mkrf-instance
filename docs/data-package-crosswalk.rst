@@ -88,3 +88,7 @@ In particular:
   comparing against; and
 - the retained legacy-only control seams still sit outside the canonical claim
   boundary unless a later task explicitly reopens control-lane reconstruction.
+
+For the archive-oriented reading of those same legacy surfaces, use:
+
+- :doc:`legacy-archive-reference`

@@ -16,6 +16,7 @@ The retained PoC benchmark/reference package remains under
 
    getting-started
    model-anatomy
+   legacy-archive-reference
    treatments-and-state-logic
    analysis-units-and-yield-curves
    data-package-crosswalk

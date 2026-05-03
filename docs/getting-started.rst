@@ -41,6 +41,15 @@ The retained benchmark/reference package is:
 Use the canonical package for current runtime/package work. Use the PoC package
 only for benchmark/reference comparison.
 
+The repo-local archival legacy package lives under:
+
+- ``data/legacy_mkrf/``
+
+Use that archive only for historical/reference inspection, not as the active
+runtime lane. The dedicated archive guide is:
+
+- :doc:`legacy-archive-reference`
+
 Quick Operator Surface
 ----------------------
 
@@ -88,6 +97,8 @@ This guide documents the current MKRF instance surfaces:
 - what the instance contains;
 - how the canonical runtime package is wired;
 - what benchmark/reference evidence was retained;
+- where the full retained legacy package lives and how to use it as an
+  archival/reference lane;
 - what boundaries and caveats still exist; and
 - how the canonical rebuild lane differs from the retained PoC package.
 

@@ -133,6 +133,10 @@ Treat the following as belonging to the active canonical rebuild contract:
   ``models/mkrf_patchworks_model/``; and
 - accepted runtime-surface parity against the PoC benchmark package.
 
+For the explicit repo-local archive guide to ``data/legacy_mkrf/``, use:
+
+- :doc:`legacy-archive-reference`
+
 Accepted Legacy-Only Control Seams
 ----------------------------------
 

@@ -160,6 +160,10 @@ Those assumptions explain why the active canonical package is centered on:
 The retained PoC package still matters for benchmark/reference comparison, but
 it is no longer the package this page is teaching as current.
 
+For a focused guide to the retained legacy package itself, use:
+
+- :doc:`legacy-archive-reference`
+
 Current figure references:
 
 - treatment and AU/yield logic:
