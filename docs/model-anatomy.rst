@@ -145,9 +145,11 @@ canonical rebuild and the retained PoC benchmark:
 - two silvicultural systems:
 
   - clearcut with reserves; and
-  - commercial thinning with a 20-year post-treatment re-entry lock plus the
-    legacy proportional split of ``0.4`` extracted CT volume and ``0.6``
-    residual THN standing volume;
+  - commercial thinning with a 20-year post-treatment scheduling lock and a
+    bucketed constant-absolute-gap response in the canonical lane
+    (``CT40``, ``CT50``, ``CT60``, ...), while the older ``0.4``/``0.6``
+    proportional split remains documented only as legacy/PoC benchmark
+    behavior;
 - minimum harvest ages driven by operability and treatment type.
 
 Those assumptions explain why the active canonical package is centered on:

@@ -83,35 +83,86 @@ split:
 This is not a constant absolute gap model of the form
 ``f(x) - 0.4 * f(x_ct)``.
 
-Canonical ``CT`` behavior now matches that legacy/PoC contract:
+The canonical rebuild no longer uses that legacy/PoC proportional-gap rule as
+its active target behavior. It is retained as benchmark/reference only.
+
+Canonical ``CT`` behavior now uses a bucketed constant-absolute-gap design
+intended for release line ``v0.0.2a1``:
 
 - available on
-  ``status in managed and oper in operable and ct eq 'Y' and not startswith(au,'thn_')``;
-- minimum age ``40``;
-- maximum age ``150``;
-- uses the treatment ``retain="20"`` attribute as the same 20-year
-  post-treatment re-entry lock; and
-- after treatment, the post-treatment stratum is rewritten as follows:
+  ``status in managed and oper in operable and ct eq 'Y' and not startswith(au,'thn')``;
+- uses 10-year midpoint CT buckets rather than one continuous-age treatment:
 
-  - ``au = 'thn_' + au``: move the stand onto the explicit thinned AU lane.
+  - ``CT40`` for ages ``35-44``
+  - ``CT50`` for ages ``45-54``
+  - ``CT60`` for ages ``55-64``
+  - continuing in the same pattern through ``CT150`` for ages ``145-154``
+
+- keeps the treatment ``retain="20"`` attribute as the same 20-year
+  post-treatment scheduling lock; and
+- after treatment, the post-treatment stratum is rewritten as follows, using
+  the bucket-specific thinned lane:
+
+  - ``CT40`` -> ``au = 'thn040_' + au``
+  - ``CT50`` -> ``au = 'thn050_' + au``
+  - and so on through the full bucket family.
 
 Unlike ``CC``, ``CT`` does not reset origin. It preserves the current natural
 or treated origin lane and marks THN from the thinned AU identity.
 
+Why the canonical lane is bucketed
+----------------------------------
+
+The desired CT response depends on treatment age. Patchworks ForestModel XML
+does not provide a clean generic way to persist arbitrary ``x_ct`` into
+post-treatment state for later curve evaluation.
+
+The canonical workaround is therefore to discretize CT into a finite family of
+treatments and precompile the response for each bucket anchor age. That keeps
+the runtime XML legal and auditable while still moving away from the old
+proportional-gap approximation.
+
 Current Thinning Yield Logic
 ----------------------------
 
-The canonical runtime now splits CT standing and CT extracted volume the same
-way the legacy and PoC XML do:
+The canonical runtime now uses bucket-anchored extracted and residual curves.
 
-- standing yield/features on thinned AUs:
-  ``if(startswith(au,'thn_'), 0.6, 1)``
-- treatment-year CT harvested products:
-  ``if(treatment eq 'CT', 0.4, 1)``
+For each CT bucket with midpoint anchor ``x_ct``:
 
-Both expressions are applied on top of the active origin-driven yield lane, so
-the thinning adjustment stays separate from the natural-versus-treated curve
-choice.
+- treatment-year CT harvested product =
+  ``0.4 * base_curve(x_ct)``
+- post-CT THN standing yield for later ages =
+  ``max(0, base_curve(x) - 0.4 * base_curve(x_ct))``
+
+That means:
+
+- the extracted CT volume is constant within the bucket and anchored to the
+  bucket midpoint age;
+- the post-CT standing lane carries a constant absolute gap rather than a
+  constant proportional gap; and
+- ``CC`` from the thinned lane harvests the residual standing curve, not the
+  untreated base curve.
+
+Representative rebuilt track evidence from the canonical runtime package shows
+the intended arithmetic:
+
+- ``CT40`` example:
+
+  - base standing at age ``100`` = ``764.8``
+  - ``CT40`` extracted volume = ``73.64``
+  - ``thn040`` standing at age ``100`` = ``691.16``
+  - ``73.64 + 691.16 = 764.8``
+
+- ``CT100`` example:
+
+  - base standing at age ``120`` = ``895.3``
+  - ``CT100`` extracted volume = ``305.92``
+  - ``thn100`` standing at age ``120`` = ``589.38``
+  - ``305.92 + 589.38 = 895.3``
+
+Those checks are why the canonical docs now describe CT as a bucketed
+constant-absolute-gap model rather than the older legacy proportional-gap
+contract.
 
 State Families
 --------------

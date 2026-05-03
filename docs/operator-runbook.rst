@@ -107,11 +107,16 @@ Use :doc:`treatments-and-state-logic` for the exact current behavior,
 including:
 
 - ``CC`` minimum age and post-treatment transition;
-- ``CT`` eligibility, age window, retained re-entry lock, and explicit
-  ``thn_`` transition; and
-- the legacy-parity proportional split now used in emitted logic:
-  ``0.4`` treatment-year CT extraction and ``0.6`` post-thin THN standing
-  yield.
+- the bucketed ``CT40`` / ``CT50`` / ``CT60`` ... treatment family, its age
+  windows, retained scheduling lock, and explicit per-bucket ``thn040_`` /
+  ``thn050_`` / ... transitions; and
+- the current canonical bucketed constant-absolute-gap rule:
+  ``0.4 * base_curve(x_ct_bucket)`` extracted at treatment time and
+  ``base_curve(x) - 0.4 * base_curve(x_ct_bucket)`` on the post-CT THN lane.
+
+This redesign is the intended behavior for the next MKRF prerelease line
+``v0.0.2a1``. The older legacy/PoC ``0.4`` / ``0.6`` proportional split is
+retained only as benchmark/reference context.
 
 What the current ``v0`` smoke proves
 ------------------------------------
