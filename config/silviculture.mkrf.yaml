@@ -10,14 +10,65 @@ pre_commercial_thinning:
     - "HW"
 
 commercial_thinning:
-  enabled: false
+  enabled: true
   state_field: "SILV_STATE"
   from_state: "cc_pl"
   to_state: "cc_pl_ct"
-  eligible_au_ids: []
+  objective: "promote utility pole grade cedar (Cw) outcomes"
+  eligibility:
+    slope_percent_lt: 50
+    cw_share_percent_gt: 15
+    source: "models/mkrf_patchworks_model/analysis/ct_eligibility_audit.csv"
+    notes:
+      - "Slope eligibility is represented by the current runtime CT/operability evidence, which carries the ground-based treatment eligibility seam."
+      - "Cw threshold is provisional and intentionally strict: exactly 15% Cw is not eligible."
+  eligible_au_ids:
+    - "cwh_dm_x_cw_dr"
+    - "cwh_dm_x_cw_fdc"
+    - "cwh_dm_x_cw_hw"
+    - "cwh_dm_x_dr_cw"
+    - "cwh_dm_x_fdc_cw"
+    - "cwh_dm_x_hw_cw"
+    - "cwh_vm_1_cw_fdc"
+    - "cwh_vm_1_cw_hw"
+    - "cwh_vm_1_fdc_cw"
+    - "cwh_vm_1_hw_cw"
+    - "cwh_vm_2_cw_fdc"
+    - "cwh_vm_2_cw_hw"
+    - "cwh_vm_2_fdc_cw"
+    - "cwh_vm_2_hw_cw"
   min_origin: "planted"
+  active_age_buckets:
+    CT35:
+      begin_age: 35
+      end_age: 39
+      thinned_au_prefix: "thn035"
+    CT40:
+      begin_age: 40
+      end_age: 44
+      thinned_au_prefix: "thn040"
+    CT45:
+      begin_age: 45
+      end_age: 49
+      thinned_au_prefix: "thn045"
   age_by_au: {}
-  basal_area_removal_fraction: 0.30
+  intensity_variants:
+    low:
+      basal_area_removal_fraction: 0.35
+    medium:
+      basal_area_removal_fraction: 0.45
+    high:
+      basal_area_removal_fraction: 0.55
+  default_intensity: "medium"
+  species_prescription:
+    retain_species:
+      - "CW"
+    remove_species:
+      - "HW"
+    provisional_fir_rule: "remove merchantable Fd only as needed to keep the treatment cash-flow positive; final merch/diameter selection remains a calibration item."
+  residual_state_assumption: "post-CT THN lane preserves cedar and carries a bucket-anchored residual standing curve."
+  growth_response_assumption: "current runtime reuses adjacent bucket response curves for CT35/CT45 until cedar pole response curves are recalibrated."
+  basal_area_removal_fraction: 0.45
   basal_area_to_volume_ratio: 1.0
 
 fertilization:

@@ -1,0 +1,137 @@
+schema_version: 1
+contract: mkrf_cedar_pole_commercial_thinning
+status: active_runtime_contract
+parent_issue: 8
+
+objective: "promote utility pole grade cedar (Cw) outcomes"
+
+eligibility:
+  slope_percent_lt: 50
+  slope_source: "current runtime CT/operability evidence; ground-based seam"
+  cw_share_percent_gt: 15
+  cw_share_source: "models/mkrf_patchworks_model/analysis/runtime_species_share_audit.csv"
+  audit_artifact: "models/mkrf_patchworks_model/analysis/ct_eligibility_audit.csv"
+  eligible_au_ids:
+    - cwh_dm_x_cw_dr
+    - cwh_dm_x_cw_fdc
+    - cwh_dm_x_cw_hw
+    - cwh_dm_x_dr_cw
+    - cwh_dm_x_fdc_cw
+    - cwh_dm_x_hw_cw
+    - cwh_vm_1_cw_fdc
+    - cwh_vm_1_cw_hw
+    - cwh_vm_1_fdc_cw
+    - cwh_vm_1_hw_cw
+    - cwh_vm_2_cw_fdc
+    - cwh_vm_2_cw_hw
+    - cwh_vm_2_fdc_cw
+    - cwh_vm_2_hw_cw
+  notes:
+    - "Cw threshold is strict: exactly 15% Cw is ineligible."
+    - "Slope threshold is provisional and currently represented through the published runtime CT/operability seam."
+
+operability:
+  generator_source: "src/femic/workflows/mkrf.py::_mkrf_ct_bucket_specs"
+  age_window:
+    min_age: 35
+    max_age_exclusive: 50
+    inclusive_min: true
+    inclusive_max: false
+  active_treatments:
+    CT35:
+      begin_age: 35
+      end_age: 39
+      thinned_au_prefix: thn035
+    CT40:
+      begin_age: 40
+      end_age: 44
+      thinned_au_prefix: thn040
+    CT45:
+      begin_age: 45
+      end_age: 49
+      thinned_au_prefix: thn045
+  inactive_legacy_treatments:
+    - CT50
+    - CT60
+    - CT70
+    - CT80
+    - CT90
+    - CT100
+    - CT110
+    - CT120
+    - CT130
+    - CT140
+    - CT150
+
+intensity:
+  active_runtime_variant: medium
+  variants:
+    low:
+      basal_area_removal_fraction: 0.35
+    medium:
+      basal_area_removal_fraction: 0.45
+    high:
+      basal_area_removal_fraction: 0.55
+  species_prescription:
+    retain_species:
+      - Cw
+    remove_species:
+      - Hw
+    implemented_medium_allocation: "target-bounded Hw-first product allocation: Cw product fraction is 0; Hw receives the CT product volume up to the 45% medium removal target; Fd receives only any target balance not met by Hw"
+    provisional_fir_rule: "remove merchantable Fd only if Hw share is below the active removal target or later cash-flow calibration requires it"
+    audit_artifacts:
+      - "models/mkrf_patchworks_model/analysis/ct_intensity_audit.csv"
+      - "models/mkrf_patchworks_model/analysis/ct_intensity_summary.csv"
+  residual_state_assumption: "post-CT THN lane preserves cedar and carries a bucket-anchored residual standing curve"
+  growth_response_assumption: "CT35 and CT45 reuse adjacent bucket response curves until cedar pole response curves are recalibrated"
+
+planted_hw_ingrowth_overlay:
+  issue: 13
+  config_surface: "config/tipsy/tsamkrf.yaml"
+  enabled: true
+  landscape_default_percent: 50
+  au_override_surface: "hw_ingrowth_overlay.au_overrides_pct"
+  stand_override_surface: "hw_ingrowth_overlay.stand_overrides_pct"
+  audit_artifacts:
+    - "models/mkrf_patchworks_model/analysis/planted_hw_ingrowth_overlay_audit.csv"
+    - "models/mkrf_patchworks_model/analysis/planted_hw_ingrowth_overlay_summary.csv"
+  notes:
+    - "Applied to managed/planted BTC input rows before species are packed into TIPSY slots."
+    - "Each non-Hw species transfers the configured percent of stems to Hw while keeping the total planted density at 1500 sph."
+    - "BTC supports five planted species slots; where Hw creates a sixth species, the smallest residual non-Hw share is folded into Hw and recorded in the audit."
+
+validation:
+  generated_from_parent_checkout: "F:/projects/femic"
+  commands:
+    - "femic instance mkrf-build-managed-au-inputs --instance-root external\\femic-mkrf-instance --resultant-gdb external\\femic-mkrf-instance\\data\\source\\03_MappingAnalysisData\\Resultant.gdb"
+    - "femic instance mkrf-build-managed-au-curves --instance-root external\\femic-mkrf-instance"
+    - "femic instance mkrf-init-runtime-package --instance-root external\\femic-mkrf-instance"
+    - "femic patchworks preflight --instance-root external\\femic-mkrf-instance --config config\\patchworks.runtime.mkrf_rebuild.windows.yaml"
+    - "femic patchworks matrix-build --instance-root external\\femic-mkrf-instance --config config\\patchworks.runtime.mkrf_rebuild.windows.yaml --run-id <ct-run-id>"
+    - "femic patchworks run-default-scenario mkrf.base --run-id <ct-smoke-run-id>"
+    - "femic instance mkrf-audit-runtime-sanity --instance-root external\\femic-mkrf-instance --stage-dir <saved-stage>"
+    - "pytest tests/test_mkrf_managed.py tests/test_mkrf_runtime_package.py"
+  runtime_checks:
+    - "CT bucket treatments are CT35, CT40, and CT45."
+    - "No active CT50/thn050 or CT150/thn150 behavior remains."
+    - "CT eligibility audit is published at models/mkrf_patchworks_model/analysis/ct_eligibility_audit.csv."
+    - "CT intensity audit and summary are published under models/mkrf_patchworks_model/analysis/."
+    - "Patchworks Matrix Builder completes against the regenerated canonical package."
+    - "Patchworks default mkrf.base smoke completes and produces a saved stage."
+    - "Saved-stage runtime sanity audit passes against the smoke output."
+  latest_local_results:
+    patchworks_preflight: passed
+    matrix_build: passed
+    matrix_build_run_id: mkrf_ct_matrix_20260601
+    matrix_build_manifest: "runtime/logs/patchworks_matrixbuilder_manifest-mkrf_ct_matrix_20260601.json"
+    default_scenario_smoke: passed
+    default_scenario_smoke_run_id: mkrf_ct_smoke_20260601
+    default_scenario_smoke_manifest: "F:/projects/femic/runtime/logs/patchworks_headless_manifest-mkrf_ct_smoke_20260601.json"
+    saved_stage: "F:/projects/femic/runtime/logs/headless_stage/mkrf_ct_smoke_20260601"
+    saved_stage_sanity_audit: passed
+    saved_stage_sanity_audit_failures: 0
+    saved_stage_sanity_audit_rows: 24
+    saved_stage_sanity_audit_summary: "F:/projects/femic/runtime/logs/headless_stage/mkrf_ct_smoke_20260601/sanity/mkrf_runtime_sanity_summary.json"
+    pytest_mkrf_managed_runtime_package: "12 passed"
+    pytest_tipsy_config: "33 passed"
+  parent_closeout_comment_template: "CT implementation pass completed: eligibility, 35-49 operability buckets, medium 45% Hw-first intensity, planted Hw ingrowth overlay, runtime regeneration, Matrix Builder regeneration, default Patchworks smoke, saved-stage sanity audit, and targeted pytest/runtime checks are documented in metadata/ct_treatment_contract.yaml and docs/rebuild-and-qa.rst."

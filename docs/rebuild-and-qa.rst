@@ -113,6 +113,32 @@ The saved-stage sanity audit is intended to catch cases where a species family
 is emitted structurally but carries zero or contradictory signal relative to
 the published source-share contract.
 
+Cedar-pole CT validation lane
+-----------------------------
+
+After changing the canonical cedar-pole ``CT`` implementation, regenerate the
+managed inputs, managed curves, and runtime package from the parent FEMIC
+checkout using the project virtual environment:
+
+- ``femic instance mkrf-build-managed-au-inputs --instance-root external\femic-mkrf-instance --resultant-gdb external\femic-mkrf-instance\data\source\03_MappingAnalysisData\Resultant.gdb``
+- ``femic instance mkrf-build-managed-au-curves --instance-root external\femic-mkrf-instance``
+- ``femic instance mkrf-init-runtime-package --instance-root external\femic-mkrf-instance``
+
+Then validate the CT-specific runtime surface:
+
+- ``femic patchworks preflight --instance-root external\femic-mkrf-instance --config config\patchworks.runtime.mkrf_rebuild.windows.yaml``
+- ``femic patchworks matrix-build --instance-root external\femic-mkrf-instance --config config\patchworks.runtime.mkrf_rebuild.windows.yaml --run-id <ct-run-id>``
+- ``femic patchworks run-default-scenario mkrf.base --run-id <ct-smoke-run-id>``
+- ``femic instance mkrf-audit-runtime-sanity --instance-root external\femic-mkrf-instance --stage-dir <saved-stage>``
+- ``pytest tests/test_mkrf_managed.py tests/test_mkrf_runtime_package.py``
+- confirm ``models/mkrf_patchworks_model/xml/forestmodel.xml`` contains
+  ``CT35``, ``CT40``, and ``CT45`` only for CT bucket treatments;
+- confirm no active ``CT50`` / ``thn050`` or older ``CT150`` / ``thn150``
+  behavior remains;
+- inspect ``models/mkrf_patchworks_model/analysis/ct_eligibility_audit.csv``;
+  and
+- inspect ``models/mkrf_patchworks_model/analysis/ct_intensity_summary.csv``.
+
 What Still Belongs To The Later Rebuild
 ---------------------------------------
 

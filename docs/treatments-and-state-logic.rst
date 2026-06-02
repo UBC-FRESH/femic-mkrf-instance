@@ -86,26 +86,30 @@ This is not a constant absolute gap model of the form
 The canonical rebuild no longer uses that legacy/PoC proportional-gap rule as
 its active target behavior. It is retained as benchmark/reference only.
 
-Canonical ``CT`` behavior now uses a bucketed constant-absolute-gap design
-intended for release line ``v0.0.2a1``:
+Canonical ``CT`` behavior now uses a cedar-pole commercial-thinning contract:
 
 - available on
   ``status in managed and oper in operable and ct eq 'Y' and not startswith(au,'thn')``;
-- uses 10-year midpoint CT buckets rather than one continuous-age treatment:
+- further constrained to AUs with runtime Cw share strictly greater than
+  ``15%``;
+- relies on the current runtime CT/operability evidence as the ground-based
+  treatment seam, with the provisional planning rule that CT is only active
+  where slope is less than ``50%``;
+- uses 5-year CT buckets over the ``35`` to ``50`` operability window,
+  excluding age ``50``:
 
-  - ``CT40`` for ages ``35-44``
-  - ``CT50`` for ages ``45-54``
-  - ``CT60`` for ages ``55-64``
-  - continuing in the same pattern through ``CT150`` for ages ``145-154``
+  - ``CT35`` for ages ``35-39``
+  - ``CT40`` for ages ``40-44``
+  - ``CT45`` for ages ``45-49``
 
 - keeps the treatment ``retain="20"`` attribute as the same 20-year
   post-treatment scheduling lock; and
 - after treatment, the post-treatment stratum is rewritten as follows, using
   the bucket-specific thinned lane:
 
+  - ``CT35`` -> ``au = 'thn035_' + au``
   - ``CT40`` -> ``au = 'thn040_' + au``
-  - ``CT50`` -> ``au = 'thn050_' + au``
-  - and so on through the full bucket family.
+  - ``CT45`` -> ``au = 'thn045_' + au``.
 
 Unlike ``CC``, ``CT`` does not reset origin. It preserves the current natural
 or treated origin lane and marks THN from the thinned AU identity.
@@ -129,10 +133,10 @@ The canonical runtime now uses bucket-anchored extracted and residual curves.
 
 For each CT bucket with midpoint anchor ``x_ct``:
 
-- treatment-year CT harvested product =
-  ``0.4 * base_curve(x_ct)``
+- treatment-year CT harvested product is provisionally represented by the
+  medium-intensity target of ``45%`` basal-area removal;
 - post-CT THN standing yield for later ages =
-  ``max(0, base_curve(x) - 0.4 * base_curve(x_ct))``
+  ``max(0, base_curve(x) - extracted_ct_bucket_gap)``.
 
 That means:
 
@@ -143,8 +147,25 @@ That means:
 - ``CC`` from the thinned lane harvests the residual standing curve, not the
   untreated base curve.
 
+The current published runtime keeps low/medium/high planning intensities in
+the silviculture contract:
+
+- low: ``35%`` basal-area removal;
+- medium: ``45%`` basal-area removal; and
+- high: ``55%`` basal-area removal.
+
+The compiled package currently publishes the medium-intensity lane as the
+active runtime surface. CT product species accounting is target-bounded and
+Hw-first: Cw product volume is zero, Hw receives the CT product volume up to the
+``45%`` medium removal target, and Fd receives only any target balance not met
+by Hw. In the current planted-Hw overlay, eligible treated stands carry enough
+Hw to fill the medium target, so the active CT product allocation is ``100%``
+Hw, ``0%`` Cw, and ``0%`` Fd. The residual-state and cedar pole response rules
+remain documented calibration assumptions until local CT response curves are
+available.
+
 Representative rebuilt track evidence from the canonical runtime package shows
-the intended arithmetic:
+the constant-gap arithmetic:
 
 - ``CT40`` example:
 
@@ -153,16 +174,13 @@ the intended arithmetic:
   - ``thn040`` standing at age ``100`` = ``691.16``
   - ``73.64 + 691.16 = 764.8``
 
-- ``CT100`` example:
-
-  - base standing at age ``120`` = ``895.3``
-  - ``CT100`` extracted volume = ``305.92``
-  - ``thn100`` standing at age ``120`` = ``589.38``
-  - ``305.92 + 589.38 = 895.3``
-
-Those checks are why the canonical docs now describe CT as a bucketed
-constant-absolute-gap model rather than the older legacy proportional-gap
-contract.
+The eligibility filter is recorded in
+``models/mkrf_patchworks_model/analysis/ct_eligibility_audit.csv``. That table
+shows each selected AU's Cw share, whether it passed the strict ``>15%`` Cw
+threshold, and whether it passed the current runtime CT/operability seam.
+The implemented CT product split is recorded in
+``models/mkrf_patchworks_model/analysis/ct_intensity_audit.csv`` and summarized
+in ``models/mkrf_patchworks_model/analysis/ct_intensity_summary.csv``.
 
 State Families
 --------------
