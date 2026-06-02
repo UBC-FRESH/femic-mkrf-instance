@@ -12,6 +12,16 @@ metadata:
 origin_rules:
   fire_origin_min_age: 80
 
+hw_ingrowth_overlay:
+  enabled: true
+  landscape_default_pct: 50
+  au_overrides_pct: {}
+  stand_overrides_pct: {}
+  notes:
+    - "Provisional planted-stand Hw ingrowth overlay for CT implementation issue #13."
+    - "Applied after the family planting mix: each non-Hw species transfers this percent of its stems to Hw while total density remains 1500 sph."
+    - "AU-level overrides take precedence over the landscape default; stand-level overrides take precedence over AU overrides where a stand id is provided."
+
 managed_defaults:
   density_total: 1500
   regen_delay: 1
@@ -20,7 +30,10 @@ managed_defaults:
   planted_percent: 100
   baseline_system: "clearcut"
   ct_eligible: true
-  ct_target_age: 40
+  ct_target_ages:
+    - 35
+    - 40
+    - 45
   ct_on_fire_origin: false
 
 families:

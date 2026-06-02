@@ -8,8 +8,8 @@ Current scope:
 - this is a path-distinct canonical package root for the rebuild lane;
 - it is separate from the PoC benchmark package at
   `models/mkrf_patchworks_model_poc/`; and
-- it currently contains only the checked-in package skeleton required for the
-  next runtime-generation steps.
+- it contains the active canonical runtime package artifacts used for the
+  current MKRF rebuild lane.
 
 Planned contents:
 
@@ -23,7 +23,15 @@ Planned contents:
 
 Current boundary:
 
-- no canonical XML has been generated here yet;
-- no canonical tracks have been generated here yet; and
-- no runtime claims should be made from this package path until `P60.8a-b`
-  materialize the rebuild outputs.
+- `tracks/` is the active compiled track-table surface;
+- `xml/` is the active XML/runtime contract surface; and
+- `analysis/ct_eligibility_audit.csv` records the current cedar-pole CT
+  eligibility filter used to constrain the active commercial-thinning lane.
+
+Current CT contract:
+
+- active CT treatments are `CT35`, `CT40`, and `CT45`;
+- active CT eligibility requires the runtime ground/operability seam plus
+  strict `Cw > 15%`; and
+- CT intensity is documented in `metadata/ct_treatment_contract.yaml`, with the
+  medium 45% basal-area removal lane represented in the current runtime.

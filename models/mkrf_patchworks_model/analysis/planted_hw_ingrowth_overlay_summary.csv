@@ -1,0 +1,4 @@
+managed_family_id,au_count,mean_hw_ingrowth_pct,mean_base_hw_sph,mean_adjusted_hw_sph,mean_delta_hw_sph,overflow_au_count
+cwh_dm_x,13,50.0,0.0,750.0,750.0,0
+cwh_vm_1,9,50.0,0.0,750.0,750.0,0
+cwh_vm_2,9,50.0,0.0,787.5,787.5,9

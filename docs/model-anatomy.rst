@@ -146,9 +146,11 @@ canonical rebuild and the retained PoC benchmark:
 
   - clearcut with reserves; and
   - commercial thinning with a 20-year post-treatment scheduling lock and a
-    bucketed constant-absolute-gap response in the canonical lane
-    (``CT40``, ``CT50``, ``CT60``, ...), while the older ``0.4``/``0.6``
-    proportional split remains documented only as legacy/PoC benchmark
+    cedar-pole objective in the canonical lane. Active CT is now limited to
+    ground-operable, Cw-bearing AUs, the ``35`` to ``50`` age window
+    excluding age ``50`` (``CT35``, ``CT40``, ``CT45``), and the medium-intensity runtime
+    lane documented in :doc:`treatments-and-state-logic`. The older ``0.4`` /
+    ``0.6`` proportional split remains documented only as legacy/PoC benchmark
     behavior;
 - minimum harvest ages driven by operability and treatment type.
 

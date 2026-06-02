@@ -107,16 +107,17 @@ Use :doc:`treatments-and-state-logic` for the exact current behavior,
 including:
 
 - ``CC`` minimum age and post-treatment transition;
-- the bucketed ``CT40`` / ``CT50`` / ``CT60`` ... treatment family, its age
-  windows, retained scheduling lock, and explicit per-bucket ``thn040_`` /
-  ``thn050_`` / ... transitions; and
-- the current canonical bucketed constant-absolute-gap rule:
-  ``0.4 * base_curve(x_ct_bucket)`` extracted at treatment time and
-  ``base_curve(x) - 0.4 * base_curve(x_ct_bucket)`` on the post-CT THN lane.
+- the cedar-pole ``CT35`` / ``CT40`` / ``CT45`` treatment family, its ``35``
+  to ``50`` age window excluding age ``50``, retained scheduling lock, and
+  explicit per-bucket ``thn035_`` / ``thn040_`` / ``thn045_`` transitions; and
+- the current CT eligibility and intensity contract: runtime
+  ground-operability evidence plus strict ``Cw > 15%`` eligibility, with the
+  target-bounded Hw-first medium ``45%`` basal-area removal lane active in the compiled runtime and
+  low/high ``35%`` / ``55%`` planning variants documented for calibration.
 
 This redesign is the intended behavior for the next MKRF prerelease line
-``v0.0.2a1``. The older legacy/PoC ``0.4`` / ``0.6`` proportional split is
-retained only as benchmark/reference context.
+after ``v0.0.2a1``. The older legacy/PoC proportional split and broader
+pre-cedar-pole CT age family are retained only as benchmark/reference context.
 
 What the current ``v0`` smoke proves
 ------------------------------------
