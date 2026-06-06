@@ -126,10 +126,11 @@ Canonical GUI map layers
 When launching the canonical ``base.pin`` in the Patchworks GUI, the default
 map layer stack includes:
 
-- ``Forest Outline`` as a muted gray, semi-transparent model-extent context
+- ``Forest Outline`` as a very light gray model-extent context
   layer;
 - ``Age Class (20-year)`` as a hidden-by-default dynamic mean-fragment-age
-  layer using ``0.5 * (MANAGEDOFFSET + UNMANAGEDOFFSET)``; and
+  layer using ``0.5 * (MANAGEDOFFSET + UNMANAGEDOFFSET)`` and a yellow-green
+  graduated color ramp; and
 - ``Current Treatments`` / ``Latest Treatments`` themes whose legend entries
   use the active treatment labels such as ``CC``, ``CT35``, ``CT40``, and
   ``CT45``.
