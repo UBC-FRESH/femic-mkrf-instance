@@ -14,13 +14,14 @@ origin_rules:
 
 hw_ingrowth_overlay:
   enabled: true
-  landscape_default_pct: 50
+  landscape_default_pct: 30
   au_overrides_pct: {}
   stand_overrides_pct: {}
   notes:
-    - "Provisional planted-stand Hw ingrowth overlay for CT implementation issue #13."
+    - "Provisional planted-stand Hw ingrowth overlay recalibrated for CT follow-up issue #18."
     - "Applied after the family planting mix: each non-Hw species transfers this percent of its stems to Hw while total density remains 1500 sph."
     - "AU-level overrides take precedence over the landscape default; stand-level overrides take precedence over AU overrides where a stand id is provided."
+    - "Landscape default is based on Anna Tobiasz's MKRF survey summary: 18 surveys, 2-5 years post-harvest, average Hw composition 30%, median 27.5%."
 
 managed_defaults:
   density_total: 1500

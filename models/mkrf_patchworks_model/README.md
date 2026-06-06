@@ -32,6 +32,6 @@ Current CT contract:
 
 - active CT treatments are `CT35`, `CT40`, and `CT45`;
 - active CT eligibility requires the runtime ground/operability seam plus
-  strict `Cw > 15%`; and
+  inclusive `Cw + Fd >= 50%` base planted composition; and
 - CT intensity is documented in `metadata/ct_treatment_contract.yaml`, with the
   medium 45% basal-area removal lane represented in the current runtime.
