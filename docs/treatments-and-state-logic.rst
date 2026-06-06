@@ -208,9 +208,14 @@ Current GUI Treatment Layers
 
 The canonical ``base.pin`` now includes GUI map layers for:
 
-- default blocks;
-- current treatments via ``CURRENTTREATMENT``; and
-- latest treatments via ``LASTTREATMENT``.
+- ``Forest Outline``, a neutral gray, semi-transparent model-extent context
+  layer;
+- ``Age Class (20-year)``, a hidden-by-default dynamic mean-fragment-age
+  theme using ``0.5 * (MANAGEDOFFSET + UNMANAGEDOFFSET)`` with 20-year bins;
+- current treatments via ``CURRENTTREATMENT``, with legend entries that match
+  the active treatment labels; and
+- latest treatments via ``LASTTREATMENT``, with legend entries that match the
+  active treatment labels.
 
 It also includes guarded patch themes when patch displays are enabled.
 
