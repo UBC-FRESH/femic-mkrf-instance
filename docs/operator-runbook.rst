@@ -120,6 +120,20 @@ This redesign is the intended behavior for the next MKRF prerelease line
 after ``v0.0.2a1``. The older legacy/PoC proportional split and broader
 pre-cedar-pole CT age family are retained only as benchmark/reference context.
 
+Canonical GUI map layers
+------------------------
+
+When launching the canonical ``base.pin`` in the Patchworks GUI, the default
+map layer stack includes:
+
+- ``Forest Outline`` as a muted gray, semi-transparent model-extent context
+  layer;
+- ``Age Class (20-year)`` as a hidden-by-default dynamic mean-fragment-age
+  layer using ``0.5 * (MANAGEDOFFSET + UNMANAGEDOFFSET)``; and
+- ``Current Treatments`` / ``Latest Treatments`` themes whose legend entries
+  use the active treatment labels such as ``CC``, ``CT35``, ``CT40``, and
+  ``CT45``.
+
 What the current ``v0`` smoke proves
 ------------------------------------
 
