@@ -208,10 +208,11 @@ Current GUI Treatment Layers
 
 The canonical ``base.pin`` now includes GUI map layers for:
 
-- ``Forest Outline``, a neutral gray, semi-transparent model-extent context
+- ``Forest Outline``, a very light gray model-extent context
   layer;
 - ``Age Class (20-year)``, a hidden-by-default dynamic mean-fragment-age
-  theme using ``0.5 * (MANAGEDOFFSET + UNMANAGEDOFFSET)`` with 20-year bins;
+  theme using ``0.5 * (MANAGEDOFFSET + UNMANAGEDOFFSET)`` with 20-year bins
+  and a yellow-green graduated color ramp;
 - current treatments via ``CURRENTTREATMENT``, with legend entries that match
   the active treatment labels; and
 - latest treatments via ``LASTTREATMENT``, with legend entries that match the
