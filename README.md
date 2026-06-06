@@ -249,6 +249,17 @@ Important boundary:
   surface under `models/mkrf_patchworks_model/`, while retaining the older PoC
   and legacy control/runtime families as benchmark/reference evidence only.
 
+Current roadmap phase:
+
+- The Anna/Sean CT follow-up issue set is tracked under parent `#15`, with
+  child issues `#16`-`#19`. The corresponding parent FEMIC roadmap phase is
+  Phase 69. This phase broadens CT eligibility from strict
+  `Cw > 15%` to `Cw + Fd >= 50%`, updates CT retention/removal priority for
+  Fd-leading stands, recalibrates the planted Hw ingrowth landscape default
+  from `50%` to `30%`, and retains the full runtime QA gate: package
+  regeneration, Matrix Builder, Patchworks smoke, saved-stage sanity audit,
+  and targeted pytest.
+
 ## DataLad dataset policy
 
 This repository is intended to follow the **large-only DataLad/git-annex**

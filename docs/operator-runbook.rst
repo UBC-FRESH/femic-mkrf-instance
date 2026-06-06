@@ -111,9 +111,10 @@ including:
   to ``50`` age window excluding age ``50``, retained scheduling lock, and
   explicit per-bucket ``thn035_`` / ``thn040_`` / ``thn045_`` transitions; and
 - the current CT eligibility and intensity contract: runtime
-  ground-operability evidence plus strict ``Cw > 15%`` eligibility, with the
-  target-bounded Hw-first medium ``45%`` basal-area removal lane active in the compiled runtime and
-  low/high ``35%`` / ``55%`` planning variants documented for calibration.
+  ground-operability evidence plus inclusive base planted ``Cw + Fd >= 50%``
+  eligibility, with the target-bounded Hw-first medium ``45%`` basal-area
+  removal lane active in the compiled runtime and low/high ``35%`` / ``55%``
+  planning variants documented for calibration.
 
 This redesign is the intended behavior for the next MKRF prerelease line
 after ``v0.0.2a1``. The older legacy/PoC proportional split and broader

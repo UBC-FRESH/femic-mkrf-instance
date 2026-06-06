@@ -130,7 +130,7 @@ Then validate the CT-specific runtime surface:
 - ``femic patchworks matrix-build --instance-root external\femic-mkrf-instance --config config\patchworks.runtime.mkrf_rebuild.windows.yaml --run-id <ct-run-id>``
 - ``femic patchworks run-default-scenario mkrf.base --run-id <ct-smoke-run-id>``
 - ``femic instance mkrf-audit-runtime-sanity --instance-root external\femic-mkrf-instance --stage-dir <saved-stage>``
-- ``pytest tests/test_mkrf_managed.py tests/test_mkrf_runtime_package.py``
+- ``pytest tests/test_mkrf_managed.py tests/test_mkrf_runtime_package.py tests/test_tipsy_config.py``
 - confirm ``models/mkrf_patchworks_model/xml/forestmodel.xml`` contains
   ``CT35``, ``CT40``, and ``CT45`` only for CT bucket treatments;
 - confirm no active ``CT50`` / ``thn050`` or older ``CT150`` / ``thn150``

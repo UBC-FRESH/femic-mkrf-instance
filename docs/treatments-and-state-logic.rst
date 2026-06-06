@@ -90,8 +90,8 @@ Canonical ``CT`` behavior now uses a cedar-pole commercial-thinning contract:
 
 - available on
   ``status in managed and oper in operable and ct eq 'Y' and not startswith(au,'thn')``;
-- further constrained to AUs with runtime Cw share strictly greater than
-  ``15%``;
+- further constrained to AUs with base planted Cw plus Fd share greater than
+  or equal to ``50%``;
 - relies on the current runtime CT/operability evidence as the ground-based
   treatment seam, with the provisional planning rule that CT is only active
   where slope is less than ``50%``;
@@ -158,11 +158,10 @@ The compiled package currently publishes the medium-intensity lane as the
 active runtime surface. CT product species accounting is target-bounded and
 Hw-first: Cw product volume is zero, Hw receives the CT product volume up to the
 ``45%`` medium removal target, and Fd receives only any target balance not met
-by Hw. In the current planted-Hw overlay, eligible treated stands carry enough
-Hw to fill the medium target, so the active CT product allocation is ``100%``
-Hw, ``0%`` Cw, and ``0%`` Fd. The residual-state and cedar pole response rules
-remain documented calibration assumptions until local CT response curves are
-available.
+by Hw. This retains Cw first, then Fd, while still allowing Fd-leading and pure
+Fd plantations to receive CT when they pass the combined Cw/Fd eligibility
+criterion. The residual-state and cedar pole response rules remain documented
+calibration assumptions until local CT response curves are available.
 
 Representative rebuilt track evidence from the canonical runtime package shows
 the constant-gap arithmetic:
@@ -176,8 +175,9 @@ the constant-gap arithmetic:
 
 The eligibility filter is recorded in
 ``models/mkrf_patchworks_model/analysis/ct_eligibility_audit.csv``. That table
-shows each selected AU's Cw share, whether it passed the strict ``>15%`` Cw
-threshold, and whether it passed the current runtime CT/operability seam.
+shows each selected AU's base Cw, Fd, and combined Cw/Fd share; whether it
+passed the inclusive ``>=50%`` Cw/Fd threshold; and whether it passed the
+current runtime CT/operability seam.
 The implemented CT product split is recorded in
 ``models/mkrf_patchworks_model/analysis/ct_intensity_audit.csv`` and summarized
 in ``models/mkrf_patchworks_model/analysis/ct_intensity_summary.csv``.

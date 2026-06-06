@@ -2,32 +2,46 @@ schema_version: 1
 contract: mkrf_cedar_pole_commercial_thinning
 status: active_runtime_contract
 parent_issue: 8
+followup_parent_issue: 15
 
 objective: "promote utility pole grade cedar (Cw) outcomes"
 
 eligibility:
   slope_percent_lt: 50
   slope_source: "current runtime CT/operability evidence; ground-based seam"
-  cw_share_percent_gt: 15
-  cw_share_source: "models/mkrf_patchworks_model/analysis/runtime_species_share_audit.csv"
+  cw_fd_share_percent_ge: 50
+  cw_fd_share_source: "base planted managed composition in data/model_input_bundle/managed_au_bootstrap_table.csv"
   audit_artifact: "models/mkrf_patchworks_model/analysis/ct_eligibility_audit.csv"
   eligible_au_ids:
     - cwh_dm_x_cw_dr
     - cwh_dm_x_cw_fdc
     - cwh_dm_x_cw_hw
+    - cwh_dm_x_dr_act
     - cwh_dm_x_dr_cw
+    - cwh_dm_x_dr_mb
     - cwh_dm_x_fdc_cw
+    - cwh_dm_x_fdc_dr
+    - cwh_dm_x_fdc_hw
+    - cwh_dm_x_fdc_x
     - cwh_dm_x_hw_cw
+    - cwh_dm_x_hw_fdc
     - cwh_vm_1_cw_fdc
     - cwh_vm_1_cw_hw
+    - cwh_vm_1_dr_hw
     - cwh_vm_1_fdc_cw
+    - cwh_vm_1_fdc_hw
+    - cwh_vm_1_fdc_x
     - cwh_vm_1_hw_cw
+    - cwh_vm_1_hw_fdc
     - cwh_vm_2_cw_fdc
     - cwh_vm_2_cw_hw
     - cwh_vm_2_fdc_cw
+    - cwh_vm_2_fdc_hw
     - cwh_vm_2_hw_cw
+    - cwh_vm_2_hw_fdc
   notes:
-    - "Cw threshold is strict: exactly 15% Cw is ineligible."
+    - "Species threshold is inclusive: exactly 50% Cw+Fd is eligible."
+    - "Pure Fd and Fd-leading plantations are eligible when they pass the runtime CT/operability seam."
     - "Slope threshold is provisional and currently represented through the published runtime CT/operability seam."
 
 operability:
@@ -75,8 +89,12 @@ intensity:
   species_prescription:
     retain_species:
       - Cw
+      - Fd
     remove_species:
       - Hw
+      - Fd
+    retention_priority: "retain Cw first, then Fd"
+    removal_priority: "remove Hw first, then Fd only as needed to meet the active removal target"
     implemented_medium_allocation: "target-bounded Hw-first product allocation: Cw product fraction is 0; Hw receives the CT product volume up to the 45% medium removal target; Fd receives only any target balance not met by Hw"
     provisional_fir_rule: "remove merchantable Fd only if Hw share is below the active removal target or later cash-flow calibration requires it"
     audit_artifacts:
@@ -89,7 +107,7 @@ planted_hw_ingrowth_overlay:
   issue: 13
   config_surface: "config/tipsy/tsamkrf.yaml"
   enabled: true
-  landscape_default_percent: 50
+  landscape_default_percent: 30
   au_override_surface: "hw_ingrowth_overlay.au_overrides_pct"
   stand_override_surface: "hw_ingrowth_overlay.stand_overrides_pct"
   audit_artifacts:
@@ -99,6 +117,8 @@ planted_hw_ingrowth_overlay:
     - "Applied to managed/planted BTC input rows before species are packed into TIPSY slots."
     - "Each non-Hw species transfers the configured percent of stems to Hw while keeping the total planted density at 1500 sph."
     - "BTC supports five planted species slots; where Hw creates a sixth species, the smallest residual non-Hw share is folded into Hw and recorded in the audit."
+    - "Landscape default is driven by Anna Tobiasz's MKRF survey summary: 18 surveys, 2-5 years post-harvest, average Hw composition 30%, median 27.5%, range <5% to 68%."
+    - "Jaeck et al. 1984 partial-cutting evidence is supporting context for substantial Hw regeneration, not the direct landscape-default parameter source."
 
 validation:
   generated_from_parent_checkout: "F:/projects/femic"
@@ -122,16 +142,21 @@ validation:
   latest_local_results:
     patchworks_preflight: passed
     matrix_build: passed
-    matrix_build_run_id: mkrf_ct_matrix_20260601
-    matrix_build_manifest: "runtime/logs/patchworks_matrixbuilder_manifest-mkrf_ct_matrix_20260601.json"
+    matrix_build_run_id: mkrf_ct_fd_followup_matrix_20260605
+    matrix_build_manifest: "runtime/logs/patchworks_matrixbuilder_manifest-mkrf_ct_fd_followup_matrix_20260605.json"
     default_scenario_smoke: passed
-    default_scenario_smoke_run_id: mkrf_ct_smoke_20260601
-    default_scenario_smoke_manifest: "F:/projects/femic/runtime/logs/patchworks_headless_manifest-mkrf_ct_smoke_20260601.json"
-    saved_stage: "F:/projects/femic/runtime/logs/headless_stage/mkrf_ct_smoke_20260601"
+    default_scenario_smoke_run_id: mkrf_ct_fd_followup_smoke_20260605
+    default_scenario_smoke_manifest: "F:/projects/femic/runtime/logs/patchworks_headless_manifest-mkrf_ct_fd_followup_smoke_20260605.json"
+    saved_stage: "F:/projects/femic/runtime/logs/headless_stage/mkrf_ct_fd_followup_smoke_20260605"
     saved_stage_sanity_audit: passed
     saved_stage_sanity_audit_failures: 0
     saved_stage_sanity_audit_rows: 24
-    saved_stage_sanity_audit_summary: "F:/projects/femic/runtime/logs/headless_stage/mkrf_ct_smoke_20260601/sanity/mkrf_runtime_sanity_summary.json"
+    saved_stage_sanity_audit_summary: "F:/projects/femic/runtime/logs/headless_stage/mkrf_ct_fd_followup_smoke_20260605/sanity/mkrf_runtime_sanity_summary.json"
     pytest_mkrf_managed_runtime_package: "12 passed"
     pytest_tipsy_config: "33 passed"
-  parent_closeout_comment_template: "CT implementation pass completed: eligibility, 35-49 operability buckets, medium 45% Hw-first intensity, planted Hw ingrowth overlay, runtime regeneration, Matrix Builder regeneration, default Patchworks smoke, saved-stage sanity audit, and targeted pytest/runtime checks are documented in metadata/ct_treatment_contract.yaml and docs/rebuild-and-qa.rst."
+    pytest_targeted_followup: "45 passed"
+    ct_eligible_au_count: 26
+    ct_total_au_count: 31
+    hw_ingrowth_landscape_default_percent: 30
+    ct_xml_checks: "CT35/CT40/CT45 active; CT50/thn050 absent; old gt 0.15 Cw gate absent; new ge 0.5 Cw+Fd gate present"
+  parent_closeout_comment_template: "CT follow-up pass completed: eligibility broadened to inclusive Cw+Fd >=50%, Cw-first/Fd-second retention and Hw-first/Fd-balancer removal documented, planted Hw ingrowth landscape default recalibrated to 30%, managed/runtime package regenerated, Matrix Builder regeneration, default Patchworks smoke, saved-stage sanity audit, and targeted pytest/runtime checks are documented in metadata/ct_treatment_contract.yaml."
