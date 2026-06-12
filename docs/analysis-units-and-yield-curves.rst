@@ -23,19 +23,44 @@ The current canonical chain is:
 
 1. source inventory/fragment evidence;
 2. AU construction from BEC plus ordered top-2 leading species;
-3. selected top-N AU publication by cumulative covered area;
-4. natural-origin and treated-origin curve publication on the selected AU set;
+3. explicit review-approved minor-strata aggregation where two raw AU labels
+   should share one canonical AU family;
+4. selected top-N AU publication by cumulative covered area;
+5. natural-origin and treated-origin curve publication on the selected AU set;
    and
-5. runtime AU normalization/remap of non-selected raw AUs onto that canonical
+6. runtime AU normalization/remap of non-selected raw AUs onto that canonical
    selected set.
 
 The main checked-in evidence surfaces are:
 
+- ``data/model_input_bundle/au_aggregation_audit.csv``
 - ``data/model_input_bundle/selected_au_table.csv``
 - ``data/model_input_bundle/stand_au_assignment.csv``
 - ``data/model_input_bundle/stand_origin_assignment.csv``
 - ``models/mkrf_patchworks_model/analysis/runtime_au_remap_audit.csv``
 - ``models/mkrf_patchworks_model/xml/forestmodel.xml``
+
+Minor-Strata Aggregation
+------------------------
+
+The canonical MKRF AU builder now applies a narrow raw-to-canonical aggregation
+map before selected-AU ranking. This is for reviewed cases where a small
+stratum is better represented as part of an adjacent, larger AU family than as
+an independent runtime curve family.
+
+Current aggregation map:
+
+- ``cwh_vm_2_ba_hw`` -> ``cwh_vm_2_hw_ba``
+- ``cwh_dm_x_dr_mb`` -> ``cwh_dm_x_dr_act``
+- ``cwh_dm_x_cw_dr`` -> ``cwh_dm_x_dr_cw``
+- ``cwh_vm_1_ba_hw`` -> ``cwh_vm_1_hw_ba``
+- ``cwh_vm_1_fdc_hw`` -> ``cwh_vm_1_fdc_x``
+
+``stand_au_assignment.csv`` keeps both the raw AU id and the canonical AU id
+so the aggregation is auditable. ``au_aggregation_audit.csv`` summarizes each
+raw AU's source fragment count, forest-cover count, area, target AU area, and
+share of its target AU. The selected-AU table and runtime package use the
+canonical AU ids after aggregation.
 
 Selected Top-N AU Rule
 ----------------------
@@ -117,7 +142,10 @@ What The Audit Surfaces Answer
 Use these files to answer different questions:
 
 - ``data/model_input_bundle/stand_au_assignment.csv``:
-  what raw AU did the stand evidence support?
+  what raw AU did the stand evidence support, and what canonical AU was it
+  aggregated into?
+- ``data/model_input_bundle/au_aggregation_audit.csv``:
+  which raw AUs were explicitly aggregated before selected-AU publication?
 - ``data/model_input_bundle/stand_origin_assignment.csv``:
   what origin class was assigned?
 - ``models/mkrf_patchworks_model/analysis/runtime_au_remap_audit.csv``:

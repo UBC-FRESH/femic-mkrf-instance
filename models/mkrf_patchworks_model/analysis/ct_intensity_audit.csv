@@ -1,7 +1,4 @@
 au_id,treatment,ct_target_removal_fraction,base_cw_fd_share_pct,treated_cw_share_pct,treated_hw_share_pct,treated_fd_share_pct,previous_composition_proportional_cw_product_fraction,previous_composition_proportional_hw_product_fraction,previous_composition_proportional_fd_product_fraction,previous_composition_proportional_other_product_fraction,implemented_ct_cw_product_fraction,implemented_ct_hw_product_fraction,implemented_ct_fd_product_fraction,implemented_ct_other_product_fraction,implemented_ct_product_fraction_sum,prescription_note
-cwh_dm_x_cw_dr,CT35,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
-cwh_dm_x_cw_dr,CT40,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
-cwh_dm_x_cw_dr,CT45,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_dm_x_cw_fdc,CT35,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_dm_x_cw_fdc,CT40,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_dm_x_cw_fdc,CT45,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
@@ -14,9 +11,6 @@ cwh_dm_x_dr_act,CT45,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666
 cwh_dm_x_dr_cw,CT35,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_dm_x_dr_cw,CT40,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_dm_x_dr_cw,CT45,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
-cwh_dm_x_dr_mb,CT35,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
-cwh_dm_x_dr_mb,CT40,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
-cwh_dm_x_dr_mb,CT45,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_dm_x_fdc_cw,CT35,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_dm_x_fdc_cw,CT40,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_dm_x_fdc_cw,CT45,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
@@ -47,9 +41,6 @@ cwh_vm_1_dr_hw,CT45,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.66666666
 cwh_vm_1_fdc_cw,CT35,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_vm_1_fdc_cw,CT40,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_vm_1_fdc_cw,CT45,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
-cwh_vm_1_fdc_hw,CT35,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
-cwh_vm_1_fdc_hw,CT40,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
-cwh_vm_1_fdc_hw,CT45,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_vm_1_fdc_x,CT35,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_vm_1_fdc_x,CT40,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary
 cwh_vm_1_fdc_x,CT45,0.45,90.0,31.5,30.0,31.5,0.315,0.3,0.315,0.07,0.0,0.6666666666666666,0.33333333333333337,0.0,1.0,target_bounded_hw_first_fd_balancer_cw_retained_fd_secondary

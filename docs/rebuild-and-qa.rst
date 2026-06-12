@@ -139,6 +139,33 @@ Then validate the CT-specific runtime surface:
   and
 - inspect ``models/mkrf_patchworks_model/analysis/ct_intensity_summary.csv``.
 
+AU stratification validation lane
+---------------------------------
+
+After changing MKRF AU stratification, aggregation, or selected-AU publication
+logic, regenerate the AU and runtime surfaces from the parent FEMIC checkout
+using the project virtual environment:
+
+- ``femic instance mkrf-build-au-inputs --instance-root external\femic-mkrf-instance --resultant-gdb external\femic-mkrf-instance\data\source\03_MappingAnalysisData\Resultant.gdb``
+- ``femic instance mkrf-select-aus --instance-root external\femic-mkrf-instance``
+- ``femic instance mkrf-build-managed-au-inputs --instance-root external\femic-mkrf-instance --resultant-gdb external\femic-mkrf-instance\data\source\03_MappingAnalysisData\Resultant.gdb``
+- ``femic instance mkrf-build-managed-au-curves --instance-root external\femic-mkrf-instance --run-id <run-id>``
+- ``femic instance mkrf-init-runtime-package --instance-root external\femic-mkrf-instance``
+
+Then validate the regenerated runtime:
+
+- ``femic patchworks preflight --instance-root external\femic-mkrf-instance --config config\patchworks.runtime.mkrf_rebuild.windows.yaml``
+- ``femic patchworks matrix-build --instance-root external\femic-mkrf-instance --config config\patchworks.runtime.mkrf_rebuild.windows.yaml --run-id <matrix-run-id>``
+- ``femic patchworks run-default-scenario mkrf.base --run-id <smoke-run-id>``
+- ``femic instance mkrf-audit-runtime-sanity --instance-root external\femic-mkrf-instance --stage-dir <saved-stage>``
+- ``pytest tests/test_mkrf_au.py tests/test_mkrf_managed.py tests/test_mkrf_runtime_package.py``
+- inspect ``data/model_input_bundle/au_aggregation_audit.csv`` and
+  ``data/model_input_bundle/selected_au_table.csv`` directly;
+- confirm no raw AU ids intended only as aggregation sources remain in the
+  selected AU table; and
+- confirm runtime status, XML contract counts, and Matrix Builder outputs agree
+  with the regenerated selected AU count.
+
 What Still Belongs To The Later Rebuild
 ---------------------------------------
 
