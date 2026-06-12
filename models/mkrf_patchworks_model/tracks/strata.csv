@@ -292,15 +292,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 288,0,0,0,C,treated,EM,thn035_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,244,N
 289,0,0,0,C,treated,EM,thn040_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,244,N
 290,0,0,0,C,treated,EM,thn045_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,244,N
-294,0,0,0,N,treated,EM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,169,Y
-295,0,0,0,C,treated,EM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,169,Y
-296,0,0,0,C,treated,FM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,169,Y
-300,0,0,0,C,treated,FM,thn035_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,169,Y
-301,0,0,0,C,treated,FM,thn040_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,169,Y
-302,0,0,0,C,treated,FM,thn045_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,169,Y
-297,0,0,0,C,treated,EM,thn035_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,169,Y
-298,0,0,0,C,treated,EM,thn040_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,169,Y
-299,0,0,0,C,treated,EM,thn045_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,169,Y
+294,0,0,0,N,treated,EM,cwh_vm_1_fdc_cw,cwh_vm_1_fdc_cw,Operable,Y,169,N
+295,0,0,0,C,treated,EM,cwh_vm_1_fdc_cw,cwh_vm_1_fdc_cw,Operable,Y,169,N
+296,0,0,0,C,treated,FM,cwh_vm_1_fdc_cw,cwh_vm_1_fdc_cw,Operable,Y,169,N
+300,0,0,0,C,treated,FM,thn035_cwh_vm_1_fdc_cw,cwh_vm_1_fdc_cw,Operable,Y,169,N
+301,0,0,0,C,treated,FM,thn040_cwh_vm_1_fdc_cw,cwh_vm_1_fdc_cw,Operable,Y,169,N
+302,0,0,0,C,treated,FM,thn045_cwh_vm_1_fdc_cw,cwh_vm_1_fdc_cw,Operable,Y,169,N
+297,0,0,0,C,treated,EM,thn035_cwh_vm_1_fdc_cw,cwh_vm_1_fdc_cw,Operable,Y,169,N
+298,0,0,0,C,treated,EM,thn040_cwh_vm_1_fdc_cw,cwh_vm_1_fdc_cw,Operable,Y,169,N
+299,0,0,0,C,treated,EM,thn045_cwh_vm_1_fdc_cw,cwh_vm_1_fdc_cw,Operable,Y,169,N
 303,0,0,0,N,treated,EM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,188,Y
 304,0,0,0,C,treated,EM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,188,Y
 305,0,0,0,C,treated,FM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,188,Y
@@ -408,7 +408,7 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 407,0,0,0,N,natural,EN,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Low Operability,N,497,Y
 408,0,0,0,C,natural,EN,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Low Operability,N,497,Y
 409,0,0,0,C,treated,FM,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Low Operability,N,497,Y
-410,0,0,0,N,natural,EN,cwh_vm_2_ba_hw,cwh_vm_2_ba_hw,Reserve,N,425,Y
+410,0,0,0,N,natural,EN,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Reserve,N,425,Y
 411,0,0,0,N,natural,EN,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Low Operability,N,646,Y
 412,0,0,0,C,natural,EN,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Low Operability,N,646,Y
 413,0,0,0,C,treated,FM,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Low Operability,N,646,Y
@@ -511,7 +511,7 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 510,0,0,0,N,natural,EN,cwh_vm_2_fdc_hw,cwh_vm_2_fdc_hw,Operable,N,350,Y
 511,0,0,0,C,natural,EN,cwh_vm_2_fdc_hw,cwh_vm_2_fdc_hw,Operable,N,350,Y
 512,0,0,0,C,treated,FM,cwh_vm_2_fdc_hw,cwh_vm_2_fdc_hw,Operable,N,350,Y
-513,0,0,0,N,natural,EN,cwh_vm_2_ba_hw,cwh_vm_2_ba_hw,Reserve,N,404,Y
+513,0,0,0,N,natural,EN,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Reserve,N,404,Y
 514,0,0,0,N,natural,EN,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,N,594,Y
 515,0,0,0,C,natural,EN,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,N,594,Y
 516,0,0,0,C,treated,FM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,N,594,Y
@@ -591,15 +591,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 587,0,0,0,C,treated,EM,thn035_cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,1046,Y
 588,0,0,0,C,treated,EM,thn040_cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,1046,Y
 589,0,0,0,C,treated,EM,thn045_cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,1046,Y
-593,0,0,0,N,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,17,N
-594,0,0,0,C,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,17,N
-595,0,0,0,C,treated,FM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,17,N
-599,0,0,0,C,treated,FM,thn035_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,17,N
-600,0,0,0,C,treated,FM,thn040_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,17,N
-601,0,0,0,C,treated,FM,thn045_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,17,N
-596,0,0,0,C,treated,EM,thn035_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,17,N
-597,0,0,0,C,treated,EM,thn040_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,17,N
-598,0,0,0,C,treated,EM,thn045_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,17,N
+593,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,17,N
+594,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,17,N
+595,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,17,N
+599,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,17,N
+600,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,17,N
+601,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,17,N
+596,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,17,N
+597,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,17,N
+598,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,17,N
 602,0,0,0,N,natural,EN,cwh_vm_1_hw_fdc,cwh_vm_1_hw_fdc,Operable,N,508,Y
 603,0,0,0,C,natural,EN,cwh_vm_1_hw_fdc,cwh_vm_1_hw_fdc,Operable,N,508,Y
 604,0,0,0,C,treated,FM,cwh_vm_1_hw_fdc,cwh_vm_1_hw_fdc,Operable,N,508,Y
@@ -672,15 +672,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 671,0,0,0,C,natural,EN,cwh_vm_1_hw_fdc,cwh_vm_1_hw_fdc,Low Operability,N,762,Y
 672,0,0,0,C,treated,FM,cwh_vm_1_hw_fdc,cwh_vm_1_hw_fdc,Low Operability,N,762,Y
 673,0,0,0,N,natural,EN,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Reserve,N,765,Y
-674,0,0,0,N,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,983,N
-675,0,0,0,C,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,983,N
-676,0,0,0,C,treated,FM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,983,N
-680,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,983,N
-681,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,983,N
-682,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,983,N
-677,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,983,N
-678,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,983,N
-679,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,983,N
+674,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,983,N
+675,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,983,N
+676,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,983,N
+680,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,983,N
+681,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,983,N
+682,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,983,N
+677,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,983,N
+678,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,983,N
+679,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,983,N
 683,0,0,0,N,natural,EN,cwh_vm_2_hw_fdc,cwh_vm_2_hw_fdc,Operable,N,51,Y
 684,0,0,0,C,natural,EN,cwh_vm_2_hw_fdc,cwh_vm_2_hw_fdc,Operable,N,51,Y
 685,0,0,0,C,treated,FM,cwh_vm_2_hw_fdc,cwh_vm_2_hw_fdc,Operable,N,51,Y
@@ -696,15 +696,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 695,0,0,0,N,treated,EM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,N,684,Y
 696,0,0,0,C,treated,EM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,N,684,Y
 697,0,0,0,C,treated,FM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,N,684,Y
-698,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,914,N
-699,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,914,N
-700,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,914,N
-704,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,914,N
-705,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,914,N
-706,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,914,N
-701,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,914,N
-702,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,914,N
-703,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,914,N
+698,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,914,N
+699,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,914,N
+700,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,914,N
+704,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,914,N
+705,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,914,N
+706,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,914,N
+701,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,914,N
+702,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,914,N
+703,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,914,N
 707,0,0,0,N,natural,EN,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,N,149,Y
 708,0,0,0,C,natural,EN,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,N,149,Y
 709,0,0,0,C,treated,FM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,N,149,Y
@@ -714,7 +714,7 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 713,0,0,0,N,treated,EM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,N,325,Y
 714,0,0,0,C,treated,EM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,N,325,Y
 715,0,0,0,C,treated,FM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,N,325,Y
-716,0,0,0,N,natural,EN,cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Reserve,N,643,Y
+716,0,0,0,N,natural,EN,cwh_vm_1_hw_ba,cwh_vm_1_hw_ba,Reserve,N,643,N
 717,0,0,0,N,treated,EM,cwh_vm_2_fdc_cw,cwh_vm_2_fdc_cw,Operable,N,19,Y
 718,0,0,0,C,treated,EM,cwh_vm_2_fdc_cw,cwh_vm_2_fdc_cw,Operable,N,19,Y
 719,0,0,0,C,treated,FM,cwh_vm_2_fdc_cw,cwh_vm_2_fdc_cw,Operable,N,19,Y
@@ -740,15 +740,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 736,0,0,0,C,treated,EM,thn040_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,781,Y
 737,0,0,0,C,treated,EM,thn045_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,781,Y
 741,0,0,0,N,treated,EM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Reserve,N,781,Y
-742,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,908,N
-743,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,908,N
-744,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,908,N
-748,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,908,N
-749,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,908,N
-750,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,908,N
-745,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,908,N
-746,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,908,N
-747,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,908,N
+742,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,908,N
+743,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,908,N
+744,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,908,N
+748,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,908,N
+749,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,908,N
+750,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,908,N
+745,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,908,N
+746,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,908,N
+747,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,908,N
 751,0,0,0,N,treated,EM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,1051,Y
 752,0,0,0,C,treated,EM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,1051,Y
 753,0,0,0,C,treated,FM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,1051,Y
@@ -782,9 +782,9 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 778,0,0,0,C,treated,EM,thn035_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,616,Y
 779,0,0,0,C,treated,EM,thn040_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,616,Y
 780,0,0,0,C,treated,EM,thn045_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,616,Y
-784,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,N,814,N
-785,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,N,814,N
-786,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,N,814,N
+784,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,N,814,N
+785,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,N,814,N
+786,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,N,814,N
 787,0,0,0,N,natural,EN,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Operable,N,1055,Y
 788,0,0,0,C,natural,EN,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Operable,N,1055,Y
 789,0,0,0,C,treated,FM,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Operable,N,1055,Y
@@ -858,9 +858,9 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 854,0,0,0,C,treated,EM,thn035_cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,124,Y
 855,0,0,0,C,treated,EM,thn040_cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,124,Y
 856,0,0,0,C,treated,EM,thn045_cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,124,Y
-860,0,0,0,N,natural,EN,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,N,210,N
-861,0,0,0,C,natural,EN,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,N,210,N
-862,0,0,0,C,treated,FM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,N,210,N
+860,0,0,0,N,natural,EN,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,N,210,N
+861,0,0,0,C,natural,EN,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,N,210,N
+862,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,N,210,N
 863,0,0,0,N,natural,EN,cwh_dm_x_cw_fdc,cwh_dm_x_cw_fdc,Low Operability,N,629,Y
 864,0,0,0,C,natural,EN,cwh_dm_x_cw_fdc,cwh_dm_x_cw_fdc,Low Operability,N,629,Y
 865,0,0,0,C,treated,FM,cwh_dm_x_cw_fdc,cwh_dm_x_cw_fdc,Low Operability,N,629,Y
@@ -1057,15 +1057,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 1053,0,0,0,C,natural,EN,thn035_cwh_vm_1_hw_fdc,cwh_vm_1_hw_fdc,Operable,Y,654,Y
 1054,0,0,0,C,natural,EN,thn040_cwh_vm_1_hw_fdc,cwh_vm_1_hw_fdc,Operable,Y,654,Y
 1055,0,0,0,C,natural,EN,thn045_cwh_vm_1_hw_fdc,cwh_vm_1_hw_fdc,Operable,Y,654,Y
-1059,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,708,N
-1060,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,708,N
-1061,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,708,N
-1065,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,708,N
-1066,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,708,N
-1067,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,708,N
-1062,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,708,N
-1063,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,708,N
-1064,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,708,N
+1059,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,708,N
+1060,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,708,N
+1061,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,708,N
+1065,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,708,N
+1066,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,708,N
+1067,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,708,N
+1062,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,708,N
+1063,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,708,N
+1064,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,708,N
 1068,0,0,0,N,treated,EM,cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,714,Y
 1069,0,0,0,C,treated,EM,cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,714,Y
 1070,0,0,0,C,treated,FM,cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,714,Y
@@ -1173,7 +1173,7 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 1169,0,0,0,C,treated,EM,thn035_cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,Y,802,Y
 1170,0,0,0,C,treated,EM,thn040_cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,Y,802,Y
 1171,0,0,0,C,treated,EM,thn045_cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,Y,802,Y
-1175,0,0,0,N,natural,EN,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Reserve,N,229,N
+1175,0,0,0,N,natural,EN,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Reserve,N,229,N
 1176,0,0,0,N,treated,EM,cwh_vm_2_fdc_cw,cwh_vm_2_fdc_cw,Operable,N,65,Y
 1177,0,0,0,C,treated,EM,cwh_vm_2_fdc_cw,cwh_vm_2_fdc_cw,Operable,N,65,Y
 1178,0,0,0,C,treated,FM,cwh_vm_2_fdc_cw,cwh_vm_2_fdc_cw,Operable,N,65,Y
@@ -1308,24 +1308,24 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 1304,0,0,0,C,natural,EN,thn035_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,957,Y
 1305,0,0,0,C,natural,EN,thn040_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,957,Y
 1306,0,0,0,C,natural,EN,thn045_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,957,Y
-1310,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,1002,N
-1311,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,1002,N
-1312,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,1002,N
-1316,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,1002,N
-1317,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,1002,N
-1318,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,1002,N
-1313,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,1002,N
-1314,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,1002,N
-1315,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,1002,N
-1319,0,0,0,N,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,363,N
-1320,0,0,0,C,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,363,N
-1321,0,0,0,C,treated,FM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,363,N
-1325,0,0,0,C,treated,FM,thn035_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,363,N
-1326,0,0,0,C,treated,FM,thn040_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,363,N
-1327,0,0,0,C,treated,FM,thn045_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,363,N
-1322,0,0,0,C,treated,EM,thn035_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,363,N
-1323,0,0,0,C,treated,EM,thn040_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,363,N
-1324,0,0,0,C,treated,EM,thn045_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,363,N
+1310,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,1002,N
+1311,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,1002,N
+1312,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,1002,N
+1316,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,1002,N
+1317,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,1002,N
+1318,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,1002,N
+1313,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,1002,N
+1314,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,1002,N
+1315,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,1002,N
+1319,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,363,N
+1320,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,363,N
+1321,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,363,N
+1325,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,363,N
+1326,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,363,N
+1327,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,363,N
+1322,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,363,N
+1323,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,363,N
+1324,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,363,N
 1328,0,0,0,N,treated,EM,cwh_vm_2_hw_fdc,cwh_vm_2_hw_fdc,Operable,Y,569,Y
 1329,0,0,0,C,treated,EM,cwh_vm_2_hw_fdc,cwh_vm_2_hw_fdc,Operable,Y,569,Y
 1330,0,0,0,C,treated,FM,cwh_vm_2_hw_fdc,cwh_vm_2_hw_fdc,Operable,Y,569,Y
@@ -1452,15 +1452,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 1448,0,0,0,C,treated,EM,thn035_cwh_vm_1_cw_fdc,cwh_vm_1_cw_fdc,Operable,Y,636,N
 1449,0,0,0,C,treated,EM,thn040_cwh_vm_1_cw_fdc,cwh_vm_1_cw_fdc,Operable,Y,636,N
 1450,0,0,0,C,treated,EM,thn045_cwh_vm_1_cw_fdc,cwh_vm_1_cw_fdc,Operable,Y,636,N
-1454,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,69,N
-1455,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,69,N
-1456,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,69,N
-1460,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,69,N
-1461,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,69,N
-1462,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,69,N
-1457,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,69,N
-1458,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,69,N
-1459,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,69,N
+1454,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,69,N
+1455,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,69,N
+1456,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,69,N
+1460,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,69,N
+1461,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,69,N
+1462,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,69,N
+1457,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,69,N
+1458,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,69,N
+1459,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,69,N
 1463,0,0,0,N,treated,EM,cwh_vm_2_fdc_cw,cwh_vm_2_fdc_cw,Reserve,N,74,Y
 1464,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,75,N
 1465,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,75,N
@@ -1618,15 +1618,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 1614,0,0,0,C,treated,EM,thn040_cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,120,Y
 1615,0,0,0,C,treated,EM,thn045_cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,120,Y
 1619,0,0,0,N,natural,EN,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Reserve,N,622,Y
-1620,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,935,N
-1621,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,935,N
-1622,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,935,N
-1626,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,935,N
-1627,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,935,N
-1628,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,935,N
-1623,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,935,N
-1624,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,935,N
-1625,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,935,N
+1620,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,935,N
+1621,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,935,N
+1622,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,935,N
+1626,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,935,N
+1627,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,935,N
+1628,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,935,N
+1623,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,935,N
+1624,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,935,N
+1625,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,935,N
 1629,0,0,0,N,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Reserve,N,1036,Y
 1630,0,0,0,N,treated,EM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,N,29,Y
 1631,0,0,0,C,treated,EM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,N,29,Y
@@ -1685,15 +1685,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 1681,0,0,0,C,treated,EM,thn035_cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,286,Y
 1682,0,0,0,C,treated,EM,thn040_cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,286,Y
 1683,0,0,0,C,treated,EM,thn045_cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,286,Y
-1687,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,290,N
-1688,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,290,N
-1689,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,290,N
-1693,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,290,N
-1694,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,290,N
-1695,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,290,N
-1690,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,290,N
-1691,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,290,N
-1692,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,290,N
+1687,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,290,N
+1688,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,290,N
+1689,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,290,N
+1693,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,290,N
+1694,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,290,N
+1695,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,290,N
+1690,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,290,N
+1691,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,290,N
+1692,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,290,N
 1696,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,367,Y
 1697,0,0,0,C,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,367,Y
 1698,0,0,0,C,treated,FM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,367,Y
@@ -1729,15 +1729,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 1728,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Low Operability,N,631,N
 1729,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Low Operability,N,631,N
 1730,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Low Operability,N,631,N
-1731,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,822,N
-1732,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,822,N
-1733,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,822,N
-1737,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,822,N
-1738,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,822,N
-1739,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,822,N
-1734,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,822,N
-1735,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,822,N
-1736,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,822,N
+1731,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,822,N
+1732,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,822,N
+1733,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,822,N
+1737,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,822,N
+1738,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,822,N
+1739,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,822,N
+1734,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,822,N
+1735,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,822,N
+1736,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,822,N
 1740,0,0,0,N,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,964,Y
 1741,0,0,0,C,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,964,Y
 1742,0,0,0,C,treated,FM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,964,Y
@@ -1756,8 +1756,8 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 1752,0,0,0,C,natural,EN,thn035_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,966,Y
 1753,0,0,0,C,natural,EN,thn040_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,966,Y
 1754,0,0,0,C,natural,EN,thn045_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,966,Y
-1758,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Reserve,N,993,N
-1759,0,0,0,N,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Reserve,N,999,N
+1758,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Reserve,N,993,N
+1759,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Reserve,N,999,N
 1760,0,0,0,N,natural,EN,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Low Operability,N,1022,Y
 1761,0,0,0,C,natural,EN,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Low Operability,N,1022,Y
 1762,0,0,0,C,treated,FM,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Low Operability,N,1022,Y
@@ -2022,15 +2022,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 2018,0,0,0,C,natural,EN,thn035_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,960,Y
 2019,0,0,0,C,natural,EN,thn040_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,960,Y
 2020,0,0,0,C,natural,EN,thn045_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,960,Y
-2024,0,0,0,N,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,984,N
-2025,0,0,0,C,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,984,N
-2026,0,0,0,C,treated,FM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,984,N
-2030,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,984,N
-2031,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,984,N
-2032,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,984,N
-2027,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,984,N
-2028,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,984,N
-2029,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,984,N
+2024,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,984,N
+2025,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,984,N
+2026,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,984,N
+2030,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,984,N
+2031,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,984,N
+2032,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,984,N
+2027,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,984,N
+2028,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,984,N
+2029,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,984,N
 2033,0,0,0,N,treated,EM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,3,Y
 2034,0,0,0,C,treated,EM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,3,Y
 2035,0,0,0,C,treated,FM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,3,Y
@@ -2100,15 +2100,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 2096,0,0,0,C,treated,EM,thn035_cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Operable,Y,295,Y
 2097,0,0,0,C,treated,EM,thn040_cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Operable,Y,295,Y
 2098,0,0,0,C,treated,EM,thn045_cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Operable,Y,295,Y
-2102,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,747,N
-2103,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,747,N
-2104,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,747,N
-2108,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,747,N
-2109,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,747,N
-2110,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,747,N
-2105,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,747,N
-2106,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,747,N
-2107,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,747,N
+2102,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,747,N
+2103,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,747,N
+2104,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,747,N
+2108,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,747,N
+2109,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,747,N
+2110,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,747,N
+2105,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,747,N
+2106,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,747,N
+2107,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,747,N
 2111,0,0,0,N,natural,EN,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Operable,Y,909,Y
 2112,0,0,0,C,natural,EN,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Operable,Y,909,Y
 2113,0,0,0,C,treated,FM,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Operable,Y,909,Y
@@ -2589,7 +2589,7 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 2585,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,545,N
 2586,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,545,N
 2587,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,545,N
-2591,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Reserve,N,842,N
+2591,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Reserve,N,842,N
 2592,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,886,Y
 2593,0,0,0,C,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,886,Y
 2594,0,0,0,C,treated,FM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,886,Y
@@ -2600,15 +2600,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 2596,0,0,0,C,treated,EM,thn040_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,886,Y
 2597,0,0,0,C,treated,EM,thn045_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,886,Y
 2601,0,0,0,N,natural,EN,cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Reserve,N,1038,Y
-2602,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,179,N
-2603,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,179,N
-2604,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,179,N
-2608,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,179,N
-2609,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,179,N
-2610,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,179,N
-2605,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,179,N
-2606,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,179,N
-2607,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,179,N
+2602,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,179,N
+2603,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,179,N
+2604,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,179,N
+2608,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,179,N
+2609,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,179,N
+2610,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,179,N
+2605,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,179,N
+2606,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,179,N
+2607,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,179,N
 2611,0,0,0,N,treated,EM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,217,Y
 2612,0,0,0,C,treated,EM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,217,Y
 2613,0,0,0,C,treated,FM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,217,Y
@@ -2687,15 +2687,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 2683,0,0,0,C,treated,EM,thn035_cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,680,Y
 2684,0,0,0,C,treated,EM,thn040_cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,680,Y
 2685,0,0,0,C,treated,EM,thn045_cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,680,Y
-2689,0,0,0,N,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,846,N
-2690,0,0,0,C,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,846,N
-2691,0,0,0,C,treated,FM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,846,N
-2695,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,846,N
-2696,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,846,N
-2697,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,846,N
-2692,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,846,N
-2693,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,846,N
-2694,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,846,N
+2689,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,846,N
+2690,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,846,N
+2691,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,846,N
+2695,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,846,N
+2696,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,846,N
+2697,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,846,N
+2692,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,846,N
+2693,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,846,N
+2694,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,846,N
 2698,0,0,0,N,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Reserve,N,890,Y
 2699,0,0,0,N,natural,EN,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Reserve,N,942,Y
 2700,0,0,0,N,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,967,Y
@@ -2888,15 +2888,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 2884,0,0,0,C,treated,EM,thn035_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,608,Y
 2885,0,0,0,C,treated,EM,thn040_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,608,Y
 2886,0,0,0,C,treated,EM,thn045_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,608,Y
-2890,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,4,N
-2891,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,4,N
-2892,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,4,N
-2896,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,4,N
-2897,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,4,N
-2898,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,4,N
-2893,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,4,N
-2894,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,4,N
-2895,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,4,N
+2890,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,4,N
+2891,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,4,N
+2892,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,4,N
+2896,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,4,N
+2897,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,4,N
+2898,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,4,N
+2893,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,4,N
+2894,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,4,N
+2895,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,4,N
 2899,0,0,0,N,treated,EM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Low Operability,N,499,Y
 2900,0,0,0,C,treated,EM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Low Operability,N,499,Y
 2901,0,0,0,C,treated,FM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Low Operability,N,499,Y
@@ -2915,9 +2915,9 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 2911,0,0,0,C,natural,EN,thn035_cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,681,Y
 2912,0,0,0,C,natural,EN,thn040_cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,681,Y
 2913,0,0,0,C,natural,EN,thn045_cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,681,Y
-2917,0,0,0,N,natural,EN,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Low Operability,N,758,Y
-2918,0,0,0,C,natural,EN,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Low Operability,N,758,Y
-2919,0,0,0,C,treated,FM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Low Operability,N,758,Y
+2917,0,0,0,N,natural,EN,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Low Operability,N,758,N
+2918,0,0,0,C,natural,EN,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Low Operability,N,758,N
+2919,0,0,0,C,treated,FM,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Low Operability,N,758,N
 2920,0,0,0,N,natural,EN,cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,Y,916,Y
 2921,0,0,0,C,natural,EN,cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,Y,916,Y
 2922,0,0,0,C,treated,FM,cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,Y,916,Y
@@ -2930,15 +2930,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 2929,0,0,0,N,treated,EM,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Low Operability,N,1120,Y
 2930,0,0,0,C,treated,EM,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Low Operability,N,1120,Y
 2931,0,0,0,C,treated,FM,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Low Operability,N,1120,Y
-2932,0,0,0,N,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,47,N
-2933,0,0,0,C,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,47,N
-2934,0,0,0,C,treated,FM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,47,N
-2938,0,0,0,C,treated,FM,thn035_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,47,N
-2939,0,0,0,C,treated,FM,thn040_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,47,N
-2940,0,0,0,C,treated,FM,thn045_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,47,N
-2935,0,0,0,C,treated,EM,thn035_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,47,N
-2936,0,0,0,C,treated,EM,thn040_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,47,N
-2937,0,0,0,C,treated,EM,thn045_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,47,N
+2932,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,47,N
+2933,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,47,N
+2934,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,47,N
+2938,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,47,N
+2939,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,47,N
+2940,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,47,N
+2935,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,47,N
+2936,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,47,N
+2937,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,47,N
 2941,0,0,0,N,treated,EM,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Reserve,N,409,Y
 2942,0,0,0,N,treated,EM,cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,N,456,Y
 2943,0,0,0,C,treated,EM,cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,N,456,Y
@@ -3154,15 +3154,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 3153,0,0,0,N,treated,EM,cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Low Operability,N,563,Y
 3154,0,0,0,C,treated,EM,cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Low Operability,N,563,Y
 3155,0,0,0,C,treated,FM,cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Low Operability,N,563,Y
-3156,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,820,N
-3157,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,820,N
-3158,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,820,N
-3162,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,820,N
-3163,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,820,N
-3164,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,820,N
-3159,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,820,N
-3160,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,820,N
-3161,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,820,N
+3156,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,820,N
+3157,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,820,N
+3158,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,820,N
+3162,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,820,N
+3163,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,820,N
+3164,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,820,N
+3159,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,820,N
+3160,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,820,N
+3161,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,820,N
 3165,0,0,0,N,treated,EM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,888,Y
 3166,0,0,0,C,treated,EM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,888,Y
 3167,0,0,0,C,treated,FM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,888,Y
@@ -3263,9 +3263,9 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 3259,0,0,0,C,treated,EM,thn045_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,776,Y
 3263,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Reserve,N,900,N
 3264,0,0,0,N,treated,EM,cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Reserve,N,1005,Y
-3265,0,0,0,N,natural,EN,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Low Operability,N,1021,Y
-3266,0,0,0,C,natural,EN,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Low Operability,N,1021,Y
-3267,0,0,0,C,treated,FM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Low Operability,N,1021,Y
+3265,0,0,0,N,natural,EN,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Low Operability,N,1021,N
+3266,0,0,0,C,natural,EN,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Low Operability,N,1021,N
+3267,0,0,0,C,treated,FM,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Low Operability,N,1021,N
 3268,0,0,0,N,treated,EM,cwh_vm_2_hw_fdc,cwh_vm_2_hw_fdc,Operable,Y,1023,Y
 3269,0,0,0,C,treated,EM,cwh_vm_2_hw_fdc,cwh_vm_2_hw_fdc,Operable,Y,1023,Y
 3270,0,0,0,C,treated,FM,cwh_vm_2_hw_fdc,cwh_vm_2_hw_fdc,Operable,Y,1023,Y
@@ -3378,15 +3378,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 3374,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,89,N
 3375,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,89,N
 3376,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,89,N
-3380,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,193,N
-3381,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,193,N
-3382,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,193,N
-3386,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,193,N
-3387,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,193,N
-3388,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,193,N
-3383,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,193,N
-3384,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,193,N
-3385,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,193,N
+3380,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,193,N
+3381,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,193,N
+3382,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,193,N
+3386,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,193,N
+3387,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,193,N
+3388,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,193,N
+3383,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,193,N
+3384,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,193,N
+3385,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,193,N
 3389,0,0,0,N,natural,EN,cwh_vm_2_cw_hw,cwh_vm_2_cw_hw,Operable,Y,211,Y
 3390,0,0,0,C,natural,EN,cwh_vm_2_cw_hw,cwh_vm_2_cw_hw,Operable,Y,211,Y
 3391,0,0,0,C,treated,FM,cwh_vm_2_cw_hw,cwh_vm_2_cw_hw,Operable,Y,211,Y
@@ -3631,15 +3631,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 3627,0,0,0,C,treated,EM,thn040_cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,Y,812,Y
 3628,0,0,0,C,treated,EM,thn045_cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,Y,812,Y
 3632,0,0,0,N,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Reserve,N,895,Y
-3633,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,936,N
-3634,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,936,N
-3635,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,936,N
-3639,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,936,N
-3640,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,936,N
-3641,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,936,N
-3636,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,936,N
-3637,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,936,N
-3638,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,936,N
+3633,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,936,N
+3634,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,936,N
+3635,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,936,N
+3639,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,936,N
+3640,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,936,N
+3641,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,936,N
+3636,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,936,N
+3637,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,936,N
+3638,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,936,N
 3642,0,0,0,N,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,951,Y
 3643,0,0,0,C,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,951,Y
 3644,0,0,0,C,treated,FM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,951,Y
@@ -3649,15 +3649,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 3645,0,0,0,C,natural,EN,thn035_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,951,Y
 3646,0,0,0,C,natural,EN,thn040_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,951,Y
 3647,0,0,0,C,natural,EN,thn045_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,951,Y
-3651,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,978,N
-3652,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,978,N
-3653,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,978,N
-3657,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,978,N
-3658,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,978,N
-3659,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,978,N
-3654,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,978,N
-3655,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,978,N
-3656,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,978,N
+3651,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,978,N
+3652,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,978,N
+3653,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,978,N
+3657,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,978,N
+3658,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,978,N
+3659,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,978,N
+3654,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,978,N
+3655,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,978,N
+3656,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,978,N
 3660,0,0,0,N,treated,EM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,1085,Y
 3661,0,0,0,C,treated,EM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,1085,Y
 3662,0,0,0,C,treated,FM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Operable,Y,1085,Y
@@ -3846,15 +3846,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 3842,0,0,0,C,natural,EN,thn035_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,969,Y
 3843,0,0,0,C,natural,EN,thn040_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,969,Y
 3844,0,0,0,C,natural,EN,thn045_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,969,Y
-3848,0,0,0,N,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,14,N
-3849,0,0,0,C,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,14,N
-3850,0,0,0,C,treated,FM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,14,N
-3854,0,0,0,C,treated,FM,thn035_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,14,N
-3855,0,0,0,C,treated,FM,thn040_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,14,N
-3856,0,0,0,C,treated,FM,thn045_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,14,N
-3851,0,0,0,C,treated,EM,thn035_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,14,N
-3852,0,0,0,C,treated,EM,thn040_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,14,N
-3853,0,0,0,C,treated,EM,thn045_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,14,N
+3848,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,14,N
+3849,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,14,N
+3850,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,14,N
+3854,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,14,N
+3855,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,14,N
+3856,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,14,N
+3851,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,14,N
+3852,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,14,N
+3853,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,14,N
 3857,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,57,Y
 3858,0,0,0,C,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,57,Y
 3859,0,0,0,C,treated,FM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,57,Y
@@ -3882,15 +3882,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 3878,0,0,0,C,treated,EM,thn035_cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,125,Y
 3879,0,0,0,C,treated,EM,thn040_cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,125,Y
 3880,0,0,0,C,treated,EM,thn045_cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,125,Y
-3884,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,190,N
-3885,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,190,N
-3886,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,190,N
-3890,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,190,N
-3891,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,190,N
-3892,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,190,N
-3887,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,190,N
-3888,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,190,N
-3889,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,190,N
+3884,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,190,N
+3885,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,190,N
+3886,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,190,N
+3890,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,190,N
+3891,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,190,N
+3892,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,190,N
+3887,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,190,N
+3888,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,190,N
+3889,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,190,N
 3893,0,0,0,N,natural,EN,cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Low Operability,N,491,Y
 3894,0,0,0,C,natural,EN,cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Low Operability,N,491,Y
 3895,0,0,0,C,treated,FM,cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Low Operability,N,491,Y
@@ -3906,15 +3906,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 3905,0,0,0,N,treated,EM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Low Operability,N,692,Y
 3906,0,0,0,C,treated,EM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Low Operability,N,692,Y
 3907,0,0,0,C,treated,FM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Low Operability,N,692,Y
-3908,0,0,0,N,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,848,N
-3909,0,0,0,C,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,848,N
-3910,0,0,0,C,treated,FM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,848,N
-3914,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,848,N
-3915,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,848,N
-3916,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,848,N
-3911,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,848,N
-3912,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,848,N
-3913,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,848,N
+3908,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,848,N
+3909,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,848,N
+3910,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,848,N
+3914,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,848,N
+3915,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,848,N
+3916,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,848,N
+3911,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,848,N
+3912,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,848,N
+3913,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,848,N
 3917,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,97,Y
 3918,0,0,0,C,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,97,Y
 3919,0,0,0,C,treated,FM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,97,Y
@@ -4106,15 +4106,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 4105,0,0,0,C,treated,EM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Low Operability,N,1047,Y
 4106,0,0,0,C,treated,FM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Low Operability,N,1047,Y
 4107,0,0,0,N,treated,EM,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Reserve,N,934,Y
-4108,0,0,0,N,natural,EN,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,116,N
-4109,0,0,0,C,natural,EN,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,116,N
-4110,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,116,N
-4114,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,116,N
-4115,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,116,N
-4116,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,116,N
-4111,0,0,0,C,natural,EN,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,116,N
-4112,0,0,0,C,natural,EN,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,116,N
-4113,0,0,0,C,natural,EN,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,116,N
+4108,0,0,0,N,natural,EN,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,116,N
+4109,0,0,0,C,natural,EN,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,116,N
+4110,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,116,N
+4114,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,116,N
+4115,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,116,N
+4116,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,116,N
+4111,0,0,0,C,natural,EN,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,116,N
+4112,0,0,0,C,natural,EN,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,116,N
+4113,0,0,0,C,natural,EN,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,116,N
 4117,0,0,0,N,treated,EM,cwh_vm_1_cw_fdc,cwh_vm_1_cw_fdc,Operable,Y,291,N
 4118,0,0,0,C,treated,EM,cwh_vm_1_cw_fdc,cwh_vm_1_cw_fdc,Operable,Y,291,N
 4119,0,0,0,C,treated,FM,cwh_vm_1_cw_fdc,cwh_vm_1_cw_fdc,Operable,Y,291,N
@@ -4215,15 +4215,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 4211,0,0,0,C,natural,EN,thn035_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,972,Y
 4212,0,0,0,C,natural,EN,thn040_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,972,Y
 4213,0,0,0,C,natural,EN,thn045_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,972,Y
-4217,0,0,0,N,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,985,N
-4218,0,0,0,C,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,985,N
-4219,0,0,0,C,treated,FM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,985,N
-4223,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,985,N
-4224,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,985,N
-4225,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,985,N
-4220,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,985,N
-4221,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,985,N
-4222,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Operable,Y,985,N
+4217,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,985,N
+4218,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,985,N
+4219,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,985,N
+4223,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,985,N
+4224,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,985,N
+4225,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,985,N
+4220,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,985,N
+4221,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,985,N
+4222,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,985,N
 4226,0,0,0,N,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,133,Y
 4227,0,0,0,C,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,133,Y
 4228,0,0,0,C,treated,FM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,133,Y
@@ -4696,15 +4696,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 4692,0,0,0,C,natural,EN,thn040_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,965,Y
 4693,0,0,0,C,natural,EN,thn045_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,965,Y
 4697,0,0,0,N,natural,EN,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Reserve,N,207,Y
-4698,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,37,N
-4699,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,37,N
-4700,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,37,N
-4704,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,37,N
-4705,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,37,N
-4706,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,37,N
-4701,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,37,N
-4702,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,37,N
-4703,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,37,N
+4698,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,37,N
+4699,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,37,N
+4700,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,37,N
+4704,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,37,N
+4705,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,37,N
+4706,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,37,N
+4701,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,37,N
+4702,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,37,N
+4703,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,37,N
 4707,0,0,0,N,treated,EM,cwh_vm_2_cw_hw,cwh_vm_2_cw_hw,Operable,Y,481,Y
 4708,0,0,0,C,treated,EM,cwh_vm_2_cw_hw,cwh_vm_2_cw_hw,Operable,Y,481,Y
 4709,0,0,0,C,treated,FM,cwh_vm_2_cw_hw,cwh_vm_2_cw_hw,Operable,Y,481,Y
@@ -4723,15 +4723,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 4719,0,0,0,C,natural,EN,thn035_cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Operable,Y,535,Y
 4720,0,0,0,C,natural,EN,thn040_cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Operable,Y,535,Y
 4721,0,0,0,C,natural,EN,thn045_cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Operable,Y,535,Y
-4725,0,0,0,N,treated,EM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,678,Y
-4726,0,0,0,C,treated,EM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,678,Y
-4727,0,0,0,C,treated,FM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,678,Y
-4731,0,0,0,C,treated,FM,thn035_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,678,Y
-4732,0,0,0,C,treated,FM,thn040_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,678,Y
-4733,0,0,0,C,treated,FM,thn045_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,678,Y
-4728,0,0,0,C,treated,EM,thn035_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,678,Y
-4729,0,0,0,C,treated,EM,thn040_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,678,Y
-4730,0,0,0,C,treated,EM,thn045_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,678,Y
+4725,0,0,0,N,treated,EM,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,678,N
+4726,0,0,0,C,treated,EM,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,678,N
+4727,0,0,0,C,treated,FM,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,678,N
+4731,0,0,0,C,treated,FM,thn035_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,678,N
+4732,0,0,0,C,treated,FM,thn040_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,678,N
+4733,0,0,0,C,treated,FM,thn045_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,678,N
+4728,0,0,0,C,treated,EM,thn035_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,678,N
+4729,0,0,0,C,treated,EM,thn040_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,678,N
+4730,0,0,0,C,treated,EM,thn045_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,678,N
 4734,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,791,Y
 4735,0,0,0,C,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,791,Y
 4736,0,0,0,C,treated,FM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,791,Y
@@ -4884,15 +4884,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 4880,0,0,0,C,treated,EM,thn040_cwh_vm_2_hw_fdc,cwh_vm_2_hw_fdc,Operable,Y,738,Y
 4881,0,0,0,C,treated,EM,thn045_cwh_vm_2_hw_fdc,cwh_vm_2_hw_fdc,Operable,Y,738,Y
 4885,0,0,0,N,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Reserve,N,889,Y
-4886,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,55,N
-4887,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,55,N
-4888,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,55,N
-4892,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,55,N
-4893,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,55,N
-4894,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,55,N
-4889,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,55,N
-4890,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,55,N
-4891,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,55,N
+4886,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,55,N
+4887,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,55,N
+4888,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,55,N
+4892,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,55,N
+4893,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,55,N
+4894,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,55,N
+4889,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,55,N
+4890,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,55,N
+4891,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,55,N
 4895,0,0,0,N,treated,EM,cwh_dm_x_cw_fdc,cwh_dm_x_cw_fdc,Operable,N,127,Y
 4896,0,0,0,C,treated,EM,cwh_dm_x_cw_fdc,cwh_dm_x_cw_fdc,Operable,N,127,Y
 4897,0,0,0,C,treated,FM,cwh_dm_x_cw_fdc,cwh_dm_x_cw_fdc,Operable,N,127,Y
@@ -5054,15 +5054,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 5050,0,0,0,C,treated,EM,thn035_cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,365,Y
 5051,0,0,0,C,treated,EM,thn040_cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,365,Y
 5052,0,0,0,C,treated,EM,thn045_cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,365,Y
-5056,0,0,0,N,treated,EM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,428,Y
-5057,0,0,0,C,treated,EM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,428,Y
-5058,0,0,0,C,treated,FM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,428,Y
-5062,0,0,0,C,treated,FM,thn035_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,428,Y
-5063,0,0,0,C,treated,FM,thn040_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,428,Y
-5064,0,0,0,C,treated,FM,thn045_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,428,Y
-5059,0,0,0,C,treated,EM,thn035_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,428,Y
-5060,0,0,0,C,treated,EM,thn040_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,428,Y
-5061,0,0,0,C,treated,EM,thn045_cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Operable,Y,428,Y
+5056,0,0,0,N,treated,EM,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,428,N
+5057,0,0,0,C,treated,EM,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,428,N
+5058,0,0,0,C,treated,FM,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,428,N
+5062,0,0,0,C,treated,FM,thn035_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,428,N
+5063,0,0,0,C,treated,FM,thn040_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,428,N
+5064,0,0,0,C,treated,FM,thn045_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,428,N
+5059,0,0,0,C,treated,EM,thn035_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,428,N
+5060,0,0,0,C,treated,EM,thn040_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,428,N
+5061,0,0,0,C,treated,EM,thn045_cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Operable,Y,428,N
 5065,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,439,Y
 5066,0,0,0,C,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,439,Y
 5067,0,0,0,C,treated,FM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,439,Y
@@ -5072,9 +5072,9 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 5068,0,0,0,C,treated,EM,thn035_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,439,Y
 5069,0,0,0,C,treated,EM,thn040_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,439,Y
 5070,0,0,0,C,treated,EM,thn045_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,439,Y
-5074,0,0,0,N,natural,EN,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Low Operability,N,504,Y
-5075,0,0,0,C,natural,EN,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Low Operability,N,504,Y
-5076,0,0,0,C,treated,FM,cwh_vm_1_fdc_hw,cwh_vm_1_fdc_hw,Low Operability,N,504,Y
+5074,0,0,0,N,natural,EN,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Low Operability,N,504,N
+5075,0,0,0,C,natural,EN,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Low Operability,N,504,N
+5076,0,0,0,C,treated,FM,cwh_vm_1_fdc_x,cwh_vm_1_fdc_x,Low Operability,N,504,N
 5077,0,0,0,N,natural,EN,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,892,Y
 5078,0,0,0,C,natural,EN,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,892,Y
 5079,0,0,0,C,treated,FM,cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,892,Y
@@ -5095,15 +5095,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 5091,0,0,0,C,treated,EM,thn040_cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,Y,931,Y
 5092,0,0,0,C,treated,EM,thn045_cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Operable,Y,931,Y
 5096,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Reserve,N,968,Y
-5097,0,0,0,N,natural,EN,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,976,N
-5098,0,0,0,C,natural,EN,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,976,N
-5099,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,976,N
-5103,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,976,N
-5104,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,976,N
-5105,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,976,N
-5100,0,0,0,C,natural,EN,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,976,N
-5101,0,0,0,C,natural,EN,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,976,N
-5102,0,0,0,C,natural,EN,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,976,N
+5097,0,0,0,N,natural,EN,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,976,N
+5098,0,0,0,C,natural,EN,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,976,N
+5099,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,976,N
+5103,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,976,N
+5104,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,976,N
+5105,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,976,N
+5100,0,0,0,C,natural,EN,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,976,N
+5101,0,0,0,C,natural,EN,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,976,N
+5102,0,0,0,C,natural,EN,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,976,N
 5106,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,1057,Y
 5107,0,0,0,C,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,1057,Y
 5108,0,0,0,C,treated,FM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,1057,Y
@@ -5131,15 +5131,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 5127,0,0,0,C,treated,EM,thn035_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,49,Y
 5128,0,0,0,C,treated,EM,thn040_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,49,Y
 5129,0,0,0,C,treated,EM,thn045_cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Operable,Y,49,Y
-5133,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,167,N
-5134,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,167,N
-5135,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,167,N
-5139,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,167,N
-5140,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,167,N
-5141,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,167,N
-5136,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,167,N
-5137,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,167,N
-5138,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,167,N
+5133,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,167,N
+5134,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,167,N
+5135,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,167,N
+5139,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,167,N
+5140,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,167,N
+5141,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,167,N
+5136,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,167,N
+5137,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,167,N
+5138,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,167,N
 5142,0,0,0,N,treated,EM,cwh_dm_x_fdc_dr,cwh_dm_x_fdc_dr,Operable,Y,234,N
 5143,0,0,0,C,treated,EM,cwh_dm_x_fdc_dr,cwh_dm_x_fdc_dr,Operable,Y,234,N
 5144,0,0,0,C,treated,FM,cwh_dm_x_fdc_dr,cwh_dm_x_fdc_dr,Operable,Y,234,N
@@ -5265,15 +5265,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 5261,0,0,0,C,treated,EM,thn035_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,301,Y
 5262,0,0,0,C,treated,EM,thn040_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,301,Y
 5263,0,0,0,C,treated,EM,thn045_cwh_vm_1_hw_cw,cwh_vm_1_hw_cw,Operable,Y,301,Y
-5267,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,318,N
-5268,0,0,0,C,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,318,N
-5269,0,0,0,C,treated,FM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,318,N
-5273,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,318,N
-5274,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,318,N
-5275,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,318,N
-5270,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,318,N
-5271,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,318,N
-5272,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_act,cwh_dm_x_dr_act,Operable,Y,318,N
+5267,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,318,N
+5268,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,318,N
+5269,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,318,N
+5273,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,318,N
+5274,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,318,N
+5275,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,318,N
+5270,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,318,N
+5271,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,318,N
+5272,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,318,N
 5276,0,0,0,N,treated,EM,cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,719,Y
 5277,0,0,0,C,treated,EM,cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,719,Y
 5278,0,0,0,C,treated,FM,cwh_vm_1_cw_hw,cwh_vm_1_cw_hw,Operable,Y,719,Y
@@ -5417,15 +5417,15 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 5413,0,0,0,C,treated,EM,thn035_cwh_dm_x_fdc_dr,cwh_dm_x_fdc_dr,Operable,Y,58,N
 5414,0,0,0,C,treated,EM,thn040_cwh_dm_x_fdc_dr,cwh_dm_x_fdc_dr,Operable,Y,58,N
 5415,0,0,0,C,treated,EM,thn045_cwh_dm_x_fdc_dr,cwh_dm_x_fdc_dr,Operable,Y,58,N
-5419,0,0,0,N,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,121,N
-5420,0,0,0,C,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,121,N
-5421,0,0,0,C,treated,FM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,121,N
-5425,0,0,0,C,treated,FM,thn035_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,121,N
-5426,0,0,0,C,treated,FM,thn040_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,121,N
-5427,0,0,0,C,treated,FM,thn045_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,121,N
-5422,0,0,0,C,treated,EM,thn035_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,121,N
-5423,0,0,0,C,treated,EM,thn040_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,121,N
-5424,0,0,0,C,treated,EM,thn045_cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Operable,Y,121,N
+5419,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,121,N
+5420,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,121,N
+5421,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,121,N
+5425,0,0,0,C,treated,FM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,121,N
+5426,0,0,0,C,treated,FM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,121,N
+5427,0,0,0,C,treated,FM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,121,N
+5422,0,0,0,C,treated,EM,thn035_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,121,N
+5423,0,0,0,C,treated,EM,thn040_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,121,N
+5424,0,0,0,C,treated,EM,thn045_cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Operable,Y,121,N
 5428,0,0,0,N,treated,EM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,205,Y
 5429,0,0,0,C,treated,EM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,205,Y
 5430,0,0,0,C,treated,FM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Operable,Y,205,Y
@@ -5535,9 +5535,9 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 5531,0,0,0,C,natural,EN,thn035_cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Operable,Y,396,Y
 5532,0,0,0,C,natural,EN,thn040_cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Operable,Y,396,Y
 5533,0,0,0,C,natural,EN,thn045_cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Operable,Y,396,Y
-5537,0,0,0,N,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Low Operability,N,490,N
-5538,0,0,0,C,treated,EM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Low Operability,N,490,N
-5539,0,0,0,C,treated,FM,cwh_dm_x_cw_dr,cwh_dm_x_cw_dr,Low Operability,N,490,N
+5537,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Low Operability,N,490,N
+5538,0,0,0,C,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Low Operability,N,490,N
+5539,0,0,0,C,treated,FM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Low Operability,N,490,N
 5540,0,0,0,N,treated,EM,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Operable,Y,790,Y
 5541,0,0,0,C,treated,EM,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Operable,Y,790,Y
 5542,0,0,0,C,treated,FM,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Operable,Y,790,Y
@@ -6861,7 +6861,7 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 6860,0,0,0,N,treated,EM,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Riparian,N,192,Y
 6861,0,0,0,N,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Riparian,N,972,Y
 6862,0,0,0,N,natural,EN,cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Riparian,N,970,Y
-6863,0,0,0,N,natural,EN,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Riparian,N,976,N
+6863,0,0,0,N,natural,EN,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Riparian,N,976,N
 6864,0,0,0,N,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Riparian,N,971,Y
 6865,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Riparian,N,214,N
 6866,0,0,0,N,natural,EN,cwh_dm_x_cw_fdc,cwh_dm_x_cw_fdc,Riparian,N,921,Y
@@ -6869,8 +6869,8 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 6868,0,0,0,N,natural,EN,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Riparian,N,961,Y
 6869,0,0,0,N,natural,EN,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Riparian,N,769,Y
 6870,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Riparian,N,544,Y
-6871,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Riparian,N,908,N
-6872,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Riparian,N,814,N
+6871,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Riparian,N,908,N
+6872,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Riparian,N,814,N
 6873,0,0,0,N,natural,EN,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Riparian,N,1055,Y
 6874,0,0,0,N,natural,EN,cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Riparian,N,825,Y
 6875,0,0,0,N,natural,EN,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Riparian,N,909,Y
@@ -6882,7 +6882,7 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 6881,0,0,0,N,treated,EM,cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Riparian,N,927,Y
 6882,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Riparian,N,794,Y
 6883,0,0,0,N,treated,EM,cwh_vm_2_cw_hw,cwh_vm_2_cw_hw,Riparian,N,883,Y
-6884,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Riparian,N,318,N
+6884,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Riparian,N,318,N
 6885,0,0,0,N,treated,EM,cwh_dm_x_cw_hw,cwh_dm_x_cw_hw,Riparian,N,1056,Y
 6886,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Riparian,N,932,Y
 6887,0,0,0,N,treated,EM,cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Riparian,N,701,Y
@@ -6895,10 +6895,10 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 6894,0,0,0,N,treated,EM,cwh_dm_x_hw_cw,cwh_dm_x_hw_cw,Riparian,N,785,Y
 6895,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Riparian,N,545,N
 6896,0,0,0,N,natural,EN,cwh_dm_x_fdc_cw,cwh_dm_x_fdc_cw,Riparian,N,535,Y
-6897,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Riparian,N,986,N
-6898,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Riparian,N,69,N
-6899,0,0,0,N,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Riparian,N,999,N
-6900,0,0,0,N,treated,EM,cwh_dm_x_dr_mb,cwh_dm_x_dr_mb,Riparian,N,848,N
+6897,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Riparian,N,986,N
+6898,0,0,0,N,treated,EM,cwh_dm_x_dr_cw,cwh_dm_x_dr_cw,Riparian,N,69,N
+6899,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Riparian,N,999,N
+6900,0,0,0,N,treated,EM,cwh_dm_x_dr_act,cwh_dm_x_dr_act,Riparian,N,848,N
 6901,0,0,0,N,natural,EN,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Riparian,N,207,Y
 6902,0,0,0,N,natural,EN,cwh_dm_x_fdc_hw,cwh_dm_x_fdc_hw,Riparian,N,1013,Y
 6903,0,0,0,N,treated,EM,cwh_dm_x_hw_fdc,cwh_dm_x_hw_fdc,Riparian,N,486,Y
@@ -6983,8 +6983,8 @@ TRACK,OFFSET,NEXTAGE,CYCLE,status,origin,statecode,au,auf,oper,ct,aux,hasnatcurv
 6982,0,0,0,N,treated,EM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Riparian,N,692,Y
 6983,0,0,0,N,treated,EM,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Riparian,N,1047,Y
 6984,0,0,0,N,treated,EM,cwh_vm_1_fdc_cw,cwh_vm_1_fdc_cw,Riparian,N,73,N
-6985,0,0,0,N,treated,EM,cwh_vm_2_ba_hw,cwh_vm_2_ba_hw,Riparian,N,424,Y
-6986,0,0,0,N,natural,EN,cwh_vm_2_ba_hw,cwh_vm_2_ba_hw,Riparian,N,425,Y
+6985,0,0,0,N,treated,EM,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Riparian,N,424,Y
+6986,0,0,0,N,natural,EN,cwh_vm_2_hw_ba,cwh_vm_2_hw_ba,Riparian,N,425,Y
 6987,0,0,0,N,natural,EN,cwh_vm_1_hw_fdc,cwh_vm_1_hw_fdc,Riparian,N,654,Y
 6988,0,0,0,N,natural,EN,cwh_vm_2_hw_cw,cwh_vm_2_hw_cw,Riparian,N,412,Y
 6989,0,0,0,N,treated,EM,cwh_vm_1_dr_hw,cwh_vm_1_dr_hw,Riparian,N,105,N
