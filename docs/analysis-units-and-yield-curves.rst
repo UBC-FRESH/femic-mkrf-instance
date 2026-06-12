@@ -25,15 +25,17 @@ The current canonical chain is:
 2. AU construction from BEC plus ordered top-2 leading species;
 3. explicit review-approved minor-strata aggregation where two raw AU labels
    should share one canonical AU family;
-4. selected top-N AU publication by cumulative covered area;
-5. natural-origin and treated-origin curve publication on the selected AU set;
+4. provisional site-series splitting for larger canonical AU families;
+5. selected top-N AU publication by cumulative covered area;
+6. natural-origin and treated-origin curve publication on the selected AU set;
    and
-6. runtime AU normalization/remap of non-selected raw AUs onto that canonical
+7. runtime AU normalization/remap of non-selected raw AUs onto that canonical
    selected set.
 
 The main checked-in evidence surfaces are:
 
 - ``data/model_input_bundle/au_aggregation_audit.csv``
+- ``data/model_input_bundle/site_series_split_audit.csv``
 - ``data/model_input_bundle/selected_au_table.csv``
 - ``data/model_input_bundle/stand_au_assignment.csv``
 - ``data/model_input_bundle/stand_origin_assignment.csv``
@@ -61,6 +63,36 @@ so the aggregation is auditable. ``au_aggregation_audit.csv`` summarizes each
 raw AU's source fragment count, forest-cover count, area, target AU area, and
 share of its target AU. The selected-AU table and runtime package use the
 canonical AU ids after aggregation.
+
+Site-Series Splitting
+---------------------
+
+The canonical MKRF AU builder now applies a provisional site-series split to
+larger AU families after minor-strata aggregation and before selected-AU
+ranking.
+
+Current rule:
+
+- compute each canonical base AU's relative area abundance;
+- round that relative abundance to two decimal places, matching the review
+  table used to choose the cutoff;
+- split by normalized ``SITE_SERIES`` code where the rounded abundance is at
+  least ``0.04``; and
+- leave smaller AUs unsplit while retaining their source site-series metadata
+  as descriptive audit fields.
+
+This captures the intended top 9 base AU families, through
+``cwh_dm_x_cw_hw``. In the current artifact set those 9 families represent
+``0.708450`` of all assigned area, which is approximately ``0.746`` relative
+to the 95% selected-AU coverage target.
+
+``stand_au_assignment.csv`` carries the per-fragment ``site_series_label``,
+``site_series_id``, ``base_au_id``, ``base_au_area_share``, and
+``site_series_split_applied`` fields. ``site_series_split_audit.csv``
+summarizes split membership, raw and rounded abundance, cumulative area share,
+and each site series' share of its base AU. The split threshold is provisional
+and intentionally lives as a small constant in the MKRF AU builder so it can be
+revised after Anna/Sean review.
 
 Selected Top-N AU Rule
 ----------------------

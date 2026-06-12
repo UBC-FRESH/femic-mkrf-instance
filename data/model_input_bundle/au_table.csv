@@ -1,62 +1,123 @@
-au_id,bec_zone,bec_subzone,bec_variant,leading_species_1,leading_species_2,stand_count,tie_break_record_count
-cwh_dm_x_act_dr,cwh,dm,x,act,dr,5,0
-cwh_dm_x_act_fdc,cwh,dm,x,act,fdc,1,1
-cwh_dm_x_act_x,cwh,dm,x,act,x,3,0
-cwh_dm_x_cw_bg,cwh,dm,x,cw,bg,2,0
-cwh_dm_x_cw_fdc,cwh,dm,x,cw,fdc,43,11
-cwh_dm_x_cw_hw,cwh,dm,x,cw,hw,57,3
-cwh_dm_x_cw_pw,cwh,dm,x,cw,pw,7,0
-cwh_dm_x_cw_x,cwh,dm,x,cw,x,2,0
-cwh_dm_x_dr_act,cwh,dm,x,dr,act,38,11
-cwh_dm_x_dr_cw,cwh,dm,x,dr,cw,30,8
-cwh_dm_x_dr_ep,cwh,dm,x,dr,ep,9,4
-cwh_dm_x_dr_fdc,cwh,dm,x,dr,fdc,11,4
-cwh_dm_x_dr_hw,cwh,dm,x,dr,hw,15,2
-cwh_dm_x_dr_x,cwh,dm,x,dr,x,10,0
-cwh_dm_x_fdc_act,cwh,dm,x,fdc,act,2,1
-cwh_dm_x_fdc_cw,cwh,dm,x,fdc,cw,71,13
-cwh_dm_x_fdc_dr,cwh,dm,x,fdc,dr,20,3
-cwh_dm_x_fdc_hw,cwh,dm,x,fdc,hw,128,3
-cwh_dm_x_fdc_x,cwh,dm,x,fdc,x,16,0
-cwh_dm_x_hw_ba,cwh,dm,x,hw,ba,1,1
-cwh_dm_x_hw_cw,cwh,dm,x,hw,cw,161,40
-cwh_dm_x_hw_dr,cwh,dm,x,hw,dr,7,3
-cwh_dm_x_hw_ep,cwh,dm,x,hw,ep,4,0
-cwh_dm_x_hw_fdc,cwh,dm,x,hw,fdc,124,0
-cwh_dm_x_mb_dr,cwh,dm,x,mb,dr,1,0
-cwh_dm_x_x_x,cwh,dm,x,x,x,5,0
-cwh_vm_1_cw_ba,cwh,vm,1,cw,ba,5,2
-cwh_vm_1_cw_dr,cwh,vm,1,cw,dr,9,9
-cwh_vm_1_cw_fdc,cwh,vm,1,cw,fdc,20,7
-cwh_vm_1_cw_hw,cwh,vm,1,cw,hw,124,4
-cwh_vm_1_cw_x,cwh,vm,1,cw,x,1,0
-cwh_vm_1_cw_yc,cwh,vm,1,cw,yc,1,0
-cwh_vm_1_dr_act,cwh,vm,1,dr,act,2,0
-cwh_vm_1_dr_cw,cwh,vm,1,dr,cw,10,4
-cwh_vm_1_dr_fdc,cwh,vm,1,dr,fdc,1,0
-cwh_vm_1_dr_hw,cwh,vm,1,dr,hw,13,2
-cwh_vm_1_fdc_act,cwh,vm,1,fdc,act,2,0
-cwh_vm_1_fdc_cw,cwh,vm,1,fdc,cw,13,1
-cwh_vm_1_fdc_x,cwh,vm,1,fdc,x,14,1
-cwh_vm_1_hw_ba,cwh,vm,1,hw,ba,3,3
-cwh_vm_1_hw_cw,cwh,vm,1,hw,cw,225,17
-cwh_vm_1_hw_fdc,cwh,vm,1,hw,fdc,37,0
-cwh_vm_1_x_x,cwh,vm,1,x,x,2,0
-cwh_vm_2_ba_cw,cwh,vm,2,ba,cw,2,1
-cwh_vm_2_cw_act,cwh,vm,2,cw,act,2,0
-cwh_vm_2_cw_ba,cwh,vm,2,cw,ba,3,0
-cwh_vm_2_cw_fdc,cwh,vm,2,cw,fdc,27,13
-cwh_vm_2_cw_hw,cwh,vm,2,cw,hw,39,7
-cwh_vm_2_cw_x,cwh,vm,2,cw,x,2,0
-cwh_vm_2_dr_act,cwh,vm,2,dr,act,2,2
-cwh_vm_2_dr_hw,cwh,vm,2,dr,hw,9,0
-cwh_vm_2_fdc_cw,cwh,vm,2,fdc,cw,25,1
-cwh_vm_2_fdc_hw,cwh,vm,2,fdc,hw,30,2
-cwh_vm_2_fdc_x,cwh,vm,2,fdc,x,2,0
-cwh_vm_2_hm_ba,cwh,vm,2,hm,ba,1,1
-cwh_vm_2_hw_ba,cwh,vm,2,hw,ba,29,10
-cwh_vm_2_hw_cw,cwh,vm,2,hw,cw,235,37
-cwh_vm_2_hw_dr,cwh,vm,2,hw,dr,5,5
-cwh_vm_2_hw_fdc,cwh,vm,2,hw,fdc,93,0
-cwh_vm_2_hw_x,cwh,vm,2,hw,x,1,0
-cwh_vm_2_x_x,cwh,vm,2,x,x,1,0
+au_id,bec_zone,bec_subzone,bec_variant,leading_species_1,leading_species_2,stand_count,tie_break_record_count,site_series_id,site_series_label,site_series_split_applied
+cwh_dm_x_act_dr,cwh,dm,x,act,dr,5,0,ss04; ss07,Cw - Foamflower (07); Fd - Swordfern (04),False
+cwh_dm_x_act_fdc,cwh,dm,x,act,fdc,1,1,ss01,Hw - Flatmoss (01),False
+cwh_dm_x_act_x,cwh,dm,x,act,x,3,0,ss05; ss07,Cw - Foamflower (07); Cw - Swordfern (05),False
+cwh_dm_x_cw_bg,cwh,dm,x,cw,bg,2,0,ss07,Cw - Foamflower (07),False
+cwh_dm_x_cw_fdc,cwh,dm,x,cw,fdc,43,11,ss01; ss03; ss04; ss05; ss07,Cw - Foamflower (07); Cw - Swordfern (05); Fd - Swordfern (04); FdHw - Salal (03); Hw - Flatmoss (01),False
+cwh_dm_x_cw_hw_ss01,cwh,dm,x,cw,hw,16,0,ss01,Hw - Flatmoss (01),True
+cwh_dm_x_cw_hw_ss02,cwh,dm,x,cw,hw,1,0,ss02,FdPl - Cladina (02),True
+cwh_dm_x_cw_hw_ss03,cwh,dm,x,cw,hw,6,0,ss03,FdHw - Salal (03); HwCw - Salal (03),True
+cwh_dm_x_cw_hw_ss04,cwh,dm,x,cw,hw,6,0,ss04,Fd - Swordfern (04),True
+cwh_dm_x_cw_hw_ss05,cwh,dm,x,cw,hw,19,3,ss05,Cw - Swordfern (05),True
+cwh_dm_x_cw_hw_ss07,cwh,dm,x,cw,hw,6,0,ss07,Cw - Foamflower (07),True
+cwh_dm_x_cw_hw_ss12,cwh,dm,x,cw,hw,2,0,ss12,CwSs - Skunk cabbage (12),True
+cwh_dm_x_cw_hw_ssnonforested,cwh,dm,x,cw,hw,1,0,ssnonforested,Non-forested,True
+cwh_dm_x_cw_pw,cwh,dm,x,cw,pw,7,0,ss01,Hw - Flatmoss (01),False
+cwh_dm_x_cw_x,cwh,dm,x,cw,x,2,0,ss02,FdPl - Cladina (02),False
+cwh_dm_x_dr_act,cwh,dm,x,dr,act,38,11,ss03; ss04; ss05; ss07; ss12; ssnonforestedaquatic,Cw - Foamflower (07); Cw - Swordfern (05); CwSs - Skunk cabbage (12); Fd - Swordfern (04); FdHw - Salal (03); Non-forested: aquatic,False
+cwh_dm_x_dr_cw,cwh,dm,x,dr,cw,30,8,ss01; ss03; ss04; ss05; ss07,Cw - Foamflower (07); Cw - Swordfern (05); Fd - Swordfern (04); FdHw - Salal (03); Hw - Flatmoss (01),False
+cwh_dm_x_dr_ep,cwh,dm,x,dr,ep,9,4,ss01; ss03; ss05; ss07,Cw - Foamflower (07); Cw - Swordfern (05); FdHw - Salal (03); Hw - Flatmoss (01),False
+cwh_dm_x_dr_fdc,cwh,dm,x,dr,fdc,11,4,ss01; ss03; ss05; ss07,Cw - Foamflower (07); Cw - Swordfern (05); FdHw - Salal (03); Hw - Flatmoss (01),False
+cwh_dm_x_dr_hw,cwh,dm,x,dr,hw,15,2,ss01; ss03; ss04; ss05; ss07; ss12,Cw - Foamflower (07); Cw - Swordfern (05); CwSs - Skunk cabbage (12); Fd - Swordfern (04); FdHw - Salal (03); Hw - Flatmoss (01),False
+cwh_dm_x_dr_x,cwh,dm,x,dr,x,10,0,ss05; ss07,Cw - Foamflower (07); Cw - Swordfern (05),False
+cwh_dm_x_fdc_act,cwh,dm,x,fdc,act,2,1,ss05,Cw - Swordfern (05),False
+cwh_dm_x_fdc_cw_ss01,cwh,dm,x,fdc,cw,25,2,ss01,Hw - Flatmoss (01); HwBa - Blueberry (01),True
+cwh_dm_x_fdc_cw_ss02,cwh,dm,x,fdc,cw,1,0,ss02,FdPl - Cladina (02),True
+cwh_dm_x_fdc_cw_ss03,cwh,dm,x,fdc,cw,14,5,ss03,FdHw - Salal (03),True
+cwh_dm_x_fdc_cw_ss04,cwh,dm,x,fdc,cw,7,0,ss04,Fd - Swordfern (04),True
+cwh_dm_x_fdc_cw_ss05,cwh,dm,x,fdc,cw,13,2,ss05,Cw - Swordfern (05),True
+cwh_dm_x_fdc_cw_ss07,cwh,dm,x,fdc,cw,10,4,ss07,Cw - Foamflower (07),True
+cwh_dm_x_fdc_cw_ss12,cwh,dm,x,fdc,cw,1,0,ss12,CwSs - Skunk cabbage (12),True
+cwh_dm_x_fdc_dr,cwh,dm,x,fdc,dr,20,3,ss01; ss02; ss04; ss05; ss07,Cw - Foamflower (07); Cw - Swordfern (05); Fd - Swordfern (04); FdPl - Cladina (02); Hw - Flatmoss (01),False
+cwh_dm_x_fdc_hw_ss01,cwh,dm,x,fdc,hw,38,1,ss01,Hw - Flatmoss (01),True
+cwh_dm_x_fdc_hw_ss02,cwh,dm,x,fdc,hw,6,0,ss02,FdPl - Cladina (02),True
+cwh_dm_x_fdc_hw_ss03,cwh,dm,x,fdc,hw,17,0,ss03,FdHw - Salal (03); HwCw - Salal (03),True
+cwh_dm_x_fdc_hw_ss04,cwh,dm,x,fdc,hw,9,0,ss04,Fd - Swordfern (04),True
+cwh_dm_x_fdc_hw_ss05,cwh,dm,x,fdc,hw,35,1,ss05,Cw - Swordfern (05),True
+cwh_dm_x_fdc_hw_ss07,cwh,dm,x,fdc,hw,22,1,ss07,Cw - Foamflower (07),True
+cwh_dm_x_fdc_hw_ss12,cwh,dm,x,fdc,hw,1,0,ss12,CwSs - Skunk cabbage (12),True
+cwh_dm_x_fdc_x,cwh,dm,x,fdc,x,16,0,ss01; ss04; ss05,Cw - Swordfern (05); Fd - Swordfern (04); Hw - Flatmoss (01),False
+cwh_dm_x_hw_ba,cwh,dm,x,hw,ba,1,1,ss04,Fd - Swordfern (04),False
+cwh_dm_x_hw_cw_ss01,cwh,dm,x,hw,cw,43,15,ss01,Hw - Flatmoss (01); HwBa - Blueberry (01),True
+cwh_dm_x_hw_cw_ss02,cwh,dm,x,hw,cw,5,0,ss02,FdPl - Cladina (02),True
+cwh_dm_x_hw_cw_ss03,cwh,dm,x,hw,cw,34,9,ss03,FdHw - Salal (03); HwCw - Salal (03),True
+cwh_dm_x_hw_cw_ss04,cwh,dm,x,hw,cw,13,4,ss04,Fd - Swordfern (04),True
+cwh_dm_x_hw_cw_ss05,cwh,dm,x,hw,cw,41,3,ss05,Cw - Swordfern (05),True
+cwh_dm_x_hw_cw_ss07,cwh,dm,x,hw,cw,11,5,ss07,Cw - Foamflower (07),True
+cwh_dm_x_hw_cw_ss12,cwh,dm,x,hw,cw,9,3,ss12,CwSs - Skunk cabbage (12),True
+cwh_dm_x_hw_cw_ssnonforested,cwh,dm,x,hw,cw,1,1,ssnonforested,Non-forested,True
+cwh_dm_x_hw_cw_ssnonforestedaquatic,cwh,dm,x,hw,cw,4,0,ssnonforestedaquatic,Non-forested: aquatic,True
+cwh_dm_x_hw_dr,cwh,dm,x,hw,dr,7,3,ss01; ss03; ss05; ss12,Cw - Swordfern (05); CwSs - Skunk cabbage (12); FdHw - Salal (03); Hw - Flatmoss (01),False
+cwh_dm_x_hw_ep,cwh,dm,x,hw,ep,4,0,ss01; ss05,Cw - Swordfern (05); Hw - Flatmoss (01),False
+cwh_dm_x_hw_fdc_ss01,cwh,dm,x,hw,fdc,35,0,ss01,Hw - Flatmoss (01); HwBa - Blueberry (01),True
+cwh_dm_x_hw_fdc_ss02,cwh,dm,x,hw,fdc,6,0,ss02,FdPl - Cladina (02),True
+cwh_dm_x_hw_fdc_ss03,cwh,dm,x,hw,fdc,29,0,ss03,FdHw - Salal (03),True
+cwh_dm_x_hw_fdc_ss04,cwh,dm,x,hw,fdc,9,0,ss04,Fd - Swordfern (04),True
+cwh_dm_x_hw_fdc_ss05,cwh,dm,x,hw,fdc,25,0,ss05,Cw - Swordfern (05),True
+cwh_dm_x_hw_fdc_ss07,cwh,dm,x,hw,fdc,15,0,ss07,Cw - Foamflower (07),True
+cwh_dm_x_hw_fdc_ss12,cwh,dm,x,hw,fdc,4,0,ss12,CwSs - Skunk cabbage (12),True
+cwh_dm_x_hw_fdc_ssnonforestedrocks,cwh,dm,x,hw,fdc,1,0,ssnonforestedrocks,Non-forested: rocks,True
+cwh_dm_x_mb_dr,cwh,dm,x,mb,dr,1,0,ss07,Cw - Foamflower (07),False
+cwh_dm_x_x_x,cwh,dm,x,x,x,5,0,ss01; ss05,Cw - Swordfern (05); Hw - Flatmoss (01),False
+cwh_vm_1_cw_ba,cwh,vm,1,cw,ba,5,2,ss06; ss07; ss14,BaCw - Salmonberry (07); CwSs - Skunk cabbage (14); HwBa - Deer fern (06),False
+cwh_vm_1_cw_dr,cwh,vm,1,cw,dr,9,9,ss05; ss07,BaCw - Foamflower (05); BaCw - Salmonberry (07),False
+cwh_vm_1_cw_fdc,cwh,vm,1,cw,fdc,20,7,ss01; ss03; ss04; ss05; ss07,BaCw - Foamflower (05); BaCw - Salmonberry (07); Cw - Swordfern (05); CwHw - Swordfern (04); HwBa - Blueberry (01); HwCw - Salal (03),False
+cwh_vm_1_cw_hw_ss01,cwh,vm,1,cw,hw,14,1,ss01,HwBa - Blueberry (01),True
+cwh_vm_1_cw_hw_ss03,cwh,vm,1,cw,hw,10,0,ss03,HwCw - Salal (03),True
+cwh_vm_1_cw_hw_ss04,cwh,vm,1,cw,hw,9,0,ss04,CwHw - Swordfern (04),True
+cwh_vm_1_cw_hw_ss05,cwh,vm,1,cw,hw,35,0,ss05,BaCw - Foamflower (05); Cw - Swordfern (05),True
+cwh_vm_1_cw_hw_ss06,cwh,vm,1,cw,hw,7,1,ss06,HwBa - Deer fern (06),True
+cwh_vm_1_cw_hw_ss07,cwh,vm,1,cw,hw,38,2,ss07,BaCw - Salmonberry (07),True
+cwh_vm_1_cw_hw_ss14,cwh,vm,1,cw,hw,11,0,ss14,CwSs - Skunk cabbage (14),True
+cwh_vm_1_cw_x,cwh,vm,1,cw,x,1,0,ss14,CwSs - Skunk cabbage (14),False
+cwh_vm_1_cw_yc,cwh,vm,1,cw,yc,1,0,ss01,HwBa - Blueberry (01),False
+cwh_vm_1_dr_act,cwh,vm,1,dr,act,2,0,ss07,BaCw - Salmonberry (07),False
+cwh_vm_1_dr_cw,cwh,vm,1,dr,cw,10,4,ss01; ss05; ss06; ss07,BaCw - Foamflower (05); BaCw - Salmonberry (07); HwBa - Blueberry (01); HwBa - Deer fern (06),False
+cwh_vm_1_dr_fdc,cwh,vm,1,dr,fdc,1,0,ss05,BaCw - Foamflower (05),False
+cwh_vm_1_dr_hw,cwh,vm,1,dr,hw,13,2,ss04; ss05; ss07; ssnonforestedaquatic,BaCw - Foamflower (05); BaCw - Salmonberry (07); CwHw - Swordfern (04); Non-forested: aquatic,False
+cwh_vm_1_fdc_act,cwh,vm,1,fdc,act,2,0,ss05,BaCw - Foamflower (05),False
+cwh_vm_1_fdc_cw,cwh,vm,1,fdc,cw,13,1,ss01; ss03; ss04; ss05; ss07,BaCw - Foamflower (05); BaCw - Salmonberry (07); CwHw - Swordfern (04); HwBa - Blueberry (01); HwCw - Salal (03),False
+cwh_vm_1_fdc_x,cwh,vm,1,fdc,x,14,1,ss01; ss03; ss04; ss05; ss06; ss07; ss14,BaCw - Foamflower (05); BaCw - Salmonberry (07); CwHw - Swordfern (04); CwSs - Skunk cabbage (14); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03),False
+cwh_vm_1_hw_ba,cwh,vm,1,hw,ba,3,3,ss01; ss04; ss05,BaCw - Foamflower (05); CwHw - Swordfern (04); HwBa - Blueberry (01),False
+cwh_vm_1_hw_cw_ss01,cwh,vm,1,hw,cw,67,4,ss01,Hw - Flatmoss (01); HwBa - Blueberry (01),True
+cwh_vm_1_hw_cw_ss02,cwh,vm,1,hw,cw,16,1,ss02,FdPl - Cladina (02),True
+cwh_vm_1_hw_cw_ss03,cwh,vm,1,hw,cw,26,7,ss03,HwCw - Salal (03),True
+cwh_vm_1_hw_cw_ss04,cwh,vm,1,hw,cw,27,1,ss04,CwHw - Swordfern (04),True
+cwh_vm_1_hw_cw_ss05,cwh,vm,1,hw,cw,44,2,ss05,BaCw - Foamflower (05); Cw - Swordfern (05),True
+cwh_vm_1_hw_cw_ss06,cwh,vm,1,hw,cw,13,0,ss06,HwBa - Deer fern (06),True
+cwh_vm_1_hw_cw_ss07,cwh,vm,1,hw,cw,21,2,ss07,BaCw - Salmonberry (07),True
+cwh_vm_1_hw_cw_ss14,cwh,vm,1,hw,cw,9,0,ss14,CwSs - Skunk cabbage (14),True
+cwh_vm_1_hw_cw_ssnonforestedaquatic,cwh,vm,1,hw,cw,2,0,ssnonforestedaquatic,Non-forested: aquatic,True
+cwh_vm_1_hw_fdc,cwh,vm,1,hw,fdc,37,0,ss01; ss02; ss03; ss04; ss05; ss06; ss07; ss14,BaCw - Foamflower (05); BaCw - Salmonberry (07); Cw - Swordfern (05); CwHw - Swordfern (04); CwSs - Skunk cabbage (14); FdPl - Cladina (02); Hw - Flatmoss (01); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03); HwPl - Cladina (02),False
+cwh_vm_1_x_x,cwh,vm,1,x,x,2,0,ss04; ss07,BaCw - Salmonberry (07); CwHw - Swordfern (04),False
+cwh_vm_2_ba_cw,cwh,vm,2,ba,cw,2,1,ss03; ss04,CwHw - Swordfern (04); HwCw - Salal (03),False
+cwh_vm_2_cw_act,cwh,vm,2,cw,act,2,0,ss01,HwBa - Blueberry (01),False
+cwh_vm_2_cw_ba,cwh,vm,2,cw,ba,3,0,ss03,HwCw - Salal (03),False
+cwh_vm_2_cw_fdc,cwh,vm,2,cw,fdc,27,13,ss01; ss02; ss03; ss04; ss05; ss06,Cw - Swordfern (05); CwHw - Swordfern (04); FdPl - Cladina (02); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03),False
+cwh_vm_2_cw_hw,cwh,vm,2,cw,hw,39,7,ss01; ss03; ss04; ss05; ss06; ss07; ssnonforestedaquatic,BaCw - Foamflower (05); BaCw - Salmonberry (07); Cw - Swordfern (05); CwHw - Swordfern (04); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03); Non-forested: aquatic,False
+cwh_vm_2_cw_x,cwh,vm,2,cw,x,2,0,ss06,HwBa - Deer fern (06),False
+cwh_vm_2_dr_act,cwh,vm,2,dr,act,2,2,ss05,BaCw - Foamflower (05),False
+cwh_vm_2_dr_hw,cwh,vm,2,dr,hw,9,0,ss01; ss03; ss04; ss05; ssnonforested,BaCw - Foamflower (05); CwHw - Swordfern (04); HwBa - Blueberry (01); HwCw - Salal (03); Non-forested,False
+cwh_vm_2_fdc_cw,cwh,vm,2,fdc,cw,25,1,ss01; ss03; ss05; ss06; ssnonforestedaquatic,BaCw - Foamflower (05); Cw - Swordfern (05); FdHw - Salal (03); Hw - Flatmoss (01); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03); Non-forested: aquatic,False
+cwh_vm_2_fdc_hw,cwh,vm,2,fdc,hw,30,2,ss01; ss03; ss04; ss05; ss06,BaCw - Foamflower (05); CwHw - Swordfern (04); FdHw - Salal (03); Hw - Flatmoss (01); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03),False
+cwh_vm_2_fdc_x,cwh,vm,2,fdc,x,2,0,ss01,HwBa - Blueberry (01),False
+cwh_vm_2_hm_ba,cwh,vm,2,hm,ba,1,1,ss02,FdPl - Cladina (02),False
+cwh_vm_2_hw_ba,cwh,vm,2,hw,ba,29,10,ss01; ss02; ss03; ss04; ss06; ss07,BaCw - Salmonberry (07); CwHw - Swordfern (04); FdPl - Cladina (02); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03),False
+cwh_vm_2_hw_cw_ss01,cwh,vm,2,hw,cw,99,9,ss01,HwBa - Blueberry (01),True
+cwh_vm_2_hw_cw_ss02,cwh,vm,2,hw,cw,12,2,ss02,FdPl - Cladina (02); HwPl - Cladina (02),True
+cwh_vm_2_hw_cw_ss03,cwh,vm,2,hw,cw,44,10,ss03,FdHw - Salal (03); HwCw - Salal (03),True
+cwh_vm_2_hw_cw_ss04,cwh,vm,2,hw,cw,15,4,ss04,CwHw - Swordfern (04),True
+cwh_vm_2_hw_cw_ss05,cwh,vm,2,hw,cw,19,1,ss05,BaCw - Foamflower (05); Cw - Swordfern (05),True
+cwh_vm_2_hw_cw_ss06,cwh,vm,2,hw,cw,28,8,ss06,HwBa - Deer fern (06),True
+cwh_vm_2_hw_cw_ss07,cwh,vm,2,hw,cw,11,2,ss07,BaCw - Salmonberry (07),True
+cwh_vm_2_hw_cw_ssnonforestedaquatic,cwh,vm,2,hw,cw,7,1,ssnonforestedaquatic,Non-forested: aquatic,True
+cwh_vm_2_hw_dr,cwh,vm,2,hw,dr,5,5,ss01; ss07,BaCw - Salmonberry (07); HwBa - Blueberry (01),False
+cwh_vm_2_hw_fdc_ss01,cwh,vm,2,hw,fdc,48,0,ss01,Hw - Flatmoss (01); HwBa - Blueberry (01),True
+cwh_vm_2_hw_fdc_ss03,cwh,vm,2,hw,fdc,19,0,ss03,FdHw - Salal (03); HwCw - Salal (03),True
+cwh_vm_2_hw_fdc_ss04,cwh,vm,2,hw,fdc,4,0,ss04,CwHw - Swordfern (04),True
+cwh_vm_2_hw_fdc_ss05,cwh,vm,2,hw,fdc,14,0,ss05,Cw - Swordfern (05),True
+cwh_vm_2_hw_fdc_ss06,cwh,vm,2,hw,fdc,4,0,ss06,HwBa - Deer fern (06),True
+cwh_vm_2_hw_fdc_ss07,cwh,vm,2,hw,fdc,2,0,ss07,BaCw - Salmonberry (07),True
+cwh_vm_2_hw_fdc_ssnonforested,cwh,vm,2,hw,fdc,2,0,ssnonforested,Non-forested,True
+cwh_vm_2_hw_x,cwh,vm,2,hw,x,1,0,ss05,Cw - Swordfern (05),False
+cwh_vm_2_x_x,cwh,vm,2,x,x,1,0,ss05,Cw - Swordfern (05),False
