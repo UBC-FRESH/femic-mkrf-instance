@@ -251,14 +251,15 @@ Important boundary:
 
 Current roadmap phase:
 
-- The Anna/Sean CT follow-up issue set is tracked under parent `#15`, with
-  child issues `#16`-`#19`. The corresponding parent FEMIC roadmap phase is
-  Phase 69. This phase broadens CT eligibility from strict
-  `Cw > 15%` to `Cw + Fd >= 50%`, updates CT retention/removal priority for
-  Fd-leading stands, recalibrates the planted Hw ingrowth landscape default
-  from `50%` to `30%`, and retains the full runtime QA gate: package
-  regeneration, Matrix Builder, Patchworks smoke, saved-stage sanity audit,
-  and targeted pytest.
+- The MKRF stand-stratification revision issue set is tracked under parent
+  `#25`, with minor-strata aggregation in `#26` and site-series splitting in
+  `#27`. The corresponding parent FEMIC roadmap phase is Phase 73. The
+  current site-series pass splits larger canonical AU families by normalized
+  `SITE_SERIES` code where the two-decimal relative abundance is at least
+  `0.04`, capturing the intended top 9 base AU families through
+  `cwh_dm_x_cw_hw`. The full runtime QA gate remains part of this lane:
+  managed/runtime package regeneration, Matrix Builder, Patchworks smoke,
+  saved-stage sanity audit, and targeted pytest.
 
 ## DataLad dataset policy
 

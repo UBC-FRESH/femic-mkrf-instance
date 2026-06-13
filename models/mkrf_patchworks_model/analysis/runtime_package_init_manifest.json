@@ -1,11 +1,11 @@
 {
   "counts": {
     "bad_curve_flagged_au_count": 8,
-    "first_growth_curve_au_count": 16,
-    "first_growth_missing_au_count": 11,
-    "managed_curve_au_count": 27,
-    "managed_only_runtime_au_count": 4,
-    "selected_au_count": 27
+    "first_growth_curve_au_count": 53,
+    "first_growth_missing_au_count": 21,
+    "managed_curve_au_count": 74,
+    "managed_only_runtime_au_count": 12,
+    "selected_au_count": 74
   },
   "curve_policy": {
     "first_growth_borrowing_allowed": false,
@@ -18,15 +18,15 @@
     "insufficient_support_requires_first_growth_curve": false
   },
   "managed_run_summary": {
-    "curve_au_count": 27,
-    "included_au_count": 27,
+    "curve_au_count": 74,
+    "included_au_count": 74,
     "status": "completed"
   },
   "package_root": "F:\\projects\\femic\\external\\femic-mkrf-instance\\models\\mkrf_patchworks_model",
   "runtime_au_normalization": {
-    "remapped_forest_cover_id_count": 82,
-    "remapped_source_au_count": 34,
-    "selected_passthrough_count": 27
+    "remapped_forest_cover_id_count": 80,
+    "remapped_source_au_count": 44,
+    "selected_passthrough_count": 74
   },
   "runtime_generation_status": "initialized_only",
   "schema_version": 1,

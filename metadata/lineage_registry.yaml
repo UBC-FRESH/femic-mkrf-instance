@@ -288,4 +288,9 @@ artifacts:
     class: "reference_metadata"
     published: true
     notes: "Instance-local P57.6-P57.8 note documenting generated track-table evidence, launch proof, and the accepted minimal-runnable merch-tail caveat."
+  - artifact_id: "site_series_split_audit"
+    path: "data/model_input_bundle/site_series_split_audit.csv"
+    class: "generated_audit"
+    published: true
+    notes: "Issue #27 audit of provisional MKRF site-series splitting: base AU rank, raw and rounded relative abundance, split membership, site-series area shares, and cumulative area coverage."
 

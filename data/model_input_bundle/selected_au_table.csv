@@ -1,28 +1,75 @@
-au_id,bec_zone,bec_subzone,bec_variant,leading_species_1,leading_species_2,stand_count,tie_break_record_count,covered_area_ha,covered_area_share,cumulative_covered_area_share,selected_rank,target_coverage
-cwh_vm_1_hw_cw,cwh,vm,1,hw,cw,225,17,746.215514869601,0.1551109412402795,0.1551109412402795,1,0.95
-cwh_vm_2_hw_cw,cwh,vm,2,hw,cw,235,37,650.9276842211714,0.13530408275757286,0.29041502399785235,2,0.95
-cwh_dm_x_hw_cw,cwh,dm,x,hw,cw,161,40,392.86579151444016,0.0816624440106434,0.3720774680084957,3,0.95
-cwh_dm_x_fdc_hw,cwh,dm,x,fdc,hw,128,3,353.64691433719105,0.07351027237640304,0.4455877403848988,4,0.95
-cwh_vm_1_cw_hw,cwh,vm,1,cw,hw,124,4,314.4749493334842,0.06536785206902304,0.5109555924539219,5,0.95
-cwh_dm_x_hw_fdc,cwh,dm,x,hw,fdc,124,0,289.57128339545824,0.060191289819904285,0.5711468822738262,6,0.95
-cwh_vm_2_hw_fdc,cwh,vm,2,hw,fdc,93,0,265.21856082094155,0.05512924856637075,0.626276130840197,7,0.95
-cwh_dm_x_fdc_cw,cwh,dm,x,fdc,cw,71,13,213.60847664411727,0.04440139773154032,0.6706775285717372,8,0.95
-cwh_dm_x_cw_hw,cwh,dm,x,cw,hw,57,3,181.7198772366682,0.037772923021003116,0.7084504515927403,9,0.95
-cwh_vm_2_hw_ba,cwh,vm,2,hw,ba,29,10,145.1577843037702,0.030172999760861036,0.7386234513536014,10,0.95
-cwh_vm_1_hw_fdc,cwh,vm,1,hw,fdc,37,0,112.71775703381552,0.0234299033450993,0.7620533546987007,11,0.95
-cwh_vm_2_fdc_cw,cwh,vm,2,fdc,cw,25,1,94.25025961407141,0.01959118537415292,0.7816445400728537,12,0.95
-cwh_vm_1_cw_fdc,cwh,vm,1,cw,fdc,20,7,93.12984876206522,0.019358292894209147,0.8010028329670628,13,0.95
-cwh_dm_x_cw_fdc,cwh,dm,x,cw,fdc,43,11,93.12538679996926,0.019357365415315058,0.8203601983823778,14,0.95
-cwh_vm_2_cw_hw,cwh,vm,2,cw,hw,39,7,89.08956732711877,0.018518466002698207,0.8388786643850761,15,0.95
-cwh_vm_2_fdc_hw,cwh,vm,2,fdc,hw,30,2,87.3632691880809,0.018159631692942133,0.8570382960780182,16,0.95
-cwh_dm_x_dr_cw,cwh,dm,x,dr,cw,30,8,70.31391973400052,0.014615694869517899,0.871653990947536,17,0.95
-cwh_dm_x_dr_act,cwh,dm,x,dr,act,38,11,62.65627086522274,0.013023949455418266,0.8846779404029543,18,0.95
-cwh_vm_1_fdc_cw,cwh,vm,1,fdc,cw,13,1,57.28804656538165,0.011908091761032484,0.8965860321639868,19,0.95
-cwh_vm_2_cw_fdc,cwh,vm,2,cw,fdc,27,13,51.88789338265702,0.010785597218473315,0.9073716293824601,20,0.95
-cwh_dm_x_fdc_dr,cwh,dm,x,fdc,dr,20,3,43.72931302605964,0.009089726450472178,0.9164613558329322,21,0.95
-cwh_vm_1_fdc_x,cwh,vm,1,fdc,x,14,1,40.76618815701736,0.008473801053196103,0.9249351568861283,22,0.95
-cwh_vm_1_hw_ba,cwh,vm,1,hw,ba,3,3,38.25420261922032,0.007951651039714066,0.9328868079258423,23,0.95
-cwh_dm_x_fdc_x,cwh,dm,x,fdc,x,16,0,28.237432258499506,0.005869530462107681,0.93875633838795,24,0.95
-cwh_vm_1_dr_hw,cwh,vm,1,dr,hw,13,2,25.722510047681997,0.005346770021601219,0.9441031084095513,25,0.95
-cwh_dm_x_hw_ba,cwh,dm,x,hw,ba,1,1,20.41834703363092,0.004244228327939019,0.9483473367374903,26,0.95
-cwh_vm_2_ba_cw,cwh,vm,2,ba,cw,2,1,19.564678538130323,0.004066781838009887,0.9524141185755002,27,0.95
+au_id,bec_zone,bec_subzone,bec_variant,leading_species_1,leading_species_2,stand_count,tie_break_record_count,site_series_id,site_series_label,site_series_split_applied,covered_area_ha,covered_area_share,cumulative_covered_area_share,selected_rank,target_coverage
+cwh_vm_2_hw_cw_ss01,cwh,vm,2,hw,cw,99,9,ss01,HwBa - Blueberry (01),True,316.46055053412863,0.06578058601119202,0.06578058601119202,1,0.95
+cwh_vm_1_hw_cw_ss01,cwh,vm,1,hw,cw,67,4,ss01,Hw - Flatmoss (01); HwBa - Blueberry (01),True,203.41326671280905,0.042282186086813514,0.10806277209800554,2,0.95
+cwh_vm_2_hw_ba,cwh,vm,2,hw,ba,29,10,ss01; ss02; ss03; ss04; ss06; ss07,BaCw - Salmonberry (07); CwHw - Swordfern (04); FdPl - Cladina (02); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03),False,145.1577843037702,0.030172999760861036,0.13823577185886657,3,0.95
+cwh_vm_2_hw_fdc_ss01,cwh,vm,2,hw,fdc,48,0,ss01,Hw - Flatmoss (01); HwBa - Blueberry (01),True,143.44108711992547,0.02981616113890177,0.16805193299776833,4,0.95
+cwh_vm_1_hw_cw_ss05,cwh,vm,1,hw,cw,44,2,ss05,BaCw - Foamflower (05); Cw - Swordfern (05),True,141.90220012990872,0.029496282759630024,0.19754821575739834,5,0.95
+cwh_vm_2_hw_cw_ss03,cwh,vm,2,hw,cw,44,10,ss03,FdHw - Salal (03); HwCw - Salal (03),True,122.92063816306313,0.025550709551596943,0.22309892530899528,6,0.95
+cwh_dm_x_hw_cw_ss01,cwh,dm,x,hw,cw,43,15,ss01,Hw - Flatmoss (01); HwBa - Blueberry (01),True,121.90877186452248,0.025340379518451778,0.24843930482744706,7,0.95
+cwh_vm_1_hw_fdc,cwh,vm,1,hw,fdc,37,0,ss01; ss02; ss03; ss04; ss05; ss06; ss07; ss14,BaCw - Foamflower (05); BaCw - Salmonberry (07); Cw - Swordfern (05); CwHw - Swordfern (04); CwSs - Skunk cabbage (14); FdPl - Cladina (02); Hw - Flatmoss (01); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03); HwPl - Cladina (02),False,112.71775703381552,0.0234299033450993,0.27186920817254634,8,0.95
+cwh_dm_x_fdc_hw_ss01,cwh,dm,x,fdc,hw,38,1,ss01,Hw - Flatmoss (01),True,111.78905902527835,0.02323686096074557,0.2951060691332919,9,0.95
+cwh_vm_1_hw_cw_ss03,cwh,vm,1,hw,cw,26,7,ss03,HwCw - Salal (03),True,111.7395268387938,0.023226565028921304,0.3183326341622132,10,0.95
+cwh_vm_2_fdc_cw,cwh,vm,2,fdc,cw,25,1,ss01; ss03; ss05; ss06; ssnonforestedaquatic,BaCw - Foamflower (05); Cw - Swordfern (05); FdHw - Salal (03); Hw - Flatmoss (01); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03); Non-forested: aquatic,False,94.25025961407141,0.01959118537415292,0.33792381953636613,11,0.95
+cwh_vm_1_hw_cw_ss04,cwh,vm,1,hw,cw,27,1,ss04,CwHw - Swordfern (04),True,93.1853814205132,0.01936983610491677,0.3572936556412829,12,0.95
+cwh_vm_1_cw_fdc,cwh,vm,1,cw,fdc,20,7,ss01; ss03; ss04; ss05; ss07,BaCw - Foamflower (05); BaCw - Salmonberry (07); Cw - Swordfern (05); CwHw - Swordfern (04); HwBa - Blueberry (01); HwCw - Salal (03),False,93.12984876206522,0.019358292894209147,0.37665194853549205,13,0.95
+cwh_dm_x_cw_fdc,cwh,dm,x,cw,fdc,43,11,ss01; ss03; ss04; ss05; ss07,Cw - Foamflower (07); Cw - Swordfern (05); Fd - Swordfern (04); FdHw - Salal (03); Hw - Flatmoss (01),False,93.12538679996926,0.019357365415315058,0.39600931395080713,14,0.95
+cwh_vm_2_cw_hw,cwh,vm,2,cw,hw,39,7,ss01; ss03; ss04; ss05; ss06; ss07; ssnonforestedaquatic,BaCw - Foamflower (05); BaCw - Salmonberry (07); Cw - Swordfern (05); CwHw - Swordfern (04); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03); Non-forested: aquatic,False,89.08956732711877,0.018518466002698207,0.4145277799535053,15,0.95
+cwh_dm_x_hw_cw_ss03,cwh,dm,x,hw,cw,34,9,ss03,FdHw - Salal (03); HwCw - Salal (03),True,88.96855772385379,0.01849331252747889,0.4330210924809842,16,0.95
+cwh_vm_2_fdc_hw,cwh,vm,2,fdc,hw,30,2,ss01; ss03; ss04; ss05; ss06,BaCw - Foamflower (05); CwHw - Swordfern (04); FdHw - Salal (03); Hw - Flatmoss (01); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03),False,87.3632691880809,0.018159631692942133,0.45118072417392635,17,0.95
+cwh_dm_x_hw_fdc_ss03,cwh,dm,x,hw,fdc,29,0,ss03,FdHw - Salal (03),True,80.83973965891299,0.01680362825249529,0.46798435242642167,18,0.95
+cwh_dm_x_hw_fdc_ss01,cwh,dm,x,hw,fdc,35,0,ss01,Hw - Flatmoss (01); HwBa - Blueberry (01),True,78.67997514339972,0.01635469212052923,0.48433904454695087,19,0.95
+cwh_vm_1_cw_hw_ss05,cwh,vm,1,cw,hw,35,0,ss05,BaCw - Foamflower (05); Cw - Swordfern (05),True,78.66064162272835,0.016350673387965958,0.5006897179349168,20,0.95
+cwh_dm_x_fdc_cw_ss01,cwh,dm,x,fdc,cw,25,2,ss01,Hw - Flatmoss (01); HwBa - Blueberry (01),True,76.72452555018573,0.015948225595902834,0.5166379435308196,21,0.95
+cwh_dm_x_hw_cw_ss05,cwh,dm,x,hw,cw,41,3,ss05,Cw - Swordfern (05),True,74.98280648420963,0.01558618583886709,0.5322241293696867,22,0.95
+cwh_vm_1_cw_hw_ss07,cwh,vm,1,cw,hw,38,2,ss07,BaCw - Salmonberry (07),True,73.846332025543,0.015349954322010834,0.5475740836916975,23,0.95
+cwh_dm_x_dr_cw,cwh,dm,x,dr,cw,30,8,ss01; ss03; ss04; ss05; ss07,Cw - Foamflower (07); Cw - Swordfern (05); Fd - Swordfern (04); FdHw - Salal (03); Hw - Flatmoss (01),False,70.31391973400052,0.014615694869517899,0.5621897785612153,24,0.95
+cwh_dm_x_fdc_hw_ss05,cwh,dm,x,fdc,hw,35,1,ss05,Cw - Swordfern (05),True,70.08956378859658,0.014569059465708934,0.5767588380269243,25,0.95
+cwh_vm_2_hw_cw_ss04,cwh,vm,2,hw,cw,15,4,ss04,CwHw - Swordfern (04),True,66.69877286591296,0.013864237921415045,0.5906230759483393,26,0.95
+cwh_vm_1_hw_cw_ss02,cwh,vm,1,hw,cw,16,1,ss02,FdPl - Cladina (02),True,66.11630992820625,0.013743165157977456,0.6043662411063168,27,0.95
+cwh_vm_1_hw_cw_ss06,cwh,vm,1,hw,cw,13,0,ss06,HwBa - Deer fern (06),True,65.86181012036822,0.01369026394652767,0.6180565050528444,28,0.95
+cwh_dm_x_hw_fdc_ss05,cwh,dm,x,hw,fdc,25,0,ss05,Cw - Swordfern (05),True,65.44537785593452,0.013603702893839803,0.6316602079466842,29,0.95
+cwh_dm_x_fdc_hw_ss04,cwh,dm,x,fdc,hw,9,0,ss04,Fd - Swordfern (04),True,65.32119563948616,0.013577889948256682,0.6452380978949409,30,0.95
+cwh_dm_x_dr_act,cwh,dm,x,dr,act,38,11,ss03; ss04; ss05; ss07; ss12; ssnonforestedaquatic,Cw - Foamflower (07); Cw - Swordfern (05); CwSs - Skunk cabbage (12); Fd - Swordfern (04); FdHw - Salal (03); Non-forested: aquatic,False,62.65627086522274,0.013023949455418266,0.6582620473503592,31,0.95
+cwh_dm_x_cw_hw_ss05,cwh,dm,x,cw,hw,19,3,ss05,Cw - Swordfern (05),True,62.340258921620226,0.01295826211839751,0.6712203094687567,32,0.95
+cwh_vm_2_hw_cw_ss06,cwh,vm,2,hw,cw,28,8,ss06,HwBa - Deer fern (06),True,58.731834583842556,0.012208202538726572,0.6834285120074832,33,0.95
+cwh_dm_x_fdc_hw_ss03,cwh,dm,x,fdc,hw,17,0,ss03,FdHw - Salal (03); HwCw - Salal (03),True,57.34545108046289,0.01192002406234258,0.6953485360698258,34,0.95
+cwh_vm_1_fdc_cw,cwh,vm,1,fdc,cw,13,1,ss01; ss03; ss04; ss05; ss07,BaCw - Foamflower (05); BaCw - Salmonberry (07); CwHw - Swordfern (04); HwBa - Blueberry (01); HwCw - Salal (03),False,57.28804656538165,0.011908091761032484,0.7072566278308583,35,0.95
+cwh_dm_x_fdc_cw_ss05,cwh,dm,x,fdc,cw,13,2,ss05,Cw - Swordfern (05),True,54.81417050261177,0.01139386331501165,0.71865049114587,36,0.95
+cwh_dm_x_cw_hw_ss04,cwh,dm,x,cw,hw,6,0,ss04,Fd - Swordfern (04),True,52.038997388030005,0.010817006220338782,0.7294674973662088,37,0.95
+cwh_vm_2_hw_fdc_ss03,cwh,vm,2,hw,fdc,19,0,ss03,FdHw - Salal (03); HwCw - Salal (03),True,51.97547022700088,0.010803801244637798,0.7402712986108465,38,0.95
+cwh_vm_2_cw_fdc,cwh,vm,2,cw,fdc,27,13,ss01; ss02; ss03; ss04; ss05; ss06,Cw - Swordfern (05); CwHw - Swordfern (04); FdPl - Cladina (02); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03),False,51.88789338265702,0.010785597218473315,0.7510568958293198,39,0.95
+cwh_dm_x_hw_cw_ss04,cwh,dm,x,hw,cw,13,4,ss04,Fd - Swordfern (04),True,51.15369948897544,0.010632985133046873,0.7616898809623667,40,0.95
+cwh_vm_1_cw_hw_ss01,cwh,vm,1,cw,hw,14,1,ss01,HwBa - Blueberry (01),True,45.11125329486901,0.00937698134073042,0.7710668623030971,41,0.95
+cwh_dm_x_fdc_dr,cwh,dm,x,fdc,dr,20,3,ss01; ss02; ss04; ss05; ss07,Cw - Foamflower (07); Cw - Swordfern (05); Fd - Swordfern (04); FdPl - Cladina (02); Hw - Flatmoss (01),False,43.72931302605964,0.009089726450472178,0.7801565887535692,42,0.95
+cwh_vm_1_fdc_x,cwh,vm,1,fdc,x,14,1,ss01; ss03; ss04; ss05; ss06; ss07; ss14,BaCw - Foamflower (05); BaCw - Salmonberry (07); CwHw - Swordfern (04); CwSs - Skunk cabbage (14); HwBa - Blueberry (01); HwBa - Deer fern (06); HwCw - Salal (03),False,40.76618815701736,0.008473801053196103,0.7886303898067653,43,0.95
+cwh_vm_1_hw_ba,cwh,vm,1,hw,ba,3,3,ss01; ss04; ss05,BaCw - Foamflower (05); CwHw - Swordfern (04); HwBa - Blueberry (01),False,38.25420261922032,0.007951651039714066,0.7965820408464793,44,0.95
+cwh_vm_2_hw_cw_ss02,cwh,vm,2,hw,cw,12,2,ss02,FdPl - Cladina (02); HwPl - Cladina (02),True,38.21710380164671,0.007943939551011301,0.8045259803974906,45,0.95
+cwh_dm_x_hw_fdc_ss04,cwh,dm,x,hw,fdc,9,0,ss04,Fd - Swordfern (04),True,37.918227274941934,0.00788181404109088,0.8124077944385815,46,0.95
+cwh_vm_1_hw_cw_ss07,cwh,vm,1,hw,cw,21,2,ss07,BaCw - Salmonberry (07),True,37.0372212476662,0.00769868507713068,0.8201064795157121,47,0.95
+cwh_vm_2_hw_fdc_ss05,cwh,vm,2,hw,fdc,14,0,ss05,Cw - Swordfern (05),True,36.19264078831974,0.007523127657870549,0.8276296071735827,48,0.95
+cwh_dm_x_cw_hw_ss01,cwh,dm,x,cw,hw,16,0,ss01,Hw - Flatmoss (01),True,35.44036627174537,0.0073667572715521695,0.8349963644451348,49,0.95
+cwh_dm_x_fdc_hw_ss07,cwh,dm,x,fdc,hw,22,1,ss07,Cw - Foamflower (07),True,34.35831998659707,0.007141839383340974,0.8421382038284758,50,0.95
+cwh_dm_x_fdc_cw_ss07,cwh,dm,x,fdc,cw,10,4,ss07,Cw - Foamflower (07),True,31.002816925585936,0.006444352896184476,0.8485825567246603,51,0.95
+cwh_vm_1_cw_hw_ss03,cwh,vm,1,cw,hw,10,0,ss03,HwCw - Salal (03),True,30.79894406983219,0.006401975178327949,0.8549845319029883,52,0.95
+cwh_vm_1_cw_hw_ss14,cwh,vm,1,cw,hw,11,0,ss14,CwSs - Skunk cabbage (14),True,30.538708585004464,0.006347881729195089,0.8613324136321834,53,0.95
+cwh_vm_1_cw_hw_ss04,cwh,vm,1,cw,hw,9,0,ss04,CwHw - Swordfern (04),True,28.972062299972244,0.0060222332067244744,0.8673546468389078,54,0.95
+cwh_vm_2_hw_cw_ss05,cwh,vm,2,hw,cw,19,1,ss05,BaCw - Foamflower (05); Cw - Swordfern (05),True,28.48025870758856,0.005920005208780323,0.8732746520476882,55,0.95
+cwh_dm_x_fdc_x,cwh,dm,x,fdc,x,16,0,ss01; ss04; ss05,Cw - Swordfern (05); Fd - Swordfern (04); Hw - Flatmoss (01),False,28.237432258499506,0.005869530462107681,0.8791441825097959,56,0.95
+cwh_dm_x_fdc_cw_ss03,cwh,dm,x,fdc,cw,14,5,ss03,FdHw - Salal (03),True,27.74672760972544,0.005767530894388123,0.884911713404184,57,0.95
+cwh_vm_1_cw_hw_ss06,cwh,vm,1,cw,hw,7,1,ss06,HwBa - Deer fern (06),True,26.547007435534915,0.005518152904068312,0.8904298663082523,58,0.95
+cwh_vm_1_hw_cw_ss14,cwh,vm,1,hw,cw,9,0,ss14,CwSs - Skunk cabbage (14),True,26.37169884040299,0.005481712652349376,0.8959115789606017,59,0.95
+cwh_vm_1_dr_hw,cwh,vm,1,dr,hw,13,2,ss04; ss05; ss07; ssnonforestedaquatic,BaCw - Foamflower (05); BaCw - Salmonberry (07); CwHw - Swordfern (04); Non-forested: aquatic,False,25.722510047681997,0.005346770021601219,0.9012583489822029,60,0.95
+cwh_vm_2_hw_fdc_ss04,cwh,vm,2,hw,fdc,4,0,ss04,CwHw - Swordfern (04),True,22.68570414871754,0.004715529030270822,0.9059738780124738,61,0.95
+cwh_dm_x_hw_ba,cwh,dm,x,hw,ba,1,1,ss04,Fd - Swordfern (04),False,20.41834703363092,0.004244228327939019,0.9102181063404128,62,0.95
+cwh_dm_x_hw_cw_ss12,cwh,dm,x,hw,cw,9,3,ss12,CwSs - Skunk cabbage (12),True,20.18695962358121,0.004196131339537172,0.91441423767995,63,0.95
+cwh_dm_x_fdc_cw_ss04,cwh,dm,x,fdc,cw,7,0,ss04,Fd - Swordfern (04),True,19.87322101418737,0.004130916545638122,0.9185451542255881,64,0.95
+cwh_vm_2_ba_cw,cwh,vm,2,ba,cw,2,1,ss03; ss04,CwHw - Swordfern (04); HwCw - Salal (03),False,19.564678538130323,0.004066781838009887,0.922611936063598,65,0.95
+cwh_dm_x_hw_cw_ss07,cwh,dm,x,hw,cw,11,5,ss07,Cw - Foamflower (07),True,18.31970626056406,0.003807997588763739,0.9264199336523617,66,0.95
+cwh_dm_x_dr_fdc,cwh,dm,x,dr,fdc,11,4,ss01; ss03; ss05; ss07,Cw - Foamflower (07); Cw - Swordfern (05); FdHw - Salal (03); Hw - Flatmoss (01),False,16.536061842852295,0.003437243082918885,0.9298571767352807,67,0.95
+cwh_vm_2_hw_cw_ss07,cwh,vm,2,hw,cw,11,2,ss07,BaCw - Salmonberry (07),True,16.02098789787494,0.003330178028893919,0.9331873547641746,68,0.95
+cwh_vm_1_x_x,cwh,vm,1,x,x,2,0,ss04; ss07,BaCw - Salmonberry (07); CwHw - Swordfern (04),False,15.780350070618537,0.0032801582167351234,0.9364675129809097,69,0.95
+cwh_vm_1_dr_cw,cwh,vm,1,dr,cw,10,4,ss01; ss05; ss06; ss07,BaCw - Foamflower (05); BaCw - Salmonberry (07); HwBa - Blueberry (01); HwBa - Deer fern (06),False,15.630131671792427,0.003248933300113553,0.9397164462810232,70,0.95
+cwh_dm_x_dr_hw,cwh,dm,x,dr,hw,15,2,ss01; ss03; ss04; ss05; ss07; ss12,Cw - Foamflower (07); Cw - Swordfern (05); CwSs - Skunk cabbage (12); Fd - Swordfern (04); FdHw - Salal (03); Hw - Flatmoss (01),False,14.549786252348856,0.0030243689597382393,0.9427408152407615,71,0.95
+cwh_vm_1_cw_dr,cwh,vm,1,cw,dr,9,9,ss05; ss07,BaCw - Foamflower (05); BaCw - Salmonberry (07),False,14.12425264509792,0.0029359160704122943,0.9456767313111738,72,0.95
+cwh_vm_1_cw_ba,cwh,vm,1,cw,ba,5,2,ss06; ss07; ss14,BaCw - Salmonberry (07); CwSs - Skunk cabbage (14); HwBa - Deer fern (06),False,13.664277391005632,0.002840304021094398,0.9485170353322682,73,0.95
+cwh_dm_x_fdc_hw_ss02,cwh,dm,x,fdc,hw,6,0,ss02,FdPl - Cladina (02),True,13.049522372110596,0.0027125189138259465,0.9512295542460941,74,0.95
