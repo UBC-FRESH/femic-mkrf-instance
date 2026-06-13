@@ -1,10 +1,10 @@
 {
   "counts": {
     "bad_curve_flagged_au_count": 8,
-    "first_growth_curve_au_count": 8,
-    "first_growth_missing_au_count": 66,
+    "first_growth_curve_au_count": 53,
+    "first_growth_missing_au_count": 21,
     "managed_curve_au_count": 74,
-    "managed_only_runtime_au_count": 7,
+    "managed_only_runtime_au_count": 12,
     "selected_au_count": 74
   },
   "curve_policy": {
