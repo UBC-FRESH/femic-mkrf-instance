@@ -14,6 +14,24 @@ companion to that docs surface, not as a replacement for it.
 1. `femic instance validate-spec --spec config/rebuild.spec.yaml`
 2. `femic instance rebuild --spec config/rebuild.spec.yaml --dry-run --run-id mkrf_dryrun`
 
+## FreshForge planning checks
+
+The instance-owned FreshForge graph is:
+
+- `workflows/freshforge/mkrf_model_build_workflow.yaml`
+
+Use it to validate, inspect, and plan the rebuild graph before execution:
+
+1. `freshforge providers`
+2. `freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml`
+3. `freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml`
+4. `freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml`
+
+FreshForge is non-executing in this phase. It does not run FEMIC commands,
+launch BTC, launch Patchworks, materialize DataLad content, or inspect declared
+artifact files. Execution remains governed by `config/rebuild.spec.yaml` and
+`femic instance rebuild`.
+
 ## Current scope boundary
 
 1. The real MKRF bulky data/model payload is not published in this slice.

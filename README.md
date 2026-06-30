@@ -70,6 +70,29 @@ Current primary runtime/package references:
 - retained PoC benchmark package:
   `models/mkrf_patchworks_model_poc/`
 
+## FreshForge Workflow Contract
+
+This instance owns the concrete FreshForge workflow document for the MKRF
+canonical rebuild lane:
+
+- `workflows/freshforge/mkrf_model_build_workflow.yaml`
+
+FreshForge is a declarative planning and validation surface here. It can list
+the FEMIC provider, validate the MKRF graph, inspect provider references, and
+produce a deterministic non-executing plan:
+
+```bash
+freshforge providers
+freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml
+freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml
+freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml
+```
+
+FreshForge does not execute FEMIC stages, launch BTC, launch Patchworks,
+materialize DataLad content, or inspect declared artifact files. Use
+`config/rebuild.spec.yaml` and `femic instance rebuild` for execution and
+rebuild dry-runs.
+
 ## Project Communication Surfaces
 
 High-level MKRF project planning and team communication also lives in Basecamp.
