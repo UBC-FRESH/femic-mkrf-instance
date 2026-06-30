@@ -20,6 +20,9 @@ Core Validation Surfaces
 ------------------------
 
 - ``femic instance validate-spec --spec config/rebuild.spec.yaml``
+- ``freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml``
+- ``freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml``
+- ``freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml``
 - runtime XML under ``models/mkrf_patchworks_model/xml/``
 - runtime tracks under ``models/mkrf_patchworks_model/tracks/``
 - runtime spatial under ``models/mkrf_patchworks_model/spatial/``
@@ -32,7 +35,7 @@ High-Signal QA Logic
 
 The accepted QA stack for the canonical lane is:
 
-1. validate the instance spec and runtime wiring;
+1. validate the FreshForge graph, instance spec, and runtime wiring;
 2. regenerate the canonical XML/package surfaces from rebuild-owned inputs;
 3. rebuild tracks through Matrix Builder;
 4. inspect the rebuilt features/products/accounts directly; and
@@ -43,6 +46,20 @@ The accepted QA stack for the canonical lane is:
 
 The retained PoC benchmark lane still matters as comparison evidence, but it is
 not the primary runtime/package acceptance lane anymore.
+
+FreshForge Planning Boundary
+----------------------------
+
+The FreshForge workflow at
+``workflows/freshforge/mkrf_model_build_workflow.yaml`` is the declarative
+contract for the MKRF rebuild graph. It records the validate-case through
+matrix-build order, FEMIC provider references, MKRF-owned configuration paths,
+and declared runtime artifacts.
+
+FreshForge validation and planning are non-executing. They do not run FEMIC
+commands, launch BTC or Patchworks, materialize DataLad content, or read
+declared artifact files. The execution surface remains
+``femic instance rebuild`` with ``config/rebuild.spec.yaml``.
 
 Benchmark Acceptance Reading
 ----------------------------

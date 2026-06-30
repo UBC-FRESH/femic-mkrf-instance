@@ -1,0 +1,93 @@
+workflow:
+  id: mkrf_model_build
+  name: MKRF FEMIC model-build workflow
+  description: Plan-only FreshForge graph for the MKRF canonical rebuild lane.
+nodes:
+  - id: validate_case
+    provider: femic.validate_case
+    outputs:
+      case_validation: case_preflight_ok
+    parameters:
+      instance_root: .
+      run_config: config/run_profile.mkrf.yaml
+  - id: geospatial_preflight
+    provider: femic.geospatial_preflight
+    needs:
+      - validate_case
+    inputs:
+      case_validation: validate_case.case_validation
+    outputs:
+      geospatial_runtime: geospatial_runtime_ok
+    parameters:
+      instance_root: .
+  - id: compile_upstream
+    provider: femic.compile_upstream
+    needs:
+      - geospatial_preflight
+    inputs:
+      geospatial_runtime: geospatial_preflight.geospatial_runtime
+    outputs:
+      btc_handoff: stage01a_btc_handoff
+    parameters:
+      instance_root: .
+      run_config: config/run_profile.mkrf.yaml
+      run_id: mkrf_freshforge_plan
+    artifacts:
+      run_manifest: runtime/logs/run_manifest-mkrf_freshforge_plan.json
+  - id: btc_post_tipsy
+    provider: femic.btc_post_tipsy
+    needs:
+      - compile_upstream
+    inputs:
+      btc_handoff: compile_upstream.btc_handoff
+    outputs:
+      model_input_bundle: data/model_input_bundle
+    parameters:
+      instance_root: .
+      run_config: config/run_profile.mkrf.yaml
+      tsa: mkrf
+      run_id: mkrf_freshforge_plan
+    artifacts:
+      btc_manifest: runtime/logs/btc_manifest-mkrf_freshforge_plan.json
+      post_tipsy_manifest: runtime/logs/run_manifest-post_tipsy_mkrf_freshforge_plan.json
+  - id: export_patchworks
+    provider: femic.export_patchworks
+    needs:
+      - btc_post_tipsy
+    inputs:
+      model_input_bundle: btc_post_tipsy.model_input_bundle
+    outputs:
+      patchworks_package: models/mkrf_patchworks_model
+    parameters:
+      instance_root: .
+      run_config: config/run_profile.mkrf.yaml
+      tsa: mkrf
+    artifacts:
+      forestmodel_xml: models/mkrf_patchworks_model/xml/forestmodel.xml
+      fragments: models/mkrf_patchworks_model/spatial/fragments.dbf
+      tracks: models/mkrf_patchworks_model/tracks
+  - id: patchworks_preflight
+    provider: femic.patchworks_preflight
+    needs:
+      - export_patchworks
+    inputs:
+      patchworks_package: export_patchworks.patchworks_package
+    outputs:
+      patchworks_runtime: patchworks_runtime_ok
+    parameters:
+      instance_root: .
+      patchworks_config: config/patchworks.runtime.mkrf_rebuild.windows.yaml
+  - id: matrix_build
+    provider: femic.matrix_build
+    needs:
+      - patchworks_preflight
+    inputs:
+      patchworks_runtime: patchworks_preflight.patchworks_runtime
+    outputs:
+      compiled_patchworks_model: models/mkrf_patchworks_model/tracks
+    parameters:
+      instance_root: .
+      patchworks_config: config/patchworks.runtime.mkrf_rebuild.windows.yaml
+      run_id: mkrf_freshforge_plan
+    artifacts:
+      matrix_build_manifest: runtime/logs/patchworks_matrixbuilder_manifest-mkrf_freshforge_plan.json

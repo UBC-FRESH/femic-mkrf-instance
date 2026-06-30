@@ -4,21 +4,31 @@ Operator Runbook
 Minimal Operator Path
 ---------------------
 
-1. Validate the instance spec:
+1. Validate and plan the FreshForge workflow graph:
+
+   - ``freshforge providers``
+   - ``freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml``
+   - ``freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml``
+   - ``freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml``
+
+   This is a non-executing graph contract. It does not run FEMIC, BTC,
+   Patchworks, DataLad, or artifact inspection.
+
+2. Validate the instance spec:
 
    - ``femic instance validate-spec --spec config/rebuild.spec.yaml``
 
-2. Review the current runtime wiring:
+3. Review the current runtime wiring:
 
    - ``config/patchworks.runtime.mkrf_rebuild.windows.yaml``
 
-3. Inspect or launch the canonical runtime package from:
+4. Inspect or launch the canonical runtime package from:
 
    - runtime XML: ``models/mkrf_patchworks_model/xml/forestmodel.xml``
    - runtime tracks: ``models/mkrf_patchworks_model/tracks/``
    - runtime spatial: ``models/mkrf_patchworks_model/spatial/``
 
-4. Use the canonical package for:
+5. Use the canonical package for:
 
    - current runtime/package inspection;
    - Matrix Builder rebuild validation; and
@@ -29,7 +39,7 @@ Minimal Operator Path
    - :doc:`treatments-and-state-logic`
    - :doc:`analysis-units-and-yield-curves`
 
-5. For canonical scenario smoke validation, use the canonical base lane and do
+6. For canonical scenario smoke validation, use the canonical base lane and do
    not rely on very short scheduler samples:
 
    - ``femic patchworks run-default-scenario mkrf.base``
@@ -38,11 +48,11 @@ Minimal Operator Path
    ``100000`` iterations because shorter samples were not stable enough for
    meaningful runtime validation.
 
-6. After a canonical smoke run, audit the saved stage directly:
+7. After a canonical smoke run, audit the saved stage directly:
 
    - ``femic instance mkrf-audit-runtime-sanity --instance-root . --stage-dir runtime/logs/headless_stage/<run-id>``
 
-5. Use the retained PoC package only for benchmark/reference comparison:
+8. Use the retained PoC package only for benchmark/reference comparison:
 
    - ``models/mkrf_patchworks_model_poc/analysis/base.pin``
    - ``models/mkrf_patchworks_model_poc/analysis/initialTargetSummary.csv``
