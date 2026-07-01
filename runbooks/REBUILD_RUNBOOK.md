@@ -14,7 +14,7 @@ companion to that docs surface, not as a replacement for it.
 1. `femic instance validate-spec --spec config/rebuild.spec.yaml`
 2. `femic instance rebuild --spec config/rebuild.spec.yaml --dry-run --run-id mkrf_dryrun`
 
-## FreshForge planning checks
+## FreshForge workflow checks and execution
 
 The instance-owned FreshForge graph is:
 
@@ -22,15 +22,29 @@ The instance-owned FreshForge graph is:
 
 Use it to validate, inspect, and plan the rebuild graph before execution:
 
-1. `freshforge providers`
-2. `freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml`
-3. `freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml`
-4. `freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml`
+1. `python -m pip install -e .`
+2. `freshforge providers`
+3. `freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml`
+4. `freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml`
+5. `freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml`
 
-FreshForge is non-executing in this phase. It does not run FEMIC commands,
-launch BTC, launch Patchworks, materialize DataLad content, or inspect declared
-artifact files. Execution remains governed by `config/rebuild.spec.yaml` and
-`femic instance rebuild`.
+Run it explicitly only when the local environment is ready for FEMIC, BTC, and
+Patchworks:
+
+6. `freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --run-id mkrf_freshforge_exec --report runtime/freshforge/runs/mkrf_freshforge_exec.json`
+
+FreshForge `validate`, `inspect`, and `plan` are non-mutating. FreshForge `run`
+launches provider-owned FEMIC commands in planned order. The current executable
+graph uses the MKRF-owned runtime-package regeneration commands after
+geospatial preflight; older TSA-style `femic run` and BTC/post-TIPSY nodes still
+require legacy checkpoint files outside the accepted MKRF source contract. It
+still does not materialize DataLad content or inspect declared artifact files in
+this phase. `config/rebuild.spec.yaml` and `femic instance rebuild --dry-run`
+remain the legacy dry-run comparison surface.
+
+The MKRF-specific FreshForge nodes use the `mkrf.*` provider namespace from this
+instance adapter. FEMIC core still supplies reusable `femic.*` nodes and the
+temporary `femic instance mkrf-*` command targets that the adapter launches.
 
 ## Current scope boundary
 

@@ -11,24 +11,34 @@ Minimal Operator Path
    - ``freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml``
    - ``freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml``
 
-   This is a non-executing graph contract. It does not run FEMIC, BTC,
-   Patchworks, DataLad, or artifact inspection.
+   These commands are non-mutating graph checks.
 
-2. Validate the instance spec:
+2. Run the FreshForge workflow only when the local environment is ready for
+   FEMIC, BTC, and Patchworks:
+
+   - ``freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --run-id mkrf_freshforge_exec --report runtime/freshforge/runs/mkrf_freshforge_exec.json``
+
+   ``freshforge run`` launches provider-owned FEMIC commands in planned order.
+   The current executable graph uses the MKRF-owned runtime-package
+   regeneration commands after geospatial preflight rather than the older
+   TSA-style ``femic run`` and BTC/post-TIPSY lane. It does not materialize
+   DataLad content or inspect declared artifact files in this phase.
+
+3. Validate the instance spec:
 
    - ``femic instance validate-spec --spec config/rebuild.spec.yaml``
 
-3. Review the current runtime wiring:
+4. Review the current runtime wiring:
 
    - ``config/patchworks.runtime.mkrf_rebuild.windows.yaml``
 
-4. Inspect or launch the canonical runtime package from:
+5. Inspect or launch the canonical runtime package from:
 
    - runtime XML: ``models/mkrf_patchworks_model/xml/forestmodel.xml``
    - runtime tracks: ``models/mkrf_patchworks_model/tracks/``
    - runtime spatial: ``models/mkrf_patchworks_model/spatial/``
 
-5. Use the canonical package for:
+6. Use the canonical package for:
 
    - current runtime/package inspection;
    - Matrix Builder rebuild validation; and
