@@ -1,4 +1,4 @@
-# femic-mkrf-instance
+﻿# femic-mkrf-instance
 
 Private standalone **MKRF FEMIC instance** for the canonical from-scratch
 rebuild lane, with retained PoC and legacy evidence surfaces kept alongside it
@@ -109,7 +109,7 @@ that are not part of the current MKRF accepted source contract. The executable
 MKRF graph therefore starts its regeneration lane at the MKRF-owned
 `mkrf.*` provider nodes after geospatial preflight. Those nodes are owned by
 the adapter package in this instance repository and currently delegate to
-existing `femic instance mkrf-*` compatibility commands.
+the instance-owned `python -m mkrf_femic ...` commands.
 
 ## Project Communication Surfaces
 
@@ -361,4 +361,5 @@ Policy:
    only after the real MKRF boundary and checkpoint inputs are published.
 
 See `runbooks/REBUILD_RUNBOOK.md` for the current thin-baseline boundary.
+
 

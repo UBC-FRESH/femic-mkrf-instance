@@ -72,7 +72,7 @@ def test_pyproject_declares_mkrf_freshforge_entry_point() -> None:
     assert entry_points["mkrf"] == "mkrf_freshforge:provider_factory"
 
 
-def test_provider_execution_constructs_femic_command() -> None:
+def test_provider_execution_constructs_mkrf_femic_command() -> None:
     from freshforge.records import ExecutionContext, WorkflowNode
 
     commands: list[tuple[str, ...]] = []
@@ -100,8 +100,7 @@ def test_provider_execution_constructs_femic_command() -> None:
         (
             sys.executable,
             "-m",
-            "femic",
-            "instance",
+            "mkrf_femic",
             "mkrf-build-au-inputs",
             "--instance-root",
             ".",
