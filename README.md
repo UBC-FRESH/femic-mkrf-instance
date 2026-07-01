@@ -108,8 +108,8 @@ The first MKRF node validates `config/rebuild.spec.yaml` through
 that are not part of the current MKRF accepted source contract. The executable
 MKRF graph therefore starts its regeneration lane at the MKRF-owned
 `mkrf.*` provider nodes after geospatial preflight. Those nodes are owned by
-the adapter package in this instance repository and currently delegate to
-the instance-owned `python -m mkrf_femic ...` commands.
+the adapter package in this instance repository and delegate to the
+instance-owned `python -m mkrf_femic ...` commands.
 
 ## Project Communication Surfaces
 
@@ -220,9 +220,9 @@ Important boundary:
   `Spatial/fragments.*`, and `Spatial/topo_frag100.csv`;
 - the governing editable-source seam for the core XML builder is now treated as
   workbook data surfaces from `002_base.xlsm`, not the checked-in generated XML;
-- parent-side tracked workbook review extracts now live under
-  `metadata/mkrf_xlsm_review/` in the parent FEMIC repo and are referenced here
-  by `metadata/legacy_xlsm_review_extracts.yaml`;
+- workbook review extracts used by the instance-owned legacy XML builder now
+  live under `metadata/mkrf_xlsm_review/` in this repository. The canonical
+  builder API is `mkrf_femic.legacy_xml`.
 - the first MKRF-first translated `Input Variables` config now lives at
   `config/legacy_xml_builder/input_variables.mkrf.yaml`, but only
   `description`, `start_year`, `horizon_years`, and the legacy block/area/age/

@@ -43,8 +43,9 @@ this phase. `config/rebuild.spec.yaml` and `femic instance rebuild --dry-run`
 remain the legacy dry-run comparison surface.
 
 The MKRF-specific FreshForge nodes use the `mkrf.*` provider namespace from this
-instance adapter. FEMIC core still supplies reusable `femic.*` nodes and the
-temporary `femic instance mkrf-*` command targets that the adapter launches.
+instance adapter. FEMIC core still supplies reusable `femic.*` nodes, while the
+MKRF instance package owns the `mkrf-femic` and `python -m mkrf_femic` command
+targets that the adapter launches.
 
 ## Current scope boundary
 
