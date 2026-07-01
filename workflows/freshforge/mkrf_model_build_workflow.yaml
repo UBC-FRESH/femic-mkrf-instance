@@ -23,7 +23,7 @@ nodes:
     parameters:
       instance_root: .
   - id: build_au_inputs
-    provider: femic.mkrf.build_au_inputs
+    provider: mkrf.build_au_inputs
     needs:
       - geospatial_preflight
     inputs:
@@ -38,7 +38,7 @@ nodes:
       au_table: data/model_input_bundle/au_table.csv
       stand_assignment: data/model_input_bundle/stand_au_assignment.csv
   - id: select_aus
-    provider: femic.mkrf.select_aus
+    provider: mkrf.select_aus
     needs:
       - build_au_inputs
     inputs:
@@ -54,7 +54,7 @@ nodes:
     artifacts:
       selected_au_table: data/model_input_bundle/selected_au_table.csv
   - id: build_managed_au_inputs
-    provider: femic.mkrf.build_managed_au_inputs
+    provider: mkrf.build_managed_au_inputs
     needs:
       - select_aus
     inputs:
@@ -72,7 +72,7 @@ nodes:
       stand_origin_assignment: data/model_input_bundle/stand_origin_assignment.csv
       managed_au_msyt: data/model_input_bundle/managed_au_msyt.csv
   - id: build_managed_au_curves
-    provider: femic.mkrf.build_managed_au_curves
+    provider: mkrf.build_managed_au_curves
     needs:
       - build_managed_au_inputs
     inputs:
@@ -90,7 +90,7 @@ nodes:
       managed_au_curves: data/model_input_bundle/managed_au_curves.csv
       managed_run_manifest: data/model_input_bundle/managed_au_run_manifest.json
   - id: init_runtime_package
-    provider: femic.mkrf.init_runtime_package
+    provider: mkrf.init_runtime_package
     needs:
       - build_managed_au_curves
     inputs:
