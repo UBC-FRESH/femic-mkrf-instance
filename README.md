@@ -77,21 +77,31 @@ canonical rebuild lane:
 
 - `workflows/freshforge/mkrf_model_build_workflow.yaml`
 
-FreshForge is a declarative planning and validation surface here. It can list
-the FEMIC provider, validate the MKRF graph, inspect provider references, and
-produce a deterministic non-executing plan:
+FreshForge is the declarative workflow and explicit execution surface here. It
+can list the FEMIC providers, validate the MKRF graph, inspect provider
+references, produce a deterministic plan, and run the workflow when requested:
 
 ```bash
 freshforge providers
 freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml
 freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml
 freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml
+freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --run-id mkrf_freshforge_exec --report runtime/freshforge/runs/mkrf_freshforge_exec.json
 ```
 
-FreshForge does not execute FEMIC stages, launch BTC, launch Patchworks,
-materialize DataLad content, or inspect declared artifact files. Use
-`config/rebuild.spec.yaml` and `femic instance rebuild` for execution and
-rebuild dry-runs.
+`validate`, `inspect`, and `plan` are non-mutating. `run` launches provider-owned
+FEMIC commands in the planned order, including BTC and Patchworks Matrix Builder.
+FreshForge still does not materialize DataLad content or inspect declared
+artifact files in this phase. Use `config/rebuild.spec.yaml` and
+`femic instance rebuild --dry-run` as the legacy execution dry-run comparison
+surface.
+
+The first MKRF node validates `config/rebuild.spec.yaml` through
+`femic instance validate-spec`; the older TSA-style `femic prep validate-case`,
+`femic run`, and BTC/post-TIPSY surfaces still require legacy checkpoint files
+that are not part of the current MKRF accepted source contract. The executable
+MKRF graph therefore starts its regeneration lane at the MKRF-owned
+`femic.mkrf.*` commands after geospatial preflight.
 
 ## Project Communication Surfaces
 

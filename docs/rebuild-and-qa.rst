@@ -23,6 +23,7 @@ Core Validation Surfaces
 - ``freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml``
 - ``freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml``
 - ``freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml``
+- ``freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --run-id mkrf_freshforge_exec --report runtime/freshforge/runs/mkrf_freshforge_exec.json``
 - runtime XML under ``models/mkrf_patchworks_model/xml/``
 - runtime tracks under ``models/mkrf_patchworks_model/tracks/``
 - runtime spatial under ``models/mkrf_patchworks_model/spatial/``
@@ -47,7 +48,7 @@ The accepted QA stack for the canonical lane is:
 The retained PoC benchmark lane still matters as comparison evidence, but it is
 not the primary runtime/package acceptance lane anymore.
 
-FreshForge Planning Boundary
+FreshForge Workflow Boundary
 ----------------------------
 
 The FreshForge workflow at
@@ -56,10 +57,15 @@ contract for the MKRF rebuild graph. It records the validate-case through
 matrix-build order, FEMIC provider references, MKRF-owned configuration paths,
 and declared runtime artifacts.
 
-FreshForge validation and planning are non-executing. They do not run FEMIC
-commands, launch BTC or Patchworks, materialize DataLad content, or read
-declared artifact files. The execution surface remains
-``femic instance rebuild`` with ``config/rebuild.spec.yaml``.
+FreshForge validation, inspection, and planning are non-mutating. FreshForge
+``run`` explicitly launches provider-owned FEMIC commands in planned order,
+including the MKRF-owned runtime-package regeneration commands and Patchworks
+Matrix Builder. FreshForge still does not materialize DataLad content or read
+declared artifact files in this phase. The current MKRF executable graph does
+not use the older TSA-style ``femic run`` and BTC/post-TIPSY nodes because those
+still require legacy checkpoint files outside the accepted MKRF source contract.
+``femic instance rebuild --dry-run`` remains the legacy execution dry-run
+comparison surface for ``config/rebuild.spec.yaml``.
 
 Benchmark Acceptance Reading
 ----------------------------

@@ -1,7 +1,7 @@
 workflow:
   id: mkrf_model_build
-  name: MKRF FEMIC model-build workflow
-  description: Plan-only FreshForge graph for the MKRF canonical rebuild lane.
+  name: MKRF FEMIC executable model-build workflow
+  description: Explicit FreshForge execution graph for the MKRF canonical rebuild lane.
 nodes:
   - id: validate_case
     provider: femic.validate_case
@@ -10,6 +10,8 @@ nodes:
     parameters:
       instance_root: .
       run_config: config/run_profile.mkrf.yaml
+      rebuild_spec: config/rebuild.spec.yaml
+      tipsy_config_dir: config/tipsy
   - id: geospatial_preflight
     provider: femic.geospatial_preflight
     needs:
@@ -20,58 +22,104 @@ nodes:
       geospatial_runtime: geospatial_runtime_ok
     parameters:
       instance_root: .
-  - id: compile_upstream
-    provider: femic.compile_upstream
+  - id: build_au_inputs
+    provider: femic.mkrf.build_au_inputs
     needs:
       - geospatial_preflight
     inputs:
       geospatial_runtime: geospatial_preflight.geospatial_runtime
     outputs:
-      btc_handoff: stage01a_btc_handoff
+      au_inputs: data/model_input_bundle
     parameters:
       instance_root: .
-      run_config: config/run_profile.mkrf.yaml
-      run_id: mkrf_freshforge_plan
+      resultant_gdb: data/source/03_MappingAnalysisData/Resultant.gdb
+      output_dir: data/model_input_bundle
     artifacts:
-      run_manifest: runtime/logs/run_manifest-mkrf_freshforge_plan.json
-  - id: btc_post_tipsy
-    provider: femic.btc_post_tipsy
+      au_table: data/model_input_bundle/au_table.csv
+      stand_assignment: data/model_input_bundle/stand_au_assignment.csv
+  - id: select_aus
+    provider: femic.mkrf.select_aus
     needs:
-      - compile_upstream
+      - build_au_inputs
     inputs:
-      btc_handoff: compile_upstream.btc_handoff
+      au_inputs: build_au_inputs.au_inputs
     outputs:
-      model_input_bundle: data/model_input_bundle
+      selected_aus: data/model_input_bundle/selected_au_table.csv
     parameters:
       instance_root: .
-      run_config: config/run_profile.mkrf.yaml
-      tsa: mkrf
-      run_id: mkrf_freshforge_plan
+      au_table_csv: data/model_input_bundle/au_table.csv
+      assignment_csv: data/model_input_bundle/stand_au_assignment.csv
+      output_csv: data/model_input_bundle/selected_au_table.csv
+      target_coverage: 0.95
     artifacts:
-      btc_manifest: runtime/logs/btc_manifest-mkrf_freshforge_plan.json
-      post_tipsy_manifest: runtime/logs/run_manifest-post_tipsy_mkrf_freshforge_plan.json
-  - id: export_patchworks
-    provider: femic.export_patchworks
+      selected_au_table: data/model_input_bundle/selected_au_table.csv
+  - id: build_managed_au_inputs
+    provider: femic.mkrf.build_managed_au_inputs
     needs:
-      - btc_post_tipsy
+      - select_aus
     inputs:
-      model_input_bundle: btc_post_tipsy.model_input_bundle
+      selected_aus: select_aus.selected_aus
+    outputs:
+      managed_au_inputs: data/model_input_bundle
+    parameters:
+      instance_root: .
+      resultant_gdb: data/source/03_MappingAnalysisData/Resultant.gdb
+      tipsy_rules_yaml: config/tipsy/tsamkrf.yaml
+      selected_au_csv: data/model_input_bundle/selected_au_table.csv
+      assignment_csv: data/model_input_bundle/stand_au_assignment.csv
+      output_dir: data/model_input_bundle
+    artifacts:
+      stand_origin_assignment: data/model_input_bundle/stand_origin_assignment.csv
+      managed_au_msyt: data/model_input_bundle/managed_au_msyt.csv
+  - id: build_managed_au_curves
+    provider: femic.mkrf.build_managed_au_curves
+    needs:
+      - build_managed_au_inputs
+    inputs:
+      managed_au_inputs: build_managed_au_inputs.managed_au_inputs
+    outputs:
+      managed_au_curves: data/model_input_bundle/managed_au_curves.csv
+    parameters:
+      instance_root: .
+      run_id: mkrf_freshforge_exec
+      bootstrap_csv: data/model_input_bundle/managed_au_bootstrap_table.csv
+      msyt_csv: data/model_input_bundle/managed_au_msyt.csv
+      output_dir: data/model_input_bundle
+      log_dir: runtime/logs/managed_au_btc
+    artifacts:
+      managed_au_curves: data/model_input_bundle/managed_au_curves.csv
+      managed_run_manifest: data/model_input_bundle/managed_au_run_manifest.json
+  - id: init_runtime_package
+    provider: femic.mkrf.init_runtime_package
+    needs:
+      - build_managed_au_curves
+    inputs:
+      managed_au_curves: build_managed_au_curves.managed_au_curves
     outputs:
       patchworks_package: models/mkrf_patchworks_model
     parameters:
       instance_root: .
-      run_config: config/run_profile.mkrf.yaml
-      tsa: mkrf
+      package_root: models/mkrf_patchworks_model
+      selected_au_csv: data/model_input_bundle/selected_au_table.csv
+      stand_origin_assignment_csv: data/model_input_bundle/stand_origin_assignment.csv
+      stand_au_assignment_csv: data/model_input_bundle/stand_au_assignment.csv
+      managed_bootstrap_csv: data/model_input_bundle/managed_au_bootstrap_table.csv
+      first_growth_curves_csv: data/model_input_bundle/first_growth_au_curves.csv
+      first_growth_diagnostics_csv: data/model_input_bundle/first_growth_au_fit_diagnostics.csv
+      managed_curves_csv: data/model_input_bundle/managed_au_curves.csv
+      managed_run_manifest_json: data/model_input_bundle/managed_au_run_manifest.json
+      bad_curve_audit_summary_csv: data/model_input_bundle/bad_curve_audit_summary.csv
     artifacts:
       forestmodel_xml: models/mkrf_patchworks_model/xml/forestmodel.xml
+      runtime_manifest: models/mkrf_patchworks_model/analysis/runtime_package_init_manifest.json
       fragments: models/mkrf_patchworks_model/spatial/fragments.dbf
       tracks: models/mkrf_patchworks_model/tracks
   - id: patchworks_preflight
     provider: femic.patchworks_preflight
     needs:
-      - export_patchworks
+      - init_runtime_package
     inputs:
-      patchworks_package: export_patchworks.patchworks_package
+      patchworks_package: init_runtime_package.patchworks_package
     outputs:
       patchworks_runtime: patchworks_runtime_ok
     parameters:
@@ -88,6 +136,7 @@ nodes:
     parameters:
       instance_root: .
       patchworks_config: config/patchworks.runtime.mkrf_rebuild.windows.yaml
-      run_id: mkrf_freshforge_plan
+      run_id: mkrf_freshforge_exec
+      log_dir: runtime/logs
     artifacts:
-      matrix_build_manifest: runtime/logs/patchworks_matrixbuilder_manifest-mkrf_freshforge_plan.json
+      matrix_build_manifest: runtime/logs/patchworks_matrixbuilder_manifest-mkrf_freshforge_exec.json
