@@ -78,8 +78,14 @@ canonical rebuild lane:
 - `workflows/freshforge/mkrf_model_build_workflow.yaml`
 
 FreshForge is the declarative workflow and explicit execution surface here. It
-can list the FEMIC providers, validate the MKRF graph, inspect provider
-references, produce a deterministic plan, and run the workflow when requested:
+can list the FEMIC and MKRF providers, validate the MKRF graph, inspect provider
+references, produce a deterministic plan, and run the workflow when requested.
+Install the instance-owned adapter from this repository before using the
+workflow:
+
+```bash
+python -m pip install -e .
+```
 
 ```bash
 freshforge providers
@@ -101,7 +107,9 @@ The first MKRF node validates `config/rebuild.spec.yaml` through
 `femic run`, and BTC/post-TIPSY surfaces still require legacy checkpoint files
 that are not part of the current MKRF accepted source contract. The executable
 MKRF graph therefore starts its regeneration lane at the MKRF-owned
-`femic.mkrf.*` commands after geospatial preflight.
+`mkrf.*` provider nodes after geospatial preflight. Those nodes are owned by
+the adapter package in this instance repository and currently delegate to
+existing `femic instance mkrf-*` compatibility commands.
 
 ## Project Communication Surfaces
 

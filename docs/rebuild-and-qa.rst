@@ -54,8 +54,8 @@ FreshForge Workflow Boundary
 The FreshForge workflow at
 ``workflows/freshforge/mkrf_model_build_workflow.yaml`` is the declarative
 contract for the MKRF rebuild graph. It records the validate-case through
-matrix-build order, FEMIC provider references, MKRF-owned configuration paths,
-and declared runtime artifacts.
+matrix-build order, reusable FEMIC provider references, MKRF-owned provider
+references, MKRF-owned configuration paths, and declared runtime artifacts.
 
 FreshForge validation, inspection, and planning are non-mutating. FreshForge
 ``run`` explicitly launches provider-owned FEMIC commands in planned order,
@@ -66,6 +66,16 @@ not use the older TSA-style ``femic run`` and BTC/post-TIPSY nodes because those
 still require legacy checkpoint files outside the accepted MKRF source contract.
 ``femic instance rebuild --dry-run`` remains the legacy execution dry-run
 comparison surface for ``config/rebuild.spec.yaml``.
+
+Install this repository's adapter package before running FreshForge commands:
+
+.. code-block:: bash
+
+   python -m pip install -e .
+
+The adapter exposes provider id ``mkrf``. FEMIC core exposes reusable provider
+id ``femic`` and currently retains the ``femic instance mkrf-*`` compatibility
+commands that the MKRF adapter launches.
 
 Benchmark Acceptance Reading
 ----------------------------
