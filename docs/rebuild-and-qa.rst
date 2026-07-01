@@ -1,4 +1,4 @@
-Rebuild and QA
+﻿Rebuild and QA
 ==============
 
 Current Rebuild Meaning
@@ -74,8 +74,7 @@ Install this repository's adapter package before running FreshForge commands:
    python -m pip install -e .
 
 The adapter exposes provider id ``mkrf``. FEMIC core exposes reusable provider
-id ``femic`` and currently retains the ``femic instance mkrf-*`` compatibility
-commands that the MKRF adapter launches.
+id ``femic`` and no longer owns MKRF-specific ``mkrf-*`` commands. The MKRF instance package owns those commands through ``mkrf-femic`` and ``python -m mkrf_femic``.
 
 Benchmark Acceptance Reading
 ----------------------------
@@ -140,7 +139,7 @@ The current accepted operator-grade smoke for the canonical lane is:
    and
 4. audit the saved stage with:
 
-   - ``femic instance mkrf-audit-runtime-sanity --instance-root . --stage-dir <saved-stage>``
+   - ``mkrf-femic mkrf-audit-runtime-sanity --instance-root . --stage-dir <saved-stage>``
 
 The saved-stage sanity audit is intended to catch cases where a species family
 is emitted structurally but carries zero or contradictory signal relative to
@@ -150,19 +149,18 @@ Cedar-pole CT validation lane
 -----------------------------
 
 After changing the canonical cedar-pole ``CT`` implementation, regenerate the
-managed inputs, managed curves, and runtime package from the parent FEMIC
-checkout using the project virtual environment:
+managed inputs, managed curves, and runtime package from this MKRF instance checkout after installing the instance package:
 
-- ``femic instance mkrf-build-managed-au-inputs --instance-root external\femic-mkrf-instance --resultant-gdb external\femic-mkrf-instance\data\source\03_MappingAnalysisData\Resultant.gdb``
-- ``femic instance mkrf-build-managed-au-curves --instance-root external\femic-mkrf-instance``
-- ``femic instance mkrf-init-runtime-package --instance-root external\femic-mkrf-instance``
+- ``mkrf-femic mkrf-build-managed-au-inputs --instance-root external\femic-mkrf-instance --resultant-gdb external\femic-mkrf-instance\data\source\03_MappingAnalysisData\Resultant.gdb``
+- ``mkrf-femic mkrf-build-managed-au-curves --instance-root external\femic-mkrf-instance``
+- ``mkrf-femic mkrf-init-runtime-package --instance-root external\femic-mkrf-instance``
 
 Then validate the CT-specific runtime surface:
 
 - ``femic patchworks preflight --instance-root external\femic-mkrf-instance --config config\patchworks.runtime.mkrf_rebuild.windows.yaml``
 - ``femic patchworks matrix-build --instance-root external\femic-mkrf-instance --config config\patchworks.runtime.mkrf_rebuild.windows.yaml --run-id <ct-run-id>``
 - ``femic patchworks run-default-scenario mkrf.base --run-id <ct-smoke-run-id>``
-- ``femic instance mkrf-audit-runtime-sanity --instance-root external\femic-mkrf-instance --stage-dir <saved-stage>``
+- ``mkrf-femic mkrf-audit-runtime-sanity --instance-root external\femic-mkrf-instance --stage-dir <saved-stage>``
 - ``pytest tests/test_mkrf_managed.py tests/test_mkrf_runtime_package.py tests/test_tipsy_config.py``
 - confirm ``models/mkrf_patchworks_model/xml/forestmodel.xml`` contains
   ``CT35``, ``CT40``, and ``CT45`` only for CT bucket treatments;
@@ -179,18 +177,18 @@ After changing MKRF AU stratification, aggregation, or selected-AU publication
 logic, regenerate the AU and runtime surfaces from the parent FEMIC checkout
 using the project virtual environment:
 
-- ``femic instance mkrf-build-au-inputs --instance-root external\femic-mkrf-instance --resultant-gdb external\femic-mkrf-instance\data\source\03_MappingAnalysisData\Resultant.gdb``
-- ``femic instance mkrf-select-aus --instance-root external\femic-mkrf-instance``
-- ``femic instance mkrf-build-managed-au-inputs --instance-root external\femic-mkrf-instance --resultant-gdb external\femic-mkrf-instance\data\source\03_MappingAnalysisData\Resultant.gdb``
-- ``femic instance mkrf-build-managed-au-curves --instance-root external\femic-mkrf-instance --run-id <run-id>``
-- ``femic instance mkrf-init-runtime-package --instance-root external\femic-mkrf-instance``
+- ``mkrf-femic mkrf-build-au-inputs --instance-root external\femic-mkrf-instance --resultant-gdb external\femic-mkrf-instance\data\source\03_MappingAnalysisData\Resultant.gdb``
+- ``mkrf-femic mkrf-select-aus --instance-root external\femic-mkrf-instance``
+- ``mkrf-femic mkrf-build-managed-au-inputs --instance-root external\femic-mkrf-instance --resultant-gdb external\femic-mkrf-instance\data\source\03_MappingAnalysisData\Resultant.gdb``
+- ``mkrf-femic mkrf-build-managed-au-curves --instance-root external\femic-mkrf-instance --run-id <run-id>``
+- ``mkrf-femic mkrf-init-runtime-package --instance-root external\femic-mkrf-instance``
 
 Then validate the regenerated runtime:
 
 - ``femic patchworks preflight --instance-root external\femic-mkrf-instance --config config\patchworks.runtime.mkrf_rebuild.windows.yaml``
 - ``femic patchworks matrix-build --instance-root external\femic-mkrf-instance --config config\patchworks.runtime.mkrf_rebuild.windows.yaml --run-id <matrix-run-id>``
 - ``femic patchworks run-default-scenario mkrf.base --run-id <smoke-run-id>``
-- ``femic instance mkrf-audit-runtime-sanity --instance-root external\femic-mkrf-instance --stage-dir <saved-stage>``
+- ``mkrf-femic mkrf-audit-runtime-sanity --instance-root external\femic-mkrf-instance --stage-dir <saved-stage>``
 - ``pytest tests/test_mkrf_au.py tests/test_mkrf_managed.py tests/test_mkrf_runtime_package.py``
 - inspect ``data/model_input_bundle/au_aggregation_audit.csv`` and
   ``data/model_input_bundle/selected_au_table.csv`` directly;
@@ -231,3 +229,4 @@ The canonical closeout phase should decide:
   necessity requires it; and
 - what legacy seams to leave behind because they are not part of the desired
   FEMIC-native structure.
+

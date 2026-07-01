@@ -5,13 +5,20 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "femic-mkrf-freshforge"
 version = "0.1.0a1"
-description = "MKRF-owned FreshForge provider adapter for FEMIC rebuild workflows"
+description = "MKRF-owned FEMIC workflow implementation and FreshForge provider adapter"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 authors = [
     {name = "UBC FRESH Lab"},
 ]
+dependencies = [
+    "rich",
+    "typer",
+]
+
+[project.scripts]
+mkrf-femic = "mkrf_femic.cli:app"
 
 [project.entry-points."freshforge.providers"]
 mkrf = "mkrf_freshforge:provider_factory"

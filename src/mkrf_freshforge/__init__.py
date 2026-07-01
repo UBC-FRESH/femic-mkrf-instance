@@ -317,8 +317,8 @@ def _default_command_runner(
     )
 
 
-def _python_m_femic(*args: str) -> tuple[str, ...]:
-    return (sys.executable, "-m", "femic", *args)
+def _python_m_mkrf_femic(*args: str) -> tuple[str, ...]:
+    return (sys.executable, "-m", "mkrf_femic", *args)
 
 
 def _parameter(node: Any, key: str) -> str:
@@ -359,8 +359,7 @@ def _command_builders() -> dict[str, Callable[[Any, Any], tuple[str, ...]]]:
 
 def _build_au_inputs_command(node: Any, _context: Any) -> tuple[str, ...]:
     command = list(
-        _python_m_femic(
-            "instance",
+        _python_m_mkrf_femic(
             "mkrf-build-au-inputs",
             "--instance-root",
             _parameter(node, "instance_root"),
@@ -374,8 +373,7 @@ def _build_au_inputs_command(node: Any, _context: Any) -> tuple[str, ...]:
 
 def _build_select_aus_command(node: Any, _context: Any) -> tuple[str, ...]:
     command = list(
-        _python_m_femic(
-            "instance",
+        _python_m_mkrf_femic(
             "mkrf-select-aus",
             "--instance-root",
             _parameter(node, "instance_root"),
@@ -390,8 +388,7 @@ def _build_select_aus_command(node: Any, _context: Any) -> tuple[str, ...]:
 
 def _build_managed_au_inputs_command(node: Any, _context: Any) -> tuple[str, ...]:
     command = list(
-        _python_m_femic(
-            "instance",
+        _python_m_mkrf_femic(
             "mkrf-build-managed-au-inputs",
             "--instance-root",
             _parameter(node, "instance_root"),
@@ -408,8 +405,7 @@ def _build_managed_au_inputs_command(node: Any, _context: Any) -> tuple[str, ...
 
 def _build_managed_au_curves_command(node: Any, _context: Any) -> tuple[str, ...]:
     command = list(
-        _python_m_femic(
-            "instance",
+        _python_m_mkrf_femic(
             "mkrf-build-managed-au-curves",
             "--instance-root",
             _parameter(node, "instance_root"),
@@ -427,8 +423,7 @@ def _build_managed_au_curves_command(node: Any, _context: Any) -> tuple[str, ...
 
 def _build_init_runtime_package_command(node: Any, _context: Any) -> tuple[str, ...]:
     command = list(
-        _python_m_femic(
-            "instance",
+        _python_m_mkrf_femic(
             "mkrf-init-runtime-package",
             "--instance-root",
             _parameter(node, "instance_root"),

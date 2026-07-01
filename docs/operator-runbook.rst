@@ -1,4 +1,4 @@
-Operator Runbook
+﻿Operator Runbook
 ================
 
 Minimal Operator Path
@@ -60,7 +60,7 @@ Minimal Operator Path
 
 7. After a canonical smoke run, audit the saved stage directly:
 
-   - ``femic instance mkrf-audit-runtime-sanity --instance-root . --stage-dir runtime/logs/headless_stage/<run-id>``
+   - ``mkrf-femic mkrf-audit-runtime-sanity --instance-root . --stage-dir runtime/logs/headless_stage/<run-id>``
 
 8. Use the retained PoC package only for benchmark/reference comparison:
 
@@ -183,3 +183,4 @@ Key Reads
 - ``runbooks/REBUILD_RUNBOOK.md``
 - ``runbooks/LEGACY_REBUILD_READINESS_CRITERIA.md``
 - ``runbooks/LEGACY_SOURCE_REPRODUCIBILITY_BOUNDARY.md``
+
