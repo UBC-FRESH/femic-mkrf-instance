@@ -16,13 +16,25 @@ Minimal Operator Path
 2. Run the FreshForge workflow only when the local environment is ready for
    FEMIC, BTC, and Patchworks:
 
-   - ``freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --run-id mkrf_freshforge_exec --report runtime/freshforge/runs/mkrf_freshforge_exec.json``
+   - ``freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json``
 
    ``freshforge run`` launches provider-owned FEMIC commands in planned order.
    The current executable graph uses the MKRF-owned runtime-package
    regeneration commands after geospatial preflight rather than the older
    TSA-style ``femic run`` and BTC/post-TIPSY lane. It does not materialize
    DataLad content or inspect declared artifact files in this phase.
+
+   If the MKRF submodule is thin or missing annexed content, run the
+   materialization workflow first from the parent FEMIC checkout:
+
+   - ``freshforge validate external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml``
+   - ``freshforge inspect external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml``
+   - ``freshforge plan external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml``
+   - ``freshforge run external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml --workdir runtime/freshforge --namespace mkrf/materialization --json``
+
+   ``freshforge plan`` is the non-mutating preview. The materialization
+   ``freshforge run`` performs real submodule, package-install, DataLad, and
+   git-annex work.
 
 3. Validate the instance spec:
 

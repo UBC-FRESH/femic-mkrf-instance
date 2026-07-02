@@ -23,7 +23,11 @@ Core Validation Surfaces
 - ``freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml``
 - ``freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml``
 - ``freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml``
-- ``freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --run-id mkrf_freshforge_exec --report runtime/freshforge/runs/mkrf_freshforge_exec.json``
+- ``freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json``
+- ``freshforge validate external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml``
+- ``freshforge inspect external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml``
+- ``freshforge plan external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml``
+- ``freshforge run external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml --workdir runtime/freshforge --namespace mkrf/materialization --json``
 - runtime XML under ``models/mkrf_patchworks_model/xml/``
 - runtime tracks under ``models/mkrf_patchworks_model/tracks/``
 - runtime spatial under ``models/mkrf_patchworks_model/spatial/``
@@ -60,10 +64,12 @@ references, MKRF-owned configuration paths, and declared runtime artifacts.
 FreshForge validation, inspection, and planning are non-mutating. FreshForge
 ``run`` explicitly launches provider-owned FEMIC commands in planned order,
 including the MKRF-owned runtime-package regeneration commands and Patchworks
-Matrix Builder. FreshForge still does not materialize DataLad content or read
-declared artifact files in this phase. The current MKRF executable graph does
-not use the older TSA-style ``femic run`` and BTC/post-TIPSY nodes because those
-still require legacy checkpoint files outside the accepted MKRF source contract.
+Matrix Builder. FreshForge materialization is a separate workflow that can
+prepare a thin parent checkout by initializing the MKRF submodule, installing
+dependencies, enabling ``arbutus-s3``, materializing required MKRF paths, and
+writing an ignored report. The current MKRF executable graph does not use the
+older TSA-style ``femic run`` and BTC/post-TIPSY nodes because those still
+require legacy checkpoint files outside the accepted MKRF source contract.
 ``femic instance rebuild --dry-run`` remains the legacy execution dry-run
 comparison surface for ``config/rebuild.spec.yaml``.
 
