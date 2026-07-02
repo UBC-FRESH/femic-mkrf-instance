@@ -1,0 +1,35 @@
+instances:
+- instance_id: mkrf
+  label: MKRF canonical rebuild instance
+variants:
+- variant_id: mkrf.base
+  label: MKRF canonical rebuild base
+  instance_id: mkrf
+  variant_family: baseline
+  kind: patchworks
+  instance_root: .
+  analysis_pin: models/mkrf_patchworks_model/analysis/base.pin
+  runtime_config: config/patchworks.runtime.mkrf_rebuild.windows.yaml
+  default: true
+  default_scenario_id: even_flow_smoke
+  notes:
+  - Canonical MKRF rebuild launch surface backed by the FEMIC-native runtime package.
+  scenarios:
+  - scenario_id: even_flow_smoke
+    label: MKRF base even-flow smoke
+    mode: max-even-flow-smoke
+    target: product.yield.managed.total
+    iterations: 100000
+    improvement: 0.0
+- variant_id: mkrf.poc_base
+  label: MKRF PoC base
+  instance_id: mkrf
+  variant_family: benchmark
+  kind: patchworks
+  instance_root: .
+  analysis_pin: models/mkrf_patchworks_model_poc/analysis/base.pin
+  runtime_config: config/patchworks.runtime.windows.yaml
+  notes:
+  - Retained PoC benchmark launch surface backed by the older checkpoint-oriented
+    control lane.
+scenario_sets: []
