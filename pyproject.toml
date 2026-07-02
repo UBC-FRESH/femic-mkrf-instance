@@ -13,6 +13,7 @@ authors = [
     {name = "UBC FRESH Lab"},
 ]
 dependencies = [
+    "PyYAML>=6",
     "rich",
     "typer",
 ]
@@ -23,6 +24,9 @@ mkrf-femic = "mkrf_femic.cli:app"
 [project.entry-points."freshforge.providers"]
 mkrf = "mkrf_freshforge:provider_factory"
 
+[project.entry-points."femic.patchworks_variant_registries"]
+mkrf = "mkrf_femic.patchworks_variants:provider_factory"
+
 [project.optional-dependencies]
 dev = [
     "pytest",
@@ -30,6 +34,9 @@ dev = [
 
 [tool.setuptools]
 package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+mkrf_femic = ["resources/*.yaml"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
