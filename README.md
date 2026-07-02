@@ -73,9 +73,10 @@ Current primary runtime/package references:
 ## FreshForge Workflow Contract
 
 This instance owns the concrete FreshForge workflow document for the MKRF
-canonical rebuild lane:
+canonical rebuild lane and a parent-checkout materialization workflow:
 
 - `workflows/freshforge/mkrf_model_build_workflow.yaml`
+- `workflows/freshforge/mkrf_materialization_workflow.yaml`
 
 FreshForge is the declarative workflow and explicit execution surface here. It
 can list the FEMIC and MKRF providers, validate the MKRF graph, inspect provider
@@ -92,15 +93,30 @@ freshforge providers
 freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml
 freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml
 freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml
-freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --run-id mkrf_freshforge_exec --report runtime/freshforge/runs/mkrf_freshforge_exec.json
+freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json
 ```
 
 `validate`, `inspect`, and `plan` are non-mutating. `run` launches provider-owned
 FEMIC commands in the planned order, including BTC and Patchworks Matrix Builder.
-FreshForge still does not materialize DataLad content or inspect declared
-artifact files in this phase. Use `config/rebuild.spec.yaml` and
-`femic instance rebuild --dry-run` as the legacy execution dry-run comparison
-surface.
+Use `freshforge plan` as the non-mutating preview. Use
+`config/rebuild.spec.yaml` and `femic instance rebuild --dry-run` as the legacy
+execution dry-run comparison surface.
+
+For parent-checkout materialization, run these commands from the parent FEMIC
+repository root:
+
+```bash
+freshforge providers
+freshforge validate external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml
+freshforge inspect external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml
+freshforge plan external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml
+freshforge run external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml --workdir runtime/freshforge --namespace mkrf/materialization --json
+```
+
+`freshforge run` for the materialization workflow performs real submodule,
+package-install, DataLad, and git-annex work. It materializes the MKRF
+`models`, `config`, `workflows`, and `data/source` paths and writes an ignored
+report under the parent checkout `runtime/freshforge/` tree.
 
 The first MKRF node validates `config/rebuild.spec.yaml` through
 `femic instance validate-spec`; the older TSA-style `femic prep validate-case`,

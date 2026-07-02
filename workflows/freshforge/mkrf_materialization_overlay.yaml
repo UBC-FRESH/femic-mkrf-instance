@@ -1,0 +1,27 @@
+instance:
+  root: external/femic-mkrf-instance
+  submodule_path: external/femic-mkrf-instance
+environment:
+  venv_path: .venv
+install:
+  extras:
+    - dev
+    - freshforge
+  requirements: []
+  editable_paths:
+    - external/femic-mkrf-instance
+  packages: []
+annex:
+  special_remote: arbutus-s3
+materialization:
+  required_paths:
+    - models
+    - config
+    - workflows
+    - data/source
+audit:
+  required_paths:
+    - models
+    - data/source
+report:
+  path: runtime/freshforge/mkrf_materialization_report.json

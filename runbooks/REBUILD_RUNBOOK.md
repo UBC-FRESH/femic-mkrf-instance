@@ -19,6 +19,7 @@ companion to that docs surface, not as a replacement for it.
 The instance-owned FreshForge graph is:
 
 - `workflows/freshforge/mkrf_model_build_workflow.yaml`
+- `workflows/freshforge/mkrf_materialization_workflow.yaml`
 
 Use it to validate, inspect, and plan the rebuild graph before execution:
 
@@ -31,16 +32,34 @@ Use it to validate, inspect, and plan the rebuild graph before execution:
 Run it explicitly only when the local environment is ready for FEMIC, BTC, and
 Patchworks:
 
-6. `freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --run-id mkrf_freshforge_exec --report runtime/freshforge/runs/mkrf_freshforge_exec.json`
+6. `freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json`
 
 FreshForge `validate`, `inspect`, and `plan` are non-mutating. FreshForge `run`
 launches provider-owned FEMIC commands in planned order. The current executable
 graph uses the MKRF-owned runtime-package regeneration commands after
 geospatial preflight; older TSA-style `femic run` and BTC/post-TIPSY nodes still
 require legacy checkpoint files outside the accepted MKRF source contract. It
-still does not materialize DataLad content or inspect declared artifact files in
-this phase. `config/rebuild.spec.yaml` and `femic instance rebuild --dry-run`
-remain the legacy dry-run comparison surface.
+does not materialize DataLad content; use the materialization workflow first
+from the parent checkout when starting from a thin clone.
+`config/rebuild.spec.yaml` and `femic instance rebuild --dry-run` remain the
+legacy dry-run comparison surface.
+
+## FreshForge materialization workflow
+
+Run the materialization workflow from the parent FEMIC checkout, not from inside
+the MKRF submodule:
+
+1. `freshforge providers`
+2. `freshforge validate external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml`
+3. `freshforge inspect external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml`
+4. `freshforge plan external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml`
+5. `freshforge run external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml --workdir runtime/freshforge --namespace mkrf/materialization --json`
+
+FreshForge `plan` is the non-mutating preview. FreshForge `run` performs real
+submodule, package-install, DataLad, and git-annex work. The current MKRF
+overlay materializes `models`, `config`, `workflows`, and `data/source`, audits
+`models` and `data/source` against `arbutus-s3`, and writes an ignored report
+under the parent checkout `runtime/freshforge/` tree.
 
 The MKRF-specific FreshForge nodes use the `mkrf.*` provider namespace from this
 instance adapter. FEMIC core still supplies reusable `femic.*` nodes, while the
