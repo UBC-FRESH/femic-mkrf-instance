@@ -11,7 +11,7 @@ companion to that docs surface, not as a replacement for it.
 
 ## Thin-baseline checks
 
-1. `femic instance validate-spec --spec config/rebuild.spec.yaml`
+1. `python -m femic instance validate-spec --instance-root external/femic-mkrf-instance --spec config/rebuild.spec.yaml`
 2. `femic instance rebuild --spec config/rebuild.spec.yaml --dry-run --run-id mkrf_dryrun`
 
 ## FreshForge workflow checks and execution
@@ -21,18 +21,23 @@ The instance-owned FreshForge graph is:
 - `workflows/freshforge/mkrf_model_build_workflow.yaml`
 - `workflows/freshforge/mkrf_materialization_workflow.yaml`
 
+From the parent FEMIC checkout, use workflow discovery to find and render the
+model-build commands:
+
+1. `python -m femic freshforge workflows list`
+2. `python -m femic freshforge workflows commands external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml`
+
 Use it to validate, inspect, and plan the rebuild graph before execution:
 
-1. `python -m pip install -e .`
-2. `freshforge providers`
-3. `freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml`
-4. `freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml`
-5. `freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml`
+3. `freshforge providers`
+4. `freshforge validate external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml`
+5. `freshforge inspect external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml`
+6. `freshforge plan external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml`
 
 Run it explicitly only when the local environment is ready for FEMIC, BTC, and
 Patchworks:
 
-6. `freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json`
+7. `freshforge run external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json`
 
 FreshForge `validate`, `inspect`, and `plan` are non-mutating. FreshForge `run`
 launches provider-owned FEMIC commands in planned order. The current executable

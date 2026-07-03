@@ -81,19 +81,36 @@ canonical rebuild lane and a parent-checkout materialization workflow:
 FreshForge is the declarative workflow and explicit execution surface here. It
 can list the FEMIC and MKRF providers, validate the MKRF graph, inspect provider
 references, produce a deterministic plan, and run the workflow when requested.
-Install the instance-owned adapter from this repository before using the
-workflow:
+Install the parent FEMIC package with FreshForge support and this
+instance-owned adapter before using the workflow:
 
 ```bash
-python -m pip install -e .
+python -m pip install -e ".[dev,freshforge]"
+python -m pip install -e external/femic-mkrf-instance
 ```
+
+From the parent FEMIC checkout, discover and render the available workflow
+commands:
+
+```bash
+python -m femic freshforge workflows list
+python -m femic freshforge workflows commands external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml
+```
+
+Run the rebuild-spec validation as a separate pre-run check:
+
+```bash
+python -m femic instance validate-spec --instance-root external/femic-mkrf-instance --spec config/rebuild.spec.yaml
+```
+
+Then validate, preview, and explicitly run the FreshForge model-build workflow:
 
 ```bash
 freshforge providers
-freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml
-freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml
-freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml
-freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json
+freshforge validate external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml
+freshforge inspect external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml
+freshforge plan external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml
+freshforge run external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json
 ```
 
 `validate`, `inspect`, and `plan` are non-mutating. `run` launches provider-owned
@@ -118,14 +135,12 @@ package-install, DataLad, and git-annex work. It materializes the MKRF
 `models`, `config`, `workflows`, and `data/source` paths and writes an ignored
 report under the parent checkout `runtime/freshforge/` tree.
 
-The first MKRF node validates `config/rebuild.spec.yaml` through
-`femic instance validate-spec`; the older TSA-style `femic prep validate-case`,
-`femic run`, and BTC/post-TIPSY surfaces still require legacy checkpoint files
-that are not part of the current MKRF accepted source contract. The executable
-MKRF graph therefore starts its regeneration lane at the MKRF-owned
-`mkrf.*` provider nodes after geospatial preflight. Those nodes are owned by
-the adapter package in this instance repository and delegate to the
-instance-owned `python -m mkrf_femic ...` commands.
+Rebuild-spec validation remains a separate pre-run FEMIC check. The first
+FreshForge node runs generic case preflight, then the executable MKRF graph
+starts its regeneration lane at the MKRF-owned `mkrf.*` provider nodes after
+geospatial preflight. Those nodes are owned by the adapter package in this
+instance repository and delegate to the instance-owned
+`python -m mkrf_femic ...` commands.
 
 ## Project Communication Surfaces
 
@@ -332,9 +347,9 @@ Policy:
 ## Quickstart
 
 1. Validate the rebuild contract:
-   `femic instance validate-spec --spec config/rebuild.spec.yaml`
+   `python -m femic instance validate-spec --instance-root external/femic-mkrf-instance --spec config/rebuild.spec.yaml`
 2. Dry-run the rebuild sequence:
-   `femic instance rebuild --spec config/rebuild.spec.yaml --dry-run --run-id mkrf_dryrun`
+   `python -m femic instance rebuild --instance-root external/femic-mkrf-instance --spec config/rebuild.spec.yaml --dry-run --run-id mkrf_dryrun`
 3. Review the legacy compiled-package reference note:
    `runbooks/LEGACY_COMPILED_PACKAGE_REFERENCE.md`
 4. Review the legacy XML-builder authority note:
