@@ -25,9 +25,9 @@ Minimal Operator Path
    - ``freshforge run external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json``
 
    ``freshforge run`` launches provider-owned FEMIC commands in planned order.
-   The current executable graph uses the MKRF-owned runtime-package
-   regeneration commands after geospatial preflight rather than the older
-   TSA-style ``femic run`` and BTC/post-TIPSY lane. It does not materialize
+   The current executable graph starts with the MKRF-owned runtime-package
+   regeneration commands rather than the older TSA-style case/geospatial
+   preflight, ``femic run``, and BTC/post-TIPSY lane. It does not materialize
    DataLad content or inspect declared artifact files in this phase.
 
    If the MKRF submodule is thin or missing annexed content, run the

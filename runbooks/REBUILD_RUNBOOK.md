@@ -40,9 +40,9 @@ Patchworks:
 7. `freshforge run external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json`
 
 FreshForge `validate`, `inspect`, and `plan` are non-mutating. FreshForge `run`
-launches provider-owned FEMIC commands in planned order. The current executable
-graph uses the MKRF-owned runtime-package regeneration commands after
-geospatial preflight; older TSA-style `femic run` and BTC/post-TIPSY nodes still
+launches provider-owned commands in planned order. The current executable graph
+starts with the MKRF-owned runtime-package regeneration commands; older
+TSA-style case/geospatial preflight, `femic run`, and BTC/post-TIPSY nodes still
 require legacy checkpoint files outside the accepted MKRF source contract. It
 does not materialize DataLad content; use the materialization workflow first
 from the parent checkout when starting from a thin clone.

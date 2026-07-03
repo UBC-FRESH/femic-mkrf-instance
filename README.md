@@ -135,11 +135,12 @@ package-install, DataLad, and git-annex work. It materializes the MKRF
 `models`, `config`, `workflows`, and `data/source` paths and writes an ignored
 report under the parent checkout `runtime/freshforge/` tree.
 
-Rebuild-spec validation remains a separate pre-run FEMIC check. The first
-FreshForge node runs generic case preflight, then the executable MKRF graph
-starts its regeneration lane at the MKRF-owned `mkrf.*` provider nodes after
-geospatial preflight. Those nodes are owned by the adapter package in this
-instance repository and delegate to the instance-owned
+Rebuild-spec validation remains a separate pre-run FEMIC check. The executable
+MKRF graph starts its regeneration lane at the MKRF-owned `mkrf.*` provider
+nodes because the older TSA-style case/geospatial preflight surfaces require
+legacy checkpoint files outside the current MKRF accepted source contract.
+Those nodes are owned by the adapter package in this instance repository and
+delegate to the instance-owned
 `python -m mkrf_femic ...` commands.
 
 ## Project Communication Surfaces

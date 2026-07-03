@@ -3,30 +3,8 @@ workflow:
   name: MKRF FEMIC executable model-build workflow
   description: Explicit FreshForge execution graph for the MKRF canonical rebuild lane.
 nodes:
-  - id: validate_case
-    provider: femic.validate_case
-    outputs:
-      case_validation: case_preflight_ok
-    parameters:
-      instance_root: external/femic-mkrf-instance
-      run_config: config/run_profile.mkrf.yaml
-      tipsy_config_dir: config/tipsy
-  - id: geospatial_preflight
-    provider: femic.geospatial_preflight
-    needs:
-      - validate_case
-    inputs:
-      case_validation: validate_case.case_validation
-    outputs:
-      geospatial_runtime: geospatial_runtime_ok
-    parameters:
-      instance_root: external/femic-mkrf-instance
   - id: build_au_inputs
     provider: mkrf.build_au_inputs
-    needs:
-      - geospatial_preflight
-    inputs:
-      geospatial_runtime: geospatial_preflight.geospatial_runtime
     outputs:
       au_inputs: data/model_input_bundle
     parameters:

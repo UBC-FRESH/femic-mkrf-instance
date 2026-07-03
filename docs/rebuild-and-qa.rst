@@ -60,19 +60,21 @@ FreshForge Workflow Boundary
 The FreshForge workflow at
 ``workflows/freshforge/mkrf_model_build_workflow.yaml`` is the declarative
 contract for the MKRF rebuild graph. From the parent FEMIC checkout, it records
-the validate-case through
-matrix-build order, reusable FEMIC provider references, MKRF-owned provider
-references, MKRF-owned configuration paths, and declared runtime artifacts.
+the MKRF runtime-package regeneration through matrix-build order, reusable
+FEMIC provider references, MKRF-owned provider references, MKRF-owned
+configuration paths, and declared runtime artifacts.
 
 FreshForge validation, inspection, and planning are non-mutating. FreshForge
 ``run`` explicitly launches provider-owned FEMIC commands in planned order,
 including the MKRF-owned runtime-package regeneration commands and Patchworks
-Matrix Builder. FreshForge materialization is a separate workflow that can
+Matrix Builder. The executable graph starts with the MKRF-owned provider nodes
+because older TSA-style case/geospatial preflight surfaces still require legacy
+checkpoint files outside the accepted MKRF source contract. FreshForge
+materialization is a separate workflow that can
 prepare a thin parent checkout by initializing the MKRF submodule, installing
 dependencies, enabling ``arbutus-s3``, materializing required MKRF paths, and
 writing an ignored report. The current MKRF executable graph does not use the
-older TSA-style ``femic run`` and BTC/post-TIPSY nodes because those still
-require legacy checkpoint files outside the accepted MKRF source contract.
+older TSA-style ``femic run`` and BTC/post-TIPSY nodes.
 ``femic instance rebuild --dry-run`` remains the legacy execution dry-run
 comparison surface for ``config/rebuild.spec.yaml``.
 Run rebuild-spec validation separately before FreshForge execution with

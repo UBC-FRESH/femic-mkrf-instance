@@ -12,6 +12,7 @@ import subprocess
 import sys
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 PROVIDER_ID = "mkrf"
@@ -271,7 +272,7 @@ def _execute_with_builder(
                     ),
                     location=f"nodes.{node.id}",
                 ),
-            )
+            ),
         )
     try:
         command = builder(node, context)
@@ -285,13 +286,16 @@ def _execute_with_builder(
                     message=str(exc),
                     location=f"nodes.{node.id}.parameters",
                 ),
-            )
+            ),
         )
-    completed = runner(command)
+    cwd = _execution_cwd(node)
+    completed = _run_command(runner, command, cwd=cwd)
     data: dict[str, Any] = {
         "command": list(command),
         "returncode": completed.returncode,
     }
+    if cwd is not None:
+        data["cwd"] = str(cwd)
     if completed.stdout:
         data["stdout"] = completed.stdout
     if completed.stderr:
@@ -334,14 +338,28 @@ def _resolved_artifacts(node: Any, context: Any) -> dict[str, Any]:
     return resolved
 
 
+def _run_command(
+    runner: CommandRunner,
+    command: tuple[str, ...],
+    *,
+    cwd: Path | None,
+) -> subprocess.CompletedProcess[str]:
+    if runner is _default_command_runner:
+        return _default_command_runner(command, cwd=cwd)
+    return runner(command)
+
+
 def _default_command_runner(
     command: tuple[str, ...],
+    *,
+    cwd: Path | None = None,
 ) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         list(command),
         check=False,
         capture_output=True,
         text=True,
+        cwd=cwd,
     )
 
 
@@ -369,6 +387,19 @@ def _optional_parameter(node: Any, key: str) -> str | None:
     return str(value)
 
 
+def _execution_cwd(node: Any) -> Path | None:
+    instance_root = _optional_parameter(node, "instance_root")
+    if instance_root is None:
+        return None
+    return Path(instance_root)
+
+
+def _execution_instance_root(node: Any) -> str:
+    return (
+        "." if _execution_cwd(node) is not None else _parameter(node, "instance_root")
+    )
+
+
 def _append_option(command: list[str], node: Any, key: str, option: str) -> None:
     value = _optional_parameter(node, key)
     if value is not None:
@@ -390,7 +421,7 @@ def _build_au_inputs_command(node: Any, _context: Any) -> tuple[str, ...]:
         _python_m_mkrf_femic(
             "mkrf-build-au-inputs",
             "--instance-root",
-            _parameter(node, "instance_root"),
+            _execution_instance_root(node),
             "--resultant-gdb",
             _parameter(node, "resultant_gdb"),
         )
@@ -404,7 +435,7 @@ def _build_select_aus_command(node: Any, _context: Any) -> tuple[str, ...]:
         _python_m_mkrf_femic(
             "mkrf-select-aus",
             "--instance-root",
-            _parameter(node, "instance_root"),
+            _execution_instance_root(node),
         )
     )
     _append_option(command, node, "au_table_csv", "--au-table-csv")
@@ -419,7 +450,7 @@ def _build_managed_au_inputs_command(node: Any, _context: Any) -> tuple[str, ...
         _python_m_mkrf_femic(
             "mkrf-build-managed-au-inputs",
             "--instance-root",
-            _parameter(node, "instance_root"),
+            _execution_instance_root(node),
             "--resultant-gdb",
             _parameter(node, "resultant_gdb"),
         )
@@ -436,7 +467,7 @@ def _build_managed_au_curves_command(node: Any, _context: Any) -> tuple[str, ...
         _python_m_mkrf_femic(
             "mkrf-build-managed-au-curves",
             "--instance-root",
-            _parameter(node, "instance_root"),
+            _execution_instance_root(node),
             "--run-id",
             _parameter(node, "run_id"),
         )
@@ -454,7 +485,7 @@ def _build_init_runtime_package_command(node: Any, _context: Any) -> tuple[str, 
         _python_m_mkrf_femic(
             "mkrf-init-runtime-package",
             "--instance-root",
-            _parameter(node, "instance_root"),
+            _execution_instance_root(node),
         )
     )
     _append_option(command, node, "package_root", "--package-root")

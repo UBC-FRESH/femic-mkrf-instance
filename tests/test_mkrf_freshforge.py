@@ -13,8 +13,6 @@ freshforge = pytest.importorskip("freshforge")
 
 WORKFLOW_PATH = Path("workflows/freshforge/mkrf_model_build_workflow.yaml")
 EXPECTED_MODEL_BUILD_ORDER = [
-    "validate_case",
-    "geospatial_preflight",
     "build_au_inputs",
     "select_aus",
     "build_managed_au_inputs",
@@ -157,8 +155,12 @@ def test_workflow_run_uses_mkrf_provider_with_mocked_commands() -> None:
 
     commands: list[tuple[str, ...]] = []
     registry = ProviderRegistry()
-    registry.register(FemicFreshForgeProvider(command_runner=_successful_runner(commands)))
-    registry.register(MkrfFreshForgeProvider(command_runner=_successful_runner(commands)))
+    registry.register(
+        FemicFreshForgeProvider(command_runner=_successful_runner(commands))
+    )
+    registry.register(
+        MkrfFreshForgeProvider(command_runner=_successful_runner(commands))
+    )
 
     report = run_workflow(
         spec,
@@ -171,4 +173,6 @@ def test_workflow_run_uses_mkrf_provider_with_mocked_commands() -> None:
     assert report.status == RunStatus.SUCCESS
     assert [node.id for node in report.nodes] == EXPECTED_MODEL_BUILD_ORDER
     assert commands
-    assert any(command[:3] == (sys.executable, "-m", "mkrf_femic") for command in commands)
+    assert any(
+        command[:3] == (sys.executable, "-m", "mkrf_femic") for command in commands
+    )
