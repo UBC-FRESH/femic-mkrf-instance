@@ -105,7 +105,15 @@ class MkrfFreshForgeProvider:
         return _validate_contract_node(node, node_type, location=location)
 
     def execute_node(self, node: Any, node_type: Any, *, context: Any) -> Any:
-        """Execute one MKRF node through the installed FEMIC CLI."""
+        """Execute one MKRF node through the installed FEMIC CLI.
+
+        This compatibility shim supports callers that used the pre-release
+        FreshForge execution hook. Released FreshForge calls :meth:`run_node`.
+        """
+        return self.run_node(node, node_type, context=context)
+
+    def run_node(self, node: Any, node_type: Any, *, context: Any) -> Any:
+        """Execute one MKRF node through the released FreshForge API."""
         return _execute_with_builder(
             node=node,
             node_type=node_type,
@@ -229,14 +237,14 @@ def _freshforge_diagnostic_types() -> tuple[Any, Any]:
     return Diagnostic, DiagnosticSeverity
 
 
-def _freshforge_execution_result_type() -> Any:
+def _freshforge_run_result_types() -> tuple[Any, Any]:
     try:
-        from freshforge.records import ProviderExecutionResult
+        from freshforge.records import ProviderRunResult, RunStatus
     except ModuleNotFoundError as exc:
         raise RuntimeError(
             "The MKRF FreshForge adapter requires FreshForge to be installed."
         ) from exc
-    return ProviderExecutionResult
+    return ProviderRunResult, RunStatus
 
 
 def _execute_with_builder(
@@ -247,12 +255,12 @@ def _execute_with_builder(
     builders: dict[str, Callable[[Any, Any], tuple[str, ...]]],
     runner: CommandRunner,
 ) -> Any:
-    _ = context
-    result_type = _freshforge_execution_result_type()
+    result_type, run_status = _freshforge_run_result_types()
     diagnostic, severity = _freshforge_diagnostic_types()
     builder = builders.get(str(node_type.id))
     if builder is None:
         return result_type(
+            status=run_status.FAILED,
             diagnostics=(
                 diagnostic(
                     severity=severity.ERROR,
@@ -269,6 +277,7 @@ def _execute_with_builder(
         command = builder(node, context)
     except ValueError as exc:
         return result_type(
+            status=run_status.FAILED,
             diagnostics=(
                 diagnostic(
                     severity=severity.ERROR,
@@ -279,11 +288,14 @@ def _execute_with_builder(
             )
         )
     completed = runner(command)
-    metadata: dict[str, Any] = {"returncode": completed.returncode}
+    data: dict[str, Any] = {
+        "command": list(command),
+        "returncode": completed.returncode,
+    }
     if completed.stdout:
-        metadata["stdout"] = completed.stdout
+        data["stdout"] = completed.stdout
     if completed.stderr:
-        metadata["stderr"] = completed.stderr
+        data["stderr"] = completed.stderr
     diagnostics: tuple[Any, ...] = ()
     if completed.returncode != 0:
         diagnostics = (
@@ -297,13 +309,29 @@ def _execute_with_builder(
                 location=f"nodes.{node.id}",
             ),
         )
-    artifacts = node.artifacts if isinstance(node.artifacts, dict) else {}
+    artifacts = _resolved_artifacts(node, context)
+    outputs = node.outputs if isinstance(node.outputs, dict) else {}
     return result_type(
-        metadata=metadata,
-        command=command,
+        status=run_status.SUCCESS if completed.returncode == 0 else run_status.FAILED,
+        outputs=outputs,
         diagnostics=diagnostics,
         artifacts=artifacts,
+        data=data,
     )
+
+
+def _resolved_artifacts(node: Any, context: Any) -> dict[str, Any]:
+    artifacts = node.artifacts if isinstance(node.artifacts, dict) else {}
+    resolve_path = getattr(context, "resolve_path", None)
+    if not callable(resolve_path):
+        return dict(artifacts)
+    resolved: dict[str, Any] = {}
+    for key, value in artifacts.items():
+        if isinstance(value, str):
+            resolved[key] = str(resolve_path(value))
+        else:
+            resolved[key] = value
+    return resolved
 
 
 def _default_command_runner(
