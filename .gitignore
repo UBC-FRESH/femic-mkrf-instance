@@ -32,6 +32,7 @@ plots/*
 !plots/vdyp_fitdiag_tsamkrf-*.png
 !plots/tipsy_vdyp_tsamkrf-*.png
 docs/_build/
+_build/
 
 # Legacy intermediate artifacts
 data/*.feather
