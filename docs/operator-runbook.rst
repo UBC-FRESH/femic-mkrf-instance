@@ -4,24 +4,30 @@
 Minimal Operator Path
 ---------------------
 
-1. Validate and plan the FreshForge workflow graph:
+1. Discover and render the FreshForge workflow commands from the parent FEMIC
+   checkout:
+
+   - ``python -m femic freshforge workflows list``
+   - ``python -m femic freshforge workflows commands external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml``
+
+2. Validate and plan the FreshForge workflow graph:
 
    - ``freshforge providers``
-   - ``freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml``
-   - ``freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml``
-   - ``freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml``
+   - ``freshforge validate external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml``
+   - ``freshforge inspect external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml``
+   - ``freshforge plan external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml``
 
    These commands are non-mutating graph checks.
 
-2. Run the FreshForge workflow only when the local environment is ready for
+3. Run the FreshForge workflow only when the local environment is ready for
    FEMIC, BTC, and Patchworks:
 
-   - ``freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json``
+   - ``freshforge run external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json``
 
    ``freshforge run`` launches provider-owned FEMIC commands in planned order.
-   The current executable graph uses the MKRF-owned runtime-package
-   regeneration commands after geospatial preflight rather than the older
-   TSA-style ``femic run`` and BTC/post-TIPSY lane. It does not materialize
+   The current executable graph starts with the MKRF-owned runtime-package
+   regeneration commands rather than the older TSA-style case/geospatial
+   preflight, ``femic run``, and BTC/post-TIPSY lane. It does not materialize
    DataLad content or inspect declared artifact files in this phase.
 
    If the MKRF submodule is thin or missing annexed content, run the
@@ -36,21 +42,21 @@ Minimal Operator Path
    ``freshforge run`` performs real submodule, package-install, DataLad, and
    git-annex work.
 
-3. Validate the instance spec:
+4. Validate the instance spec as a separate pre-run FEMIC check:
 
-   - ``femic instance validate-spec --spec config/rebuild.spec.yaml``
+   - ``python -m femic instance validate-spec --instance-root external/femic-mkrf-instance --spec config/rebuild.spec.yaml``
 
-4. Review the current runtime wiring:
+5. Review the current runtime wiring:
 
    - ``config/patchworks.runtime.mkrf_rebuild.windows.yaml``
 
-5. Inspect or launch the canonical runtime package from:
+6. Inspect or launch the canonical runtime package from:
 
    - runtime XML: ``models/mkrf_patchworks_model/xml/forestmodel.xml``
    - runtime tracks: ``models/mkrf_patchworks_model/tracks/``
    - runtime spatial: ``models/mkrf_patchworks_model/spatial/``
 
-6. Use the canonical package for:
+7. Use the canonical package for:
 
    - current runtime/package inspection;
    - Matrix Builder rebuild validation; and

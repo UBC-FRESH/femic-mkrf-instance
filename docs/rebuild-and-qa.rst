@@ -19,11 +19,13 @@ is no longer the primary meaning of MKRF rebuild/QA in this instance.
 Core Validation Surfaces
 ------------------------
 
-- ``femic instance validate-spec --spec config/rebuild.spec.yaml``
-- ``freshforge validate workflows/freshforge/mkrf_model_build_workflow.yaml``
-- ``freshforge inspect workflows/freshforge/mkrf_model_build_workflow.yaml``
-- ``freshforge plan workflows/freshforge/mkrf_model_build_workflow.yaml``
-- ``freshforge run workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json``
+- ``python -m femic instance validate-spec --instance-root external/femic-mkrf-instance --spec config/rebuild.spec.yaml``
+- ``python -m femic freshforge workflows list``
+- ``python -m femic freshforge workflows commands external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml``
+- ``freshforge validate external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml``
+- ``freshforge inspect external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml``
+- ``freshforge plan external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml``
+- ``freshforge run external/femic-mkrf-instance/workflows/freshforge/mkrf_model_build_workflow.yaml --workdir runtime/freshforge --namespace mkrf/model-build --json``
 - ``freshforge validate external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml``
 - ``freshforge inspect external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml``
 - ``freshforge plan external/femic-mkrf-instance/workflows/freshforge/mkrf_materialization_workflow.yaml``
@@ -57,21 +59,26 @@ FreshForge Workflow Boundary
 
 The FreshForge workflow at
 ``workflows/freshforge/mkrf_model_build_workflow.yaml`` is the declarative
-contract for the MKRF rebuild graph. It records the validate-case through
-matrix-build order, reusable FEMIC provider references, MKRF-owned provider
-references, MKRF-owned configuration paths, and declared runtime artifacts.
+contract for the MKRF rebuild graph. From the parent FEMIC checkout, it records
+the MKRF runtime-package regeneration through matrix-build order, reusable
+FEMIC provider references, MKRF-owned provider references, MKRF-owned
+configuration paths, and declared runtime artifacts.
 
 FreshForge validation, inspection, and planning are non-mutating. FreshForge
 ``run`` explicitly launches provider-owned FEMIC commands in planned order,
 including the MKRF-owned runtime-package regeneration commands and Patchworks
-Matrix Builder. FreshForge materialization is a separate workflow that can
+Matrix Builder. The executable graph starts with the MKRF-owned provider nodes
+because older TSA-style case/geospatial preflight surfaces still require legacy
+checkpoint files outside the accepted MKRF source contract. FreshForge
+materialization is a separate workflow that can
 prepare a thin parent checkout by initializing the MKRF submodule, installing
 dependencies, enabling ``arbutus-s3``, materializing required MKRF paths, and
 writing an ignored report. The current MKRF executable graph does not use the
-older TSA-style ``femic run`` and BTC/post-TIPSY nodes because those still
-require legacy checkpoint files outside the accepted MKRF source contract.
+older TSA-style ``femic run`` and BTC/post-TIPSY nodes.
 ``femic instance rebuild --dry-run`` remains the legacy execution dry-run
 comparison surface for ``config/rebuild.spec.yaml``.
+Run rebuild-spec validation separately before FreshForge execution with
+``python -m femic instance validate-spec --instance-root external/femic-mkrf-instance --spec config/rebuild.spec.yaml``.
 
 Install this repository's adapter package before running FreshForge commands:
 

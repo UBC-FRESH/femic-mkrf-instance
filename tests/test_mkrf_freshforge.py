@@ -13,8 +13,6 @@ freshforge = pytest.importorskip("freshforge")
 
 WORKFLOW_PATH = Path("workflows/freshforge/mkrf_model_build_workflow.yaml")
 EXPECTED_MODEL_BUILD_ORDER = [
-    "validate_case",
-    "geospatial_preflight",
     "build_au_inputs",
     "select_aus",
     "build_managed_au_inputs",
@@ -72,8 +70,9 @@ def test_pyproject_declares_mkrf_freshforge_entry_point() -> None:
     assert entry_points["mkrf"] == "mkrf_freshforge:provider_factory"
 
 
-def test_provider_execution_constructs_mkrf_femic_command() -> None:
-    from freshforge.records import ExecutionContext, WorkflowNode
+def test_provider_run_constructs_mkrf_femic_command() -> None:
+    from freshforge.execution import RunContext
+    from freshforge.records import RunStatus, WorkflowNode
 
     commands: list[tuple[str, ...]] = []
     provider = MkrfFreshForgeProvider(command_runner=_successful_runner(commands))
@@ -89,13 +88,24 @@ def test_provider_execution_constructs_mkrf_femic_command() -> None:
         },
     )
 
-    result = provider.execute_node(
+    result = provider.run_node(
         node,
         node_type,
-        context=ExecutionContext(workflow_id="wf", run_id="run"),
+        context=RunContext(workflow_id="wf", workdir=Path("runtime/freshforge")),
     )
 
+    assert result.status == RunStatus.SUCCESS
     assert result.diagnostics == ()
+    assert result.data["command"] == [
+        sys.executable,
+        "-m",
+        "mkrf_femic",
+        "mkrf-build-au-inputs",
+        "--instance-root",
+        ".",
+        "--resultant-gdb",
+        "data/source/03_MappingAnalysisData/Resultant.gdb",
+    ]
     assert commands == [
         (
             sys.executable,
@@ -133,21 +143,36 @@ def test_workflow_validates_and_plans_with_mkrf_provider() -> None:
     assert {node.provider_id for node in plan.nodes} == {"femic", "mkrf"}
 
 
-def test_workflow_dry_run_uses_mkrf_provider() -> None:
-    from freshforge.execution import execute_workflow
+def test_workflow_run_uses_mkrf_provider_with_mocked_commands() -> None:
+    from femic.freshforge import FemicFreshForgeProvider
+    from freshforge.execution import run_workflow
     from freshforge.loading import load_workflow
+    from freshforge.providers import ProviderRegistry
+    from freshforge.records import RunStatus
 
     spec, load_diagnostics = load_workflow(WORKFLOW_PATH)
     assert spec is not None
 
-    report = execute_workflow(
-        spec,
-        run_id="mkrf_freshforge_exec",
-        diagnostics=load_diagnostics,
-        registry=_registry_with_femic_and_mkrf(),
-        dry_run=True,
+    commands: list[tuple[str, ...]] = []
+    registry = ProviderRegistry()
+    registry.register(
+        FemicFreshForgeProvider(command_runner=_successful_runner(commands))
+    )
+    registry.register(
+        MkrfFreshForgeProvider(command_runner=_successful_runner(commands))
     )
 
-    assert not report.failed
-    assert report.dry_run
-    assert report.planned_order == tuple(EXPECTED_MODEL_BUILD_ORDER)
+    report = run_workflow(
+        spec,
+        diagnostics=load_diagnostics,
+        registry=registry,
+        workdir="runtime/freshforge",
+        run_namespace="mkrf/model-build",
+    )
+
+    assert report.status == RunStatus.SUCCESS
+    assert [node.id for node in report.nodes] == EXPECTED_MODEL_BUILD_ORDER
+    assert commands
+    assert any(
+        command[:3] == (sys.executable, "-m", "mkrf_femic") for command in commands
+    )

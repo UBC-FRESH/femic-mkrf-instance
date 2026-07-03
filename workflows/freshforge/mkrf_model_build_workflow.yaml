@@ -3,35 +3,12 @@ workflow:
   name: MKRF FEMIC executable model-build workflow
   description: Explicit FreshForge execution graph for the MKRF canonical rebuild lane.
 nodes:
-  - id: validate_case
-    provider: femic.validate_case
-    outputs:
-      case_validation: case_preflight_ok
-    parameters:
-      instance_root: .
-      run_config: config/run_profile.mkrf.yaml
-      rebuild_spec: config/rebuild.spec.yaml
-      tipsy_config_dir: config/tipsy
-  - id: geospatial_preflight
-    provider: femic.geospatial_preflight
-    needs:
-      - validate_case
-    inputs:
-      case_validation: validate_case.case_validation
-    outputs:
-      geospatial_runtime: geospatial_runtime_ok
-    parameters:
-      instance_root: .
   - id: build_au_inputs
     provider: mkrf.build_au_inputs
-    needs:
-      - geospatial_preflight
-    inputs:
-      geospatial_runtime: geospatial_preflight.geospatial_runtime
     outputs:
       au_inputs: data/model_input_bundle
     parameters:
-      instance_root: .
+      instance_root: external/femic-mkrf-instance
       resultant_gdb: data/source/03_MappingAnalysisData/Resultant.gdb
       output_dir: data/model_input_bundle
     artifacts:
@@ -46,7 +23,7 @@ nodes:
     outputs:
       selected_aus: data/model_input_bundle/selected_au_table.csv
     parameters:
-      instance_root: .
+      instance_root: external/femic-mkrf-instance
       au_table_csv: data/model_input_bundle/au_table.csv
       assignment_csv: data/model_input_bundle/stand_au_assignment.csv
       output_csv: data/model_input_bundle/selected_au_table.csv
@@ -62,7 +39,7 @@ nodes:
     outputs:
       managed_au_inputs: data/model_input_bundle
     parameters:
-      instance_root: .
+      instance_root: external/femic-mkrf-instance
       resultant_gdb: data/source/03_MappingAnalysisData/Resultant.gdb
       tipsy_rules_yaml: config/tipsy/tsamkrf.yaml
       selected_au_csv: data/model_input_bundle/selected_au_table.csv
@@ -80,7 +57,7 @@ nodes:
     outputs:
       managed_au_curves: data/model_input_bundle/managed_au_curves.csv
     parameters:
-      instance_root: .
+      instance_root: external/femic-mkrf-instance
       run_id: mkrf_freshforge_exec
       bootstrap_csv: data/model_input_bundle/managed_au_bootstrap_table.csv
       msyt_csv: data/model_input_bundle/managed_au_msyt.csv
@@ -98,7 +75,7 @@ nodes:
     outputs:
       patchworks_package: models/mkrf_patchworks_model
     parameters:
-      instance_root: .
+      instance_root: external/femic-mkrf-instance
       package_root: models/mkrf_patchworks_model
       selected_au_csv: data/model_input_bundle/selected_au_table.csv
       stand_origin_assignment_csv: data/model_input_bundle/stand_origin_assignment.csv
@@ -123,7 +100,7 @@ nodes:
     outputs:
       patchworks_runtime: patchworks_runtime_ok
     parameters:
-      instance_root: .
+      instance_root: external/femic-mkrf-instance
       patchworks_config: config/patchworks.runtime.mkrf_rebuild.windows.yaml
   - id: matrix_build
     provider: femic.matrix_build
@@ -134,7 +111,7 @@ nodes:
     outputs:
       compiled_patchworks_model: models/mkrf_patchworks_model/tracks
     parameters:
-      instance_root: .
+      instance_root: external/femic-mkrf-instance
       patchworks_config: config/patchworks.runtime.mkrf_rebuild.windows.yaml
       run_id: mkrf_freshforge_exec
       log_dir: runtime/logs

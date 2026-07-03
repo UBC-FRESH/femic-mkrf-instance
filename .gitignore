@@ -4,6 +4,7 @@
 .venv/
 __pycache__/
 *.pyc
+*.egg-info/
 
 # Runtime logs and manifests
 runtime/logs/
@@ -32,6 +33,7 @@ plots/*
 !plots/vdyp_fitdiag_tsamkrf-*.png
 !plots/tipsy_vdyp_tsamkrf-*.png
 docs/_build/
+_build/
 
 # Legacy intermediate artifacts
 data/*.feather
