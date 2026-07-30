@@ -475,6 +475,18 @@ def build_mkrf_managed_au_msyt_table(
     return build_btc_msyt_input_table(tipsy_table=tipsy_table, pd_module=pd)
 
 
+MKRF_BTC_LOG_GRADE_COLUMNS: tuple[str, ...] = (
+    "Logs_Grade_D",
+    "Logs_Grade_F",
+    "Logs_Grade_H",
+    "Logs_Grade_I",
+    "Logs_Grade_J",
+    "Logs_Grade_U",
+    "Logs_Grade_X",
+    "Logs_Grade_Y",
+)
+
+
 def parse_mkrf_managed_au_curves(
     *,
     output_csv: Path,
@@ -525,8 +537,11 @@ def parse_mkrf_managed_au_curves(
     for column in ordered_columns:
         if column not in curves.columns:
             curves[column] = np.nan
+    log_grade_columns = [
+        column for column in MKRF_BTC_LOG_GRADE_COLUMNS if column in curves.columns
+    ]
     return (
-        curves[ordered_columns]
+        curves[ordered_columns + log_grade_columns]
         .sort_values(
             ["managed_curve_id", "age"],
             kind="stable",

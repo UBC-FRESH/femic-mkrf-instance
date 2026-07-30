@@ -1666,6 +1666,7 @@ def build_mkrf_managed_au_curves(
     log_dir: Path,
     run_id: str = "mkrf_managed_au_curves",
     executable_path: Path | None = None,
+    indicator_bank_names: tuple[str, ...] = ("log-grades",),
 ) -> MkrfManagedAuCurvesResult:
     """Attempt a BTC compile for the provisional managed AU lane."""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -1679,6 +1680,7 @@ def build_mkrf_managed_au_curves(
             mode="TSR",
             executable_path=executable_path,
             report_preset_name="tsr-unattended-default",
+            indicator_bank_names=indicator_bank_names,
             log_dir=log_dir,
             run_id=run_id,
         )
