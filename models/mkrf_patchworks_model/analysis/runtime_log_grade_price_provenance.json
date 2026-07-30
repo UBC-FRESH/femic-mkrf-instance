@@ -1,0 +1,14 @@
+{
+  "active_matrix": "vlm_second_growth_2026_01",
+  "config_path": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\config\\log_grade_prices.mkrf.yaml",
+  "market": "Vancouver Log Market (VLM)",
+  "period_basis": "three month rolling average",
+  "period_ending": "2026-01",
+  "publisher": "Timber Pricing Branch, BC Ministry of Forests",
+  "region": "BC Coast Forest Region",
+  "report_label": "Coast Selling Price System - Average Log Prices - Second Growth",
+  "retrieved": "2026-07-30",
+  "source_file": "3m2gc_jan_26.pdf",
+  "source_url": "https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/timber-pricing/coast-timber-pricing/coast-log-reports/3m2gc_jan_26.pdf",
+  "units": "CAD/m3"
+}

@@ -12,6 +12,7 @@ import xml.etree.ElementTree as et
 import geopandas as gpd
 import numpy as np
 import pandas as pd
+import yaml
 
 from mkrf_femic.pipeline.mkrf_au import (
     build_mkrf_au_aggregation_audit,
@@ -133,6 +134,95 @@ def _build_mkrf_log_grade_shares(managed_curves: pd.DataFrame) -> pd.DataFrame:
     shares = totals.div(row_totals.where(row_totals > 0.0, other=1.0), axis=0) * 100.0
     shares.loc[row_totals <= 0.0, :] = 0.0
     return shares.reset_index()
+
+
+MKRF_LOG_PRICE_CONFIG_NAME = "log_grade_prices.mkrf.yaml"
+
+
+def _resolve_mkrf_log_price_config(package_root: Path) -> Path | None:
+    """Return the instance-local log price config, searching upward from the package root."""
+    for candidate_root in (package_root, *package_root.parents):
+        candidate = candidate_root / "config" / MKRF_LOG_PRICE_CONFIG_NAME
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def _load_mkrf_log_grade_prices(
+    config_path: Path,
+) -> tuple[dict[str, dict[str, float]], dict[str, str | None], dict[str, object]]:
+    """Return (market-species prices, bucket proxy map, provenance) from the price config."""
+    payload = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    matrices = payload.get("matrices") or {}
+    matrix_name = payload.get("active_matrix")
+    if matrix_name not in matrices:
+        raise ValueError(
+            f"log price config {config_path} does not define active matrix {matrix_name!r}"
+        )
+    matrix = matrices[matrix_name] or {}
+    species_prices: dict[str, dict[str, float]] = {}
+    for species, grade_prices in (matrix.get("species") or {}).items():
+        species_prices[str(species)] = {
+            str(grade): float(price) for grade, price in (grade_prices or {}).items()
+        }
+    proxies: dict[str, str | None] = {}
+    for bucket, market_species in (payload.get("species_market_proxies") or {}).items():
+        if market_species is None:
+            proxies[str(bucket)] = None
+            continue
+        resolved = str(market_species)
+        if resolved not in species_prices:
+            raise ValueError(
+                f"log price config {config_path} proxies {bucket!r} to unknown "
+                f"market species {resolved!r}"
+            )
+        proxies[str(bucket)] = resolved
+    provenance: dict[str, object] = dict(matrix.get("provenance") or {})
+    provenance["active_matrix"] = matrix_name
+    provenance["config_path"] = str(config_path)
+    return species_prices, proxies, provenance
+
+
+def _build_mkrf_log_grade_blended_prices(
+    managed_species_shares: pd.DataFrame,
+    *,
+    species_prices: dict[str, dict[str, float]],
+    proxies: dict[str, str | None],
+) -> pd.DataFrame:
+    """Return per-AU species-blended log price (CAD/m3) for each BTC grade.
+
+    Published Vancouver Log Market prices are quoted per market species, so each
+    AU price is the species-share weighted average across its constituent
+    buckets. Buckets with no published coast conifer price (the deciduous and
+    residual buckets) contribute zero rather than having their weight
+    redistributed, so the blend is deliberately conservative for
+    deciduous-leading AUs. ``priced_share_pct`` records how much of each AU is
+    actually covered by a published price so that dilution stays auditable.
+    """
+    frame = managed_species_shares.assign(
+        au_id=lambda df: df["au_id"].astype(str)
+    ).sort_values("au_id", kind="stable")
+    result = pd.DataFrame({"au_id": frame["au_id"].tolist()})
+    priced_weight = pd.Series(0.0, index=frame.index)
+    for bucket, market_species in proxies.items():
+        if market_species is None or bucket not in frame.columns:
+            continue
+        priced_weight = priced_weight + pd.to_numeric(
+            frame[bucket], errors="coerce"
+        ).fillna(0.0)
+    for grade_label in MKRF_LOG_GRADE_LABELS:
+        grade_key = f"Logs_Grade_{grade_label}"
+        blended = pd.Series(0.0, index=frame.index)
+        for bucket, market_species in proxies.items():
+            if market_species is None or bucket not in frame.columns:
+                continue
+            share = pd.to_numeric(frame[bucket], errors="coerce").fillna(0.0) / 100.0
+            blended = blended + share * float(
+                species_prices.get(market_species, {}).get(grade_key, 0.0)
+            )
+        result[grade_key] = blended.to_numpy()
+    result["priced_share_pct"] = priced_weight.to_numpy()
+    return result
 
 
 def _mkrf_ct_bucket_label(anchor_age: int) -> str:
@@ -2750,6 +2840,44 @@ def initialize_mkrf_runtime_package(
         log_grade_share_lookup_exprs[grade_label] = f"Number({lookup_expr})/100"
     log_grade_share_audit_path = analysis_dir / "runtime_log_grade_share_audit.csv"
     log_grade_shares.to_csv(log_grade_share_audit_path, index=False)
+    log_price_config_path = _resolve_mkrf_log_price_config(package_root)
+    if log_price_config_path is None:
+        raise FileNotFoundError(
+            "MKRF log price config not found; expected "
+            f"config/{MKRF_LOG_PRICE_CONFIG_NAME} at or above {package_root}"
+        )
+    (
+        log_price_species,
+        log_price_proxies,
+        log_price_provenance,
+    ) = _load_mkrf_log_grade_prices(log_price_config_path)
+    log_grade_prices = _build_mkrf_log_grade_blended_prices(
+        managed_species_shares,
+        species_prices=log_price_species,
+        proxies=log_price_proxies,
+    )
+    log_grade_price_lookup_exprs: dict[str, str] = {}
+    log_grade_price_keys = log_grade_prices["au_id"].tolist()
+    for grade_label in MKRF_LOG_GRADE_LABELS:
+        log_grade_price_values = [
+            str(round(float(value), 4))
+            for value in log_grade_prices[f"Logs_Grade_{grade_label}"].tolist()
+        ]
+        lookup_expr = _build_lookup_expr(
+            log_grade_price_keys,
+            log_grade_price_values,
+            key_expr=runtime_base_au_expr,
+        )
+        log_grade_price_lookup_exprs[grade_label] = f"Number({lookup_expr})"
+    log_grade_price_audit_path = analysis_dir / "runtime_log_grade_price_audit.csv"
+    log_grade_prices.to_csv(log_grade_price_audit_path, index=False)
+    log_grade_price_provenance_path = (
+        analysis_dir / "runtime_log_grade_price_provenance.json"
+    )
+    log_grade_price_provenance_path.write_text(
+        json.dumps(log_price_provenance, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     species_share_audit = _build_species_share_audit_table(
         managed_species_shares=managed_species_shares,
         unmanaged_species_shares=unmanaged_species_shares,
@@ -3546,6 +3674,44 @@ def initialize_mkrf_runtime_package(
                 "ignoreMissingAttributes": "false",
             },
         )
+    for grade_label in MKRF_LOG_GRADE_LABELS:
+        product_log_grade_value_attr = et.SubElement(
+            products_node,
+            "attribute",
+            {"label": f"product.Logs_Grade_{grade_label}.managed.value"},
+        )
+        et.SubElement(
+            product_log_grade_value_attr,
+            "expression",
+            {
+                "statement": (
+                    f"{product_curve_expr}*"
+                    f"({log_grade_share_lookup_exprs[grade_label]})*"
+                    f"({log_grade_price_lookup_exprs[grade_label]})"
+                ),
+                "by": "1",
+                "ignoreMissingAttributes": "false",
+            },
+        )
+    product_log_value_total_attr = et.SubElement(
+        products_node,
+        "attribute",
+        {"label": "product.LogValue.managed.total"},
+    )
+    log_value_total_expr = "+".join(
+        f"({log_grade_share_lookup_exprs[grade_label]})*"
+        f"({log_grade_price_lookup_exprs[grade_label]})"
+        for grade_label in MKRF_LOG_GRADE_LABELS
+    )
+    et.SubElement(
+        product_log_value_total_attr,
+        "expression",
+        {
+            "statement": f"{product_curve_expr}*({log_value_total_expr})",
+            "by": "1",
+            "ignoreMissingAttributes": "false",
+        },
+    )
     product_yield_treat = et.SubElement(
         products_node,
         "attribute",
