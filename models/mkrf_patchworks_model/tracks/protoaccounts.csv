@@ -35,6 +35,14 @@ _UNMANAGED_,feature.yield.unmanaged.indsp.Yc,feature.yield.unmanaged.indsp.Yc,1
 _UNMANAGED_,feature.yield.unmanaged.state.EM,feature.yield.unmanaged.state.EM,1
 _UNMANAGED_,feature.yield.unmanaged.state.EN,feature.yield.unmanaged.state.EN,1
 _UNMANAGED_,feature.yield.unmanaged.total,feature.yield.unmanaged.total,1
+_MANAGED_,product.Logs_Grade_D.managed.total,product.Logs_Grade_D.managed.total,1
+_MANAGED_,product.Logs_Grade_F.managed.total,product.Logs_Grade_F.managed.total,1
+_MANAGED_,product.Logs_Grade_H.managed.total,product.Logs_Grade_H.managed.total,1
+_MANAGED_,product.Logs_Grade_I.managed.total,product.Logs_Grade_I.managed.total,1
+_MANAGED_,product.Logs_Grade_J.managed.total,product.Logs_Grade_J.managed.total,1
+_MANAGED_,product.Logs_Grade_U.managed.total,product.Logs_Grade_U.managed.total,1
+_MANAGED_,product.Logs_Grade_X.managed.total,product.Logs_Grade_X.managed.total,1
+_MANAGED_,product.Logs_Grade_Y.managed.total,product.Logs_Grade_Y.managed.total,1
 _MANAGED_,product.area.managed.state.EM,product.area.managed.state.EM,1
 _MANAGED_,product.area.managed.state.EN,product.area.managed.state.EN,1
 _MANAGED_,product.area.managed.state.FM,product.area.managed.state.FM,1
