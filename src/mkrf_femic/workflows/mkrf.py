@@ -112,6 +112,29 @@ def _build_lookup_expr(keys: list[str], values: list[str], *, key_expr: str) -> 
     return f"lookupTable({key_expr},'{','.join(keys)}','{','.join(values)}')"
 
 
+MKRF_LOG_GRADE_LABELS: tuple[str, ...] = ("D", "F", "H", "I", "J", "U", "X", "Y")
+
+
+def _build_mkrf_log_grade_shares(managed_curves: pd.DataFrame) -> pd.DataFrame:
+    """Return volume-weighted per-AU BTC log-grade shares as percentages.
+
+    The eight explicit BTC grades partition merchantable volume, so the shares
+    are normalized to sum to 100 per AU. AUs with no graded volume yield zero
+    shares rather than an undefined split.
+    """
+    columns = [f"Logs_Grade_{label}" for label in MKRF_LOG_GRADE_LABELS]
+    frame = managed_curves.assign(au_id=lambda df: df["au_id"].astype(str))
+    for column in columns:
+        if column not in frame.columns:
+            frame[column] = 0.0
+        frame[column] = pd.to_numeric(frame[column], errors="coerce").fillna(0.0)
+    totals = frame.groupby("au_id", sort=True)[columns].sum()
+    row_totals = totals.sum(axis=1)
+    shares = totals.div(row_totals.where(row_totals > 0.0, other=1.0), axis=0) * 100.0
+    shares.loc[row_totals <= 0.0, :] = 0.0
+    return shares.reset_index()
+
+
 def _mkrf_ct_bucket_label(anchor_age: int) -> str:
     return f"CT{int(anchor_age)}"
 
@@ -2711,6 +2734,22 @@ def initialize_mkrf_runtime_package(
             key_expr=runtime_base_au_expr,
         )
         unmanaged_share_lookup_exprs[share_column] = f"Number({lookup_expr})/100"
+    log_grade_shares = _build_mkrf_log_grade_shares(managed_curves)
+    log_grade_share_lookup_exprs: dict[str, str] = {}
+    log_grade_share_keys = log_grade_shares["au_id"].tolist()
+    for grade_label in MKRF_LOG_GRADE_LABELS:
+        log_grade_share_values = [
+            str(float(value))
+            for value in log_grade_shares[f"Logs_Grade_{grade_label}"].tolist()
+        ]
+        lookup_expr = _build_lookup_expr(
+            log_grade_share_keys,
+            log_grade_share_values,
+            key_expr=runtime_base_au_expr,
+        )
+        log_grade_share_lookup_exprs[grade_label] = f"Number({lookup_expr})/100"
+    log_grade_share_audit_path = analysis_dir / "runtime_log_grade_share_audit.csv"
+    log_grade_shares.to_csv(log_grade_share_audit_path, index=False)
     species_share_audit = _build_species_share_audit_table(
         managed_species_shares=managed_species_shares,
         unmanaged_species_shares=unmanaged_species_shares,
@@ -3484,6 +3523,24 @@ def initialize_mkrf_runtime_package(
                     f"if(startswith(treatment,'CT'),"
                     f"{ct_product_species_fraction_expr},"
                     f"{origin_share_lookup_exprs[share_column]}))"
+                ),
+                "by": "1",
+                "ignoreMissingAttributes": "false",
+            },
+        )
+    for grade_label in MKRF_LOG_GRADE_LABELS:
+        product_log_grade_attr = et.SubElement(
+            products_node,
+            "attribute",
+            {"label": f"product.Logs_Grade_{grade_label}.managed.total"},
+        )
+        et.SubElement(
+            product_log_grade_attr,
+            "expression",
+            {
+                "statement": (
+                    f"{product_curve_expr}*"
+                    f"({log_grade_share_lookup_exprs[grade_label]})"
                 ),
                 "by": "1",
                 "ignoreMissingAttributes": "false",
