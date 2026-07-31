@@ -109,9 +109,16 @@ fertilization:
     years_after_previous: 10
 
 qmd:
-  enabled: false
-  source: "synthetic"
-  notes: "Replace provisional QMD curves with observed or Nemora-derived curves when available."
+  enabled: true
+  harvested_product_accounts_enabled: true
+  qmd_response_fraction_by_bucket:
+    CT35: 0.10
+    CT40: 0.12
+    CT45: 0.15
+  notes:
+    - "Response fractions are placeholders pending calibration against MKRF staff guidance."
+    - "Per-bucket keys match the _mkrf_ct_bucket_specs() labels."
+    - "Falls back to the flat qmd_response_fraction default (0.10) for any bucket not listed."
 
 retention:
   full_retention_au_ids: []

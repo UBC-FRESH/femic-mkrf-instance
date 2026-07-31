@@ -42,7 +42,22 @@ from femic.pipeline.plots import (
     strata_plot_paths,
 )
 from femic.pipeline.tipsy import run_btc_cli
-from femic.fmg.patchworks import validate_forestmodel_xml_tree, write_forestmodel_xml
+from femic.fmg.patchworks import (
+    CurvePoint,
+    _build_qmd_curve_points,
+    validate_forestmodel_xml_tree,
+    write_forestmodel_xml,
+)
+
+
+def _au_token_to_si_level(au_token: str) -> str:
+    """Map an MKRF AU token to a K3Z-style SI level (L/M/H)."""
+    token = str(au_token).upper()
+    if "L" in token:
+        return "L"
+    if "H" in token:
+        return "H"
+    return "M"
 
 
 @dataclass(frozen=True)
@@ -2832,6 +2847,15 @@ def initialize_mkrf_runtime_package(
         str(row["first_growth_curve_id"]) for row in first_growth_curve_lookup_rows
     ]
     ct_bucket_specs = _mkrf_ct_bucket_specs()
+    # Load silviculture config for QMD and other silviculture settings
+    silviculture_config = None
+    silviculture_path = package_root.parent / "config" / "silviculture.mkrf.yaml"
+    if silviculture_path.exists():
+        import yaml
+
+        silviculture_config = yaml.safe_load(
+            silviculture_path.read_text(encoding="utf-8")
+        )
     runtime_base_au_expr = (
         f"if(startswith(au,'thn'),substring(au,{len(_mkrf_ct_bucket_prefix(40))}),au)"
     )
@@ -3775,6 +3799,39 @@ def initialize_mkrf_runtime_package(
                 "ignoreMissingAttributes": "false",
             },
         )
+    # QMD standing-stock curve and attribute (if enabled)
+    qmd_config = silviculture_config.get("qmd", {}) if silviculture_config else {}
+    qmd_enabled = bool(qmd_config.get("enabled", False))
+    if qmd_enabled and managed_group is not None and not managed_group.empty:
+        qmd_curve_ref = f"QMD_{au_token}"
+        qmd_curve = et.SubElement(forestmodel_root, "curve", {"id": qmd_curve_ref})
+        qmd_curve_points = _build_qmd_curve_points(
+            source_curve_points=tuple(
+                CurvePoint(x=float(r.age), y=float(r.volume))
+                for r in managed_group.itertuples()
+            ),
+            si_level=_au_token_to_si_level(au_token),
+            response_age=int(_mkrf_ct_bucket_specs()[0]["anchor_age"]),
+            response_fraction=float(
+                qmd_config.get("qmd_response_fraction_by_bucket", {}).get(
+                    _mkrf_ct_bucket_specs()[0]["label"], 0.10
+                )
+            ),
+            response_years=10,
+        )
+        for qmd_point in qmd_curve_points:
+            et.SubElement(
+                qmd_curve,
+                "point",
+                {"x": str(float(qmd_point.x)), "y": str(float(qmd_point.y))},
+            )
+        managed_yield_features_qmd = et.SubElement(managed_yield_select, "features")
+        managed_yield_qmd_attr = et.SubElement(
+            managed_yield_features_qmd,
+            "attribute",
+            {"label": f"feature.QMD.managed.{au_token}"},
+        )
+        et.SubElement(managed_yield_qmd_attr, "curve", {"idref": qmd_curve_ref})
     products_select = et.SubElement(
         forestmodel_root,
         "select",
