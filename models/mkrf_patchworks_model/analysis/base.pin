@@ -12,6 +12,7 @@ boolean usePatches = false;
 String tracks_path_prefix = "../tracks/";
 sourceRelative("headless_runtime_common.bsh");
 sourceRelative("../scripts/targets/flowtargets.bsh");
+sourceRelative("../scripts/targets/qmdRatioAccounts.bsh");
 
 blocks = tracks_path_prefix + "blocks.csv";
 curves = tracks_path_prefix + "curves.csv";
