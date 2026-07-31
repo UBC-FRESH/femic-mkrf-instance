@@ -3360,6 +3360,11 @@ def initialize_mkrf_runtime_package(
     # QMD config and pre-build curve refs (must be before any attribute references)
     qmd_config = silviculture_config.get("qmd", {}) if silviculture_config else {}
     qmd_enabled = bool(qmd_config.get("enabled", False))
+    
+    # Resolve default intensity from CT config
+    ct_config = silviculture_config.get("commercial_thinning", {}) if silviculture_config else {}
+    default_intensity = str(ct_config.get("default_intensity", "medium")).lower()
+    
     qmd_curve_refs = {}
     if qmd_enabled:
         for row in runtime_curve_status.itertuples(index=False):
@@ -3367,6 +3372,25 @@ def initialize_mkrf_runtime_package(
             managed_group = managed_by_au.get(str(row.au_id))
             if managed_group is None or managed_group.empty:
                 continue
+            
+            # Resolve QMD response fraction with intensity-aware fallback
+            response_fraction = 0.10  # default
+            by_bucket_intensity = qmd_config.get("qmd_response_fraction_by_bucket_intensity", {})
+            by_bucket = qmd_config.get("qmd_response_fraction_by_bucket", {})
+            
+            # Try per-(bucket, intensity) first, then per-bucket, then default
+            for bucket_spec in ct_bucket_specs:
+                bucket_label = str(bucket_spec["label"])
+                intensity_key = f"{bucket_label}_{default_intensity}"
+                if intensity_key in by_bucket_intensity:
+                    response_fraction = float(by_bucket_intensity[intensity_key])
+                    response_age = int(bucket_spec["anchor_age"])
+                    break
+                elif bucket_label in by_bucket:
+                    response_fraction = float(by_bucket[bucket_label])
+                    response_age = int(bucket_spec["anchor_age"])
+                    break
+            
             qmd_curve_ref = f"QMD_{au_token}"
             qmd_curve = et.SubElement(forestmodel_root, "curve", {"id": qmd_curve_ref})
             qmd_curve_points = _build_qmd_curve_points(
@@ -3375,12 +3399,8 @@ def initialize_mkrf_runtime_package(
                     for r in managed_group.itertuples()
                 ),
                 si_level=_au_token_to_si_level(au_token),
-                response_age=int(_mkrf_ct_bucket_specs()[0]["anchor_age"]),
-                response_fraction=float(
-                    qmd_config.get("qmd_response_fraction_by_bucket", {}).get(
-                        _mkrf_ct_bucket_specs()[0]["label"], 0.10
-                    )
-                ),
+                response_age=response_age,
+                response_fraction=response_fraction,
                 response_years=10,
             )
             for qmd_point in qmd_curve_points:
