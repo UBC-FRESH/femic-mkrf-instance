@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 import json
 import os
@@ -223,6 +224,141 @@ def _build_mkrf_log_grade_blended_prices(
         result[grade_key] = blended.to_numpy()
     result["priced_share_pct"] = priced_weight.to_numpy()
     return result
+
+
+MKRF_HARVEST_COST_CONFIG_NAME = "harvest_costs.mkrf.yaml"
+
+
+def _resolve_mkrf_harvest_cost_config(package_root: Path) -> Path | None:
+    """Return the instance-local harvest cost config, searching upward from the package root."""
+    for candidate_root in (package_root, *package_root.parents):
+        candidate = candidate_root / "config" / MKRF_HARVEST_COST_CONFIG_NAME
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def _load_mkrf_harvest_costs(config_path: Path) -> dict[str, object]:
+    """Return the resolved harvest cost basis from the instance-local cost config.
+
+    The returned mapping carries the per-cubic-metre rates keyed by cost item,
+    the per-hectare basic silviculture estimate keyed by BEC unit, the analysis
+    unit prefix map used to resolve those BEC keys, and provenance. Rates that
+    the Coast Appraisal Manual does not publish are flagged in the config with
+    ``basis: assumption``; those item names are returned separately so that
+    downstream audit output can keep the distinction visible.
+    """
+    payload = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    matrices = payload.get("matrices") or {}
+    matrix_name = payload.get("active_matrix")
+    if matrix_name not in matrices:
+        raise ValueError(
+            f"harvest cost config {config_path} does not define active matrix {matrix_name!r}"
+        )
+    matrix = matrices[matrix_name] or {}
+
+    volume_rates: dict[str, float] = {}
+    assumed_items: list[str] = []
+    for item, entry in (matrix.get("volume_costs_cad_per_m3") or {}).items():
+        entry = entry or {}
+        volume_rates[str(item)] = float(entry.get("rate") or 0.0)
+        if str(entry.get("basis") or "").strip().lower() == "assumption":
+            assumed_items.append(str(item))
+
+    stumpage = matrix.get("stumpage") or {}
+    stumpage_enabled = bool(stumpage.get("enabled"))
+    stumpage_rate = stumpage.get("rate_cad_per_m3")
+    if stumpage_enabled:
+        if stumpage_rate is None:
+            raise ValueError(
+                f"harvest cost config {config_path} enables stumpage without a rate; "
+                "supply stumpage.rate_cad_per_m3 or disable it"
+            )
+        volume_rates["stumpage"] = float(stumpage_rate)
+
+    silviculture = (matrix.get("area_costs_cad_per_ha") or {}).get(
+        "basic_silviculture"
+    ) or {}
+    silviculture_by_bec = {
+        str(bec): float(cost)
+        for bec, cost in (silviculture.get("by_bec_unit") or {}).items()
+    }
+    silviculture_default = float(silviculture.get("default") or 0.0)
+
+    prefixes = {
+        str(prefix): str(bec)
+        for prefix, bec in (payload.get("bec_unit_prefixes") or {}).items()
+    }
+    for prefix, bec in prefixes.items():
+        if bec not in silviculture_by_bec:
+            raise ValueError(
+                f"harvest cost config {config_path} maps analysis unit prefix "
+                f"{prefix!r} to unknown BEC unit {bec!r}"
+            )
+
+    provenance: dict[str, object] = dict(matrix.get("provenance") or {})
+    provenance["active_matrix"] = matrix_name
+    provenance["config_path"] = str(config_path)
+    provenance["volume_cost_rates_cad_per_m3"] = dict(sorted(volume_rates.items()))
+    provenance["volume_cost_total_cad_per_m3"] = round(sum(volume_rates.values()), 4)
+    provenance["assumed_rate_items"] = sorted(assumed_items)
+    provenance["stumpage_enabled"] = stumpage_enabled
+
+    return {
+        "volume_rates": volume_rates,
+        "assumed_items": sorted(assumed_items),
+        "silviculture_by_bec": silviculture_by_bec,
+        "silviculture_default": silviculture_default,
+        "bec_prefixes": prefixes,
+        "provenance": provenance,
+    }
+
+
+def _resolve_mkrf_bec_unit(au_id: str, prefixes: dict[str, str]) -> str | None:
+    """Return the BEC cost key for an analysis unit, matching the longest prefix first."""
+    for prefix in sorted(prefixes, key=len, reverse=True):
+        if au_id.startswith(prefix):
+            return prefixes[prefix]
+    return None
+
+
+def _build_mkrf_silviculture_costs(
+    au_ids: Sequence[str],
+    *,
+    by_bec: dict[str, float],
+    default: float,
+    prefixes: dict[str, str],
+) -> pd.DataFrame:
+    """Return the per-AU basic silviculture cost (CAD/ha) resolved from BEC unit.
+
+    The Coast Appraisal Manual keys basic silviculture cost estimates to BEC
+    zone, subzone and variant, and directs that an unlisted unit falls back to
+    the next higher classification. ``bec_unit`` is carried in the output so the
+    resolution stays auditable, and ``resolved_by`` records whether the value
+    came from a matched prefix or from the zone-level default.
+    """
+    rows: list[dict[str, object]] = []
+    for au_id in sorted({str(au_id) for au_id in au_ids}):
+        bec_unit = _resolve_mkrf_bec_unit(au_id, prefixes)
+        if bec_unit is None:
+            rows.append(
+                {
+                    "au_id": au_id,
+                    "bec_unit": "",
+                    "silviculture_cad_per_ha": default,
+                    "resolved_by": "default",
+                }
+            )
+            continue
+        rows.append(
+            {
+                "au_id": au_id,
+                "bec_unit": bec_unit,
+                "silviculture_cad_per_ha": by_bec[bec_unit],
+                "resolved_by": "bec_prefix",
+            }
+        )
+    return pd.DataFrame(rows)
 
 
 def _mkrf_ct_bucket_label(anchor_age: int) -> str:
@@ -2878,6 +3014,65 @@ def initialize_mkrf_runtime_package(
         json.dumps(log_price_provenance, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",
     )
+    harvest_cost_config_path = _resolve_mkrf_harvest_cost_config(package_root)
+    if harvest_cost_config_path is None:
+        raise FileNotFoundError(
+            "MKRF harvest cost config not found; expected "
+            f"config/{MKRF_HARVEST_COST_CONFIG_NAME} at or above {package_root}"
+        )
+    harvest_costs = _load_mkrf_harvest_costs(harvest_cost_config_path)
+    harvest_volume_rates = dict(harvest_costs["volume_rates"])
+    harvest_volume_rate_total = round(sum(harvest_volume_rates.values()), 4)
+    harvesting_rate = round(
+        harvest_volume_rates.get("tree_to_truck", 0.0)
+        + harvest_volume_rates.get("hauling", 0.0),
+        4,
+    )
+    tenure_obligation_rate = round(harvest_volume_rate_total - harvesting_rate, 4)
+    silviculture_costs = _build_mkrf_silviculture_costs(
+        log_grade_price_keys,
+        by_bec=harvest_costs["silviculture_by_bec"],
+        default=harvest_costs["silviculture_default"],
+        prefixes=harvest_costs["bec_prefixes"],
+    )
+    # Basic silviculture is a stand re-establishment obligation incurred once
+    # after final harvest, so it is gated to the clearcut treatment. Charging it
+    # on a commercial thinning entry would double-count the regeneration
+    # obligation, and because it is a fixed per-hectare charge against a light
+    # partial-cut volume it would also drive net revenue spuriously negative.
+    silviculture_treatment_labels = ["CC"] + [
+        str(spec["label"]) for spec in _mkrf_ct_bucket_specs()
+    ]
+    silviculture_treatment_gate = "Number({})".format(
+        _build_lookup_expr(
+            silviculture_treatment_labels,
+            ["1" if label == "CC" else "0" for label in silviculture_treatment_labels],
+            key_expr="treatment",
+        )
+    )
+    silviculture_au_expr = "Number({})".format(
+        _build_lookup_expr(
+            silviculture_costs["au_id"].astype(str).tolist(),
+            [
+                str(round(float(value), 4))
+                for value in silviculture_costs["silviculture_cad_per_ha"].tolist()
+            ],
+            key_expr=runtime_base_au_expr,
+        )
+    )
+    silviculture_cost_expr = f"({silviculture_au_expr})*({silviculture_treatment_gate})"
+    harvest_cost_audit_path = analysis_dir / "runtime_harvest_cost_audit.csv"
+    harvest_cost_audit = silviculture_costs.assign(
+        harvesting_cad_per_m3=harvesting_rate,
+        tenure_obligation_cad_per_m3=tenure_obligation_rate,
+        volume_cost_total_cad_per_m3=harvest_volume_rate_total,
+    )
+    harvest_cost_audit.to_csv(harvest_cost_audit_path, index=False)
+    harvest_cost_provenance_path = analysis_dir / "runtime_harvest_cost_provenance.json"
+    harvest_cost_provenance_path.write_text(
+        json.dumps(harvest_costs["provenance"], indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     species_share_audit = _build_species_share_audit_table(
         managed_species_shares=managed_species_shares,
         unmanaged_species_shares=unmanaged_species_shares,
@@ -3708,6 +3903,66 @@ def initialize_mkrf_runtime_package(
         "expression",
         {
             "statement": f"{product_curve_expr}*({log_value_total_expr})",
+            "by": "1",
+            "ignoreMissingAttributes": "false",
+        },
+    )
+    # Cost and net revenue products. Volume-driven costs scale with the harvest
+    # volume curve; basic silviculture is a per-hectare estimate, so it enters
+    # unscaled. Both are therefore expressed per hectare, matching the units of
+    # the gross value attribute above, and Patchworks scales them by treated
+    # area. Harvesting is emitted separately from the tenure obligation costs
+    # because only the tenure obligation rates are published in the Coast
+    # Appraisal Manual; the harvesting rate is a config assumption.
+    cost_volume_terms = {
+        "Harvesting": f"{product_curve_expr}*{harvesting_rate}",
+        "TenureObligation": f"{product_curve_expr}*{tenure_obligation_rate}",
+        "Silviculture": silviculture_cost_expr,
+    }
+    for cost_label, cost_statement in cost_volume_terms.items():
+        product_cost_attr = et.SubElement(
+            products_node,
+            "attribute",
+            {"label": f"product.Cost_{cost_label}.managed.total"},
+        )
+        et.SubElement(
+            product_cost_attr,
+            "expression",
+            {
+                "statement": cost_statement,
+                "by": "1",
+                "ignoreMissingAttributes": "false",
+            },
+        )
+    cost_total_expr = (
+        f"{product_curve_expr}*{harvest_volume_rate_total}+({silviculture_cost_expr})"
+    )
+    product_cost_total_attr = et.SubElement(
+        products_node,
+        "attribute",
+        {"label": "product.Cost_Total.managed.total"},
+    )
+    et.SubElement(
+        product_cost_total_attr,
+        "expression",
+        {
+            "statement": cost_total_expr,
+            "by": "1",
+            "ignoreMissingAttributes": "false",
+        },
+    )
+    product_net_revenue_attr = et.SubElement(
+        products_node,
+        "attribute",
+        {"label": "product.NetRevenue.managed.total"},
+    )
+    et.SubElement(
+        product_net_revenue_attr,
+        "expression",
+        {
+            "statement": (
+                f"{product_curve_expr}*({log_value_total_expr})-({cost_total_expr})"
+            ),
             "by": "1",
             "ignoreMissingAttributes": "false",
         },

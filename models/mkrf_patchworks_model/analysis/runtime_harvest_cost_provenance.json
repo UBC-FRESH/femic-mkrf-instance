@@ -1,0 +1,24 @@
+{
+  "active_matrix": "cam_2026_coast",
+  "assumed_rate_items": [
+    "hauling",
+    "tree_to_truck"
+  ],
+  "config_path": "C:\\Users\\gep\\Projects\\femic\\external\\femic-mkrf-instance\\config\\harvest_costs.mkrf.yaml",
+  "currency": "CAD",
+  "effective_date": "2026-01-01",
+  "notes": "Published values are transcribed from the scale-based variants. The CAM also defines cruise-based variants as the scale-based rate multiplied by the cut-to-cruise factor CTC = 0.975 (CAM 5.2). Scale-based is used here because the model tracks scaled harvest volume, not cruise volume.",
+  "publisher": "BC Ministry of Forests, Timber Pricing Branch",
+  "retrieved": "2026-07-30",
+  "stumpage_enabled": false,
+  "title": "Coast Appraisal Manual",
+  "url": "https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/timber-pricing/coast-timber-pricing/coast-appraisal-manual/cam_2026_master.pdf",
+  "volume_cost_rates_cad_per_m3": {
+    "forest_planning_and_administration": 21.56,
+    "hauling": 12.0,
+    "market_logger": 8.58,
+    "road_management": 4.73,
+    "tree_to_truck": 43.0
+  },
+  "volume_cost_total_cad_per_m3": 89.87
+}

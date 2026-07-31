@@ -35,6 +35,10 @@ _UNMANAGED_,feature.yield.unmanaged.indsp.Yc,feature.yield.unmanaged.indsp.Yc,1
 _UNMANAGED_,feature.yield.unmanaged.state.EM,feature.yield.unmanaged.state.EM,1
 _UNMANAGED_,feature.yield.unmanaged.state.EN,feature.yield.unmanaged.state.EN,1
 _UNMANAGED_,feature.yield.unmanaged.total,feature.yield.unmanaged.total,1
+_MANAGED_,product.Cost_Harvesting.managed.total,product.Cost_Harvesting.managed.total,1
+_MANAGED_,product.Cost_Silviculture.managed.total,product.Cost_Silviculture.managed.total,1
+_MANAGED_,product.Cost_TenureObligation.managed.total,product.Cost_TenureObligation.managed.total,1
+_MANAGED_,product.Cost_Total.managed.total,product.Cost_Total.managed.total,1
 _MANAGED_,product.LogValue.managed.total,product.LogValue.managed.total,1
 _MANAGED_,product.Logs_Grade_D.managed.total,product.Logs_Grade_D.managed.total,1
 _MANAGED_,product.Logs_Grade_D.managed.value,product.Logs_Grade_D.managed.value,1
@@ -52,6 +56,7 @@ _MANAGED_,product.Logs_Grade_X.managed.total,product.Logs_Grade_X.managed.total,
 _MANAGED_,product.Logs_Grade_X.managed.value,product.Logs_Grade_X.managed.value,1
 _MANAGED_,product.Logs_Grade_Y.managed.total,product.Logs_Grade_Y.managed.total,1
 _MANAGED_,product.Logs_Grade_Y.managed.value,product.Logs_Grade_Y.managed.value,1
+_MANAGED_,product.NetRevenue.managed.total,product.NetRevenue.managed.total,1
 _MANAGED_,product.area.managed.state.EM,product.area.managed.state.EM,1
 _MANAGED_,product.area.managed.state.EN,product.area.managed.state.EN,1
 _MANAGED_,product.area.managed.state.FM,product.area.managed.state.FM,1
