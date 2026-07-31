@@ -35,6 +35,7 @@ block_key = "RES_KEY";
 
 int Patchworks_TargetInit() {
    setupYieldFlowTargets(control, periods, tracks_path_prefix);
+   setupHarvestedQmdRatioAccounts(control, tracks_path_prefix);
    return 1;
 }
 
