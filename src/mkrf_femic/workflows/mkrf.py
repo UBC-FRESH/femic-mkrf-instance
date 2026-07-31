@@ -2849,7 +2849,7 @@ def initialize_mkrf_runtime_package(
     ct_bucket_specs = _mkrf_ct_bucket_specs()
     # Load silviculture config for QMD and other silviculture settings
     silviculture_config = None
-    silviculture_path = package_root.parent / "config" / "silviculture.mkrf.yaml"
+    silviculture_path = package_root.parents[1] / "config" / "silviculture.mkrf.yaml"
     if silviculture_path.exists():
         import yaml
 
