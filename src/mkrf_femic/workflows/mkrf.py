@@ -3884,6 +3884,35 @@ def initialize_mkrf_runtime_package(
             "ignoreMissingAttributes": "false",
         },
     )
+    # QMD product numerators and treated-area companions (if enabled)
+    qmd_harvested_product_accounts_enabled = bool(
+        qmd_config.get("harvested_product_accounts_enabled", False)
+    )
+    if qmd_enabled and qmd_harvested_product_accounts_enabled:
+        for bucket_spec in ct_bucket_specs:
+            bucket_label = bucket_spec["label"]
+            # QMD numerator: area * QMD
+            qmd_numerator_attr = et.SubElement(
+                products_node,
+                "attribute",
+                {"label": f"product.QMDNumerator.managed.{au_token}.{bucket_label}"},
+            )
+            et.SubElement(
+                qmd_numerator_attr,
+                "expression",
+                {
+                    "statement": f"({product_curve_expr})*({qmd_curve_ref})",
+                    "by": "1",
+                    "ignoreMissingAttributes": "false",
+                },
+            )
+            # Treated area: just area
+            treated_area_attr = et.SubElement(
+                products_node,
+                "attribute",
+                {"label": f"product.Treated.managed.{au_token}.{bucket_label}"},
+            )
+            et.SubElement(treated_area_attr, "curve", {"idref": "unity"})
     for share_column, species_label in managed_share_label_map.items():
         product_indsp_attr = et.SubElement(
             products_node,
