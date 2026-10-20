@@ -133,6 +133,20 @@ qmd:
     - "Values are placeholders pending calibration against MKRF staff guidance."
     - "QMD curves use the managed volume/height support in managed_au_curves.csv. That export does not yet carry TPH or DBHq, so stems per hectare fall back to the bootstrap planting density as a constant approximation; re-run BTC with stand-structure support to replace the fallback."
 
+greenup:
+  enabled: false
+  greenup_years: 5
+  adjacency_distance_m: 100
+  intermediate_min_ha: 40
+  max_patch_size_ha: 50
+  intermediate_max_size_percent: 5
+  intermediate_weight: 10
+  large_patch_weight: 1000
+  notes:
+    - "Optional Patchworks approximation of adjacency/greenup constraints. When enabled, the builder adds a le5 seral feature, generates the 100 m separation-block topology from the runtime fragments, and configures patch targets on feature.area.managed.seral.le5."
+    - "Patchworks patch targets are soft weighted objectives, not hard adjacency constraints. Use ws4 when an exact greenup constraint is required."
+    - "The second implementation, soft patch size distribution targets, is not parameterized yet; details TBD."
+
 retention:
   full_retention_au_ids: []
   full_retention_stratum_codes: []

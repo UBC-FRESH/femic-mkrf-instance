@@ -77,6 +77,189 @@ def _mkrf_curve_points_from_column(
 
 
 @dataclass(frozen=True)
+class MkrfGreenupConfig:
+    """Optional Patchworks approximation of adjacency/greenup constraints."""
+
+    enabled: bool = False
+    greenup_years: int = 5
+    adjacency_distance_m: float = 100.0
+    intermediate_min_ha: float = 40.0
+    max_patch_size_ha: float = 50.0
+    intermediate_max_size_percent: float = 5.0
+    intermediate_weight: float = 10.0
+    large_patch_weight: float = 1000.0
+
+    @property
+    def curve_id(self) -> str:
+        return f"le{self.greenup_years}"
+
+    @property
+    def criteria_account(self) -> str:
+        return f"feature.area.managed.seral.le{self.greenup_years}"
+
+    @property
+    def topology_filename(self) -> str:
+        return f"topo_frag{int(round(self.adjacency_distance_m))}.csv"
+
+
+def _resolve_mkrf_greenup_config(
+    silviculture_config: dict[str, object] | None,
+) -> MkrfGreenupConfig:
+    """Return the optional greenup/adjacency settings from the silviculture config."""
+    greenup_payload = (silviculture_config or {}).get("greenup") or {}
+    payload = greenup_payload if isinstance(greenup_payload, dict) else {}
+    config = MkrfGreenupConfig(
+        enabled=bool(payload.get("enabled", False)),
+        greenup_years=int(payload.get("greenup_years", 5)),
+        adjacency_distance_m=float(payload.get("adjacency_distance_m", 100.0)),
+        intermediate_min_ha=float(payload.get("intermediate_min_ha", 40.0)),
+        max_patch_size_ha=float(payload.get("max_patch_size_ha", 50.0)),
+        intermediate_max_size_percent=float(
+            payload.get("intermediate_max_size_percent", 5.0)
+        ),
+        intermediate_weight=float(payload.get("intermediate_weight", 10.0)),
+        large_patch_weight=float(payload.get("large_patch_weight", 1000.0)),
+    )
+    if config.greenup_years <= 0:
+        raise ValueError("greenup.greenup_years must be greater than zero")
+    if config.adjacency_distance_m <= 0.0:
+        raise ValueError("greenup.adjacency_distance_m must be greater than zero")
+    if config.max_patch_size_ha <= config.intermediate_min_ha:
+        raise ValueError(
+            "greenup.max_patch_size_ha must be greater than "
+            "greenup.intermediate_min_ha"
+        )
+    return config
+
+
+def build_mkrf_proximal_topology(
+    *,
+    fragments_path: Path,
+    output_path: Path,
+    distance_m: float,
+) -> pd.DataFrame:
+    """Write the Patchworks proximal-topology CSV for the runtime fragments.
+
+    The file has the same ``BLOCK1,BLOCK2,DISTANCE,LENGTH`` contract as the
+    legacy ``ProximalTopology`` export. Pairs are emitted once, ordered by
+    block key, and only when the polygon-to-polygon distance is at or below the
+    requested threshold.
+    """
+    if not fragments_path.is_file():
+        raise FileNotFoundError(
+            f"MKRF greenup topology requires runtime fragments: {fragments_path}"
+        )
+    fragments = gpd.read_file(fragments_path)
+    if "RES_KEY" not in fragments.columns:
+        raise ValueError(f"fragments file has no RES_KEY column: {fragments_path}")
+    fragments = fragments.loc[
+        fragments.geometry.notna() & ~fragments.geometry.is_empty
+    ].reset_index(drop=True)
+    keys = fragments["RES_KEY"].astype(int).to_numpy()
+    geometries = list(fragments.geometry)
+    spatial_index = fragments.sindex
+    rows: list[tuple[int, int, float, float]] = []
+    for left_index, left_geometry in enumerate(geometries):
+        candidates = spatial_index.query(
+            left_geometry.buffer(distance_m),
+            predicate="intersects",
+        )
+        for right_index in candidates:
+            right_index = int(right_index)
+            if right_index <= left_index:
+                continue
+            right_geometry = geometries[right_index]
+            distance = float(left_geometry.distance(right_geometry))
+            if distance > distance_m:
+                continue
+            shared_length = (
+                float(left_geometry.intersection(right_geometry).length)
+                if distance <= 0.0
+                else 0.0
+            )
+            rows.append(
+                (
+                    int(keys[left_index]),
+                    int(keys[right_index]),
+                    round(distance, 1),
+                    round(shared_length, 1),
+                )
+            )
+    topology = pd.DataFrame(
+        rows,
+        columns=["BLOCK1", "BLOCK2", "DISTANCE", "LENGTH"],
+    ).sort_values(["BLOCK1", "BLOCK2"], kind="stable")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    topology.to_csv(output_path, index=False)
+    return topology
+
+
+def _write_mkrf_greenup_patch_targets_script(
+    *,
+    output_path: Path,
+    config: MkrfGreenupConfig,
+) -> None:
+    """Write the BeanShell target setup for the optional greenup patch classes."""
+    intermediate_label = (
+        f"{int(config.intermediate_min_ha)}_{int(config.max_patch_size_ha)}"
+    )
+    large_label = f"{int(config.max_patch_size_ha)}plus"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(
+        dedent(
+            f"""
+            /*************************************************************
+             *
+             * Greenup/adjacency patch targets (Patchworks approximation).
+             * Generated by FEMIC from config/silviculture.mkrf.yaml.
+             *
+             * Criteria account: {config.criteria_account}
+             * Topology distance: {config.adjacency_distance_m:g} m
+             * Greenup period:   {config.greenup_years} years
+             *
+             * Patchworks patch targets are soft weighted objectives, not hard
+             * adjacency constraints. Use ws4 when a true greenup constraint is
+             * required.
+             *
+             *************************************************************/
+
+            setupGreenupPatchTargets(control, int periods) {{
+               String criteria = "{config.criteria_account}";
+
+               setActive("patch.sepblk.{intermediate_label}.size", true, false, true);
+               setMaximumPeriodic(
+                  "patch.sepblk.{intermediate_label}.size",
+                  {config.intermediate_max_size_percent:.1f},
+                  0,
+                  periods
+               );
+               setMaxWeight(
+                  "patch.sepblk.{intermediate_label}.size",
+                  {config.intermediate_weight:.1f}
+               );
+
+               setActive("patch.sepblk.{large_label}.size", true, false, true);
+               setMaximumPeriodic(
+                  "patch.sepblk.{large_label}.size",
+                  0.0,
+                  0,
+                  periods
+               );
+               setMaxWeight(
+                  "patch.sepblk.{large_label}.size",
+                  {config.large_patch_weight:.1f}
+               );
+
+               print("Configured greenup patch targets for " + criteria);
+            }}
+            """
+        ).strip()
+        + "\n",
+        encoding="utf-8",
+    )
+
+
+@dataclass(frozen=True)
 class MkrfAuBuildResult:
     """Result payload for MKRF AU-input bundle materialization."""
 
@@ -2667,6 +2850,8 @@ def initialize_mkrf_runtime_package(
     tracks_dir = package_root / "tracks"
     targets_dir = package_root / "scripts" / "targets"
     flow_targets_script_path = targets_dir / "flowtargets.bsh"
+    greenup_patch_targets_script_path = targets_dir / "patchtargets.bsh"
+    greenup_provenance_path = analysis_dir / "runtime_greenup_provenance.json"
     manifest_path = analysis_dir / "runtime_package_init_manifest.json"
     curve_status_path = analysis_dir / "runtime_curve_status.csv"
     analysis_au_runtime_status_path = analysis_dir / "au_runtime_status.csv"
@@ -2895,6 +3080,56 @@ def initialize_mkrf_runtime_package(
 
         silviculture_config = yaml.safe_load(
             silviculture_path.read_text(encoding="utf-8")
+        )
+    greenup_config = _resolve_mkrf_greenup_config(silviculture_config)
+    greenup_enabled = greenup_config.enabled
+    greenup_topology_path = package_root / "spatial" / greenup_config.topology_filename
+    greenup_topology_pair_count = 0
+    if greenup_enabled:
+        greenup_topology = build_mkrf_proximal_topology(
+            fragments_path=package_root / "spatial" / "fragments.shp",
+            output_path=greenup_topology_path,
+            distance_m=greenup_config.adjacency_distance_m,
+        )
+        greenup_topology_pair_count = int(len(greenup_topology))
+        _write_mkrf_greenup_patch_targets_script(
+            output_path=greenup_patch_targets_script_path,
+            config=greenup_config,
+        )
+        greenup_provenance_path.write_text(
+            json.dumps(
+                {
+                    "enabled": True,
+                    "greenup_years": greenup_config.greenup_years,
+                    "adjacency_distance_m": greenup_config.adjacency_distance_m,
+                    "criteria_account": greenup_config.criteria_account,
+                    "criteria_feature": f"%f.area.%m.seral.{greenup_config.curve_id}",
+                    "patch_prefix": "patch.sepblk",
+                    "intermediate_min_ha": greenup_config.intermediate_min_ha,
+                    "max_patch_size_ha": greenup_config.max_patch_size_ha,
+                    "intermediate_max_size_percent": (
+                        greenup_config.intermediate_max_size_percent
+                    ),
+                    "intermediate_weight": greenup_config.intermediate_weight,
+                    "large_patch_weight": greenup_config.large_patch_weight,
+                    "topology_path": _manifest_path_value(greenup_topology_path),
+                    "topology_pair_count": greenup_topology_pair_count,
+                    "fragments_path": _manifest_path_value(
+                        package_root / "spatial" / "fragments.shp"
+                    ),
+                    "patch_targets_script": _manifest_path_value(
+                        greenup_patch_targets_script_path
+                    ),
+                    "implementation_boundary": (
+                        "Patchworks patch targets are soft weighted objectives, "
+                        "not exact adjacency/greenup constraints."
+                    ),
+                },
+                indent=2,
+                sort_keys=True,
+            )
+            + "\n",
+            encoding="utf-8",
         )
     runtime_base_au_expr = (
         f"if(startswith(au,'thn'),substring(au,{len(_mkrf_ct_bucket_prefix(40))}),au)"
@@ -3397,6 +3632,21 @@ def initialize_mkrf_runtime_package(
     le10_curve = et.SubElement(forestmodel_root, "curve", {"id": "le10"})
     et.SubElement(le10_curve, "point", {"x": "10", "y": "1"})
     et.SubElement(le10_curve, "point", {"x": "11", "y": "0"})
+    greenup_curve_id = greenup_config.curve_id
+    if greenup_enabled and greenup_curve_id != "le10":
+        greenup_curve = et.SubElement(
+            forestmodel_root, "curve", {"id": greenup_curve_id}
+        )
+        et.SubElement(
+            greenup_curve,
+            "point",
+            {"x": str(greenup_config.greenup_years), "y": "1"},
+        )
+        et.SubElement(
+            greenup_curve,
+            "point",
+            {"x": str(greenup_config.greenup_years + 1), "y": "0"},
+        )
     # QMD config and pre-build curve refs (must be before any attribute references)
     qmd_config = silviculture_config.get("qmd", {}) if silviculture_config else {}
     qmd_enabled = bool(qmd_config.get("enabled", False))
@@ -3812,6 +4062,13 @@ def initialize_mkrf_runtime_package(
         {"label": "%f.area.%m.seral.le10"},
     )
     et.SubElement(area_seral_attr, "curve", {"idref": "le10"})
+    if greenup_enabled and greenup_curve_id != "le10":
+        area_greenup_attr = et.SubElement(
+            area_seral_features,
+            "attribute",
+            {"label": f"%f.area.%m.seral.{greenup_curve_id}"},
+        )
+        et.SubElement(area_greenup_attr, "curve", {"idref": greenup_curve_id})
     managed_yield_select = et.SubElement(
         forestmodel_root,
         "select",
@@ -4200,6 +4457,9 @@ def initialize_mkrf_runtime_package(
             "ignoreMissingAttributes": "false",
         },
     )
+    required_curve_ids = ["unity", "le10"]
+    if greenup_enabled and greenup_curve_id != "le10":
+        required_curve_ids.append(greenup_curve_id)
     validate_forestmodel_xml_tree(
         root=forestmodel_root,
         required_define_fields=(
@@ -4219,7 +4479,7 @@ def initialize_mkrf_runtime_package(
             "lowoper",
             "frd",
         ),
-        required_curve_ids=("unity", "le10"),
+        required_curve_ids=tuple(required_curve_ids),
         require_cc_treatment=True,
     )
     write_forestmodel_xml(root=forestmodel_root, path=forestmodel_xml_path)
@@ -4595,6 +4855,32 @@ def initialize_mkrf_runtime_package(
         encoding="utf-8",
     )
 
+    greenup_pin_block = ""
+    if greenup_enabled:
+        intermediate_label = (
+            f"{int(greenup_config.intermediate_min_ha)}_"
+            f"{int(greenup_config.max_patch_size_ha)}"
+        )
+        large_label = f"{int(greenup_config.max_patch_size_ha)}plus"
+        greenup_pin_block = (
+            f'   control.inputTopology("../spatial/'
+            f'{greenup_config.topology_filename}", '
+            f"{greenup_config.adjacency_distance_m:g}d);\n"
+            "   if (usePatches) {\n"
+            f'      control.addPatchTarget("{greenup_config.criteria_account}", '
+            f'"patch.sepblk.0_{int(greenup_config.intermediate_min_ha)}", '
+            f"0.0, {greenup_config.intermediate_min_ha:.1f});\n"
+            f'      control.addPatchTarget("{greenup_config.criteria_account}", '
+            f'"patch.sepblk.{intermediate_label}", '
+            f"{greenup_config.intermediate_min_ha:.1f}, "
+            f"{greenup_config.max_patch_size_ha:.1f});\n"
+            f'      control.addPatchTarget("{greenup_config.criteria_account}", '
+            f'"patch.sepblk.{large_label}", '
+            f"{greenup_config.max_patch_size_ha:.1f}, 99999.0);\n"
+            "      setupGreenupPatchTargets(control, periods);\n"
+            "   }\n"
+        )
+
     analysis_pin_text = (
         dedent(
             """
@@ -4907,12 +5193,44 @@ def initialize_mkrf_runtime_package(
             "   setupHarvestedQmdRatioAccounts(control, tracks_path_prefix);\n",
             1,
         )
+    if greenup_enabled:
+        analysis_pin_text = (
+            analysis_pin_text.replace(
+                "boolean usePatches = false;",
+                "boolean usePatches = true;",
+                1,
+            )
+            .replace(
+                'sourceRelative("../scripts/targets/flowtargets.bsh");\n',
+                'sourceRelative("../scripts/targets/flowtargets.bsh");\n'
+                'sourceRelative("../scripts/targets/patchtargets.bsh");\n',
+                1,
+            )
+            .replace(
+                "   setupYieldFlowTargets(control, periods, tracks_path_prefix);\n",
+                "   setupYieldFlowTargets(control, periods, tracks_path_prefix);\n"
+                + greenup_pin_block,
+                1,
+            )
+            .replace(
+                'patch1Theme.setFieldname("feature.area.managed.seral.le10.size");',
+                f'patch1Theme.setFieldname("{greenup_config.criteria_account}.size");',
+                1,
+            )
+        )
     analysis_pin_path.write_text(analysis_pin_text, encoding="utf-8")
 
     manifest_payload = {
         "schema_version": 1,
         "package_root": _manifest_path_value(package_root),
         "runtime_generation_status": "initialized_only",
+        "greenup": {
+            "enabled": greenup_enabled,
+            "greenup_years": greenup_config.greenup_years,
+            "adjacency_distance_m": greenup_config.adjacency_distance_m,
+            "criteria_account": greenup_config.criteria_account,
+            "topology_pair_count": greenup_topology_pair_count,
+        },
         "source_contracts": {
             "selected_au_csv": _manifest_path_value(selected_au_csv),
             "stand_origin_assignment_csv": _manifest_path_value(
@@ -4961,6 +5279,11 @@ def initialize_mkrf_runtime_package(
                 headless_runtime_common_path
             ),
             "flow_targets_bsh": _manifest_path_value(flow_targets_script_path),
+            "greenup_topology_csv": _manifest_path_value(greenup_topology_path),
+            "greenup_patch_targets_bsh": _manifest_path_value(
+                greenup_patch_targets_script_path
+            ),
+            "greenup_provenance_json": _manifest_path_value(greenup_provenance_path),
         },
         "counts": {
             "selected_au_count": selected_au_count,

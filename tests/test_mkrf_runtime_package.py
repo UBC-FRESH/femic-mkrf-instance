@@ -4,14 +4,20 @@ import json
 from pathlib import Path
 from xml.etree import ElementTree as et
 
+import geopandas as gpd
 import pandas as pd
 import pytest
+from shapely.geometry import box
 
 from mkrf_femic.workflows.mkrf import (
+    MkrfGreenupConfig,
     _build_unmanaged_species_share_table,
     _manifest_path_value,
+    _resolve_mkrf_greenup_config,
     _resolve_mkrf_qmd_response_fraction,
+    _write_mkrf_greenup_patch_targets_script,
     audit_mkrf_runtime_sanity,
+    build_mkrf_proximal_topology,
     initialize_mkrf_runtime_package,
 )
 
@@ -129,6 +135,62 @@ def test_resolve_mkrf_qmd_response_fraction_uses_intensity_then_bucket_then_defa
     )
 
 
+def test_resolve_mkrf_greenup_config_defaults_and_validation() -> None:
+    config = _resolve_mkrf_greenup_config(None)
+    assert config.enabled is False
+    assert config.greenup_years == 5
+    assert config.adjacency_distance_m == pytest.approx(100.0)
+    assert config.criteria_account == "feature.area.managed.seral.le5"
+    assert config.topology_filename == "topo_frag100.csv"
+
+    with pytest.raises(ValueError):
+        _resolve_mkrf_greenup_config(
+            {"greenup": {"enabled": True, "max_patch_size_ha": 30}}
+        )
+
+
+def test_build_mkrf_proximal_topology_filters_distance(tmp_path: Path) -> None:
+    fragments_path = tmp_path / "fragments.shp"
+    gpd.GeoDataFrame(
+        {"RES_KEY": [1, 2, 3]},
+        geometry=[
+            box(0.0, 0.0, 10.0, 10.0),
+            box(12.0, 0.0, 22.0, 10.0),
+            box(200.0, 0.0, 210.0, 10.0),
+        ],
+        crs="EPSG:3006",
+    ).to_file(fragments_path)
+    output_path = tmp_path / "topo_frag100.csv"
+
+    topology = build_mkrf_proximal_topology(
+        fragments_path=fragments_path,
+        output_path=output_path,
+        distance_m=100.0,
+    )
+
+    assert topology.columns.tolist() == ["BLOCK1", "BLOCK2", "DISTANCE", "LENGTH"]
+    assert topology[["BLOCK1", "BLOCK2"]].values.tolist() == [[1, 2]]
+    assert topology["DISTANCE"].tolist() == [pytest.approx(2.0)]
+    assert output_path.is_file()
+
+
+def test_write_mkrf_greenup_patch_targets_script(tmp_path: Path) -> None:
+    output_path = tmp_path / "patchtargets.bsh"
+    config = MkrfGreenupConfig(enabled=True, greenup_years=5)
+    _write_mkrf_greenup_patch_targets_script(
+        output_path=output_path,
+        config=config,
+    )
+
+    script = output_path.read_text(encoding="utf-8")
+    assert "setupGreenupPatchTargets(control, int periods)" in script
+    assert 'String criteria = "feature.area.managed.seral.le5";' in script
+    assert '"patch.sepblk.40_50.size"' in script
+    assert '"patch.sepblk.50plus.size"' in script
+    assert "setMaximumPeriodic(" in script
+    assert "setMaxWeight(" in script
+
+
 def test_initialize_mkrf_runtime_package_writes_manifest(tmp_path: Path) -> None:
     package_root = tmp_path / "models" / "mkrf_patchworks_model"
 
@@ -155,10 +217,27 @@ qmd:
     CT45_medium: 0.15
 commercial_thinning:
   default_intensity: medium
+greenup:
+  enabled: true
+  greenup_years: 5
+  adjacency_distance_m: 100
+  intermediate_min_ha: 40
+  max_patch_size_ha: 50
 """.strip()
         + "\n",
         encoding="utf-8",
     )
+
+    spatial_dir = package_root / "spatial"
+    spatial_dir.mkdir(parents=True)
+    gpd.GeoDataFrame(
+        {"RES_KEY": [101, 102], "CONTCLAS": ["C", "C"]},
+        geometry=[
+            box(0.0, 0.0, 10.0, 10.0),
+            box(12.0, 0.0, 22.0, 10.0),
+        ],
+        crs="EPSG:3006",
+    ).to_file(spatial_dir / "fragments.shp")
 
     selected_au_csv = tmp_path / "selected_au_table.csv"
     pd.DataFrame(
@@ -528,6 +607,23 @@ commercial_thinning:
         assert ct35_curve[40.0] > base_curve[40.0]
         assert ct45_curve[60.0] > base_curve[60.0]
 
+    assert 'curve id="le5"' in forestmodel_text
+    assert "%f.area.%m.seral.le5" in forestmodel_text
+    assert payload["greenup"]["enabled"] is True
+    assert payload["greenup"]["criteria_account"] == (
+        "feature.area.managed.seral.le5"
+    )
+    topology_path = package_root / "spatial" / "topo_frag100.csv"
+    assert topology_path.is_file()
+    topology = pd.read_csv(topology_path)
+    assert topology[["BLOCK1", "BLOCK2"]].values.tolist() == [[101, 102]]
+    assert topology["DISTANCE"].tolist() == [pytest.approx(2.0)]
+    patch_targets_script = package_root / "scripts" / "targets" / "patchtargets.bsh"
+    assert patch_targets_script.is_file()
+    assert "feature.area.managed.seral.le5" in patch_targets_script.read_text(
+        encoding="utf-8"
+    )
+
     analysis_pin_text = result.analysis_pin_path.read_text(encoding="utf-8")
     assert 'String tracks_path_prefix = "../tracks/";' in analysis_pin_text
     assert (
@@ -538,6 +634,28 @@ commercial_thinning:
         "setupHarvestedQmdRatioAccounts(control, tracks_path_prefix);"
         in analysis_pin_text
     )
+    assert "boolean usePatches = true;" in analysis_pin_text
+    assert (
+        'sourceRelative("../scripts/targets/patchtargets.bsh");'
+        in analysis_pin_text
+    )
+    assert (
+        'control.inputTopology("../spatial/topo_frag100.csv", 100d);'
+        in analysis_pin_text
+    )
+    assert (
+        'control.addPatchTarget("feature.area.managed.seral.le5", '
+        '"patch.sepblk.0_40", 0.0, 40.0);' in analysis_pin_text
+    )
+    assert (
+        'control.addPatchTarget("feature.area.managed.seral.le5", '
+        '"patch.sepblk.40_50", 40.0, 50.0);' in analysis_pin_text
+    )
+    assert (
+        'control.addPatchTarget("feature.area.managed.seral.le5", '
+        '"patch.sepblk.50plus", 50.0, 99999.0);' in analysis_pin_text
+    )
+    assert "setupGreenupPatchTargets(control, periods);" in analysis_pin_text
     assert 'sourceRelative("headless_runtime_common.bsh");' in analysis_pin_text
     assert 'sourceRelative("../scripts/targets/flowtargets.bsh");' in analysis_pin_text
     assert 'block_shape = "../spatial/fragments.shp";' in analysis_pin_text
@@ -567,7 +685,7 @@ commercial_thinning:
         in analysis_pin_text
     )
     assert (
-        'patch1Theme.setFieldname("feature.area.managed.seral.le10.size");'
+        'patch1Theme.setFieldname("feature.area.managed.seral.le5.size");'
         in analysis_pin_text
     )
     assert "femicQueueHeadlessStage();" in analysis_pin_text
