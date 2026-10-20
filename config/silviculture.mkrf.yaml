@@ -131,6 +131,7 @@ qmd:
     - "Per-(bucket, intensity) keys are 'CT{age}_{intensity}' (e.g., 'CT35_medium')."
     - "Falls back to per-bucket value if intensity not listed; falls back to flat default (0.10) if bucket not listed."
     - "Values are placeholders pending calibration against MKRF staff guidance."
+    - "QMD curves use the managed volume/height support in managed_au_curves.csv. That export does not yet carry TPH or DBHq, so stems per hectare fall back to the bootstrap planting density as a constant approximation; re-run BTC with stand-structure support to replace the fallback."
 
 retention:
   full_retention_au_ids: []

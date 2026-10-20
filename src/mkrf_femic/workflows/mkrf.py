@@ -60,6 +60,22 @@ def _au_token_to_si_level(au_token: str) -> str:
     return "M"
 
 
+def _mkrf_curve_points_from_column(
+    frame: pd.DataFrame,
+    column: str,
+) -> tuple[CurvePoint, ...]:
+    """Return positive ``(age, value)`` points from a managed-curve column."""
+    if column not in frame.columns or "age" not in frame.columns:
+        return ()
+    values = pd.to_numeric(frame[column], errors="coerce")
+    points: list[CurvePoint] = []
+    for age, value in zip(frame["age"], values):
+        if pd.isna(value) or float(value) <= 0.0:
+            continue
+        points.append(CurvePoint(x=float(age), y=float(value)))
+    return tuple(points)
+
+
 @dataclass(frozen=True)
 class MkrfAuBuildResult:
     """Result payload for MKRF AU-input bundle materialization."""
@@ -395,6 +411,30 @@ def _mkrf_ct_bucket_specs() -> tuple[dict[str, int | str], ...]:
         }
         for anchor_age in _MKRF_CT_BUCKET_ANCHORS
     )
+
+
+def _resolve_mkrf_qmd_response_fraction(
+    qmd_config: dict[str, object],
+    *,
+    bucket_label: str,
+    intensity: str,
+) -> float:
+    """Resolve the CT diameter-response fraction for a bucket and intensity.
+
+    Resolution order matches the documented config contract: the
+    per-``(bucket, intensity)`` entry wins, then the per-bucket entry, then the
+    flat ``qmd_response_fraction`` default.
+    """
+    by_bucket_intensity = (
+        qmd_config.get("qmd_response_fraction_by_bucket_intensity") or {}
+    )
+    by_bucket = qmd_config.get("qmd_response_fraction_by_bucket") or {}
+    intensity_key = f"{bucket_label}_{intensity}"
+    if intensity_key in by_bucket_intensity:
+        return float(by_bucket_intensity[intensity_key])
+    if bucket_label in by_bucket:
+        return float(by_bucket[bucket_label])
+    return float(qmd_config.get("qmd_response_fraction", 0.10))
 
 
 def _ct_product_species_fraction_expr(
@@ -3360,56 +3400,104 @@ def initialize_mkrf_runtime_package(
     # QMD config and pre-build curve refs (must be before any attribute references)
     qmd_config = silviculture_config.get("qmd", {}) if silviculture_config else {}
     qmd_enabled = bool(qmd_config.get("enabled", False))
-    
-    # Resolve default intensity from CT config
-    ct_config = silviculture_config.get("commercial_thinning", {}) if silviculture_config else {}
+    ct_config = (
+        silviculture_config.get("commercial_thinning", {})
+        if silviculture_config
+        else {}
+    )
     default_intensity = str(ct_config.get("default_intensity", "medium")).lower()
-    
-    qmd_curve_refs = {}
+
+    # Base QMD curves are pre-thinning (no diameter response), so they can back
+    # the harvested-stem numerator without double-counting the CT response.
+    # Bucket curves apply the response at that bucket's anchor age; the
+    # feature attribute selects the bucket curve from the thinned AU prefix.
+    managed_density_by_au: dict[str, float] = {}
+    if "density_total" in managed_bootstrap.columns:
+        for bootstrap_row in managed_bootstrap.itertuples(index=False):
+            density = pd.to_numeric(
+                getattr(bootstrap_row, "density_total", None), errors="coerce"
+            )
+            if pd.notna(density) and float(density) > 0.0:
+                managed_density_by_au[str(bootstrap_row.au_id)] = float(density)
+
+    qmd_base_curve_refs: dict[str, str] = {}
+    qmd_bucket_curve_refs: dict[tuple[str, str], str] = {}
+    qmd_feature_exprs: dict[str, str] = {}
     if qmd_enabled:
         for row in runtime_curve_status.itertuples(index=False):
-            au_token = str(row.au_id).upper().replace("-", "_")
-            managed_group = managed_by_au.get(str(row.au_id))
+            au_id = str(row.au_id)
+            au_token = au_id.upper().replace("-", "_")
+            managed_group = managed_by_au.get(au_id)
             if managed_group is None or managed_group.empty:
                 continue
-            
-            # Resolve QMD response fraction with intensity-aware fallback
-            response_fraction = 0.10  # default
-            by_bucket_intensity = qmd_config.get("qmd_response_fraction_by_bucket_intensity", {})
-            by_bucket = qmd_config.get("qmd_response_fraction_by_bucket", {})
-            
-            # Try per-(bucket, intensity) first, then per-bucket, then default
-            for bucket_spec in ct_bucket_specs:
-                bucket_label = str(bucket_spec["label"])
-                intensity_key = f"{bucket_label}_{default_intensity}"
-                if intensity_key in by_bucket_intensity:
-                    response_fraction = float(by_bucket_intensity[intensity_key])
-                    response_age = int(bucket_spec["anchor_age"])
-                    break
-                elif bucket_label in by_bucket:
-                    response_fraction = float(by_bucket[bucket_label])
-                    response_age = int(bucket_spec["anchor_age"])
-                    break
-            
-            qmd_curve_ref = f"QMD_{au_token}"
-            qmd_curve = et.SubElement(forestmodel_root, "curve", {"id": qmd_curve_ref})
-            qmd_curve_points = _build_qmd_curve_points(
-                source_curve_points=tuple(
-                    CurvePoint(x=float(r.age), y=float(r.volume))
-                    for r in managed_group.itertuples()
-                ),
-                si_level=_au_token_to_si_level(au_token),
-                response_age=response_age,
-                response_fraction=response_fraction,
-                response_years=10,
+            source_curve_points = tuple(
+                CurvePoint(x=float(r.age), y=float(r.volume))
+                for r in managed_group.itertuples()
             )
-            for qmd_point in qmd_curve_points:
+            si_level = _au_token_to_si_level(au_token)
+            qmd_support = {
+                "source_curve_points": source_curve_points,
+                "si_level": si_level,
+                "height_curve_points": _mkrf_curve_points_from_column(
+                    managed_group, "height"
+                ),
+                "tph_curve_points": _mkrf_curve_points_from_column(
+                    managed_group, "tph"
+                ),
+                "stems_per_ha": managed_density_by_au.get(au_id),
+                "direct_diameter_curve_points": _mkrf_curve_points_from_column(
+                    managed_group, "dbhq"
+                ),
+            }
+
+            base_curve_ref = f"QMD_{au_token}"
+            base_curve = et.SubElement(
+                forestmodel_root, "curve", {"id": base_curve_ref}
+            )
+            for qmd_point in _build_qmd_curve_points(**qmd_support):
                 et.SubElement(
-                    qmd_curve,
+                    base_curve,
                     "point",
                     {"x": str(float(qmd_point.x)), "y": str(float(qmd_point.y))},
                 )
-            qmd_curve_refs[au_token] = qmd_curve_ref
+            qmd_base_curve_refs[au_token] = base_curve_ref
+
+            bucket_keys: list[str] = []
+            bucket_curve_ids: list[str] = []
+            for bucket_spec in ct_bucket_specs:
+                bucket_label = str(bucket_spec["label"])
+                response_curve_ref = f"QMD_{au_token}_{bucket_label}"
+                response_curve = et.SubElement(
+                    forestmodel_root, "curve", {"id": response_curve_ref}
+                )
+                for qmd_point in _build_qmd_curve_points(
+                    **qmd_support,
+                    response_age=int(bucket_spec["anchor_age"]),
+                    response_fraction=_resolve_mkrf_qmd_response_fraction(
+                        qmd_config,
+                        bucket_label=bucket_label,
+                        intensity=default_intensity,
+                    ),
+                    response_years=10,
+                ):
+                    et.SubElement(
+                        response_curve,
+                        "point",
+                        {"x": str(float(qmd_point.x)), "y": str(float(qmd_point.y))},
+                    )
+                qmd_bucket_curve_refs[(au_token, bucket_label)] = response_curve_ref
+                bucket_keys.append(f"{bucket_spec['prefix']}{au_id}")
+                bucket_curve_ids.append(response_curve_ref)
+
+            bucket_curve_lookup_expr = _build_lookup_expr(
+                bucket_keys,
+                bucket_curve_ids,
+                key_expr="au",
+            )
+            qmd_feature_exprs[au_token] = (
+                f"if(startswith(au,'thn'),curveId({bucket_curve_lookup_expr}),"
+                f"curveId({base_curve_ref}))"
+            )
     for row in runtime_curve_status.itertuples(index=False):
         au_token = str(row.au_id).upper().replace("-", "_")
         if bool(row.has_first_growth_curve):
@@ -3758,16 +3846,24 @@ def initialize_mkrf_runtime_package(
             "ignoreMissingAttributes": "false",
         },
     )
-    # QMD feature attribute (if enabled and curve was pre-built)
-    if qmd_enabled and au_token in qmd_curve_refs:
-        managed_yield_qmd_attr = et.SubElement(
-            managed_yield_features,
-            "attribute",
-            {"label": f"feature.QMD.managed.{au_token}"},
-        )
-        et.SubElement(
-            managed_yield_qmd_attr, "curve", {"idref": qmd_curve_refs[au_token]}
-        )
+    # QMD feature attributes (one per AU; the expression selects the bucket
+    # response curve for thinned AUs and the pre-thinning curve otherwise).
+    if qmd_enabled:
+        for au_token in sorted(qmd_feature_exprs):
+            managed_yield_qmd_attr = et.SubElement(
+                managed_yield_features,
+                "attribute",
+                {"label": f"feature.QMD.managed.{au_token}"},
+            )
+            et.SubElement(
+                managed_yield_qmd_attr,
+                "expression",
+                {
+                    "statement": qmd_feature_exprs[au_token],
+                    "by": "1",
+                    "ignoreMissingAttributes": "false",
+                },
+            )
     managed_yield_merch_select = et.SubElement(
         forestmodel_root,
         "select",
@@ -3862,12 +3958,7 @@ def initialize_mkrf_runtime_package(
                 "ignoreMissingAttributes": "false",
             },
         )
-    # Pre-build all QMD curves (must be defined before any attribute references them)
-    qmd_curve_refs = {}
-    qmd_config = silviculture_config.get("qmd", {}) if silviculture_config else {}
-    qmd_enabled = bool(qmd_config.get("enabled", False))
-    if qmd_enabled:
-        products_select = et.SubElement(
+    products_select = et.SubElement(
         forestmodel_root,
         "select",
         {"statement": ""},
@@ -3924,30 +4015,37 @@ def initialize_mkrf_runtime_package(
         qmd_config.get("harvested_product_accounts_enabled", False)
     )
     if qmd_enabled and qmd_harvested_product_accounts_enabled:
-        for bucket_spec in ct_bucket_specs:
-            bucket_label = bucket_spec["label"]
-            # QMD numerator: area * QMD
-            qmd_numerator_attr = et.SubElement(
-                products_node,
-                "attribute",
-                {"label": f"product.QMDNumerator.managed.{au_token}.{bucket_label}"},
-            )
-            et.SubElement(
-                qmd_numerator_attr,
-                "expression",
-                {
-                    "statement": f"({product_curve_expr})*(curveId('{qmd_curve_ref}'))",
-                    "by": "1",
-                    "ignoreMissingAttributes": "false",
-                },
-            )
-            # Treated area: just area
-            treated_area_attr = et.SubElement(
-                products_node,
-                "attribute",
-                {"label": f"product.Treated.managed.{au_token}.{bucket_label}"},
-            )
-            et.SubElement(treated_area_attr, "curve", {"idref": "unity"})
+        for row in runtime_curve_status.itertuples(index=False):
+            au_token = str(row.au_id).upper().replace("-", "_")
+            base_curve_ref = qmd_base_curve_refs.get(au_token)
+            if base_curve_ref is None:
+                continue
+            for bucket_spec in ct_bucket_specs:
+                bucket_label = str(bucket_spec["label"])
+                # The numerator is the pre-thinning QMD curve, matching the
+                # K3Z convention. Dividing by treated area gives mean
+                # harvested-stem QMD without double-counting the diameter
+                # response that belongs to the standing-stock feature curve.
+                qmd_numerator_attr = et.SubElement(
+                    products_node,
+                    "attribute",
+                    {
+                        "label": (
+                            f"product.QMDNumerator.managed.{au_token}.{bucket_label}"
+                        )
+                    },
+                )
+                et.SubElement(
+                    qmd_numerator_attr,
+                    "curve",
+                    {"idref": base_curve_ref},
+                )
+                treated_area_attr = et.SubElement(
+                    products_node,
+                    "attribute",
+                    {"label": f"product.Treated.managed.{au_token}.{bucket_label}"},
+                )
+                et.SubElement(treated_area_attr, "curve", {"idref": "unity"})
     for share_column, species_label in managed_share_label_map.items():
         product_indsp_attr = et.SubElement(
             products_node,
@@ -4497,7 +4595,7 @@ def initialize_mkrf_runtime_package(
         encoding="utf-8",
     )
 
-    analysis_pin_path.write_text(
+    analysis_pin_text = (
         dedent(
             """
             /*
@@ -4795,9 +4893,21 @@ def initialize_mkrf_runtime_package(
             }
             """
         ).strip()
-        + "\n",
-        encoding="utf-8",
+        + "\n"
     )
+    if qmd_enabled:
+        analysis_pin_text = analysis_pin_text.replace(
+            'sourceRelative("../scripts/targets/flowtargets.bsh");\n',
+            'sourceRelative("../scripts/targets/flowtargets.bsh");\n'
+            'sourceRelative("../scripts/targets/qmdRatioAccounts.bsh");\n',
+            1,
+        ).replace(
+            "   setupYieldFlowTargets(control, periods, tracks_path_prefix);\n",
+            "   setupYieldFlowTargets(control, periods, tracks_path_prefix);\n"
+            "   setupHarvestedQmdRatioAccounts(control, tracks_path_prefix);\n",
+            1,
+        )
+    analysis_pin_path.write_text(analysis_pin_text, encoding="utf-8")
 
     manifest_payload = {
         "schema_version": 1,

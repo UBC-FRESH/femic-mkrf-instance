@@ -10,6 +10,7 @@ import pytest
 from mkrf_femic.workflows.mkrf import (
     _build_unmanaged_species_share_table,
     _manifest_path_value,
+    _resolve_mkrf_qmd_response_fraction,
     audit_mkrf_runtime_sanity,
     initialize_mkrf_runtime_package,
 )
@@ -90,8 +91,74 @@ def test_build_unmanaged_species_share_table_aggregates_area_weighted_species_mi
     assert second["share_fd"] == pytest.approx(0.0)
 
 
+def test_resolve_mkrf_qmd_response_fraction_uses_intensity_then_bucket_then_default() -> (
+    None
+):
+    config = {
+        "qmd_response_fraction": 0.07,
+        "qmd_response_fraction_by_bucket": {"CT35": 0.10, "CT40": 0.12},
+        "qmd_response_fraction_by_bucket_intensity": {
+            "CT35_medium": 0.11,
+            "CT40_high": 0.14,
+        },
+    }
+
+    assert (
+        _resolve_mkrf_qmd_response_fraction(
+            config, bucket_label="CT35", intensity="medium"
+        )
+        == pytest.approx(0.11)
+    )
+    assert (
+        _resolve_mkrf_qmd_response_fraction(
+            config, bucket_label="CT40", intensity="high"
+        )
+        == pytest.approx(0.14)
+    )
+    assert (
+        _resolve_mkrf_qmd_response_fraction(
+            config, bucket_label="CT40", intensity="medium"
+        )
+        == pytest.approx(0.12)
+    )
+    assert (
+        _resolve_mkrf_qmd_response_fraction(
+            config, bucket_label="CT45", intensity="medium"
+        )
+        == pytest.approx(0.07)
+    )
+
+
 def test_initialize_mkrf_runtime_package_writes_manifest(tmp_path: Path) -> None:
     package_root = tmp_path / "models" / "mkrf_patchworks_model"
+
+    repo_root = Path(__file__).resolve().parents[1]
+    config_dir = tmp_path / "config"
+    config_dir.mkdir()
+    for config_name in ("log_grade_prices.mkrf.yaml", "harvest_costs.mkrf.yaml"):
+        (config_dir / config_name).write_text(
+            (repo_root / "config" / config_name).read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
+    (config_dir / "silviculture.mkrf.yaml").write_text(
+        """
+qmd:
+  enabled: true
+  harvested_product_accounts_enabled: true
+  qmd_response_fraction_by_bucket:
+    CT35: 0.10
+    CT40: 0.12
+    CT45: 0.15
+  qmd_response_fraction_by_bucket_intensity:
+    CT35_medium: 0.10
+    CT40_medium: 0.12
+    CT45_medium: 0.15
+commercial_thinning:
+  default_intensity: medium
+""".strip()
+        + "\n",
+        encoding="utf-8",
+    )
 
     selected_au_csv = tmp_path / "selected_au_table.csv"
     pd.DataFrame(
@@ -166,6 +233,7 @@ def test_initialize_mkrf_runtime_package_writes_manifest(tmp_path: Path) -> None
                 "base_managed_pct_3": 20.0,
                 "base_managed_pct_4": 0.0,
                 "base_managed_pct_5": 0.0,
+                "density_total": 1500,
             },
             {
                 "au_id": "cwh_vm_1_dr_hw",
@@ -189,6 +257,7 @@ def test_initialize_mkrf_runtime_package_writes_manifest(tmp_path: Path) -> None
                 "base_managed_pct_3": 10.0,
                 "base_managed_pct_4": 0.0,
                 "base_managed_pct_5": 0.0,
+                "density_total": 1500,
             },
         ]
     ).to_csv(managed_bootstrap_csv, index=False)
@@ -210,12 +279,21 @@ def test_initialize_mkrf_runtime_package_writes_manifest(tmp_path: Path) -> None
     ).to_csv(first_growth_diagnostics_csv, index=False)
 
     managed_curves_csv = tmp_path / "managed_au_curves.csv"
-    pd.DataFrame(
-        [
-            {"au_id": "cwh_vm_1_hw_cw", "age": 0, "volume": 0.0},
-            {"au_id": "cwh_vm_1_dr_hw", "age": 0, "volume": 0.0},
-        ]
-    ).to_csv(managed_curves_csv, index=False)
+    managed_curve_rows = []
+    for au_id, volumes in (
+        ("cwh_vm_1_hw_cw", (0.0, 50.0, 180.0, 360.0)),
+        ("cwh_vm_1_dr_hw", (0.0, 40.0, 150.0, 320.0)),
+    ):
+        for age, volume in zip((0, 20, 40, 60), volumes):
+            managed_curve_rows.append(
+                {
+                    "au_id": au_id,
+                    "age": age,
+                    "volume": volume,
+                    "height": 0.0 if age == 0 else age * 0.4,
+                }
+            )
+    pd.DataFrame(managed_curve_rows).to_csv(managed_curves_csv, index=False)
 
     managed_run_manifest_json = tmp_path / "managed_au_run_manifest.json"
     managed_run_manifest_json.write_text(
@@ -417,8 +495,49 @@ def test_initialize_mkrf_runtime_package_writes_manifest(tmp_path: Path) -> None
         in forestmodel_text
     )
 
+    forestmodel_root = et.parse(result.forestmodel_xml_path).getroot()
+    qmd_labels = {
+        attribute.get("label")
+        for attribute in forestmodel_root.iter("attribute")
+        if (attribute.get("label") or "").startswith(
+            ("feature.QMD", "product.QMDNumerator", "product.Treated")
+        )
+    }
+    for au_token in ("CWH_VM_1_HW_CW", "CWH_VM_1_DR_HW"):
+        assert f"feature.QMD.managed.{au_token}" in qmd_labels
+        for bucket_label in ("CT35", "CT40", "CT45"):
+            assert (
+                f"product.QMDNumerator.managed.{au_token}.{bucket_label}"
+                in qmd_labels
+            )
+            assert f"product.Treated.managed.{au_token}.{bucket_label}" in qmd_labels
+
+    qmd_curves = {
+        curve.get("id"): {
+            float(point.get("x")): float(point.get("y"))
+            for point in curve.findall("point")
+        }
+        for curve in forestmodel_root.findall("curve")
+        if (curve.get("id") or "").startswith("QMD_")
+    }
+    for au_token in ("CWH_VM_1_HW_CW", "CWH_VM_1_DR_HW"):
+        base_curve = qmd_curves[f"QMD_{au_token}"]
+        ct35_curve = qmd_curves[f"QMD_{au_token}_CT35"]
+        ct45_curve = qmd_curves[f"QMD_{au_token}_CT45"]
+        assert base_curve[40.0] > 0.0
+        assert ct35_curve[40.0] > base_curve[40.0]
+        assert ct45_curve[60.0] > base_curve[60.0]
+
     analysis_pin_text = result.analysis_pin_path.read_text(encoding="utf-8")
     assert 'String tracks_path_prefix = "../tracks/";' in analysis_pin_text
+    assert (
+        'sourceRelative("../scripts/targets/qmdRatioAccounts.bsh");'
+        in analysis_pin_text
+    )
+    assert (
+        "setupHarvestedQmdRatioAccounts(control, tracks_path_prefix);"
+        in analysis_pin_text
+    )
     assert 'sourceRelative("headless_runtime_common.bsh");' in analysis_pin_text
     assert 'sourceRelative("../scripts/targets/flowtargets.bsh");' in analysis_pin_text
     assert 'block_shape = "../spatial/fragments.shp";' in analysis_pin_text
