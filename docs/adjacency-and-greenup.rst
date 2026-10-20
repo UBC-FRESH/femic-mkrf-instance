@@ -78,6 +78,40 @@ The matrix build is required because the patch target criteria account must
 exist in ``tracks/accounts.csv``. A pin that references the new criterion
 against a stale track package will fail at load time.
 
+Platform-neutral validation with ws4
+------------------------------------
+
+The ws4 matrix builder can compile the same ``ForestModelXML`` recipe and
+runtime fragments without the Patchworks runtime:
+
+.. code-block:: bash
+
+   cd /path/to/ws4
+   python -m ws4.cli build \
+     --xml /path/to/models/mkrf_patchworks_model/xml/forestmodel.xml \
+     --fragments /path/to/models/mkrf_patchworks_model/spatial/fragments.shp \
+     --out /tmp/mkrf_matrix
+
+On the current canonical MKRF recipe this compiled 3,183 fragment portions into
+7,048 tracks and 10,014 treatments, and ``python -m ws4.cli validate`` accepted
+the dataset. With ``greenup.enabled: true`` the compiled dataset also contained
+``feature.area.managed.seral.le5`` and the corresponding account, and its
+``le5`` curve encoded the expected 5-year on / 6-year off transition.
+
+This is a structural validation of the recipe and matrix, not a drop-in
+replacement for ``tracks/*.csv``: ws4 writes its canonical Parquet dataset,
+which uses a different column contract from the Patchworks matrix tables.
+
+Known ws4 compiler gaps at this time:
+
+- the nested ``curveId``/``lookupTable`` ``feature.QMD.managed.*`` expression
+  is not compiled into the ws4 features table, although the QMD product
+  numerator and treated-area accounts are;
+- ws4 does not read ``analysis/base.pin``, so the Patchworks patch-target
+  definitions are not exercised by the ws4 build. Use ws4's own
+  ``optimize --max-opening-ha`` / ``--min-green-up-years`` options when an
+  exact greenup constraint is required.
+
 Deferred work
 -------------
 
