@@ -111,7 +111,8 @@ The ws4 move-delta evaluator prices the patch accounts and the optional
 opening/green-up/core-area penalties, so the search stays on the fast path.
 The pilot no longer passes `min_green_up_years`; the opening targets are the
 policy instrument. `--max-opening-ha` remains available as an optional hard
-ceiling.
+ceiling. `--coalesce-min-area-ha`/`--coalesce-max-area-ha` control the
+area-aware coalesce move; the current default band is 5-40 ha.
 
 ## Pilot result (2026-10-21)
 
@@ -129,6 +130,8 @@ Current-policy search (`anna_policy_search`, 500 iterations with the coalesce mo
 - objective **27,228,894**
 - the search now uses the `coalesce` operator, which aligns adjacent blocks onto one
 treatment year
+- an area-aware variant (`--coalesce-min-area-ha 5 --coalesce-max-area-ha 40`) was also
+tried; it did not improve the patch shares on this schedule
 - patch shares still exceed the <=1 ha zero target and the 1-5 ha 10% maximum;
   the search needs a stronger patch-aware move set or a longer run
 - no hard spatial violations (the hard 100 m rule is disabled)
