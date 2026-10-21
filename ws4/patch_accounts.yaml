@@ -1,0 +1,20 @@
+# Patch accounts translated from the MKRF Patchworks base.pin.
+#
+# The legacy PIN defines two patch families:
+#
+#   patch.grpblk.*  on product.area.managed.treat.CC  (20 m topology)
+#   patch.sepblk.*  on feature.area.managed.seral.le10 (100 m topology)
+#
+# WS4 derives the area/size/frequency/shape sub-accounts from these
+# definitions, so no runtime Patchworks target table is needed.
+accounts:
+  - name: patch.grpblk
+    criteria: product.area.managed.treat.CC
+    threshold: 0.0
+    size_classes: [1.0, 5.0, 40.0, 50.0, .inf]
+    search_distance: 20.0
+  - name: patch.sepblk
+    criteria: feature.area.managed.seral.le10
+    threshold: 0.0
+    size_classes: [40.0, 50.0, .inf]
+    search_distance: 100.0

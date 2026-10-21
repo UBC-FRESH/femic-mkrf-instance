@@ -19,6 +19,7 @@ The retained PoC benchmark/reference package remains under
    legacy-archive-reference
    treatments-and-state-logic
    adjacency-and-greenup
+   ws4-pilot
    analysis-units-and-yield-curves
    data-package-crosswalk
    benchmark-results

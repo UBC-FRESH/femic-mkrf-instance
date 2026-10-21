@@ -38,3 +38,6 @@ _build/
 # Legacy intermediate artifacts
 data/*.feather
 data/*.pkl
+
+# ws4 pilot runtime outputs
+ws4/runtime/

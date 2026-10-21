@@ -39,6 +39,26 @@ Not included yet:
 The remaining active lane in the parent FEMIC repository is now closeout/docs
 work for the completed canonical rebuild runtime surface.
 
+## ws4 pilot
+
+MKRF is the flagship pilot instance for replacing the Patchworks control lane
+with ws4. The translated inputs live under `ws4/`:
+
+- `ws4/targets.yaml` — harvest, flow, growing-stock and patch targets;
+- `ws4/patch_accounts.yaml` — `patch.grpblk` / `patch.sepblk` definitions;
+- `ws4/topology.csv` — 100 m proximal topology from the runtime fragments;
+- `ws4/schedules/` — baseline and green-up-aware schedules; and
+- `ws4/run_pilot.py` — build, simulate, constrain, and summarise.
+
+Quick start:
+
+```bash
+python ws4/run_pilot.py
+```
+
+See `ws4/README.md` for the Patchworks-to-ws4 translation table and the
+current pilot results.
+
 ## Current managed-lane contract
 
 The current managed/planted AU compile now treats:
