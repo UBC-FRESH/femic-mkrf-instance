@@ -1,6 +1,6 @@
 {
   "blocks_scheduled": 1742,
-  "incumbent_objective": 3591306.9285575603,
+  "incumbent_objective": 3591306.92855756,
   "initial_schedule_path": "/srv/shared-data/gep/ws4/femic/external/femic-mkrf-instance/ws4/schedules/greenup_greedy.csv",
   "iterations": 50,
   "kind": "search",

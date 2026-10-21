@@ -87,17 +87,15 @@ The same inputs drive the ws4 target search:
 python ws4/run_optimize.py --iterations 50
 ```
 
-`run_optimize.py` loads `greenup_greedy.csv`, evaluates every move with the
-whole-schedule evaluator (so the opening/green-up penalty is part of the
-objective), and writes a normal ws4 search run. The `--seed-greedy` path is
+`run_optimize.py` loads `greenup_greedy.csv`, starts the ws4 search from it,
+and writes a normal ws4 search run. The ws4 move-delta evaluator now prices the
+opening, green-up and core-area penalties, so the fast path keeps the spatial
+rules in every move. `--full-evaluation` is available as a whole-schedule
+cross-check.
+
+The pilot keeps `spatial_weight` at 1,000,000. The `--seed-greedy` path is
 expensive on the full 1,763-block model because it scores every candidate
 chain for every block; the translated schedule is the pilot's warm start.
-
-The pilot keeps `spatial_weight` at 1,000,000. The default ws4 incremental
-delta evaluator prices targets only and can improve them by violating the
-spatial rules, so the harness deliberately uses the whole-schedule path. That
-is a ws4-side improvement to make next: fold the spatial penalty into the
-delta path.
 
 ## Pilot result (2026-10-21)
 
@@ -114,7 +112,8 @@ accounts and the exact ws4 spatial check use the same five-year criterion.
 - 0-40 ha separation-block share: 78.4% at year 0, 100% from year 30 onward;
   40-50 ha and 50+ ha shares are 0% after the initial young-stand snapshot
 
-`run_optimize.py --iterations 50` from that schedule:
+`run_optimize.py --iterations 50` from that schedule (the ws4 move-delta path,
+with the spatial penalty priced per move):
 
 - spatial violations: **0**
 - blocks scheduled: 1,742
@@ -132,9 +131,8 @@ accounts and the exact ws4 spatial check use the same five-year criterion.
   canonical MKRF model is a 4,810 ha research forest.
 - Green-up is now enabled in the canonical runtime config. Set
   `greenup.enabled: false` and rebuild to return to the old surface.
-- ws4's incremental delta evaluator does not include the spatial penalty. The
-  pilot harness uses the whole-schedule evaluator; folding the spatial penalty
-  into the delta path is the next ws4 improvement.
+- The ws4 move-delta evaluator now includes the opening, green-up and core-area
+  penalties. `--full-evaluation` remains available as a slower cross-check.
 - ws4 writes its canonical Parquet matrix, not the Patchworks `tracks/*.csv`
   column contract. The Patchworks runtime package remains in the instance for
   comparison until the project finishes the cutover.

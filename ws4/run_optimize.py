@@ -78,6 +78,11 @@ def main() -> None:
         default=1_000_000.0,
         help="Penalty weight on the opening/green-up rules; the pilot keeps this high.",
     )
+    parser.add_argument(
+        "--full-evaluation",
+        action="store_true",
+        help="Use the whole-schedule evaluator instead of the move-delta path.",
+    )
     args = parser.parse_args()
 
     import random
@@ -106,22 +111,24 @@ def main() -> None:
     optimiser = Optimizer.from_dataset(args.dataset, cfg)
     initial = load_schedule_csv(args.initial_schedule)
     targets = load_targets(args.targets)
-    # Use the whole-schedule evaluator so the opening/green-up penalty is part of
-    # every move. The incremental delta path prices targets only, so a search on
-    # that path can improve the targets by violating the spatial rules.
-    problem = Problem(
-        evaluate=lambda schedule: optimiser._evaluate(schedule, targets),
-        candidates=optimiser.candidates(),
-        registry=optimiser.registry,
-    )
-    best, objective = solve_sa(
-        problem,
-        random.Random(args.seed),
-        iterations=args.iterations,
-        temperature=args.temperature,
-        cooling=args.cooling,
-        initial=initial,
-    )
+    if args.full_evaluation:
+        # Whole-schedule evaluation, kept as a cross-check and as a fallback.
+        problem = Problem(
+            evaluate=lambda schedule: optimiser._evaluate(schedule, targets),
+            candidates=optimiser.candidates(),
+            registry=optimiser.registry,
+        )
+        best, objective = solve_sa(
+            problem,
+            random.Random(args.seed),
+            iterations=args.iterations,
+            temperature=args.temperature,
+            cooling=args.cooling,
+            initial=initial,
+        )
+    else:
+        # The move-delta path now prices the opening and green-up penalty too.
+        best, objective = optimiser._solve(args.seed, initial=initial)
 
     out = args.out
     out.mkdir(parents=True, exist_ok=True)

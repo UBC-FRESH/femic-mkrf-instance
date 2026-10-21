@@ -60,10 +60,10 @@ Limits
 - The legacy 500,000 m3/decade harvest floor is retained in
   ``ws4/targets_legacy.yaml`` for parity, but the runnable pilot uses a
   calibrated 300,000 floor for the 4,810 ha model.
-- The ws4 incremental delta evaluator prices targets only, so the pilot
-  harness uses the whole-schedule evaluator to keep the opening/green-up
-  penalty in every move. Folding that penalty into the delta path is the next
-  ws4-side improvement.
+- The ws4 move-delta evaluator now prices the opening, green-up and core-area
+  penalties alongside the account targets. The pilot harness uses that fast
+  path by default; ``--full-evaluation`` remains available as a slower
+  cross-check.
 - Legacy scenario targets that depend on THLB, biodiversity, ECA, UWR or VQO
   accounts are not mapped because the canonical MKRF dataset has no such
   accounts.
