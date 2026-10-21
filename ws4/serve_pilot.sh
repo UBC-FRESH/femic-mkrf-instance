@@ -16,6 +16,7 @@ exec python -m ws4.cli serve \
   --runs "$INSTANCE_ROOT/ws4/runtime" \
   --targets "$INSTANCE_ROOT/ws4/targets.yaml" \
   --geometry "$INSTANCE_ROOT/ws4/runtime/fragments.geojson" \
+  --crs EPSG:3005 \
   --topology "$INSTANCE_ROOT/ws4/topology.csv" \
   --patch-accounts "$INSTANCE_ROOT/ws4/patch_accounts.yaml" \
   --host 127.0.0.1 \
