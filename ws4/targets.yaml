@@ -95,105 +95,207 @@ targets:
     flow_end_period: 9
     min_weight: 100.0
 
-  # --- legacy separation-block size limits --------------------------------
-  # 06_patch.bsh: 40-50 ha max 5% of recent-harvest patch area, 50+ ha max 0.
-  - account: patch.sepblk.40_50.size
-    period: 1
-    maximum: 5.0
-    period_width: 10
-    max_weight: 10.0
-  - account: patch.sepblk.40_50.size
-    period: 2
-    maximum: 5.0
-    period_width: 10
-    max_weight: 10.0
-  - account: patch.sepblk.40_50.size
-    period: 3
-    maximum: 5.0
-    period_width: 10
-    max_weight: 10.0
-  - account: patch.sepblk.40_50.size
-    period: 4
-    maximum: 5.0
-    period_width: 10
-    max_weight: 10.0
-  - account: patch.sepblk.40_50.size
-    period: 5
-    maximum: 5.0
-    period_width: 10
-    max_weight: 10.0
-  - account: patch.sepblk.40_50.size
-    period: 6
-    maximum: 5.0
-    period_width: 10
-    max_weight: 10.0
-  - account: patch.sepblk.40_50.size
-    period: 7
-    maximum: 5.0
-    period_width: 10
-    max_weight: 10.0
-  - account: patch.sepblk.40_50.size
-    period: 8
-    maximum: 5.0
-    period_width: 10
-    max_weight: 10.0
-  - account: patch.sepblk.40_50.size
-    period: 9
-    maximum: 5.0
-    period_width: 10
-    max_weight: 10.0
-  - account: patch.sepblk.40_50.size
-    period: 10
-    maximum: 5.0
-    period_width: 10
-    max_weight: 10.0
-  - account: patch.sepblk.50_9999999.size
+  # --- opening size-class targets (MKRF staff guidance, October 2026) ----
+  # Target shares are maxima; 5-40 ha has no target. Weight mapping:
+  # Very High = 1,000,000, High = 100,000, None = no target.
+  # Classes: <=1, >1-5, >5-40, >40-50, >50 ha.
+  - account: patch.grpblk.0_1.size
     period: 1
     maximum: 0.0
     period_width: 10
-    max_weight: 1000.0
-  - account: patch.sepblk.50_9999999.size
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 1
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 1
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 1
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
     period: 2
     maximum: 0.0
     period_width: 10
-    max_weight: 1000.0
-  - account: patch.sepblk.50_9999999.size
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 2
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 2
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 2
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
     period: 3
     maximum: 0.0
     period_width: 10
-    max_weight: 1000.0
-  - account: patch.sepblk.50_9999999.size
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 3
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 3
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 3
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
     period: 4
     maximum: 0.0
     period_width: 10
-    max_weight: 1000.0
-  - account: patch.sepblk.50_9999999.size
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 4
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 4
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 4
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
     period: 5
     maximum: 0.0
     period_width: 10
-    max_weight: 1000.0
-  - account: patch.sepblk.50_9999999.size
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 5
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 5
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 5
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
     period: 6
     maximum: 0.0
     period_width: 10
-    max_weight: 1000.0
-  - account: patch.sepblk.50_9999999.size
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 6
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 6
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 6
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
     period: 7
     maximum: 0.0
     period_width: 10
-    max_weight: 1000.0
-  - account: patch.sepblk.50_9999999.size
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 7
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 7
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 7
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
     period: 8
     maximum: 0.0
     period_width: 10
-    max_weight: 1000.0
-  - account: patch.sepblk.50_9999999.size
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 8
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 8
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 8
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
     period: 9
     maximum: 0.0
     period_width: 10
-    max_weight: 1000.0
-  - account: patch.sepblk.50_9999999.size
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 9
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 9
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 9
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
     period: 10
     maximum: 0.0
     period_width: 10
-    max_weight: 1000.0
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 10
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 10
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 10
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0

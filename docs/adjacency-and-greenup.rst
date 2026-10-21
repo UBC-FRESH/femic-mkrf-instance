@@ -9,6 +9,16 @@ MKRF runtime package. It is enabled in the canonical runtime and is configured
 under the ``greenup`` block in ``config/silviculture.mkrf.yaml``; set
 ``greenup.enabled: false`` and rebuild to turn it off.
 
+.. note::
+
+   **Current MKRF policy supersedes the 100 m rule.** MKRF staff guidance from
+   October 2026 is to control opening size with size-class targets and weights,
+   not with an arbitrary 100 m adjacency rule. The active ws4 policy is in
+   ``ws4/patch_accounts.yaml`` and ``ws4/targets.yaml``; the ``greenup`` block
+   described on this page remains as the legacy/reference Patchworks surface
+   and as an optional ws4 constraint. See
+   ``planning/2026-10-21_basecamp_mkrf_decisions.md``.
+
 .. warning::
 
    Patchworks patch targets are soft weighted objectives, not hard adjacency

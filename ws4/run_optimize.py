@@ -23,7 +23,7 @@ import pandas as pd
 INSTANCE_ROOT = Path(__file__).resolve().parents[1]
 WS4_ROOT = INSTANCE_ROOT / "ws4"
 DEFAULT_DATASET = WS4_ROOT / "runtime" / "matrix"
-DEFAULT_RUN = WS4_ROOT / "runtime" / "optimized"
+DEFAULT_RUN = WS4_ROOT / "runtime" / "anna_policy_search"
 
 
 def load_schedule_csv(path: Path) -> dict[int, tuple[tuple[str, int], ...]]:
@@ -70,8 +70,18 @@ def main() -> None:
     parser.add_argument("--temperature", type=float, default=1000.0)
     parser.add_argument("--cooling", type=float, default=0.99)
     parser.add_argument("--out", type=Path, default=DEFAULT_RUN)
-    parser.add_argument("--max-opening-ha", type=float, default=50.0)
-    parser.add_argument("--min-green-up-years", type=int, default=5)
+    parser.add_argument(
+        "--max-opening-ha",
+        type=float,
+        default=None,
+        help="Optional hard opening ceiling; the pilot uses the size-class targets instead.",
+    )
+    parser.add_argument(
+        "--min-green-up-years",
+        type=int,
+        default=None,
+        help="Optional hard green-up interval; the pilot no longer uses a 100 m adjacency rule.",
+    )
     parser.add_argument(
         "--spatial-weight",
         type=float,

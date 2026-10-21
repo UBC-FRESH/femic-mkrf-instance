@@ -1,24 +1,15 @@
 # Patch accounts translated from the MKRF Patchworks base.pin.
 #
-# The legacy PIN defines two patch families:
+# Active ws4 policy (MKRF staff guidance, October 2026): opening size is
+# controlled with size-class targets and weights, not with an arbitrary 100 m
+# adjacency rule. The patch membership criterion is the clearcut area; blocks
+# join a patch only when they actually touch (search_distance 0.0).
 #
-#   patch.grpblk.*  on product.area.managed.treat.CC  (20 m topology)
-#   patch.sepblk.*  on the recent-harvest seral criterion (100 m topology)
-#
-# The legacy PIN used seral.le10. The canonical runtime now enables the
-# optional greenup block, so this pilot uses seral.le5 to match the 5-year
-# policy. WS4 derives the area/size/frequency/shape sub-accounts from these
-# definitions, so no runtime Patchworks target table is needed.
+# The legacy patch.sepblk (100 m / seral.le10) account is retained in the
+# Patchworks reference package but is not part of the active ws4 pilot.
 accounts:
   - name: patch.grpblk
     criteria: product.area.managed.treat.CC
     threshold: 0.0
     size_classes: [1.0, 5.0, 40.0, 50.0, .inf]
-    search_distance: 20.0
-  - name: patch.sepblk
-    criteria: feature.area.managed.seral.le5
-    threshold: 0.0
-    # Keep the same non-overlapping ladder as patch.grpblk so the web UI can
-    # present one class list without overlapping numeric ranges.
-    size_classes: [1.0, 5.0, 40.0, 50.0, .inf]
-    search_distance: 100.0
+    search_distance: 0.0

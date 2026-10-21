@@ -145,7 +145,8 @@ greenup:
   notes:
     - "Optional Patchworks approximation of adjacency/greenup constraints. When enabled, the builder adds a le5 seral feature, generates the 100 m separation-block topology from the runtime fragments, and configures patch targets on feature.area.managed.seral.le5."
     - "Patchworks patch targets are soft weighted objectives, not hard adjacency constraints. Use ws4 when an exact greenup constraint is required."
-    - "The second implementation, soft patch size distribution targets, is not parameterized yet; details TBD."
+    - "MKRF staff guidance (October 2026) supersedes the 100 m rule for the active ws4 pilot: opening size is controlled by size-class targets and weights on touching blocks. This greenup block is retained for the Patchworks reference surface."
+    - "The soft patch-size distribution implementation now lives in ws4/targets.yaml and ws4/patch_accounts.yaml; details are in planning/2026-10-21_basecamp_mkrf_decisions.md."
 
 retention:
   full_retention_au_ids: []

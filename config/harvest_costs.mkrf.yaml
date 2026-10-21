@@ -1,5 +1,12 @@
 # MKRF harvest cost and net revenue basis.
 #
+# PUBLICATION NOTE: this file is part of the public open model. It uses
+# published Coast Appraisal Manual rates and explicitly flagged assumptions.
+# It does not contain MKRF contractor rates, raw sorts/revenue spreadsheets or
+# other internal financial data. The private planning overlay is tracked in the
+# separate private instance repository and linked as a git submodule in
+# internal checkouts; see planning/data_publication_boundary.md.
+#
 # Companion to log_grade_prices.mkrf.yaml. That file supplies gross log value
 # ($/m3 by species and grade, Vancouver Log Market). This file supplies the
 # cost side so the model can express net revenue rather than gross revenue

@@ -21,7 +21,7 @@ INSTANCE_ROOT = Path(__file__).resolve().parents[1]
 MODEL_ROOT = INSTANCE_ROOT / "models" / "mkrf_patchworks_model"
 WS4_ROOT = INSTANCE_ROOT / "ws4"
 DEFAULT_DATASET = WS4_ROOT / "runtime" / "matrix"
-DEFAULT_RUN = WS4_ROOT / "runtime" / "greenup_greedy"
+DEFAULT_RUN = WS4_ROOT / "runtime" / "baseline"
 
 
 def _require_ws4() -> None:
@@ -68,8 +68,6 @@ def run_simulation(
         topology_csv=WS4_ROOT / "topology.csv",
         patch_accounts=load_patch_accounts(WS4_ROOT / "patch_accounts.yaml"),
         patch_membership=True,
-        max_opening_ha=50.0,
-        min_green_up_years=5,
     )
     return run_dir
 
@@ -119,22 +117,22 @@ def summarise(run_dir: Path) -> dict[str, object]:
     size_columns = [
         column
         for column in patches.columns
-        if column.startswith("patch.sepblk.") and column.endswith(".size")
+        if column.startswith("patch.grpblk.") and column.endswith(".size")
     ]
-    sepblk = patches.loc[
+    patch_frame = patches.loc[
         patches["year"].isin(range(0, 101, 10)),
-        ["year", *size_columns, "patch.sepblk.TOTAL.frequency"],
+        ["year", *size_columns, "patch.grpblk.TOTAL.frequency"],
     ].copy()
-    sepblk_by_decade = {
+    grpblk_by_decade = {
         int(row["year"]): {
             **{
-                column.removeprefix("patch.sepblk.").removesuffix(".size")
+                column.removeprefix("patch.grpblk.").removesuffix(".size")
                 + "_pct": round(float(row[column]), 3)
                 for column in size_columns
             },
-            "patch_count": float(row["patch.sepblk.TOTAL.frequency"]),
+            "patch_count": float(row["patch.grpblk.TOTAL.frequency"]),
         }
-        for row in sepblk.to_dict("records")
+        for row in patch_frame.to_dict("records")
     }
 
     violations_path = run_dir / "spatial_violations.csv"
@@ -150,7 +148,7 @@ def summarise(run_dir: Path) -> dict[str, object]:
     summary: dict[str, object] = {
         "harvest_by_decade_m3": harvest_by_decade,
         "growing_stock_by_decade_m3": growing_stock_by_decade,
-        "sepblk_by_decade": sepblk_by_decade,
+        "grpblk_by_decade": grpblk_by_decade,
         "spatial_violation_count": len(violations),
         "spatial_violation_kinds": (
             violations.groupby("kind").size().to_dict() if len(violations) else {}

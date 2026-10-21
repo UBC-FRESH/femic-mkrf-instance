@@ -59,6 +59,17 @@ python ws4/run_pilot.py
 See `ws4/README.md` for the Patchworks-to-ws4 translation table and the
 current pilot results.
 
+## Data publication boundary
+
+The public model is the open teaching/research model. It uses published cost
+and price bases only; raw MKRF cost/revenue spreadsheets and contractor rates
+are not published. Internal detailed financial work belongs in the tracked
+private overlay repository, linked as a git submodule for internal checkouts.
+
+See `planning/data_publication_boundary.md` for the classification and audit
+commands, and `planning/2026-10-21_basecamp_mkrf_decisions.md` for the MKRF
+staff decisions behind it.
+
 ## Current managed-lane contract
 
 The current managed/planted AU compile now treats:
