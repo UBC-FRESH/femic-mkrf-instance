@@ -134,7 +134,7 @@ qmd:
     - "QMD curves use the managed volume/height support in managed_au_curves.csv. That export does not yet carry TPH or DBHq, so stems per hectare fall back to the bootstrap planting density as a constant approximation; re-run BTC with stand-structure support to replace the fallback."
 
 greenup:
-  enabled: false
+  enabled: true
   greenup_years: 5
   adjacency_distance_m: 100
   intermediate_min_ha: 40

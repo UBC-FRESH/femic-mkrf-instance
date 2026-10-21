@@ -12,6 +12,13 @@
     "first_growth_curve_family": "smoothed_bin_pchip",
     "managed_only_runtime_units_allowed": true
   },
+  "greenup": {
+    "adjacency_distance_m": 100.0,
+    "criteria_account": "feature.area.managed.seral.le5",
+    "enabled": true,
+    "greenup_years": 5,
+    "topology_pair_count": 10906
+  },
   "managed_only_runtime_policy": {
     "insufficient_support_borrowing": "forbidden",
     "insufficient_support_fallback_generation": "forbidden",
@@ -42,6 +49,9 @@
     "first_growth_diagnostics_csv": "external/femic-mkrf-instance/data/model_input_bundle/first_growth_au_fit_diagnostics.csv",
     "flow_targets_bsh": "external/femic-mkrf-instance/models/mkrf_patchworks_model/scripts/targets/flowtargets.bsh",
     "forestmodel_xml": "external/femic-mkrf-instance/models/mkrf_patchworks_model/xml/forestmodel.xml",
+    "greenup_patch_targets_bsh": "external/femic-mkrf-instance/models/mkrf_patchworks_model/scripts/targets/patchtargets.bsh",
+    "greenup_provenance_json": "external/femic-mkrf-instance/models/mkrf_patchworks_model/analysis/runtime_greenup_provenance.json",
+    "greenup_topology_csv": "external/femic-mkrf-instance/models/mkrf_patchworks_model/spatial/topo_frag100.csv",
     "headless_runtime_common_bsh": "external/femic-mkrf-instance/models/mkrf_patchworks_model/analysis/headless_runtime_common.bsh",
     "hw_ingrowth_overlay_audit_csv": "external/femic-mkrf-instance/models/mkrf_patchworks_model/analysis/planted_hw_ingrowth_overlay_audit.csv",
     "hw_ingrowth_overlay_summary_csv": "external/femic-mkrf-instance/models/mkrf_patchworks_model/analysis/planted_hw_ingrowth_overlay_summary.csv",

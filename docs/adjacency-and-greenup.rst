@@ -5,8 +5,9 @@ Purpose
 -------
 
 This page documents the optional greenup/adjacency surface in the canonical
-MKRF runtime package. It is disabled by default and is configured under the
-``greenup`` block in ``config/silviculture.mkrf.yaml``.
+MKRF runtime package. It is enabled in the canonical runtime and is configured
+under the ``greenup`` block in ``config/silviculture.mkrf.yaml``; set
+``greenup.enabled: false`` and rebuild to turn it off.
 
 .. warning::
 
@@ -20,7 +21,7 @@ Configuration
 .. code-block:: yaml
 
    greenup:
-     enabled: false
+     enabled: true
      greenup_years: 5
      adjacency_distance_m: 100
      intermediate_min_ha: 40

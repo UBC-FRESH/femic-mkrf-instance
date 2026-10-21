@@ -7,11 +7,12 @@ int periods = 30;
 Horizon.setHorizon(periods, 10);
 
 boolean useRoutes = false;
-boolean usePatches = false;
+boolean usePatches = true;
 
 String tracks_path_prefix = "../tracks/";
 sourceRelative("headless_runtime_common.bsh");
 sourceRelative("../scripts/targets/flowtargets.bsh");
+sourceRelative("../scripts/targets/patchtargets.bsh");
 sourceRelative("../scripts/targets/qmdRatioAccounts.bsh");
 
 blocks = tracks_path_prefix + "blocks.csv";
@@ -35,6 +36,13 @@ block_key = "RES_KEY";
 
 int Patchworks_TargetInit() {
    setupYieldFlowTargets(control, periods, tracks_path_prefix);
+   control.inputTopology("../spatial/topo_frag100.csv", 100d);
+   if (usePatches) {
+      control.addPatchTarget("feature.area.managed.seral.le5", "patch.sepblk.0_40", 0.0, 40.0);
+      control.addPatchTarget("feature.area.managed.seral.le5", "patch.sepblk.40_50", 40.0, 50.0);
+      control.addPatchTarget("feature.area.managed.seral.le5", "patch.sepblk.50plus", 50.0, 99999.0);
+      setupGreenupPatchTargets(control, periods);
+   }
    setupHarvestedQmdRatioAccounts(control, tracks_path_prefix);
    return 1;
 }
@@ -258,7 +266,7 @@ int PatchWorks_Init() {
          layers.add(patch0Layer);
 
          NumericTheme patch1Theme = new NumericTheme(blockData);
-         patch1Theme.setFieldname("feature.area.managed.seral.le10.size");
+         patch1Theme.setFieldname("feature.area.managed.seral.le5.size");
          patch1Theme.addElement(
             new ThemeElement(
                "0_40",

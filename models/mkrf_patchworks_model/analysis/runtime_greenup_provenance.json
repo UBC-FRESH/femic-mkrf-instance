@@ -1,0 +1,18 @@
+{
+  "adjacency_distance_m": 100.0,
+  "criteria_account": "feature.area.managed.seral.le5",
+  "criteria_feature": "%f.area.%m.seral.le5",
+  "enabled": true,
+  "fragments_path": "external/femic-mkrf-instance/models/mkrf_patchworks_model/spatial/fragments.shp",
+  "greenup_years": 5,
+  "implementation_boundary": "Patchworks patch targets are soft weighted objectives, not exact adjacency/greenup constraints.",
+  "intermediate_max_size_percent": 5.0,
+  "intermediate_min_ha": 40.0,
+  "intermediate_weight": 10.0,
+  "large_patch_weight": 1000.0,
+  "max_patch_size_ha": 50.0,
+  "patch_prefix": "patch.sepblk",
+  "patch_targets_script": "external/femic-mkrf-instance/models/mkrf_patchworks_model/scripts/targets/patchtargets.bsh",
+  "topology_pair_count": 10906,
+  "topology_path": "external/femic-mkrf-instance/models/mkrf_patchworks_model/spatial/topo_frag100.csv"
+}

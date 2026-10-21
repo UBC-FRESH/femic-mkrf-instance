@@ -173,9 +173,18 @@ def main() -> None:
     )
     parser.add_argument("--years", type=int, default=100)
     parser.add_argument("--skip-build", action="store_true")
+    parser.add_argument(
+        "--rebuild",
+        action="store_true",
+        help="Recompile the ws4 matrix even when a cached manifest exists.",
+    )
     args = parser.parse_args()
 
     _require_ws4()
+    if args.rebuild:
+        import shutil
+
+        shutil.rmtree(args.dataset, ignore_errors=True)
     dataset = args.dataset if args.skip_build else build_dataset(args.dataset)
     run_dir = run_simulation(
         dataset_dir=dataset,

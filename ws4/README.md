@@ -10,13 +10,17 @@ the old `.pin` / `.bsh` behaviour to ws4 inputs.
 
 ```bash
 cd /path/to/femic-mkrf-instance
-python ws4/run_pilot.py
+python ws4/run_pilot.py --rebuild
+python ws4/run_optimize.py
 ```
 
-The script compiles the recipe and fragments into
-`ws4/runtime/matrix/`, replays `ws4/schedules/greenup_greedy.csv` with the
-translated patch accounts and the 5-year / 50 ha constraints, and writes
-`ws4/runtime/greenup_greedy/pilot_summary.json`.
+`run_pilot.py` compiles the recipe and fragments into `ws4/runtime/matrix/`,
+replays `ws4/schedules/greenup_greedy.csv` with the translated patch accounts
+and the 5-year / 50 ha constraints, and writes
+`ws4/runtime/greenup_greedy/pilot_summary.json`. `run_optimize.py` starts the
+ws4 search from that schedule, keeps the spatial weight high, and writes
+`ws4/runtime/optimized/`. Use `--rebuild` after changing the runtime XML or
+fragments; otherwise the cached matrix is reused.
 
 Requires an importable `ws4` (`pip install -e /path/to/ws4`). The pilot was run
 against the ws4 checkout at `/srv/shared-data/gep/ws4/ws4`.
@@ -30,11 +34,11 @@ ws4/serve_pilot.sh
 ```
 
 Then open <http://127.0.0.1:8011/>. The launcher points the UI at the
-pilot matrix, the `greenup_greedy` run, the translated targets, the 100 m
-topology, the patch accounts, and the fragments GeoJSON. `PORT=...` overrides
-the port. The default bind is loopback only; ws4 provides no authentication,
-so do not expose it with `--allow-remote` unless you put it behind a trusted
-proxy.
+pilot matrix, the `greenup_greedy` simulation and `optimized` search runs, the
+translated targets, the 100 m topology, the patch accounts, and the fragments
+GeoJSON. `PORT=...` overrides the port. The default bind is loopback only; ws4
+provides no authentication, so do not expose it with `--allow-remote` unless
+you put it behind a trusted proxy.
 
 ## Translation map
 
@@ -44,7 +48,7 @@ proxy.
 | `base.pin` `block_shape`, `block_key = "RES_KEY"` | `--fragments` shapefile; compiler block key |
 | `base.pin` `control.inputTopology(..., 20d/100d)` | `ws4/topology.csv`; `patch_accounts.yaml` `search_distance` |
 | `base.pin` `control.addPatchTarget("product.area.managed.treat.CC", "patch.grpblk...")` | `patch_accounts.yaml` `patch.grpblk` |
-| `base.pin` `control.addPatchTarget("feature.area.managed.seral.le10", "patch.sepblk...")` | `patch_accounts.yaml` `patch.sepblk` |
+| `base.pin` `control.addPatchTarget("feature.area.managed.seral.le5", "patch.sepblk...")` | `patch_accounts.yaml` `patch.sepblk` |
 | `Targets/01_harvest.bsh` minimum periodic harvest | `targets.yaml` `product.yield.managed.total` minimum entries |
 | `Targets/07_flow.bsh` `feature.flow.yield.total` | `targets.yaml` `feature.yield.managed.total` `flow: ndy` |
 | `Targets/07_flow.bsh` `product.flow.yield.even` | `targets.yaml` `product.yield.managed.total` `flow: even` |
@@ -72,57 +76,65 @@ proxy.
 | `schedules/greenup_greedy.csv` | spatially constrained baseline used by `run_pilot.py` |
 | `make_greenup_schedule.py` | builds the constrained schedule from fragments + topology |
 | `run_pilot.py` | builds the matrix, replays the schedule, writes `pilot_summary.json` |
+| `run_optimize.py` | starts the ws4 search from `greenup_greedy.csv` and writes a normal search run |
+| `evidence/` | captured summaries and target reports for the simulation and optimized runs |
 
 ## Running the optimizer
 
 The same inputs drive the ws4 target search:
 
 ```bash
-python -m ws4.cli optimize \
-  --dataset ws4/runtime/matrix \
-  --targets ws4/targets.yaml \
-  --years 100 \
-  --iterations 500 \
-  --topology ws4/topology.csv \
-  --patch-accounts ws4/patch_accounts.yaml \
-  --max-opening-ha 50 \
-  --min-green-up-years 5 \
-  --out ws4/runtime/optimized
+python ws4/run_optimize.py --iterations 50
 ```
 
-`--seed-greedy` is the intended way to start from a target-satisfying schedule,
-but it is expensive on the full 1,763-block model: it scores every candidate
-chain for every block. The pilot therefore uses the constructed
-`greenup_greedy.csv` schedule. A reduced-AU run or a faster seed is the next
-ws4-side improvement.
+`run_optimize.py` loads `greenup_greedy.csv`, evaluates every move with the
+whole-schedule evaluator (so the opening/green-up penalty is part of the
+objective), and writes a normal ws4 search run. The `--seed-greedy` path is
+expensive on the full 1,763-block model because it scores every candidate
+chain for every block; the translated schedule is the pilot's warm start.
+
+The pilot keeps `spatial_weight` at 1,000,000. The default ws4 incremental
+delta evaluator prices targets only and can improve them by violating the
+spatial rules, so the harness deliberately uses the whole-schedule path. That
+is a ws4-side improvement to make next: fold the spatial penalty into the
+delta path.
 
 ## Pilot result (2026-10-21)
+
+The canonical runtime now enables `greenup` with `seral.le5`, so the patch
+accounts and the exact ws4 spatial check use the same five-year criterion.
 
 `greenup_greedy.csv` with `min_green_up_years=5` and `max_opening_ha=50`:
 
 - spatial violations: **0**
-- harvest by decade (m3): 672,753, 563,182, 507,431, 321,172, 278,578,
-  257,143, 590,282, 553,524, 498,934, 332,902
-- growing stock at decade ends (m3): 1,443,347 -> 657,156 by year 90
+- harvest by decade (m3): 680,096, 554,651, 308,150, 445,647, 330,787,
+  266,906, 528,417, 510,859, 391,284, 439,393
+- growing stock at decade ends (m3): 1,443,347 -> 858,346 by year 90
 - QMD numerator accounts: 81 (27 AUs x CT35/CT40/CT45)
+- 0-40 ha separation-block share: 78.4% at year 0, 100% from year 30 onward;
+  40-50 ha and 50+ ha shares are 0% after the initial young-stand snapshot
 
-The `patch.sepblk` sub-accounts in the run use `feature.area.managed.seral.le10`
-because that is the legacy Patchworks criterion. They therefore describe
-10-year recent-harvest patches, not the 5-year policy. The exact 5-year rule is
-the zero-violation `min_green_up_years=5` check above. If the project adopts
-5-year green-up as the reporting criterion too, enable `greenup` in
-`config/silviculture.mkrf.yaml`, rebuild the runtime XML so `seral.le5` exists,
-and point `patch.sepblk.criteria` at it.
+`run_optimize.py --iterations 50` from that schedule:
+
+- spatial violations: **0**
+- blocks scheduled: 1,742
+- incumbent objective: 3,591,307
+- harvest by decade (m3): 679,762, 546,062, 307,063, 445,879, 330,787,
+  266,205, 527,989, 505,597, 387,684, 439,205
+- growing stock: stable around 1.0-1.1 million m3 after the first rotation
+- target status: 30 of 32 met; the decade-40 harvest floor and the even-flow
+  band are the two remaining shortfalls
 
 ## Boundaries and next steps
 
-- The legacy harvest floor of 500,000 m3/decade is preserved in the comments in
-  `targets.yaml` but the pilot uses 300,000 because the canonical MKRF model is
-  a 4,810 ha research forest. Restore 500,000 to test the literal legacy target.
-- `ws4 optimize` is configured by the same `targets.yaml`, `patch_accounts.yaml`
-  and `topology.csv`. On the full 1,763-block model the greedy seed is slow
-  enough that the pilot uses a constructed schedule instead. A reduced-AU pilot
-  or a faster seed is the next ws4-side improvement.
+- The legacy harvest floor of 500,000 m3/decade is preserved in
+  `targets_legacy.yaml`, but the runnable pilot uses 300,000 because the
+  canonical MKRF model is a 4,810 ha research forest.
+- Green-up is now enabled in the canonical runtime config. Set
+  `greenup.enabled: false` and rebuild to return to the old surface.
+- ws4's incremental delta evaluator does not include the spatial penalty. The
+  pilot harness uses the whole-schedule evaluator; folding the spatial penalty
+  into the delta path is the next ws4 improvement.
 - ws4 writes its canonical Parquet matrix, not the Patchworks `tracks/*.csv`
   column contract. The Patchworks runtime package remains in the instance for
   comparison until the project finishes the cutover.

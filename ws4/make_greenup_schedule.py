@@ -60,11 +60,11 @@ def main() -> None:
         for block in candidates:
             if any(
                 neighbour in chosen_set
-                or year - last_disturbed[neighbour] < args.greenup
+                or year - last_disturbed[neighbour] <= args.greenup
                 for neighbour in neighbours.get(block, ())
             ):
                 continue
-            if year - last_disturbed[block] < args.greenup:
+            if year - last_disturbed[block] <= args.greenup:
                 continue
             chosen.append(block)
             chosen_set.add(block)
