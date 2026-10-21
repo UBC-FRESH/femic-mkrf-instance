@@ -18,5 +18,7 @@ accounts:
   - name: patch.sepblk
     criteria: feature.area.managed.seral.le5
     threshold: 0.0
-    size_classes: [40.0, 50.0, .inf]
+    # Keep the same non-overlapping ladder as patch.grpblk so the web UI can
+    # present one class list without overlapping numeric ranges.
+    size_classes: [1.0, 5.0, 40.0, 50.0, .inf]
     search_distance: 100.0

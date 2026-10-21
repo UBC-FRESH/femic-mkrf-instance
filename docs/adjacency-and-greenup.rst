@@ -37,8 +37,9 @@ The parameters mean:
 - ``adjacency_distance_m``: proximal distance used to build the separation-block
   topology and to group neighbouring blocks into one patch.
 - ``intermediate_min_ha`` / ``max_patch_size_ha``: bounds of the intermediate
-  patch-size class. The generated classes are ``0_40``, ``40_50`` and
-  ``50plus`` by default.
+  patch-size class. The Patchworks approximation uses ``0_40``, ``40_50`` and
+  ``50plus``. The ws4 pilot uses the same non-overlapping ladder as the
+  opening account: ``0_1``, ``1_5``, ``5_40``, ``40_50`` and ``50plus``.
 - ``intermediate_max_size_percent`` / ``intermediate_weight``: soft maximum and
   scheduler weight for the intermediate class.
 - ``large_patch_weight``: scheduler weight for the ``50plus`` class, whose soft

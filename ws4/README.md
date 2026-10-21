@@ -109,8 +109,9 @@ accounts and the exact ws4 spatial check use the same five-year criterion.
   266,906, 528,417, 510,859, 391,284, 439,393
 - growing stock at decade ends (m3): 1,443,347 -> 858,346 by year 90
 - QMD numerator accounts: 81 (27 AUs x CT35/CT40/CT45)
-- 0-40 ha separation-block share: 78.4% at year 0, 100% from year 30 onward;
-  40-50 ha and 50+ ha shares are 0% after the initial young-stand snapshot
+- separation-block classes: 0-1, 1-5, 5-40, 40-50 and 50+ ha. The 50+ share
+  is 21.6% at year 0 from pre-existing young stands, then 0%; 40-50 is 0%
+  throughout
 
 `run_optimize.py --iterations 50` from that schedule (the ws4 move-delta path,
 with the spatial penalty priced per move):

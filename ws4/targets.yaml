@@ -14,70 +14,72 @@
 # restore the literal legacy value if that is what you want to test.
 #
 # The 100-year pilot horizon covers ten 10-year accounting periods. Extend
-# the year list to 300 to match the full Patchworks 30-period horizon.
+# the period list to 30 to match the full Patchworks horizon.
 targets:
   # --- harvest level, one target per decade -------------------------------
   - account: product.yield.managed.total
-    year: 10
+    period: 1
     minimum: 300000
     period_width: 10
     min_weight: 1.0
   - account: product.yield.managed.total
-    year: 20
+    period: 2
     minimum: 300000
     period_width: 10
     min_weight: 1.0
   - account: product.yield.managed.total
-    year: 30
+    period: 3
     minimum: 300000
     period_width: 10
     min_weight: 1.0
   - account: product.yield.managed.total
-    year: 40
+    period: 4
     minimum: 300000
     period_width: 10
     min_weight: 1.0
   - account: product.yield.managed.total
-    year: 50
+    period: 5
     minimum: 300000
     period_width: 10
     min_weight: 1.0
   - account: product.yield.managed.total
-    year: 60
+    period: 6
     minimum: 300000
     period_width: 10
     min_weight: 1.0
   - account: product.yield.managed.total
-    year: 70
+    period: 7
     minimum: 300000
     period_width: 10
     min_weight: 1.0
   - account: product.yield.managed.total
-    year: 80
+    period: 8
     minimum: 300000
     period_width: 10
     min_weight: 1.0
   - account: product.yield.managed.total
-    year: 90
+    period: 9
     minimum: 300000
     period_width: 10
     min_weight: 1.0
   - account: product.yield.managed.total
-    year: 100
+    period: 10
     minimum: 300000
     period_width: 10
     min_weight: 1.0
 
   # --- even flow: percent difference from the final period ----------------
   # Replaces RATIO_ACCOUNTS.bsh product.flow.yield.even + 07_flow.bsh.
+  # Periods 1-9 are the legacy flow_end: 100 (exclusive-year) window; period 10
+  # is the final level target and is not part of the flow-shape comparison.
   - account: product.yield.managed.total
-    year: 0
+    period: 1
     minimum: -10.0
     maximum: 10.0
     flow: even
     period_width: 10
-    flow_start: 0
-    flow_end: 100
+    flow_start_period: 1
+    flow_end_period: 9
     min_weight: 1000.0
     max_weight: 1000.0
     shape: non_linear
@@ -85,113 +87,113 @@ targets:
   # --- non-declining growing stock ---------------------------------------
   # Replaces RATIO_ACCOUNTS.bsh feature.flow.yield.total + 07_flow.bsh.
   - account: feature.yield.managed.total
-    year: 0
+    period: 1
     minimum: 0.0
     flow: ndy
     period_width: 10
-    flow_start: 0
-    flow_end: 100
+    flow_start_period: 1
+    flow_end_period: 9
     min_weight: 100.0
 
   # --- legacy separation-block size limits --------------------------------
   # 06_patch.bsh: 40-50 ha max 5% of recent-harvest patch area, 50+ ha max 0.
   - account: patch.sepblk.40_50.size
-    year: 10
+    period: 1
     maximum: 5.0
     period_width: 10
     max_weight: 10.0
   - account: patch.sepblk.40_50.size
-    year: 20
+    period: 2
     maximum: 5.0
     period_width: 10
     max_weight: 10.0
   - account: patch.sepblk.40_50.size
-    year: 30
+    period: 3
     maximum: 5.0
     period_width: 10
     max_weight: 10.0
   - account: patch.sepblk.40_50.size
-    year: 40
+    period: 4
     maximum: 5.0
     period_width: 10
     max_weight: 10.0
   - account: patch.sepblk.40_50.size
-    year: 50
+    period: 5
     maximum: 5.0
     period_width: 10
     max_weight: 10.0
   - account: patch.sepblk.40_50.size
-    year: 60
+    period: 6
     maximum: 5.0
     period_width: 10
     max_weight: 10.0
   - account: patch.sepblk.40_50.size
-    year: 70
+    period: 7
     maximum: 5.0
     period_width: 10
     max_weight: 10.0
   - account: patch.sepblk.40_50.size
-    year: 80
+    period: 8
     maximum: 5.0
     period_width: 10
     max_weight: 10.0
   - account: patch.sepblk.40_50.size
-    year: 90
+    period: 9
     maximum: 5.0
     period_width: 10
     max_weight: 10.0
   - account: patch.sepblk.40_50.size
-    year: 100
+    period: 10
     maximum: 5.0
     period_width: 10
     max_weight: 10.0
   - account: patch.sepblk.50_9999999.size
-    year: 10
+    period: 1
     maximum: 0.0
     period_width: 10
     max_weight: 1000.0
   - account: patch.sepblk.50_9999999.size
-    year: 20
+    period: 2
     maximum: 0.0
     period_width: 10
     max_weight: 1000.0
   - account: patch.sepblk.50_9999999.size
-    year: 30
+    period: 3
     maximum: 0.0
     period_width: 10
     max_weight: 1000.0
   - account: patch.sepblk.50_9999999.size
-    year: 40
+    period: 4
     maximum: 0.0
     period_width: 10
     max_weight: 1000.0
   - account: patch.sepblk.50_9999999.size
-    year: 50
+    period: 5
     maximum: 0.0
     period_width: 10
     max_weight: 1000.0
   - account: patch.sepblk.50_9999999.size
-    year: 60
+    period: 6
     maximum: 0.0
     period_width: 10
     max_weight: 1000.0
   - account: patch.sepblk.50_9999999.size
-    year: 70
+    period: 7
     maximum: 0.0
     period_width: 10
     max_weight: 1000.0
   - account: patch.sepblk.50_9999999.size
-    year: 80
+    period: 8
     maximum: 0.0
     period_width: 10
     max_weight: 1000.0
   - account: patch.sepblk.50_9999999.size
-    year: 90
+    period: 9
     maximum: 0.0
     period_width: 10
     max_weight: 1000.0
   - account: patch.sepblk.50_9999999.size
-    year: 100
+    period: 10
     maximum: 0.0
     period_width: 10
     max_weight: 1000.0

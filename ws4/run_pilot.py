@@ -116,19 +116,22 @@ def summarise(run_dir: Path) -> dict[str, object]:
         for row in decade_rows.itertuples(index=False)
     }
 
-    sepblk_columns = [
-        "year",
-        "patch.sepblk.0_40.size",
-        "patch.sepblk.40_50.size",
-        "patch.sepblk.50_9999999.size",
-        "patch.sepblk.TOTAL.frequency",
+    size_columns = [
+        column
+        for column in patches.columns
+        if column.startswith("patch.sepblk.") and column.endswith(".size")
     ]
-    sepblk = patches.loc[patches["year"].isin(range(0, 101, 10)), sepblk_columns].copy()
+    sepblk = patches.loc[
+        patches["year"].isin(range(0, 101, 10)),
+        ["year", *size_columns, "patch.sepblk.TOTAL.frequency"],
+    ].copy()
     sepblk_by_decade = {
         int(row["year"]): {
-            "0_40_pct": round(float(row["patch.sepblk.0_40.size"]), 3),
-            "40_50_pct": round(float(row["patch.sepblk.40_50.size"]), 3),
-            "50plus_pct": round(float(row["patch.sepblk.50_9999999.size"]), 3),
+            **{
+                column.removeprefix("patch.sepblk.").removesuffix(".size")
+                + "_pct": round(float(row[column]), 3)
+                for column in size_columns
+            },
             "patch_count": float(row["patch.sepblk.TOTAL.frequency"]),
         }
         for row in sepblk.to_dict("records")
