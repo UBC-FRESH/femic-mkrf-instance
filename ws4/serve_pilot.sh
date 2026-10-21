@@ -19,5 +19,7 @@ exec python -m ws4.cli serve \
   --crs EPSG:3005 \
   --topology "$INSTANCE_ROOT/ws4/topology.csv" \
   --patch-accounts "$INSTANCE_ROOT/ws4/patch_accounts.yaml" \
+  --allow-agent \
+  --agent-cwd "$INSTANCE_ROOT" \
   --host 127.0.0.1 \
   --port "$PORT"
