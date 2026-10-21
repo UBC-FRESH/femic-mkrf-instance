@@ -1,18 +1,19 @@
 {
-  "incumbent_objective": 29279181.91639354,
-  "iterations": 800,
+  "incumbent_objective": 27228894.364911817,
+  "iterations": 500,
   "patience": 0,
   "seed": 42,
   "metaheuristic": "sa",
   "starts": 1,
   "initial_schedule_path": "/home/gep/projects/femic/external/femic-mkrf-instance/ws4/schedules/greenup_greedy.csv",
-  "blocks_scheduled": 1701,
+  "blocks_scheduled": 1722,
   "operators": [
     "toggle",
     "shift",
     "swap",
     "lns",
     "cluster",
+    "coalesce",
     "merge",
     "split"
   ],

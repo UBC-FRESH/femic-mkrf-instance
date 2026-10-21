@@ -123,10 +123,12 @@ Current-policy baseline (`baseline`, no hard adjacency rule):
 - opening classes: many small openings remain; the 0-1 ha and 1-5 ha maxima
   are not met by the constructed schedule
 
-Current-policy search (`anna_policy_search`, 800 iterations):
+Current-policy search (`anna_policy_search`, 500 iterations with the coalesce move):
 
-- **1,701 blocks scheduled**
-- objective **29,279,182**
+- **1,722 blocks scheduled**
+- objective **27,228,894**
+- the search now uses the `coalesce` operator, which aligns adjacent blocks onto one
+treatment year
 - patch shares still exceed the <=1 ha zero target and the 1-5 ha 10% maximum;
   the search needs a stronger patch-aware move set or a longer run
 - no hard spatial violations (the hard 100 m rule is disabled)

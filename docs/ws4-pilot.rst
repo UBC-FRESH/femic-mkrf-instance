@@ -66,7 +66,8 @@ Current pilot result
 
 The current-policy baseline does not yet meet the small-opening maxima: many
 openings remain in the 0-1 ha and 1-5 ha classes. The 800-iteration
-current-policy search schedules 1,701 blocks and improves the objective, but
+current-policy search schedules 1,722 blocks and improves the objective to
+27,228,894, but
 the patch targets still bind. This is now a patch-aware search problem, not a
 config problem.
 
