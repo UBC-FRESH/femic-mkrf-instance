@@ -112,8 +112,13 @@ pilot:
 
 ## 3. Current pilot status
 
-The ws4 baseline and search use the new size-class targets. The current search
-does **not yet meet** the `<=1 ha` zero target and the `>1-5 ha` 10% maximum;
-the model naturally forms many small openings. Meeting those targets needs a
-patch-aware search (merge/cluster moves or a longer run), not a config change.
-The legacy 100 m green-up run remains available as a comparison surface.
+The constructive patch-first schedule meets all 32 period targets. It has 364
+openings and 1,226 scheduled blocks; at the target periods, 100% of openings are
+in the 5-40 ha class, with 0% in the `<=1`, `>1-5`, `>40-50` and `>50` classes.
+The warm-start search reaches objective 0 while keeping the patch and harvest
+targets met.
+
+The legacy 100 m green-up run remains available as a comparison surface. The
+two policy questions above were posted to the MKRF Basecamp ws4 thread on
+2026-10-21; the pilot continues to treat the shares as maxima and the weights as
+pilot defaults until MKRF confirms them.
