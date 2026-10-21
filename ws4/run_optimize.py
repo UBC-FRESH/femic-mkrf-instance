@@ -23,7 +23,7 @@ import pandas as pd
 INSTANCE_ROOT = Path(__file__).resolve().parents[1]
 WS4_ROOT = INSTANCE_ROOT / "ws4"
 DEFAULT_DATASET = WS4_ROOT / "runtime" / "matrix"
-DEFAULT_RUN = WS4_ROOT / "runtime" / "anna_policy_search"
+DEFAULT_RUN = WS4_ROOT / "runtime" / "patch_first_search"
 
 
 def load_schedule_csv(path: Path) -> dict[int, tuple[tuple[str, int], ...]]:
@@ -58,7 +58,7 @@ def main() -> None:
     parser.add_argument(
         "--initial-schedule",
         type=Path,
-        default=WS4_ROOT / "schedules" / "greenup_greedy.csv",
+        default=WS4_ROOT / "schedules" / "patch_first.csv",
     )
     parser.add_argument(
         "--patch-accounts", type=Path, default=WS4_ROOT / "patch_accounts.yaml"

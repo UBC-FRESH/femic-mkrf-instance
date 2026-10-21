@@ -21,7 +21,7 @@ INSTANCE_ROOT = Path(__file__).resolve().parents[1]
 MODEL_ROOT = INSTANCE_ROOT / "models" / "mkrf_patchworks_model"
 WS4_ROOT = INSTANCE_ROOT / "ws4"
 DEFAULT_DATASET = WS4_ROOT / "runtime" / "matrix"
-DEFAULT_RUN = WS4_ROOT / "runtime" / "baseline"
+DEFAULT_RUN = WS4_ROOT / "runtime" / "patch_first"
 
 
 def _require_ws4() -> None:
@@ -170,7 +170,7 @@ def main() -> None:
     parser.add_argument(
         "--schedule",
         type=Path,
-        default=WS4_ROOT / "schedules" / "greenup_greedy.csv",
+        default=WS4_ROOT / "schedules" / "patch_first.csv",
     )
     parser.add_argument("--years", type=int, default=100)
     parser.add_argument("--skip-build", action="store_true")

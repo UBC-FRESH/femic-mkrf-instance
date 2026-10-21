@@ -44,6 +44,20 @@ The pilot treats the shares as maxima and maps Very High to 1,000,000 and High
 to 100,000. The 100 m ``patch.sepblk`` green-up surface remains only in the
 legacy Patchworks reference package.
 
+Patch-first construction
+------------------------
+
+Random moves do not reliably form same-year openings, so the pilot builds them
+directly with ``ws4/build_patch_schedule.py``:
+
+1. aggregate managed fragments to blocks;
+2. grow connected openings of touching blocks until they reach 5-40 ha;
+3. assign each opening a harvest year, filling decades toward 300,000 m3;
+4. write ``schedules/patch_first.csv`` for ws4.
+
+The builder leaves sub-5 ha clusters and blocks larger than 40 ha unharvested.
+That is why the final decade harvest is below target.
+
 Running it
 ----------
 
@@ -52,28 +66,27 @@ From the instance root:
 .. code-block:: bash
 
    python ws4/run_pilot.py --rebuild
-   python ws4/run_optimize.py
+   python ws4/build_patch_schedule.py \
+     --dataset ws4/runtime/matrix \
+     --topology ws4/topology.csv \
+     --out ws4/schedules/patch_first.csv
+   python ws4/run_pilot.py --skip-build \
+     --schedule ws4/schedules/patch_first.csv \
+     --run ws4/runtime/patch_first
+   python ws4/run_optimize.py --iterations 200
    ws4/serve_pilot.sh
-
-``run_pilot.py`` builds the ws4 matrix, replays the constructed baseline with
-the translated patch accounts, and writes ``ws4/runtime/baseline/`` plus a
-``pilot_summary.json``. ``run_optimize.py`` starts the ws4 search from that
-schedule and writes ``ws4/runtime/anna_policy_search/``. The web UI lists the
-baseline, the current-policy search, and the retained legacy green-up search.
 
 Current pilot result
 --------------------
 
-The current-policy baseline does not yet meet the small-opening maxima: many
-openings remain in the 0-1 ha and 1-5 ha classes. The 800-iteration
-current-policy search schedules 1,722 blocks and improves the objective to
-27,228,894, but
-the patch targets still bind. This is now a patch-aware search problem, not a
-config problem.
+The patch-first schedule produces 399 openings, all in the 5-40 ha class, and
+the target periods report 100% of patch area in that class. Harvest is about
+299,000 m3 per decade except the final decade at about 214,000 m3, where the
+builder runs out of eligible openings.
 
-The previous 100 m green-up search remains in ``ws4/evidence/legacy_greenup``
-as a comparison surface: 1,742 blocks, zero spatial violations, objective
-3,591,307, and 30 of 32 targets met.
+The 200-iteration search from that schedule keeps the patch targets met,
+schedules 973 blocks, and reaches objective 101,863. Five harvest floors remain
+slightly below 300,000 m3; the final decade is the main gap.
 
 Limits
 ------
@@ -81,11 +94,15 @@ Limits
 - Confirm that the opening-size shares are maxima, not minima, and confirm the
   numeric Very High/High weights before treating the patch targets as
   calibrated policy.
+- The final-decade harvest gap is an opening-supply problem: the builder leaves
+  sub-5 ha clusters and >40 ha blocks untouched. Merging small clusters or
+  allowing a capped 40-50 ha class is the next step.
 - The legacy 500,000 m3/decade harvest floor is retained in
   ``ws4/targets_legacy.yaml`` for parity, but the runnable pilot uses 300,000
   for the 4,810 ha model.
-- The public model uses published cost/price bases only. Raw MKRF cost/revenue
-  spreadsheets and private financial overlays live in the tracked private overlay repo.
+- The public model uses published cost/price bases only; raw MKRF cost/revenue
+  spreadsheets and private financial overlays live in the tracked private
+  overlay repo.
 - Legacy scenario targets that depend on THLB, biodiversity, ECA, UWR or VQO
   accounts are not mapped because the canonical MKRF dataset has no such
   accounts.

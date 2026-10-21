@@ -16,16 +16,22 @@ data boundary is in `planning/data_publication_boundary.md`.
 ```bash
 cd /path/to/femic-mkrf-instance
 python ws4/run_pilot.py --rebuild
-python ws4/run_optimize.py
+python ws4/build_patch_schedule.py \
+  --dataset ws4/runtime/matrix \
+  --topology ws4/topology.csv \
+  --out ws4/schedules/patch_first.csv
+python ws4/run_pilot.py --skip-build \
+  --schedule ws4/schedules/patch_first.csv \
+  --run ws4/runtime/patch_first
+python ws4/run_optimize.py --iterations 200
 ```
 
-`run_pilot.py` compiles the recipe and fragments into `ws4/runtime/matrix/`,
-replays `ws4/schedules/greenup_greedy.csv` (the constructed baseline schedule)
-with the translated patch accounts, and writes
-`ws4/runtime/baseline/pilot_summary.json`. `run_optimize.py` starts the ws4
-search from that schedule and writes `ws4/runtime/anna_policy_search/`. Use
-`--rebuild` after changing the runtime XML or fragments; otherwise the cached
-matrix is reused.
+`run_pilot.py` compiles the recipe and fragments into `ws4/runtime/matrix/`.
+`build_patch_schedule.py` grows connected 5-40 ha openings, assigns harvest
+years to fill decades toward 300,000 m3, and writes
+`ws4/schedules/patch_first.csv`. `run_pilot.py` replays it with the translated
+patch accounts into `ws4/runtime/patch_first/`. `run_optimize.py` starts the ws4
+search from that schedule and writes `ws4/runtime/patch_first_search/`.
 
 Requires an importable `ws4` (`pip install -e /path/to/ws4`). The pilot was run
 against the ws4 checkout at `/srv/shared-data/gep/ws4/ws4`.
@@ -36,16 +42,13 @@ against the ws4 checkout at `/srv/shared-data/gep/ws4/ws4`.
 ws4/serve_pilot.sh
 ```
 
-Open <http://127.0.0.1:8011/>. The service lists the baseline simulation, the
-legacy green-up search and the current-policy search, and points at the
-translated targets, topology, patch accounts and fragments GeoJSON.
-`PORT=...` overrides the port. The default bind is loopback only; ws4 provides
-no authentication, so do not expose it with `--allow-remote` unless you put it
+Open <http://127.0.0.1:8011/>. The service lists the current-policy baseline and
+search, the older baseline, and the legacy green-up comparison. `PORT=...`
+overrides the port. The default bind is loopback only; ws4 provides no
+authentication, so do not expose it with `--allow-remote` unless you put it
 behind a trusted proxy.
 
 ## Opening-size policy
-
-Current MKRF guidance:
 
 | Size class | Target share | Weight |
 | --- | --- | --- |
@@ -55,11 +58,11 @@ Current MKRF guidance:
 | `> 40 and <= 50 ha` | 5% | High |
 | `> 50 ha` | 0% | High |
 
-The pilot treats the shares as maxima and maps weights to
-Very High = 1,000,000 and High = 100,000. `patch_accounts.yaml` defines one
-account, `patch.grpblk`, on `product.area.managed.treat.CC`, with
-`search_distance: 0.0` (touching blocks only). The 100 m `patch.sepblk`
-green-up account is retained only in the legacy Patchworks reference surface.
+The pilot treats the shares as maxima and maps Very High = 1,000,000 and High =
+100,000. `patch_accounts.yaml` defines one account, `patch.grpblk`, on
+`product.area.managed.treat.CC`, with `search_distance: 0.0` (touching blocks
+only). The 100 m `patch.sepblk` green-up account remains only in the legacy
+Patchworks reference surface.
 
 ## Translation map
 
@@ -92,49 +95,52 @@ green-up account is retained only in the legacy Patchworks reference surface.
 | `targets_legacy.yaml` | the same targets with the literal legacy 500,000 m3/decade floor |
 | `patch_accounts.yaml` | `patch.grpblk` opening-size account (touching blocks only) |
 | `topology.csv` | proximal topology generated from the current `fragments.shp` |
+| `build_patch_schedule.py` | grows 5-40 ha openings and assigns harvest years |
 | `schedules/cc_at_60.csv` | aggressive baseline: every block clearcut at age 60 |
-| `schedules/greenup_greedy.csv` | constructed baseline used by `run_pilot.py` (legacy name) |
-| `make_greenup_schedule.py` | builds the baseline schedule from fragments + topology |
-| `run_pilot.py` | builds the matrix, replays the baseline, writes `pilot_summary.json` |
-| `run_optimize.py` | starts the ws4 search from the baseline schedule |
-| `evidence/baseline/` | current-policy baseline summary and target report |
+| `schedules/greenup_greedy.csv` | older constructed baseline, retained for comparison |
+| `schedules/patch_first.csv` | current patch-first schedule |
+| `make_greenup_schedule.py` | older baseline builder, retained for comparison |
+| `run_pilot.py` | compiles the matrix and replays a schedule |
+| `run_optimize.py` | starts the ws4 search from the patch-first schedule |
+| `evidence/patch_first/` | patch-first simulation summary and target report |
+| `evidence/patch_first_search/` | patch-first search summary and target report |
+| `evidence/baseline/` | older constructed baseline |
 | `evidence/legacy_greenup/` | previous 100 m green-up search, retained for comparison |
-| `evidence/anna_policy/` | current-policy search summary and target report |
 
 ## Running the optimizer
 
 ```bash
-python ws4/run_optimize.py --iterations 300
+python ws4/run_optimize.py --iterations 200
 ```
 
 The ws4 move-delta evaluator prices the patch accounts and the optional
-opening/green-up/core-area penalties, so the search stays on the fast path.
-The pilot no longer passes `min_green_up_years`; the opening targets are the
-policy instrument. `--max-opening-ha` remains available as an optional hard
-ceiling. `--coalesce-min-area-ha`/`--coalesce-max-area-ha` control the
-area-aware coalesce move; the current default band is 5-40 ha.
+opening/green-up/core-area penalties. The pilot no longer passes
+`min_green_up_years`; the opening targets are the policy instrument.
+`--max-opening-ha` remains available as an optional hard ceiling.
+`--coalesce-min-area-ha`/`--coalesce-max-area-ha` control the area-aware
+coalesce move; the current default band is 5-40 ha.
 
 ## Pilot result (2026-10-21)
 
-Current-policy baseline (`baseline`, no hard adjacency rule):
+Patch-first simulation (`patch_first`):
 
-- harvest by decade (m3): 680,096, 554,651, 308,150, 445,647, 330,787,
-  266,906, 528,417, 510,859, 391,284, 439,393
+- openings: 399, all in the 5-40 ha class
+- patch shares at the target periods: **100% 5-40 ha**, 0% in 0-1, 1-5, 40-50
+  and 50+ ha
+- harvest by decade (m3): 299,022, 299,879, 299,094, 299,674, 298,376,
+  299,893, 297,427, 299,344, 299,637, 214,215
 - QMD numerator accounts: 81 (27 AUs x CT35/CT40/CT45)
-- opening classes: many small openings remain; the 0-1 ha and 1-5 ha maxima
-  are not met by the constructed schedule
 
-Current-policy search (`anna_policy_search`, 500 iterations with the coalesce move):
+Patch-first search (`patch_first_search`, 200 iterations):
 
-- **1,722 blocks scheduled**
-- objective **27,228,894**
-- the search now uses the `coalesce` operator, which aligns adjacent blocks onto one
-treatment year
-- an area-aware variant (`--coalesce-min-area-ha 5 --coalesce-max-area-ha 40`) was also
-tried; it did not improve the patch shares on this schedule
-- patch shares still exceed the <=1 ha zero target and the 1-5 ha 10% maximum;
-  the search needs a stronger patch-aware move set or a longer run
-- no hard spatial violations (the hard 100 m rule is disabled)
+- 973 blocks scheduled
+- objective **101,863**
+- patch targets met: 0% in 0-1, 1-5, 40-50 and 50+ ha at the target periods
+- harvest by decade (m3): 293,361, 297,575, 297,901, 299,204, 294,875,
+  299,466, 298,028, 299,344, 297,930, 214,298
+- five harvest floors are slightly below 300,000; the final decade is the main
+  shortfall because the patch builder leaves sub-5 ha clusters and blocks larger
+  than 40 ha unharvested
 
 Legacy comparison (`legacy_greenup_search`, previous 100 m policy):
 
@@ -147,10 +153,11 @@ Legacy comparison (`legacy_greenup_search`, previous 100 m policy):
   `setMaximumPeriodic` semantics. Confirm that interpretation with MKRF staff.
 - The numeric Very High/High weights are pilot defaults; confirm them before
   treating the patch targets as calibrated policy.
-- The patch-aware search is the next modeling task: the constructed baseline
-  and the 800-iteration search do not yet meet the small-opening maxima.
+- The remaining harvest shortfall is in the final decade. The next step is to
+  use the unharvested blocks: merge small clusters into existing openings or
+  allow a capped 40-50 ha class, then rerun the patch-first builder.
 - The public model uses published cost/price bases only. Raw MKRF cost/revenue
-  spreadsheets and private financial overlays live in the tracked private overlay repo; see
-  `planning/data_publication_boundary.md`.
+  spreadsheets and private financial overlays live in the tracked private
+  overlay repo; see `planning/data_publication_boundary.md`.
 - ws4 writes its canonical Parquet matrix, not the Patchworks `tracks/*.csv`
   contract. Patchworks remains the reference lane until the cutover is complete.
