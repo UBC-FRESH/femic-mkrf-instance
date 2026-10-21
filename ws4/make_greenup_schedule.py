@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Build a simple green-up-aware clearcut schedule for the MKRF pilot.
 
 The schedule is deliberately conservative: one block per opening, no two

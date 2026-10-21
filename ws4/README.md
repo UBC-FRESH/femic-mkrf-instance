@@ -21,6 +21,21 @@ translated patch accounts and the 5-year / 50 ha constraints, and writes
 Requires an importable `ws4` (`pip install -e /path/to/ws4`). The pilot was run
 against the ws4 checkout at `/srv/shared-data/gep/ws4/ws4`.
 
+## Web UI
+
+After `run_pilot.py`, serve the pilot in the ws4 web UI:
+
+```bash
+ws4/serve_pilot.sh
+```
+
+Then open <http://127.0.0.1:8011/>. The launcher points the UI at the
+pilot matrix, the `greenup_greedy` run, the translated targets, the 100 m
+topology, the patch accounts, and the fragments GeoJSON. `PORT=...` overrides
+the port. The default bind is loopback only; ws4 provides no authentication,
+so do not expose it with `--allow-remote` unless you put it behind a trusted
+proxy.
+
 ## Translation map
 
 | Patchworks file / construct | ws4 equivalent |

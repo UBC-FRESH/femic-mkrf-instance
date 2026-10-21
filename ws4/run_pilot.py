@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Run the MKRF ws4 pilot from the translated Patchworks control inputs.
 
 The script compiles the MKRF ForestModelXML + fragments into the ws4 matrix,
@@ -71,6 +72,23 @@ def run_simulation(
         min_green_up_years=5,
     )
     return run_dir
+
+
+def write_ui_assets(run_dir: Path) -> None:
+    """Write the geometry and report files the ws4 web UI reads."""
+    import geopandas as gpd
+    import pandas as pd
+    from ws4.opt.objective import load_targets
+    from ws4.report import write_report
+
+    runtime_dir = run_dir.parent
+    geometry_path = runtime_dir / "fragments.geojson"
+    fragments = gpd.read_file(MODEL_ROOT / "spatial" / "fragments.shp")
+    fragments["block_id"] = fragments["RES_KEY"].astype(int)
+    fragments[["block_id", "geometry"]].to_file(geometry_path, driver="GeoJSON")
+
+    values = pd.read_csv(run_dir / "account_values.csv")
+    write_report(values, load_targets(WS4_ROOT / "targets.yaml"), run_dir)
 
 
 def summarise(run_dir: Path) -> dict[str, object]:
@@ -165,6 +183,7 @@ def main() -> None:
         run_dir=args.run,
         years=args.years,
     )
+    write_ui_assets(run_dir)
     summary = summarise(run_dir)
     print(json.dumps(summary, indent=2, sort_keys=True))
 
