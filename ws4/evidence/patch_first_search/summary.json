@@ -1,12 +1,12 @@
 {
-  "incumbent_objective": 101863.07322077989,
-  "iterations": 200,
+  "incumbent_objective": 0.0,
+  "iterations": 50,
   "patience": 0,
   "seed": 42,
   "metaheuristic": "sa",
   "starts": 1,
   "initial_schedule_path": "/home/gep/projects/femic/external/femic-mkrf-instance/ws4/schedules/patch_first.csv",
-  "blocks_scheduled": 973,
+  "blocks_scheduled": 1226,
   "operators": [
     "toggle",
     "shift",

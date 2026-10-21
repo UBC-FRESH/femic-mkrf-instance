@@ -52,11 +52,11 @@ directly with ``ws4/build_patch_schedule.py``:
 
 1. aggregate managed fragments to blocks;
 2. grow connected openings of touching blocks until they reach 5-40 ha;
-3. assign each opening a harvest year, filling decades toward 300,000 m3;
+3. assign each opening a harvest year, filling target periods toward 304,000 m3;
 4. write ``schedules/patch_first.csv`` for ws4.
 
-The builder leaves sub-5 ha clusters and blocks larger than 40 ha unharvested.
-That is why the final decade harvest is below target.
+The builder merges small clusters where capacity allows and caps the 40-50 ha
+class at 5%. Openings beyond the period capacity are left unharvested.
 
 Running it
 ----------
@@ -73,20 +73,19 @@ From the instance root:
    python ws4/run_pilot.py --skip-build \
      --schedule ws4/schedules/patch_first.csv \
      --run ws4/runtime/patch_first
-   python ws4/run_optimize.py --iterations 200
+   python ws4/run_optimize.py --iterations 50
    ws4/serve_pilot.sh
 
 Current pilot result
 --------------------
 
-The patch-first schedule produces 399 openings, all in the 5-40 ha class, and
-the target periods report 100% of patch area in that class. Harvest is about
-299,000 m3 per decade except the final decade at about 214,000 m3, where the
-builder runs out of eligible openings.
+The patch-first schedule produces 364 openings, all in the 5-40 ha class, and
+the target periods report 100% of patch area in that class. It schedules 1,226
+blocks and meets all 32 targets. Harvest by period is 303,751, 303,789,
+301,958, 302,521, 303,775, 303,146, 302,950, 303,481, 300,075 and 300,763 m3.
 
-The 200-iteration search from that schedule keeps the patch targets met,
-schedules 973 blocks, and reaches objective 101,863. Five harvest floors remain
-slightly below 300,000 m3; the final decade is the main gap.
+The 50-iteration search from that schedule keeps every target met and reaches
+objective 0.
 
 Limits
 ------
@@ -94,9 +93,9 @@ Limits
 - Confirm that the opening-size shares are maxima, not minima, and confirm the
   numeric Very High/High weights before treating the patch targets as
   calibrated policy.
-- The final-decade harvest gap is an opening-supply problem: the builder leaves
-  sub-5 ha clusters and >40 ha blocks untouched. Merging small clusters or
-  allowing a capped 40-50 ha class is the next step.
+- The builder uses a 304,000 m3 period target (the 300,000 policy floor plus a
+  buffer) and caps the 40-50 ha class at 5%. The final run uses no 40-50 ha
+  openings; the cap remains a guard for future data.
 - The legacy 500,000 m3/decade harvest floor is retained in
   ``ws4/targets_legacy.yaml`` for parity, but the runnable pilot uses 300,000
   for the 4,810 ha model.

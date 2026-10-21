@@ -23,7 +23,7 @@ python ws4/build_patch_schedule.py \
 python ws4/run_pilot.py --skip-build \
   --schedule ws4/schedules/patch_first.csv \
   --run ws4/runtime/patch_first
-python ws4/run_optimize.py --iterations 200
+python ws4/run_optimize.py --iterations 50
 ```
 
 `run_pilot.py` compiles the recipe and fragments into `ws4/runtime/matrix/`.
@@ -110,7 +110,7 @@ Patchworks reference surface.
 ## Running the optimizer
 
 ```bash
-python ws4/run_optimize.py --iterations 200
+python ws4/run_optimize.py --iterations 50
 ```
 
 The ws4 move-delta evaluator prices the patch accounts and the optional
@@ -124,23 +124,20 @@ coalesce move; the current default band is 5-40 ha.
 
 Patch-first simulation (`patch_first`):
 
-- openings: 399, all in the 5-40 ha class
+- openings: 364, all in the 5-40 ha class
+- 1,226 blocks scheduled
 - patch shares at the target periods: **100% 5-40 ha**, 0% in 0-1, 1-5, 40-50
   and 50+ ha
-- harvest by decade (m3): 299,022, 299,879, 299,094, 299,674, 298,376,
-  299,893, 297,427, 299,344, 299,637, 214,215
+- harvest by target period (m3): 303,751, 303,789, 301,958, 302,521, 303,775,
+  303,146, 302,950, 303,481, 300,075, 300,763
+- **all 32 targets met**
 - QMD numerator accounts: 81 (27 AUs x CT35/CT40/CT45)
 
-Patch-first search (`patch_first_search`, 200 iterations):
+Patch-first search (`patch_first_search`, 50 iterations):
 
-- 973 blocks scheduled
-- objective **101,863**
-- patch targets met: 0% in 0-1, 1-5, 40-50 and 50+ ha at the target periods
-- harvest by decade (m3): 293,361, 297,575, 297,901, 299,204, 294,875,
-  299,466, 298,028, 299,344, 297,930, 214,298
-- five harvest floors are slightly below 300,000; the final decade is the main
-  shortfall because the patch builder leaves sub-5 ha clusters and blocks larger
-  than 40 ha unharvested
+- 1,226 blocks scheduled
+- **objective 0**
+- all patch and harvest targets still met
 
 Legacy comparison (`legacy_greenup_search`, previous 100 m policy):
 
@@ -153,9 +150,9 @@ Legacy comparison (`legacy_greenup_search`, previous 100 m policy):
   `setMaximumPeriodic` semantics. Confirm that interpretation with MKRF staff.
 - The numeric Very High/High weights are pilot defaults; confirm them before
   treating the patch targets as calibrated policy.
-- The remaining harvest shortfall is in the final decade. The next step is to
-  use the unharvested blocks: merge small clusters into existing openings or
-  allow a capped 40-50 ha class, then rerun the patch-first builder.
+- The builder uses a 304,000 m3 period target (the 300,000 policy floor plus a
+  buffer) and caps the 40-50 ha class at 5%. The final run uses no 40-50 ha
+  openings; the cap remains a guard for future data.
 - The public model uses published cost/price bases only. Raw MKRF cost/revenue
   spreadsheets and private financial overlays live in the tracked private
   overlay repo; see `planning/data_publication_boundary.md`.

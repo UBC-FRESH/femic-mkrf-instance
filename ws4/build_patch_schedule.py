@@ -6,11 +6,13 @@ struggles to form same-year openings, so this script builds them directly:
 
 1. aggregate the managed fragments to blocks (area, age, yield curve);
 2. grow connected clusters of touching blocks until they reach the 5-40 ha band;
-3. assign each opening a harvest year, filling decades toward the target volume;
+3. assign each opening a harvest year, filling the target periods (years 1-10,
+   11-20, ...) toward the policy floor plus a small buffer;
 4. emit a ``block_id,treatment,period`` schedule for ws4.
 
-Blocks larger than the upper band are left unharvested. Small clusters that
-cannot reach the lower band are left unharvested as well. The output is a
+Small clusters are merged into adjacent openings when capacity allows. The
+40-50 ha class is capped at 5% of patch area. Blocks larger than the upper band
+and openings beyond the period capacity are left unharvested. The output is a
 starting schedule, not a final optimized plan.
 """
 
@@ -70,8 +72,27 @@ def _volume(
     block: dict[str, object],
     year: int,
     curves: dict[int, np.ndarray],
+    *,
+    simulator: object | None = None,
+    cache: dict[tuple[int, int], float] | None = None,
 ) -> float:
-    """Return the managed volume at a harvest year for one block."""
+    """Return the managed harvest volume at a harvest year for one block.
+
+    When a ws4 simulator is supplied, its product calculation is used so the
+    builder's decade totals match the simulation. Otherwise the standing-yield
+    curve is a fallback proxy.
+    """
+    if simulator is not None:
+        key = (int(block["block_id"]), year)
+        if cache is not None and key in cache:
+            return cache[key]
+        products = simulator.block_products(  # type: ignore[attr-defined]
+            int(block["block_id"]), "CC", year
+        )
+        value = float(products.get("product.yield.managed.total", 0.0))
+        if cache is not None:
+            cache[key] = value
+        return value
     total = 0.0
     for fragment in block["fragments"].itertuples():  # type: ignore[attr-defined]
         curve = curves.get(int(fragment.track_id))
@@ -104,6 +125,7 @@ def _build_openings(
     *,
     min_area: float,
     max_area: float,
+    intermediate_share: float = 0.05,
 ) -> list[dict[str, object]]:
     """Grow connected openings in the area band and return them."""
     for block in blocks.values():
@@ -116,6 +138,7 @@ def _build_openings(
     )
     assigned: set[int] = set()
     openings: list[dict[str, object]] = []
+    small: list[tuple[list[int], float]] = []
     for seed in eligible:
         block_id = int(seed["block_id"])
         if block_id in assigned:
@@ -140,8 +163,7 @@ def _build_openings(
                 item for item in adjacency.get(neighbour, ()) if item not in assigned
             )
         if total < min_area:
-            for item in cluster:
-                assigned.add(item)
+            small.append((cluster, total))
             continue
         openings.append(
             {
@@ -150,7 +172,49 @@ def _build_openings(
                 "ready": max(int(blocks[item]["ready"]) for item in cluster),
             }
         )
-    return openings
+
+    # Merge small clusters into an adjacent opening when capacity allows.
+    block_opening: dict[int, int] = {}
+    for index, opening in enumerate(openings):
+        for block in opening["blocks"]:
+            block_opening[block] = index
+    for cluster, area in small:
+        candidates = {
+            block_opening[neighbour]
+            for block in cluster
+            for neighbour in adjacency.get(block, ())
+            if neighbour in block_opening
+        }
+        choices = [
+            (float(openings[index]["area"]), index)
+            for index in candidates
+            if float(openings[index]["area"]) + area <= max_area
+        ]
+        if not choices:
+            continue
+        _, index = min(choices)
+        opening = openings[index]
+        opening["blocks"] = tuple(opening["blocks"]) + tuple(cluster)
+        opening["area"] = float(opening["area"]) + area
+        opening["ready"] = max(
+            int(opening["ready"]), max(int(blocks[item]["ready"]) for item in cluster)
+        )
+        for block in cluster:
+            block_opening[block] = index
+
+    # Keep the 40-50 ha class within the policy's 5% cap.
+    total_area = sum(float(opening["area"]) for opening in openings)
+    cap = intermediate_share * total_area
+    used = 0.0
+    kept: list[dict[str, object]] = []
+    for opening in openings:
+        area = float(opening["area"])
+        if area > 40.0:
+            if used + area > cap:
+                continue
+            used += area
+        kept.append(opening)
+    return kept
 
 
 def _assign_years(
@@ -160,39 +224,58 @@ def _assign_years(
     *,
     years: int,
     target_per_decade: float,
+    simulator: object | None = None,
 ) -> dict[int, float]:
-    """Assign opening years, filling each decade toward the target volume."""
-    decades = {decade: 0.0 for decade in range(0, years, 10)}
-    offsets = {decade: 0 for decade in decades}
+    """Assign opening years, filling each target period toward the target volume.
+
+    Target period 1 is years 1-10, period 2 is years 11-20, and so on, matching
+    ``Target.cell_years``. Year 0 is the snapshot and is never used.
+    """
+    period_count = max(1, years // 10)
+    starts = {period: 1 + 10 * (period - 1) for period in range(1, period_count + 1)}
+    volumes = {period: 0.0 for period in starts}
+    offsets = {period: 0 for period in starts}
+    cache: dict[tuple[int, int], float] = {}
+    dropped = 0
     for opening in sorted(
         openings, key=lambda item: (item["ready"], -float(item["area"]))
     ):
-        candidates = [decade for decade in decades if decade >= opening["ready"]]
+        candidates = [
+            period for period, start in starts.items() if start >= int(opening["ready"])
+        ]
         if not candidates:
-            candidates = list(decades)
+            candidates = list(starts)
         choice: tuple[int, int, float] | None = None
-        for decade in sorted(candidates):
-            year = max(int(opening["ready"]), decade + (offsets[decade] % 10))
-            volume = sum(
-                _volume(blocks[item], year, curves) for item in opening["blocks"]
+        for period in sorted(candidates):
+            start = starts[period]
+            year = min(
+                max(int(opening["ready"]), start + offsets[period] % 10), years - 1
             )
-            if decades[decade] + volume <= target_per_decade:
-                choice = (decade, year, volume)
+            volume = sum(
+                _volume(
+                    blocks[item],
+                    year,
+                    curves,
+                    simulator=simulator,
+                    cache=cache,
+                )
+                for item in opening["blocks"]
+            )
+            if volumes[period] + volume <= target_per_decade:
+                choice = (period, year, volume)
                 break
         if choice is None:
-            decade = min(candidates, key=lambda item: decades[item])
-            year = max(int(opening["ready"]), decade + (offsets[decade] % 10))
-            volume = sum(
-                _volume(blocks[item], year, curves) for item in opening["blocks"]
-            )
-            choice = (decade, year, volume)
-        decade, year, volume = choice
-        offsets[decade] += 1
-        opening["decade"] = decade
+            dropped += 1
+            continue
+        period, year, volume = choice
+        offsets[period] += 1
+        opening["period"] = period
         opening["year"] = year
         opening["volume"] = volume
-        decades[decade] += volume
-    return decades
+        volumes[period] += volume
+    if dropped:
+        print(f"dropped {dropped} openings beyond the period capacity")
+    return volumes
 
 
 def main() -> None:
@@ -202,14 +285,22 @@ def main() -> None:
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--years", type=int, default=100)
     parser.add_argument("--min-area", type=float, default=5.0)
-    parser.add_argument("--max-area", type=float, default=40.0)
-    parser.add_argument("--target-per-decade", type=float, default=300_000.0)
+    parser.add_argument("--max-area", type=float, default=50.0)
+    parser.add_argument("--target-per-decade", type=float, default=304_000.0)
+    parser.add_argument("--intermediate-share", type=float, default=0.05)
     args = parser.parse_args()
 
+    from ws4.sim.engine import Simulator
+
     blocks, curves = _load_blocks(args.dataset)
+    simulator = Simulator.from_dataset(args.dataset)
     adjacency = _read_adjacency(args.topology, blocks)
     openings = _build_openings(
-        blocks, adjacency, min_area=args.min_area, max_area=args.max_area
+        blocks,
+        adjacency,
+        min_area=args.min_area,
+        max_area=args.max_area,
+        intermediate_share=args.intermediate_share,
     )
     decades = _assign_years(
         openings,
@@ -217,20 +308,22 @@ def main() -> None:
         curves,
         years=args.years,
         target_per_decade=args.target_per_decade,
+        simulator=simulator,
     )
 
+    scheduled = [opening for opening in openings if "year" in opening]
     rows = [
         {"block_id": block_id, "treatment": "CC", "period": int(opening["year"])}
-        for opening in openings
+        for opening in scheduled
         for block_id in opening["blocks"]
     ]
     schedule = pd.DataFrame(rows).sort_values(["period", "block_id"], kind="stable")
     args.out.parent.mkdir(parents=True, exist_ok=True)
     schedule.to_csv(args.out, index=False)
 
-    areas = sorted(float(opening["area"]) for opening in openings)
+    areas = sorted(float(opening["area"]) for opening in scheduled)
     print(
-        f"blocks={len(blocks)} openings={len(openings)} "
+        f"blocks={len(blocks)} openings={len(scheduled)} "
         f"scheduled_blocks={len(schedule)} "
         f"area={sum(areas):.1f} ha "
         f"area_range={areas[0]:.1f}-{areas[-1]:.1f} ha"
