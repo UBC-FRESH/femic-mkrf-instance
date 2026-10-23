@@ -131,6 +131,19 @@ def test_an_empty_schedule_still_has_the_offset_header(tmp_path: Path) -> None:
     assert frame.empty
 
 
+def test_tracked_schedules_use_the_offset_clock() -> None:
+    """The checked-in MKRF schedules are valid clean-checkout inputs for ws4."""
+    schedules = sorted(
+        (Path(__file__).resolve().parents[1] / "ws4" / "schedules").glob("*.csv")
+    )
+    assert schedules
+    for path in schedules:
+        frame = pd.read_csv(path)
+        assert {"block_id", "treatment", "offset"} <= set(frame.columns), path
+        assert "period" not in frame.columns, path
+        assert frame["offset"].min() >= 0, path
+
+
 def test_the_optimizer_loader_reads_offsets_and_rejects_period(tmp_path: Path) -> None:
     """The harness passes offsets to the optimizer; a legacy period file is refused."""
     module = _load_optimize_module()

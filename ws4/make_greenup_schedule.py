@@ -73,16 +73,16 @@ def main() -> None:
         selected_by_year[year] = chosen
 
     rows = [
-        {"block_id": block, "treatment": "CC", "period": year}
+        {"block_id": block, "treatment": "CC", "offset": year}
         for year, blocks in selected_by_year.items()
         for block in blocks
     ]
-    schedule = pd.DataFrame(rows, columns=["block_id", "treatment", "period"])
-    schedule = schedule.sort_values(["period", "block_id"], kind="stable")
+    schedule = pd.DataFrame(rows, columns=["block_id", "treatment", "offset"])
+    schedule = schedule.sort_values(["offset", "block_id"], kind="stable")
     args.out.parent.mkdir(parents=True, exist_ok=True)
     schedule.to_csv(args.out, index=False)
     print(f"wrote {len(schedule)} events to {args.out}")
-    print(schedule.groupby("period").size().head(20).to_string())
+    print(schedule.groupby("offset").size().head(20).to_string())
 
 
 if __name__ == "__main__":
