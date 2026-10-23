@@ -59,8 +59,8 @@ behind a trusted proxy.
 | `> 40 and <= 50 ha` | 5% | High |
 | `> 50 ha` | 0% | High |
 
-The runtime treats the shares as maxima and maps Very High = 1,000,000 and High
-= 100,000. `patch_accounts.yaml` defines one account, `patch.grpblk`, on
+The shares are ceilings (MKRF staff, October 2026); the runtime maps Very High
+= 10,000,000 and High = 1,000,000. `patch_accounts.yaml` defines one account, `patch.grpblk`, on
 `product.area.managed.treat.CC`, with `search_distance: 0.0` (touching blocks
 only). The 100 m `patch.sepblk` green-up account remains only in the legacy
 Patchworks reference surface.
@@ -147,7 +147,7 @@ Legacy comparison (`legacy_greenup_search`, previous 100 m policy):
 
 ## Boundaries and next steps
 
-- The current opening-size targets are maxima, matching the legacy Patchworks
+- The current opening-size targets are ceilings, matching the legacy Patchworks
   `setMaximumPeriodic` semantics. Confirm that interpretation with MKRF staff.
 - The numeric Very High/High weights are pilot defaults; confirm them before
   treating the patch targets as calibrated policy.

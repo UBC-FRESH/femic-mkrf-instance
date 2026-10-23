@@ -41,8 +41,8 @@ Size class    Target share   Weight
 > 50 ha       0%             High
 ============  =============  =========
 
-The runtime treats the shares as maxima and maps Very High to 1,000,000 and
-High to 100,000. The 100 m ``patch.sepblk`` green-up surface remains only in
+The shares are ceilings (MKRF staff, October 2026); the runtime maps Very High to
+10,000,000 and High to 1,000,000. The 100 m ``patch.sepblk`` green-up surface remains only in
 the legacy Patchworks reference package.
 
 Patch-first construction
@@ -91,9 +91,8 @@ objective 0.
 Limits
 ------
 
-- Confirm that the opening-size shares are maxima, not minima, and confirm the
-  numeric Very High/High weights before treating the patch targets as
-  calibrated policy.
+- The opening-size shares are confirmed as ceilings; the numeric Very High/High
+  weights are an implementation calibration and may need further tuning.
 - The builder uses a 304,000 m3 period target (the 300,000 policy floor plus a
   buffer) and caps the 40-50 ha class at 5%. The final run uses no 40-50 ha
   openings; the cap remains a guard for future data.
