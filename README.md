@@ -4,6 +4,18 @@ Private standalone **MKRF FEMIC instance** for the canonical from-scratch
 rebuild lane, with retained PoC and legacy evidence surfaces kept alongside it
 for benchmark/reference comparison.
 
+## Runtime lane status
+
+**ws4 is the primary MKRF/NICC runtime.** The FEMIC rebuild produces the
+inventory, curves, ForestModel XML and fragments; `ws4` compiles, simulates,
+optimizes and serves that model. The Patchworks model packages (canonical
+rebuild, PoC and legacy compiled) are **reference/interchange-only** and are
+not the runtime lane.
+
+The ws4 pilot is the migration surface for the old Patchworks control layer.
+Its inputs and runnable entrypoints live under `ws4/`; see
+`docs/ws4-pilot.rst` and `ws4/README.md`.
+
 ## Current status
 
 This repository now carries the canonical MKRF rebuild runtime package plus the
@@ -25,8 +37,8 @@ Included now:
 - one non-sensitive annex-backed smoke artifact used to validate publication
   and cold-clone materialization.
 
-The active canonical runtime package now lives under
-`models/mkrf_patchworks_model/`.
+The canonical FEMIC input/interchange package now lives under
+`models/mkrf_patchworks_model/`; it is not the active runtime.
 
 The retained benchmark/reference package remains under
 `models/mkrf_patchworks_model_poc/`.
@@ -41,8 +53,8 @@ work for the completed canonical rebuild runtime surface.
 
 ## ws4 pilot
 
-MKRF is the flagship pilot instance for replacing the Patchworks control lane
-with ws4. The translated inputs live under `ws4/`:
+MKRF is the flagship instance for the ws4 runtime cutover from the Patchworks
+control lane. The translated inputs live under `ws4/`:
 
 - `ws4/targets.yaml` — harvest, flow, growing-stock and patch targets;
 - `ws4/patch_accounts.yaml` — `patch.grpblk` / `patch.sepblk` definitions;
@@ -92,11 +104,13 @@ Use the standalone docs tree first for operator guidance and accepted claim
 boundaries. Use this README and `runbooks/REBUILD_RUNBOOK.md` as the
 repository-level orientation and rebuild-boundary companions to that docs set.
 
-Current primary runtime/package references:
+Current build/reference package surfaces:
 
-- canonical rebuild package:
+- primary runtime:
+  `ws4/` (see `docs/ws4-pilot.rst`)
+- canonical FEMIC input/interchange package:
   `models/mkrf_patchworks_model/`
-- canonical Patchworks config:
+- reference Patchworks config:
   `config/patchworks.runtime.mkrf_rebuild.windows.yaml`
 - retained PoC benchmark package:
   `models/mkrf_patchworks_model_poc/`

@@ -1,6 +1,14 @@
 ﻿Operator Runbook
 ================
 
+Runtime lane note
+-----------------
+
+``ws4`` is the primary MKRF/NICC runtime. The steps below that generate,
+launch or smoke-test the Patchworks package are rebuild/interchange QA, not the
+runtime lane. For current scenario work, start with :doc:`ws4-pilot` and the
+ws4 runtime under ``ws4/``.
+
 Minimal Operator Path
 ---------------------
 

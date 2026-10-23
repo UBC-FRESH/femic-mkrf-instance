@@ -1,8 +1,9 @@
-# MKRF ws4 pilot
+# MKRF ws4 runtime
 
-This directory is the ws4-native replacement for the MKRF Patchworks control
-surface. The model recipe stays `models/mkrf_patchworks_model/xml/forestmodel.xml`
-and the inventory stays
+**ws4 is the primary MKRF/NICC runtime.** This directory is the ws4-native
+replacement for the MKRF Patchworks control surface. The Patchworks packages are
+reference/interchange-only. The model recipe stays
+`models/mkrf_patchworks_model/xml/forestmodel.xml` and the inventory stays
 `models/mkrf_patchworks_model/spatial/fragments.shp`; everything below translates
 the old `.pin` / `.bsh` behaviour to ws4 inputs.
 
@@ -29,12 +30,12 @@ python ws4/run_optimize.py --iterations 50
 `run_pilot.py` compiles the recipe and fragments into `ws4/runtime/matrix/`.
 `build_patch_schedule.py` grows connected 5-40 ha openings, assigns harvest
 years to fill decades toward 300,000 m3, and writes
-`ws4/schedules/patch_first.csv`. `run_pilot.py` replays it with the translated
+`ws4/schedules/patch_first.csv` on the 0-based offset clock. `run_pilot.py` replays it with the translated
 patch accounts into `ws4/runtime/patch_first/`. `run_optimize.py` starts the ws4
 search from that schedule and writes `ws4/runtime/patch_first_search/`.
 
-Requires an importable `ws4` (`pip install -e /path/to/ws4`). The pilot was run
-against the ws4 checkout at `/srv/shared-data/gep/ws4/ws4`.
+Requires an importable `ws4` (`pip install -e /path/to/ws4`). The runtime was
+validated against the ws4 checkout at `/srv/shared-data/gep/ws4/ws4`.
 
 ## Web UI
 
@@ -58,8 +59,8 @@ behind a trusted proxy.
 | `> 40 and <= 50 ha` | 5% | High |
 | `> 50 ha` | 0% | High |
 
-The pilot treats the shares as maxima and maps Very High = 1,000,000 and High =
-100,000. `patch_accounts.yaml` defines one account, `patch.grpblk`, on
+The runtime treats the shares as maxima and maps Very High = 1,000,000 and High
+= 100,000. `patch_accounts.yaml` defines one account, `patch.grpblk`, on
 `product.area.managed.treat.CC`, with `search_distance: 0.0` (touching blocks
 only). The 100 m `patch.sepblk` green-up account remains only in the legacy
 Patchworks reference surface.

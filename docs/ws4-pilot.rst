@@ -1,8 +1,9 @@
-ws4 Pilot
-=========
+ws4 Runtime
+===========
 
-MKRF is the flagship pilot instance for moving the control layer from
-Patchworks to ws4. The translated inputs and the runnable pilot live under
+**ws4 is the primary MKRF/NICC runtime.** The Patchworks XML/fragments package
+is an interchange input to ws4, and the retained Patchworks packages are
+reference-only. The translated inputs and runnable entrypoints live under
 ``ws4/`` in the repository; the full translation table and results are in
 ``ws4/README.md``.
 
@@ -13,7 +14,7 @@ boundary is in ``planning/data_publication_boundary.md``.
 Translation boundary
 --------------------
 
-The ws4 pilot keeps the canonical recipe and inventory:
+The ws4 runtime keeps the canonical recipe and inventory:
 
 - ``models/mkrf_patchworks_model/xml/forestmodel.xml``
 - ``models/mkrf_patchworks_model/spatial/fragments.shp``
@@ -40,9 +41,9 @@ Size class    Target share   Weight
 > 50 ha       0%             High
 ============  =============  =========
 
-The pilot treats the shares as maxima and maps Very High to 1,000,000 and High
-to 100,000. The 100 m ``patch.sepblk`` green-up surface remains only in the
-legacy Patchworks reference package.
+The runtime treats the shares as maxima and maps Very High to 1,000,000 and
+High to 100,000. The 100 m ``patch.sepblk`` green-up surface remains only in
+the legacy Patchworks reference package.
 
 Patch-first construction
 ------------------------

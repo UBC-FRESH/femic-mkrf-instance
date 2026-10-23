@@ -5,7 +5,7 @@ This is a thin pilot harness over the ws4 optimiser. It is deliberately
 separate from the ws4 CLI so the pilot can be reproduced without changing the
 ws4 package: the ws4 search already accepts an initial schedule through
 ``Optimizer._solve(initial=...)``, and this script loads the translated
-``block_id,treatment,period`` CSV into that form.
+``block_id,treatment,offset`` CSV into that form.
 
 The output directory is a normal ws4 search run: ``schedule.csv``,
 ``summary.json``, account/product values, patch accounts, spatial checks and
@@ -27,9 +27,13 @@ DEFAULT_RUN = WS4_ROOT / "runtime" / "patch_first_search"
 
 
 def load_schedule_csv(path: Path) -> dict[int, tuple[tuple[str, int], ...]]:
-    """Load a ``block_id,treatment,period`` schedule into ws4's chain form."""
+    """Load a ``block_id,treatment,offset`` schedule into ws4's chain form."""
     frame = pd.read_csv(path)
-    required = {"block_id", "treatment", "period"}
+    if "period" in frame.columns:
+        raise ValueError(
+            f"schedule {path} uses the legacy period column; write offset instead"
+        )
+    required = {"block_id", "treatment", "offset"}
     missing = required - set(frame.columns)
     if missing:
         raise ValueError(
@@ -40,9 +44,9 @@ def load_schedule_csv(path: Path) -> dict[int, tuple[tuple[str, int], ...]]:
         schedule[int(block)] = tuple(
             sorted(
                 (
-                    (str(treatment), int(period))
-                    for treatment, period in zip(
-                        group["treatment"], group["period"], strict=True
+                    (str(treatment), int(offset))
+                    for treatment, offset in zip(
+                        group["treatment"], group["offset"], strict=True
                     )
                 ),
                 key=lambda event: event[1],

@@ -1,10 +1,17 @@
 ﻿Rebuild and QA
 ==============
 
+Runtime lane note
+-----------------
+
+``ws4`` is the primary MKRF/NICC runtime. The rebuild/QA loop below validates
+the FEMIC input/interchange package and the retained Patchworks reference
+surface. It is not the current scenario runtime; use :doc:`ws4-pilot` for that.
+
 Current Rebuild Meaning
 -----------------------
 
-For the current canonical lane, rebuild/QA means:
+For the current canonical input/interchange lane, rebuild/QA means:
 
 - regenerate the canonical runtime XML/package surfaces from rebuild-owned
   inputs;

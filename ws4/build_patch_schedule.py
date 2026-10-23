@@ -6,9 +6,9 @@ struggles to form same-year openings, so this script builds them directly:
 
 1. aggregate the managed fragments to blocks (area, age, yield curve);
 2. grow connected clusters of touching blocks until they reach the 5-40 ha band;
-3. assign each opening a harvest year, filling the target periods (years 1-10,
-   11-20, ...) toward the policy floor plus a small buffer;
-4. emit a ``block_id,treatment,period`` schedule for ws4.
+3. assign each opening an offset, filling the target periods (offsets 0-9,
+   10-19, ...) toward the policy floor plus a small buffer;
+4. emit a ``block_id,treatment,offset`` schedule for ws4.
 
 Small clusters are merged into adjacent openings when capacity allows. The
 40-50 ha class is capped at 5% of patch area. Blocks larger than the upper band
@@ -217,7 +217,7 @@ def _build_openings(
     return kept
 
 
-def _assign_years(
+def _assign_offsets(
     openings: list[dict[str, object]],
     blocks: dict[int, dict[str, object]],
     curves: dict[int, np.ndarray],
@@ -226,13 +226,13 @@ def _assign_years(
     target_per_decade: float,
     simulator: object | None = None,
 ) -> dict[int, float]:
-    """Assign opening years, filling each target period toward the target volume.
+    """Assign opening offsets, filling each target period toward the target volume.
 
-    Target period 1 is years 1-10, period 2 is years 11-20, and so on, matching
-    ``Target.cell_years``. Year 0 is the snapshot and is never used.
+    Target period 1 is offsets 0-9, period 2 is offsets 10-19, and so on. Offset
+    0 is the first simulation year; the period-0 snapshot is never scheduled.
     """
     period_count = max(1, years // 10)
-    starts = {period: 1 + 10 * (period - 1) for period in range(1, period_count + 1)}
+    starts = {period: 10 * (period - 1) for period in range(1, period_count + 1)}
     volumes = {period: 0.0 for period in starts}
     offsets = {period: 0 for period in starts}
     cache: dict[tuple[int, int], float] = {}
@@ -244,17 +244,18 @@ def _assign_years(
             period for period, start in starts.items() if start >= int(opening["ready"])
         ]
         if not candidates:
-            candidates = list(starts)
+            dropped += 1
+            continue
         choice: tuple[int, int, float] | None = None
         for period in sorted(candidates):
             start = starts[period]
-            year = min(
+            offset = min(
                 max(int(opening["ready"]), start + offsets[period] % 10), years - 1
             )
             volume = sum(
                 _volume(
                     blocks[item],
-                    year,
+                    offset,
                     curves,
                     simulator=simulator,
                     cache=cache,
@@ -262,20 +263,32 @@ def _assign_years(
                 for item in opening["blocks"]
             )
             if volumes[period] + volume <= target_per_decade:
-                choice = (period, year, volume)
+                choice = (period, offset, volume)
                 break
         if choice is None:
             dropped += 1
             continue
-        period, year, volume = choice
+        period, offset, volume = choice
         offsets[period] += 1
-        opening["period"] = period
-        opening["year"] = year
+        opening["target_period"] = period
+        opening["offset"] = offset
         opening["volume"] = volume
         volumes[period] += volume
     if dropped:
         print(f"dropped {dropped} openings beyond the period capacity")
     return volumes
+
+
+def schedule_frame(openings: list[dict[str, object]]) -> pd.DataFrame:
+    """Return the ``block_id,treatment,offset`` schedule for assigned openings."""
+    rows = [
+        {"block_id": int(block_id), "treatment": "CC", "offset": int(opening["offset"])}
+        for opening in openings
+        for block_id in opening["blocks"]
+    ]
+    if not rows:
+        return pd.DataFrame(columns=["block_id", "treatment", "offset"])
+    return pd.DataFrame(rows).sort_values(["offset", "block_id"], kind="stable")
 
 
 def main() -> None:
@@ -302,7 +315,7 @@ def main() -> None:
         max_area=args.max_area,
         intermediate_share=args.intermediate_share,
     )
-    decades = _assign_years(
+    decades = _assign_offsets(
         openings,
         blocks,
         curves,
@@ -311,22 +324,18 @@ def main() -> None:
         simulator=simulator,
     )
 
-    scheduled = [opening for opening in openings if "year" in opening]
-    rows = [
-        {"block_id": block_id, "treatment": "CC", "period": int(opening["year"])}
-        for opening in scheduled
-        for block_id in opening["blocks"]
-    ]
-    schedule = pd.DataFrame(rows).sort_values(["period", "block_id"], kind="stable")
+    scheduled = [opening for opening in openings if "offset" in opening]
+    schedule = schedule_frame(scheduled)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     schedule.to_csv(args.out, index=False)
 
     areas = sorted(float(opening["area"]) for opening in scheduled)
+    area_range = f"{areas[0]:.1f}-{areas[-1]:.1f} ha" if areas else "n/a"
     print(
         f"blocks={len(blocks)} openings={len(scheduled)} "
         f"scheduled_blocks={len(schedule)} "
         f"area={sum(areas):.1f} ha "
-        f"area_range={areas[0]:.1f}-{areas[-1]:.1f} ha"
+        f"area_range={area_range}"
     )
     print(
         "decade volumes:", {decade: round(value) for decade, value in decades.items()}

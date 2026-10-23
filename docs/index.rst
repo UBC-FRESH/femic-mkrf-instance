@@ -4,7 +4,11 @@ MKRF User Guide
 This documentation site is the standalone operator guide for the
 ``femic-mkrf-instance`` repository.
 
-The active canonical runtime package now lives under
+**Runtime lane:** ``ws4`` is the primary MKRF/NICC runtime. The Patchworks
+model packages are reference/interchange-only. Start with :doc:`ws4-pilot` for
+the active lane.
+
+The canonical FEMIC input/interchange package lives under
 ``models/mkrf_patchworks_model/``.
 
 The retained PoC benchmark/reference package remains under

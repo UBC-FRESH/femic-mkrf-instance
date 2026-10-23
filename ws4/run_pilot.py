@@ -98,19 +98,19 @@ def summarise(run_dir: Path) -> dict[str, object]:
     patches = pd.read_csv(run_dir / "patch_accounts.csv")
 
     harvest = products.loc[
-        products["account"] == "product.yield.managed.total", ["year", "value"]
+        products["account"] == "product.yield.managed.total", ["offset", "value"]
     ].copy()
-    harvest["decade"] = (harvest["year"] // 10) * 10
+    harvest["decade"] = (harvest["offset"] // 10) * 10
     harvest_by_decade = (
         harvest.groupby("decade", sort=True)["value"].sum().round(2).to_dict()
     )
 
     growing_stock = accounts.loc[
-        accounts["account"] == "feature.yield.managed.total", ["year", "value"]
+        accounts["account"] == "feature.yield.managed.total", ["offset", "value"]
     ]
-    decade_rows = growing_stock[growing_stock["year"].isin(range(0, 101, 10))]
+    decade_rows = growing_stock[growing_stock["offset"].isin(range(0, 101, 10))]
     growing_stock_by_decade = {
-        int(row.year): round(float(row.value), 2)
+        int(row.offset): round(float(row.value), 2)
         for row in decade_rows.itertuples(index=False)
     }
 
@@ -120,11 +120,11 @@ def summarise(run_dir: Path) -> dict[str, object]:
         if column.startswith("patch.grpblk.") and column.endswith(".size")
     ]
     patch_frame = patches.loc[
-        patches["year"].isin(range(0, 101, 10)),
-        ["year", *size_columns, "patch.grpblk.TOTAL.frequency"],
+        patches["offset"].isin(range(0, 101, 10)),
+        ["offset", *size_columns, "patch.grpblk.TOTAL.frequency"],
     ].copy()
     grpblk_by_decade = {
-        int(row["year"]): {
+        int(row["offset"]): {
             **{
                 column.removeprefix("patch.grpblk.").removesuffix(".size")
                 + "_pct": round(float(row[column]), 3)
