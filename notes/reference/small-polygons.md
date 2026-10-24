@@ -1,6 +1,6 @@
 # MKRF sub-hectare stand polygons
 
-Status: analysis complete; attribute-safe merge is optional and not applied to the canonical inventory.
+Status: analysis complete. The adopted cleanup line is **0.25 ha**, with an attribute-safe optional merge; the canonical inventory is unchanged by default.
 
 ## Question
 
@@ -77,16 +77,39 @@ Using the largest touching neighbour:
 A blanket merge is therefore a strata/land-base edit, not a neutral sliver
 cleanup.
 
+## 0.25 ha decision
+
+The adopted cleanup line is **0.25 ha**:
+
+- 204 polygons < 0.25 ha (11.6% of polygons)
+- 33.90 ha (0.70% of area)
+- median 0.162 ha
+- 0.25 is a local valley in the 0.05 ha histogram, after the 0.10-0.25
+  cluster and before the 0.30-0.40 rise
+- 36 polygons / 6.19 ha carry AU combinations absent from every >= 0.25 ha
+  polygon
+- blanket merging would change operability on 65 polygons / 10.41 ha and CT
+  eligibility on 67 / 11.17 ha
+
+Attribute-safe merge into a >= 0.25 ha neighbour:
+
+- **25 polygons**
+- **3.79 ha**
+- source attributes `Operabilit`, `CONTCLAS`, `CT_eligib`, `AU_EX` and `AU_FU`
+  all match the target
+
+The optional merged inventory is written to
+`runtime/spatial/fragments_attr_safe_025.gpkg`; the canonical inventory is
+unchanged. The remaining 0.25-1.0 ha polygons stay in the inventory and are
+handled by the scheduler, not by a blanket merge.
+
 ## Recommendation
 
-Do not merge all polygons below 1 ha.
+Use **0.25 ha with attribute-safe merging** for sliver cleanup. Do not merge all
+polygons below 1 ha.
 
-Use an **attribute-safe merge** only where the small polygon and its largest
-touching ≥1 ha neighbour share `Operabilit`, `CONTCLAS`, `CT_eligib`, `AU_EX`
-and `AU_FU`.
-
-- Safe pairs: **95**
-- Area: **45.46 ha**
+- Safe pairs: **25**
+- Area: **3.79 ha**
 - The canonical inventory is not changed by default.
 - The 0-1 ha harvest-opening rule remains a separate scheduling constraint: an
   isolated block should wait for a neighbouring block.
@@ -96,12 +119,21 @@ and `AU_FU`.
 ```bash
 python scripts/small_polygons.py \
   --fragments models/mkrf_patchworks_model/spatial/fragments.shp \
-  --summary-out runtime/small_polygons_summary.json \
-  --small-out runtime/small_polygons.csv
+  --threshold 0.25 \
+  --summary-out runtime/spatial/small_polygons_summary_025.json \
+  --small-out runtime/spatial/small_polygons_025.csv
 
 # Optional conservative merge
 python scripts/small_polygons.py \
   --fragments models/mkrf_patchworks_model/spatial/fragments.shp \
-  --merge-out runtime/mkrf_fragments_attr_safe.gpkg \
-  --merge-log runtime/mkrf_fragments_attr_safe.csv
+  --threshold 0.25 \
+  --merge-out runtime/spatial/fragments_attr_safe_025.gpkg \
+  --merge-log runtime/spatial/fragments_attr_safe_025_merge_log.csv
+
+python ws4/run_pilot.py \
+  --fragments runtime/spatial/fragments_attr_safe_025.gpkg \
+  --rebuild
 ```
+
+The last command is opt-in; the default `run_pilot.py` still builds the
+canonical inventory.
