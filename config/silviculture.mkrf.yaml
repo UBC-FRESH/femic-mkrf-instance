@@ -109,9 +109,44 @@ fertilization:
     years_after_previous: 10
 
 qmd:
-  enabled: false
-  source: "synthetic"
-  notes: "Replace provisional QMD curves with observed or Nemora-derived curves when available."
+  enabled: true
+  harvested_product_accounts_enabled: true
+  qmd_response_fraction_by_bucket:
+    CT35: 0.10
+    CT40: 0.12
+    CT45: 0.15
+  qmd_response_fraction_by_bucket_intensity:
+    CT35_low: 0.08
+    CT35_medium: 0.10
+    CT35_high: 0.12
+    CT40_low: 0.10
+    CT40_medium: 0.12
+    CT40_high: 0.14
+    CT45_low: 0.12
+    CT45_medium: 0.15
+    CT45_high: 0.18
+  notes:
+    - "Response fractions scale with intensity: higher removal -> larger QMD response."
+    - "Per-bucket keys match the _mkrf_ct_bucket_specs() labels."
+    - "Per-(bucket, intensity) keys are 'CT{age}_{intensity}' (e.g., 'CT35_medium')."
+    - "Falls back to per-bucket value if intensity not listed; falls back to flat default (0.10) if bucket not listed."
+    - "Values are placeholders pending calibration against MKRF staff guidance."
+    - "QMD curves use the managed volume/height support in managed_au_curves.csv. That export does not yet carry TPH or DBHq, so stems per hectare fall back to the bootstrap planting density as a constant approximation; re-run BTC with stand-structure support to replace the fallback."
+
+greenup:
+  enabled: true
+  greenup_years: 5
+  adjacency_distance_m: 100
+  intermediate_min_ha: 40
+  max_patch_size_ha: 50
+  intermediate_max_size_percent: 5
+  intermediate_weight: 10
+  large_patch_weight: 1000
+  notes:
+    - "Optional Patchworks approximation of adjacency/greenup constraints. When enabled, the builder adds a le5 seral feature, generates the 100 m separation-block topology from the runtime fragments, and configures patch targets on feature.area.managed.seral.le5."
+    - "Patchworks patch targets are soft weighted objectives, not hard adjacency constraints. Use ws4 when an exact greenup constraint is required."
+    - "MKRF staff guidance (October 2026) supersedes the 100 m rule for the active ws4 pilot: opening size is controlled by size-class targets and weights on touching blocks. This greenup block is retained for the Patchworks reference surface."
+    - "The soft patch-size distribution implementation now lives in ws4/targets.yaml and ws4/patch_accounts.yaml; details are in planning/2026-10-21_basecamp_mkrf_decisions.md."
 
 retention:
   full_retention_au_ids: []

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 import json
 import os
@@ -12,6 +13,7 @@ import xml.etree.ElementTree as et
 import geopandas as gpd
 import numpy as np
 import pandas as pd
+import yaml
 
 from mkrf_femic.pipeline.mkrf_au import (
     build_mkrf_au_aggregation_audit,
@@ -40,7 +42,221 @@ from femic.pipeline.plots import (
     strata_plot_paths,
 )
 from femic.pipeline.tipsy import run_btc_cli
-from femic.fmg.patchworks import validate_forestmodel_xml_tree, write_forestmodel_xml
+from femic.fmg.patchworks import (
+    CurvePoint,
+    _build_qmd_curve_points,
+    validate_forestmodel_xml_tree,
+    write_forestmodel_xml,
+)
+
+
+def _au_token_to_si_level(au_token: str) -> str:
+    """Map an MKRF AU token to a K3Z-style SI level (L/M/H)."""
+    token = str(au_token).upper()
+    if "L" in token:
+        return "L"
+    if "H" in token:
+        return "H"
+    return "M"
+
+
+def _mkrf_curve_points_from_column(
+    frame: pd.DataFrame,
+    column: str,
+) -> tuple[CurvePoint, ...]:
+    """Return positive ``(age, value)`` points from a managed-curve column."""
+    if column not in frame.columns or "age" not in frame.columns:
+        return ()
+    values = pd.to_numeric(frame[column], errors="coerce")
+    points: list[CurvePoint] = []
+    for age, value in zip(frame["age"], values):
+        if pd.isna(value) or float(value) <= 0.0:
+            continue
+        points.append(CurvePoint(x=float(age), y=float(value)))
+    return tuple(points)
+
+
+@dataclass(frozen=True)
+class MkrfGreenupConfig:
+    """Optional Patchworks approximation of adjacency/greenup constraints."""
+
+    enabled: bool = False
+    greenup_years: int = 5
+    adjacency_distance_m: float = 100.0
+    intermediate_min_ha: float = 40.0
+    max_patch_size_ha: float = 50.0
+    intermediate_max_size_percent: float = 5.0
+    intermediate_weight: float = 10.0
+    large_patch_weight: float = 1000.0
+
+    @property
+    def curve_id(self) -> str:
+        return f"le{self.greenup_years}"
+
+    @property
+    def criteria_account(self) -> str:
+        return f"feature.area.managed.seral.le{self.greenup_years}"
+
+    @property
+    def topology_filename(self) -> str:
+        return f"topo_frag{int(round(self.adjacency_distance_m))}.csv"
+
+
+def _resolve_mkrf_greenup_config(
+    silviculture_config: dict[str, object] | None,
+) -> MkrfGreenupConfig:
+    """Return the optional greenup/adjacency settings from the silviculture config."""
+    greenup_payload = (silviculture_config or {}).get("greenup") or {}
+    payload = greenup_payload if isinstance(greenup_payload, dict) else {}
+    config = MkrfGreenupConfig(
+        enabled=bool(payload.get("enabled", False)),
+        greenup_years=int(payload.get("greenup_years", 5)),
+        adjacency_distance_m=float(payload.get("adjacency_distance_m", 100.0)),
+        intermediate_min_ha=float(payload.get("intermediate_min_ha", 40.0)),
+        max_patch_size_ha=float(payload.get("max_patch_size_ha", 50.0)),
+        intermediate_max_size_percent=float(
+            payload.get("intermediate_max_size_percent", 5.0)
+        ),
+        intermediate_weight=float(payload.get("intermediate_weight", 10.0)),
+        large_patch_weight=float(payload.get("large_patch_weight", 1000.0)),
+    )
+    if config.greenup_years <= 0:
+        raise ValueError("greenup.greenup_years must be greater than zero")
+    if config.adjacency_distance_m <= 0.0:
+        raise ValueError("greenup.adjacency_distance_m must be greater than zero")
+    if config.max_patch_size_ha <= config.intermediate_min_ha:
+        raise ValueError(
+            "greenup.max_patch_size_ha must be greater than "
+            "greenup.intermediate_min_ha"
+        )
+    return config
+
+
+def build_mkrf_proximal_topology(
+    *,
+    fragments_path: Path,
+    output_path: Path,
+    distance_m: float,
+) -> pd.DataFrame:
+    """Write the Patchworks proximal-topology CSV for the runtime fragments.
+
+    The file has the same ``BLOCK1,BLOCK2,DISTANCE,LENGTH`` contract as the
+    legacy ``ProximalTopology`` export. Pairs are emitted once, ordered by
+    block key, and only when the polygon-to-polygon distance is at or below the
+    requested threshold.
+    """
+    if not fragments_path.is_file():
+        raise FileNotFoundError(
+            f"MKRF greenup topology requires runtime fragments: {fragments_path}"
+        )
+    fragments = gpd.read_file(fragments_path)
+    if "RES_KEY" not in fragments.columns:
+        raise ValueError(f"fragments file has no RES_KEY column: {fragments_path}")
+    fragments = fragments.loc[
+        fragments.geometry.notna() & ~fragments.geometry.is_empty
+    ].reset_index(drop=True)
+    keys = fragments["RES_KEY"].astype(int).to_numpy()
+    geometries = list(fragments.geometry)
+    spatial_index = fragments.sindex
+    rows: list[tuple[int, int, float, float]] = []
+    for left_index, left_geometry in enumerate(geometries):
+        candidates = spatial_index.query(
+            left_geometry.buffer(distance_m),
+            predicate="intersects",
+        )
+        for right_index in candidates:
+            right_index = int(right_index)
+            if right_index <= left_index:
+                continue
+            right_geometry = geometries[right_index]
+            distance = float(left_geometry.distance(right_geometry))
+            if distance > distance_m:
+                continue
+            shared_length = (
+                float(left_geometry.intersection(right_geometry).length)
+                if distance <= 0.0
+                else 0.0
+            )
+            rows.append(
+                (
+                    int(keys[left_index]),
+                    int(keys[right_index]),
+                    round(distance, 1),
+                    round(shared_length, 1),
+                )
+            )
+    topology = pd.DataFrame(
+        rows,
+        columns=["BLOCK1", "BLOCK2", "DISTANCE", "LENGTH"],
+    ).sort_values(["BLOCK1", "BLOCK2"], kind="stable")
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    topology.to_csv(output_path, index=False)
+    return topology
+
+
+def _write_mkrf_greenup_patch_targets_script(
+    *,
+    output_path: Path,
+    config: MkrfGreenupConfig,
+) -> None:
+    """Write the BeanShell target setup for the optional greenup patch classes."""
+    intermediate_label = (
+        f"{int(config.intermediate_min_ha)}_{int(config.max_patch_size_ha)}"
+    )
+    large_label = f"{int(config.max_patch_size_ha)}plus"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(
+        dedent(
+            f"""
+            /*************************************************************
+             *
+             * Greenup/adjacency patch targets (Patchworks approximation).
+             * Generated by FEMIC from config/silviculture.mkrf.yaml.
+             *
+             * Criteria account: {config.criteria_account}
+             * Topology distance: {config.adjacency_distance_m:g} m
+             * Greenup period:   {config.greenup_years} years
+             *
+             * Patchworks patch targets are soft weighted objectives, not hard
+             * adjacency constraints. Use ws4 when a true greenup constraint is
+             * required.
+             *
+             *************************************************************/
+
+            setupGreenupPatchTargets(control, int periods) {{
+               String criteria = "{config.criteria_account}";
+
+               setActive("patch.sepblk.{intermediate_label}.size", true, false, true);
+               setMaximumPeriodic(
+                  "patch.sepblk.{intermediate_label}.size",
+                  {config.intermediate_max_size_percent:.1f},
+                  0,
+                  periods
+               );
+               setMaxWeight(
+                  "patch.sepblk.{intermediate_label}.size",
+                  {config.intermediate_weight:.1f}
+               );
+
+               setActive("patch.sepblk.{large_label}.size", true, false, true);
+               setMaximumPeriodic(
+                  "patch.sepblk.{large_label}.size",
+                  0.0,
+                  0,
+                  periods
+               );
+               setMaxWeight(
+                  "patch.sepblk.{large_label}.size",
+                  {config.large_patch_weight:.1f}
+               );
+
+               print("Configured greenup patch targets for " + criteria);
+            }}
+            """
+        ).strip()
+        + "\n",
+        encoding="utf-8",
+    )
 
 
 @dataclass(frozen=True)
@@ -112,6 +328,253 @@ def _build_lookup_expr(keys: list[str], values: list[str], *, key_expr: str) -> 
     return f"lookupTable({key_expr},'{','.join(keys)}','{','.join(values)}')"
 
 
+MKRF_LOG_GRADE_LABELS: tuple[str, ...] = ("D", "F", "H", "I", "J", "U", "X", "Y")
+
+
+def _build_mkrf_log_grade_shares(managed_curves: pd.DataFrame) -> pd.DataFrame:
+    """Return volume-weighted per-AU BTC log-grade shares as percentages.
+
+    The eight explicit BTC grades partition merchantable volume, so the shares
+    are normalized to sum to 100 per AU. AUs with no graded volume yield zero
+    shares rather than an undefined split.
+    """
+    columns = [f"Logs_Grade_{label}" for label in MKRF_LOG_GRADE_LABELS]
+    frame = managed_curves.assign(au_id=lambda df: df["au_id"].astype(str))
+    for column in columns:
+        if column not in frame.columns:
+            frame[column] = 0.0
+        frame[column] = pd.to_numeric(frame[column], errors="coerce").fillna(0.0)
+    totals = frame.groupby("au_id", sort=True)[columns].sum()
+    row_totals = totals.sum(axis=1)
+    shares = totals.div(row_totals.where(row_totals > 0.0, other=1.0), axis=0) * 100.0
+    shares.loc[row_totals <= 0.0, :] = 0.0
+    return shares.reset_index()
+
+
+MKRF_LOG_PRICE_CONFIG_NAME = "log_grade_prices.mkrf.yaml"
+
+
+def _resolve_mkrf_log_price_config(package_root: Path) -> Path | None:
+    """Return the instance-local log price config, searching upward from the package root."""
+    for candidate_root in (package_root, *package_root.parents):
+        candidate = candidate_root / "config" / MKRF_LOG_PRICE_CONFIG_NAME
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def _load_mkrf_log_grade_prices(
+    config_path: Path,
+) -> tuple[dict[str, dict[str, float]], dict[str, str | None], dict[str, object]]:
+    """Return (market-species prices, bucket proxy map, provenance) from the price config."""
+    payload = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    matrices = payload.get("matrices") or {}
+    matrix_name = payload.get("active_matrix")
+    if matrix_name not in matrices:
+        raise ValueError(
+            f"log price config {config_path} does not define active matrix {matrix_name!r}"
+        )
+    matrix = matrices[matrix_name] or {}
+    species_prices: dict[str, dict[str, float]] = {}
+    for species, grade_prices in (matrix.get("species") or {}).items():
+        species_prices[str(species)] = {
+            str(grade): float(price) for grade, price in (grade_prices or {}).items()
+        }
+    proxies: dict[str, str | None] = {}
+    for bucket, market_species in (payload.get("species_market_proxies") or {}).items():
+        if market_species is None:
+            proxies[str(bucket)] = None
+            continue
+        resolved = str(market_species)
+        if resolved not in species_prices:
+            raise ValueError(
+                f"log price config {config_path} proxies {bucket!r} to unknown "
+                f"market species {resolved!r}"
+            )
+        proxies[str(bucket)] = resolved
+    provenance: dict[str, object] = dict(matrix.get("provenance") or {})
+    provenance["active_matrix"] = matrix_name
+    provenance["config_path"] = str(config_path)
+    return species_prices, proxies, provenance
+
+
+def _build_mkrf_log_grade_blended_prices(
+    managed_species_shares: pd.DataFrame,
+    *,
+    species_prices: dict[str, dict[str, float]],
+    proxies: dict[str, str | None],
+) -> pd.DataFrame:
+    """Return per-AU species-blended log price (CAD/m3) for each BTC grade.
+
+    Published Vancouver Log Market prices are quoted per market species, so each
+    AU price is the species-share weighted average across its constituent
+    buckets. Buckets with no published coast conifer price (the deciduous and
+    residual buckets) contribute zero rather than having their weight
+    redistributed, so the blend is deliberately conservative for
+    deciduous-leading AUs. ``priced_share_pct`` records how much of each AU is
+    actually covered by a published price so that dilution stays auditable.
+    """
+    frame = managed_species_shares.assign(
+        au_id=lambda df: df["au_id"].astype(str)
+    ).sort_values("au_id", kind="stable")
+    result = pd.DataFrame({"au_id": frame["au_id"].tolist()})
+    priced_weight = pd.Series(0.0, index=frame.index)
+    for bucket, market_species in proxies.items():
+        if market_species is None or bucket not in frame.columns:
+            continue
+        priced_weight = priced_weight + pd.to_numeric(
+            frame[bucket], errors="coerce"
+        ).fillna(0.0)
+    for grade_label in MKRF_LOG_GRADE_LABELS:
+        grade_key = f"Logs_Grade_{grade_label}"
+        blended = pd.Series(0.0, index=frame.index)
+        for bucket, market_species in proxies.items():
+            if market_species is None or bucket not in frame.columns:
+                continue
+            share = pd.to_numeric(frame[bucket], errors="coerce").fillna(0.0) / 100.0
+            blended = blended + share * float(
+                species_prices.get(market_species, {}).get(grade_key, 0.0)
+            )
+        result[grade_key] = blended.to_numpy()
+    result["priced_share_pct"] = priced_weight.to_numpy()
+    return result
+
+
+MKRF_HARVEST_COST_CONFIG_NAME = "harvest_costs.mkrf.yaml"
+
+
+def _resolve_mkrf_harvest_cost_config(package_root: Path) -> Path | None:
+    """Return the instance-local harvest cost config, searching upward from the package root."""
+    for candidate_root in (package_root, *package_root.parents):
+        candidate = candidate_root / "config" / MKRF_HARVEST_COST_CONFIG_NAME
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def _load_mkrf_harvest_costs(config_path: Path) -> dict[str, object]:
+    """Return the resolved harvest cost basis from the instance-local cost config.
+
+    The returned mapping carries the per-cubic-metre rates keyed by cost item,
+    the per-hectare basic silviculture estimate keyed by BEC unit, the analysis
+    unit prefix map used to resolve those BEC keys, and provenance. Rates that
+    the Coast Appraisal Manual does not publish are flagged in the config with
+    ``basis: assumption``; those item names are returned separately so that
+    downstream audit output can keep the distinction visible.
+    """
+    payload = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+    matrices = payload.get("matrices") or {}
+    matrix_name = payload.get("active_matrix")
+    if matrix_name not in matrices:
+        raise ValueError(
+            f"harvest cost config {config_path} does not define active matrix {matrix_name!r}"
+        )
+    matrix = matrices[matrix_name] or {}
+
+    volume_rates: dict[str, float] = {}
+    assumed_items: list[str] = []
+    for item, entry in (matrix.get("volume_costs_cad_per_m3") or {}).items():
+        entry = entry or {}
+        volume_rates[str(item)] = float(entry.get("rate") or 0.0)
+        if str(entry.get("basis") or "").strip().lower() == "assumption":
+            assumed_items.append(str(item))
+
+    stumpage = matrix.get("stumpage") or {}
+    stumpage_enabled = bool(stumpage.get("enabled"))
+    stumpage_rate = stumpage.get("rate_cad_per_m3")
+    if stumpage_enabled:
+        if stumpage_rate is None:
+            raise ValueError(
+                f"harvest cost config {config_path} enables stumpage without a rate; "
+                "supply stumpage.rate_cad_per_m3 or disable it"
+            )
+        volume_rates["stumpage"] = float(stumpage_rate)
+
+    silviculture = (matrix.get("area_costs_cad_per_ha") or {}).get(
+        "basic_silviculture"
+    ) or {}
+    silviculture_by_bec = {
+        str(bec): float(cost)
+        for bec, cost in (silviculture.get("by_bec_unit") or {}).items()
+    }
+    silviculture_default = float(silviculture.get("default") or 0.0)
+
+    prefixes = {
+        str(prefix): str(bec)
+        for prefix, bec in (payload.get("bec_unit_prefixes") or {}).items()
+    }
+    for prefix, bec in prefixes.items():
+        if bec not in silviculture_by_bec:
+            raise ValueError(
+                f"harvest cost config {config_path} maps analysis unit prefix "
+                f"{prefix!r} to unknown BEC unit {bec!r}"
+            )
+
+    provenance: dict[str, object] = dict(matrix.get("provenance") or {})
+    provenance["active_matrix"] = matrix_name
+    provenance["config_path"] = str(config_path)
+    provenance["volume_cost_rates_cad_per_m3"] = dict(sorted(volume_rates.items()))
+    provenance["volume_cost_total_cad_per_m3"] = round(sum(volume_rates.values()), 4)
+    provenance["assumed_rate_items"] = sorted(assumed_items)
+    provenance["stumpage_enabled"] = stumpage_enabled
+
+    return {
+        "volume_rates": volume_rates,
+        "assumed_items": sorted(assumed_items),
+        "silviculture_by_bec": silviculture_by_bec,
+        "silviculture_default": silviculture_default,
+        "bec_prefixes": prefixes,
+        "provenance": provenance,
+    }
+
+
+def _resolve_mkrf_bec_unit(au_id: str, prefixes: dict[str, str]) -> str | None:
+    """Return the BEC cost key for an analysis unit, matching the longest prefix first."""
+    for prefix in sorted(prefixes, key=len, reverse=True):
+        if au_id.startswith(prefix):
+            return prefixes[prefix]
+    return None
+
+
+def _build_mkrf_silviculture_costs(
+    au_ids: Sequence[str],
+    *,
+    by_bec: dict[str, float],
+    default: float,
+    prefixes: dict[str, str],
+) -> pd.DataFrame:
+    """Return the per-AU basic silviculture cost (CAD/ha) resolved from BEC unit.
+
+    The Coast Appraisal Manual keys basic silviculture cost estimates to BEC
+    zone, subzone and variant, and directs that an unlisted unit falls back to
+    the next higher classification. ``bec_unit`` is carried in the output so the
+    resolution stays auditable, and ``resolved_by`` records whether the value
+    came from a matched prefix or from the zone-level default.
+    """
+    rows: list[dict[str, object]] = []
+    for au_id in sorted({str(au_id) for au_id in au_ids}):
+        bec_unit = _resolve_mkrf_bec_unit(au_id, prefixes)
+        if bec_unit is None:
+            rows.append(
+                {
+                    "au_id": au_id,
+                    "bec_unit": "",
+                    "silviculture_cad_per_ha": default,
+                    "resolved_by": "default",
+                }
+            )
+            continue
+        rows.append(
+            {
+                "au_id": au_id,
+                "bec_unit": bec_unit,
+                "silviculture_cad_per_ha": by_bec[bec_unit],
+                "resolved_by": "bec_prefix",
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def _mkrf_ct_bucket_label(anchor_age: int) -> str:
     return f"CT{int(anchor_age)}"
 
@@ -131,6 +594,30 @@ def _mkrf_ct_bucket_specs() -> tuple[dict[str, int | str], ...]:
         }
         for anchor_age in _MKRF_CT_BUCKET_ANCHORS
     )
+
+
+def _resolve_mkrf_qmd_response_fraction(
+    qmd_config: dict[str, object],
+    *,
+    bucket_label: str,
+    intensity: str,
+) -> float:
+    """Resolve the CT diameter-response fraction for a bucket and intensity.
+
+    Resolution order matches the documented config contract: the
+    per-``(bucket, intensity)`` entry wins, then the per-bucket entry, then the
+    flat ``qmd_response_fraction`` default.
+    """
+    by_bucket_intensity = (
+        qmd_config.get("qmd_response_fraction_by_bucket_intensity") or {}
+    )
+    by_bucket = qmd_config.get("qmd_response_fraction_by_bucket") or {}
+    intensity_key = f"{bucket_label}_{intensity}"
+    if intensity_key in by_bucket_intensity:
+        return float(by_bucket_intensity[intensity_key])
+    if bucket_label in by_bucket:
+        return float(by_bucket[bucket_label])
+    return float(qmd_config.get("qmd_response_fraction", 0.10))
 
 
 def _ct_product_species_fraction_expr(
@@ -1666,6 +2153,7 @@ def build_mkrf_managed_au_curves(
     log_dir: Path,
     run_id: str = "mkrf_managed_au_curves",
     executable_path: Path | None = None,
+    indicator_bank_names: tuple[str, ...] = ("log-grades",),
 ) -> MkrfManagedAuCurvesResult:
     """Attempt a BTC compile for the provisional managed AU lane."""
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -1679,6 +2167,7 @@ def build_mkrf_managed_au_curves(
             mode="TSR",
             executable_path=executable_path,
             report_preset_name="tsr-unattended-default",
+            indicator_bank_names=indicator_bank_names,
             log_dir=log_dir,
             run_id=run_id,
         )
@@ -2361,6 +2850,8 @@ def initialize_mkrf_runtime_package(
     tracks_dir = package_root / "tracks"
     targets_dir = package_root / "scripts" / "targets"
     flow_targets_script_path = targets_dir / "flowtargets.bsh"
+    greenup_patch_targets_script_path = targets_dir / "patchtargets.bsh"
+    greenup_provenance_path = analysis_dir / "runtime_greenup_provenance.json"
     manifest_path = analysis_dir / "runtime_package_init_manifest.json"
     curve_status_path = analysis_dir / "runtime_curve_status.csv"
     analysis_au_runtime_status_path = analysis_dir / "au_runtime_status.csv"
@@ -2581,6 +3072,65 @@ def initialize_mkrf_runtime_package(
         str(row["first_growth_curve_id"]) for row in first_growth_curve_lookup_rows
     ]
     ct_bucket_specs = _mkrf_ct_bucket_specs()
+    # Load silviculture config for QMD and other silviculture settings
+    silviculture_config = None
+    silviculture_path = package_root.parents[1] / "config" / "silviculture.mkrf.yaml"
+    if silviculture_path.exists():
+        import yaml
+
+        silviculture_config = yaml.safe_load(
+            silviculture_path.read_text(encoding="utf-8")
+        )
+    greenup_config = _resolve_mkrf_greenup_config(silviculture_config)
+    greenup_enabled = greenup_config.enabled
+    greenup_topology_path = package_root / "spatial" / greenup_config.topology_filename
+    greenup_topology_pair_count = 0
+    if greenup_enabled:
+        greenup_topology = build_mkrf_proximal_topology(
+            fragments_path=package_root / "spatial" / "fragments.shp",
+            output_path=greenup_topology_path,
+            distance_m=greenup_config.adjacency_distance_m,
+        )
+        greenup_topology_pair_count = int(len(greenup_topology))
+        _write_mkrf_greenup_patch_targets_script(
+            output_path=greenup_patch_targets_script_path,
+            config=greenup_config,
+        )
+        greenup_provenance_path.write_text(
+            json.dumps(
+                {
+                    "enabled": True,
+                    "greenup_years": greenup_config.greenup_years,
+                    "adjacency_distance_m": greenup_config.adjacency_distance_m,
+                    "criteria_account": greenup_config.criteria_account,
+                    "criteria_feature": f"%f.area.%m.seral.{greenup_config.curve_id}",
+                    "patch_prefix": "patch.sepblk",
+                    "intermediate_min_ha": greenup_config.intermediate_min_ha,
+                    "max_patch_size_ha": greenup_config.max_patch_size_ha,
+                    "intermediate_max_size_percent": (
+                        greenup_config.intermediate_max_size_percent
+                    ),
+                    "intermediate_weight": greenup_config.intermediate_weight,
+                    "large_patch_weight": greenup_config.large_patch_weight,
+                    "topology_path": _manifest_path_value(greenup_topology_path),
+                    "topology_pair_count": greenup_topology_pair_count,
+                    "fragments_path": _manifest_path_value(
+                        package_root / "spatial" / "fragments.shp"
+                    ),
+                    "patch_targets_script": _manifest_path_value(
+                        greenup_patch_targets_script_path
+                    ),
+                    "implementation_boundary": (
+                        "Patchworks patch targets are soft weighted objectives, "
+                        "not exact adjacency/greenup constraints."
+                    ),
+                },
+                indent=2,
+                sort_keys=True,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
     runtime_base_au_expr = (
         f"if(startswith(au,'thn'),substring(au,{len(_mkrf_ct_bucket_prefix(40))}),au)"
     )
@@ -2709,6 +3259,119 @@ def initialize_mkrf_runtime_package(
             key_expr=runtime_base_au_expr,
         )
         unmanaged_share_lookup_exprs[share_column] = f"Number({lookup_expr})/100"
+    log_grade_shares = _build_mkrf_log_grade_shares(managed_curves)
+    log_grade_share_lookup_exprs: dict[str, str] = {}
+    log_grade_share_keys = log_grade_shares["au_id"].tolist()
+    for grade_label in MKRF_LOG_GRADE_LABELS:
+        log_grade_share_values = [
+            str(float(value))
+            for value in log_grade_shares[f"Logs_Grade_{grade_label}"].tolist()
+        ]
+        lookup_expr = _build_lookup_expr(
+            log_grade_share_keys,
+            log_grade_share_values,
+            key_expr=runtime_base_au_expr,
+        )
+        log_grade_share_lookup_exprs[grade_label] = f"Number({lookup_expr})/100"
+    log_grade_share_audit_path = analysis_dir / "runtime_log_grade_share_audit.csv"
+    log_grade_shares.to_csv(log_grade_share_audit_path, index=False)
+    log_price_config_path = _resolve_mkrf_log_price_config(package_root)
+    if log_price_config_path is None:
+        raise FileNotFoundError(
+            "MKRF log price config not found; expected "
+            f"config/{MKRF_LOG_PRICE_CONFIG_NAME} at or above {package_root}"
+        )
+    (
+        log_price_species,
+        log_price_proxies,
+        log_price_provenance,
+    ) = _load_mkrf_log_grade_prices(log_price_config_path)
+    log_grade_prices = _build_mkrf_log_grade_blended_prices(
+        managed_species_shares,
+        species_prices=log_price_species,
+        proxies=log_price_proxies,
+    )
+    log_grade_price_lookup_exprs: dict[str, str] = {}
+    log_grade_price_keys = log_grade_prices["au_id"].tolist()
+    for grade_label in MKRF_LOG_GRADE_LABELS:
+        log_grade_price_values = [
+            str(round(float(value), 4))
+            for value in log_grade_prices[f"Logs_Grade_{grade_label}"].tolist()
+        ]
+        lookup_expr = _build_lookup_expr(
+            log_grade_price_keys,
+            log_grade_price_values,
+            key_expr=runtime_base_au_expr,
+        )
+        log_grade_price_lookup_exprs[grade_label] = f"Number({lookup_expr})"
+    log_grade_price_audit_path = analysis_dir / "runtime_log_grade_price_audit.csv"
+    log_grade_prices.to_csv(log_grade_price_audit_path, index=False)
+    log_grade_price_provenance_path = (
+        analysis_dir / "runtime_log_grade_price_provenance.json"
+    )
+    log_grade_price_provenance_path.write_text(
+        json.dumps(log_price_provenance, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    harvest_cost_config_path = _resolve_mkrf_harvest_cost_config(package_root)
+    if harvest_cost_config_path is None:
+        raise FileNotFoundError(
+            "MKRF harvest cost config not found; expected "
+            f"config/{MKRF_HARVEST_COST_CONFIG_NAME} at or above {package_root}"
+        )
+    harvest_costs = _load_mkrf_harvest_costs(harvest_cost_config_path)
+    harvest_volume_rates = dict(harvest_costs["volume_rates"])
+    harvest_volume_rate_total = round(sum(harvest_volume_rates.values()), 4)
+    harvesting_rate = round(
+        harvest_volume_rates.get("tree_to_truck", 0.0)
+        + harvest_volume_rates.get("hauling", 0.0),
+        4,
+    )
+    tenure_obligation_rate = round(harvest_volume_rate_total - harvesting_rate, 4)
+    silviculture_costs = _build_mkrf_silviculture_costs(
+        log_grade_price_keys,
+        by_bec=harvest_costs["silviculture_by_bec"],
+        default=harvest_costs["silviculture_default"],
+        prefixes=harvest_costs["bec_prefixes"],
+    )
+    # Basic silviculture is a stand re-establishment obligation incurred once
+    # after final harvest, so it is gated to the clearcut treatment. Charging it
+    # on a commercial thinning entry would double-count the regeneration
+    # obligation, and because it is a fixed per-hectare charge against a light
+    # partial-cut volume it would also drive net revenue spuriously negative.
+    silviculture_treatment_labels = ["CC"] + [
+        str(spec["label"]) for spec in _mkrf_ct_bucket_specs()
+    ]
+    silviculture_treatment_gate = "Number({})".format(
+        _build_lookup_expr(
+            silviculture_treatment_labels,
+            ["1" if label == "CC" else "0" for label in silviculture_treatment_labels],
+            key_expr="treatment",
+        )
+    )
+    silviculture_au_expr = "Number({})".format(
+        _build_lookup_expr(
+            silviculture_costs["au_id"].astype(str).tolist(),
+            [
+                str(round(float(value), 4))
+                for value in silviculture_costs["silviculture_cad_per_ha"].tolist()
+            ],
+            key_expr=runtime_base_au_expr,
+        )
+    )
+    silviculture_cost_expr = f"({silviculture_au_expr})*({silviculture_treatment_gate})"
+    harvest_cost_audit_path = analysis_dir / "runtime_harvest_cost_audit.csv"
+    harvest_cost_audit = silviculture_costs.assign(
+        harvesting_cad_per_m3=harvesting_rate,
+        tenure_obligation_cad_per_m3=tenure_obligation_rate,
+        volume_cost_total_cad_per_m3=harvest_volume_rate_total,
+    )
+    harvest_cost_audit.to_csv(harvest_cost_audit_path, index=False)
+    harvest_cost_provenance_path = analysis_dir / "runtime_harvest_cost_provenance.json"
+    harvest_cost_provenance_path.write_text(
+        json.dumps(harvest_costs["provenance"], indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     species_share_audit = _build_species_share_audit_table(
         managed_species_shares=managed_species_shares,
         unmanaged_species_shares=unmanaged_species_shares,
@@ -2969,6 +3632,122 @@ def initialize_mkrf_runtime_package(
     le10_curve = et.SubElement(forestmodel_root, "curve", {"id": "le10"})
     et.SubElement(le10_curve, "point", {"x": "10", "y": "1"})
     et.SubElement(le10_curve, "point", {"x": "11", "y": "0"})
+    greenup_curve_id = greenup_config.curve_id
+    if greenup_enabled and greenup_curve_id != "le10":
+        greenup_curve = et.SubElement(
+            forestmodel_root, "curve", {"id": greenup_curve_id}
+        )
+        et.SubElement(
+            greenup_curve,
+            "point",
+            {"x": str(greenup_config.greenup_years), "y": "1"},
+        )
+        et.SubElement(
+            greenup_curve,
+            "point",
+            {"x": str(greenup_config.greenup_years + 1), "y": "0"},
+        )
+    # QMD config and pre-build curve refs (must be before any attribute references)
+    qmd_config = silviculture_config.get("qmd", {}) if silviculture_config else {}
+    qmd_enabled = bool(qmd_config.get("enabled", False))
+    ct_config = (
+        silviculture_config.get("commercial_thinning", {})
+        if silviculture_config
+        else {}
+    )
+    default_intensity = str(ct_config.get("default_intensity", "medium")).lower()
+
+    # Base QMD curves are pre-thinning (no diameter response), so they can back
+    # the harvested-stem numerator without double-counting the CT response.
+    # Bucket curves apply the response at that bucket's anchor age; the
+    # feature attribute selects the bucket curve from the thinned AU prefix.
+    managed_density_by_au: dict[str, float] = {}
+    if "density_total" in managed_bootstrap.columns:
+        for bootstrap_row in managed_bootstrap.itertuples(index=False):
+            density = pd.to_numeric(
+                getattr(bootstrap_row, "density_total", None), errors="coerce"
+            )
+            if pd.notna(density) and float(density) > 0.0:
+                managed_density_by_au[str(bootstrap_row.au_id)] = float(density)
+
+    qmd_base_curve_refs: dict[str, str] = {}
+    qmd_bucket_curve_refs: dict[tuple[str, str], str] = {}
+    qmd_feature_exprs: dict[str, str] = {}
+    if qmd_enabled:
+        for row in runtime_curve_status.itertuples(index=False):
+            au_id = str(row.au_id)
+            au_token = au_id.upper().replace("-", "_")
+            managed_group = managed_by_au.get(au_id)
+            if managed_group is None or managed_group.empty:
+                continue
+            source_curve_points = tuple(
+                CurvePoint(x=float(r.age), y=float(r.volume))
+                for r in managed_group.itertuples()
+            )
+            si_level = _au_token_to_si_level(au_token)
+            qmd_support = {
+                "source_curve_points": source_curve_points,
+                "si_level": si_level,
+                "height_curve_points": _mkrf_curve_points_from_column(
+                    managed_group, "height"
+                ),
+                "tph_curve_points": _mkrf_curve_points_from_column(
+                    managed_group, "tph"
+                ),
+                "stems_per_ha": managed_density_by_au.get(au_id),
+                "direct_diameter_curve_points": _mkrf_curve_points_from_column(
+                    managed_group, "dbhq"
+                ),
+            }
+
+            base_curve_ref = f"QMD_{au_token}"
+            base_curve = et.SubElement(
+                forestmodel_root, "curve", {"id": base_curve_ref}
+            )
+            for qmd_point in _build_qmd_curve_points(**qmd_support):
+                et.SubElement(
+                    base_curve,
+                    "point",
+                    {"x": str(float(qmd_point.x)), "y": str(float(qmd_point.y))},
+                )
+            qmd_base_curve_refs[au_token] = base_curve_ref
+
+            bucket_keys: list[str] = []
+            bucket_curve_ids: list[str] = []
+            for bucket_spec in ct_bucket_specs:
+                bucket_label = str(bucket_spec["label"])
+                response_curve_ref = f"QMD_{au_token}_{bucket_label}"
+                response_curve = et.SubElement(
+                    forestmodel_root, "curve", {"id": response_curve_ref}
+                )
+                for qmd_point in _build_qmd_curve_points(
+                    **qmd_support,
+                    response_age=int(bucket_spec["anchor_age"]),
+                    response_fraction=_resolve_mkrf_qmd_response_fraction(
+                        qmd_config,
+                        bucket_label=bucket_label,
+                        intensity=default_intensity,
+                    ),
+                    response_years=10,
+                ):
+                    et.SubElement(
+                        response_curve,
+                        "point",
+                        {"x": str(float(qmd_point.x)), "y": str(float(qmd_point.y))},
+                    )
+                qmd_bucket_curve_refs[(au_token, bucket_label)] = response_curve_ref
+                bucket_keys.append(f"{bucket_spec['prefix']}{au_id}")
+                bucket_curve_ids.append(response_curve_ref)
+
+            bucket_curve_lookup_expr = _build_lookup_expr(
+                bucket_keys,
+                bucket_curve_ids,
+                key_expr="au",
+            )
+            qmd_feature_exprs[au_token] = (
+                f"if(startswith(au,'thn'),curveId({bucket_curve_lookup_expr}),"
+                f"curveId({base_curve_ref}))"
+            )
     for row in runtime_curve_status.itertuples(index=False):
         au_token = str(row.au_id).upper().replace("-", "_")
         if bool(row.has_first_growth_curve):
@@ -3283,6 +4062,13 @@ def initialize_mkrf_runtime_package(
         {"label": "%f.area.%m.seral.le10"},
     )
     et.SubElement(area_seral_attr, "curve", {"idref": "le10"})
+    if greenup_enabled and greenup_curve_id != "le10":
+        area_greenup_attr = et.SubElement(
+            area_seral_features,
+            "attribute",
+            {"label": f"%f.area.%m.seral.{greenup_curve_id}"},
+        )
+        et.SubElement(area_greenup_attr, "curve", {"idref": greenup_curve_id})
     managed_yield_select = et.SubElement(
         forestmodel_root,
         "select",
@@ -3317,6 +4103,24 @@ def initialize_mkrf_runtime_package(
             "ignoreMissingAttributes": "false",
         },
     )
+    # QMD feature attributes (one per AU; the expression selects the bucket
+    # response curve for thinned AUs and the pre-thinning curve otherwise).
+    if qmd_enabled:
+        for au_token in sorted(qmd_feature_exprs):
+            managed_yield_qmd_attr = et.SubElement(
+                managed_yield_features,
+                "attribute",
+                {"label": f"feature.QMD.managed.{au_token}"},
+            )
+            et.SubElement(
+                managed_yield_qmd_attr,
+                "expression",
+                {
+                    "statement": qmd_feature_exprs[au_token],
+                    "by": "1",
+                    "ignoreMissingAttributes": "false",
+                },
+            )
     managed_yield_merch_select = et.SubElement(
         forestmodel_root,
         "select",
@@ -3463,6 +4267,42 @@ def initialize_mkrf_runtime_package(
             "ignoreMissingAttributes": "false",
         },
     )
+    # QMD product numerators and treated-area companions (if enabled)
+    qmd_harvested_product_accounts_enabled = bool(
+        qmd_config.get("harvested_product_accounts_enabled", False)
+    )
+    if qmd_enabled and qmd_harvested_product_accounts_enabled:
+        for row in runtime_curve_status.itertuples(index=False):
+            au_token = str(row.au_id).upper().replace("-", "_")
+            base_curve_ref = qmd_base_curve_refs.get(au_token)
+            if base_curve_ref is None:
+                continue
+            for bucket_spec in ct_bucket_specs:
+                bucket_label = str(bucket_spec["label"])
+                # The numerator is the pre-thinning QMD curve, matching the
+                # K3Z convention. Dividing by treated area gives mean
+                # harvested-stem QMD without double-counting the diameter
+                # response that belongs to the standing-stock feature curve.
+                qmd_numerator_attr = et.SubElement(
+                    products_node,
+                    "attribute",
+                    {
+                        "label": (
+                            f"product.QMDNumerator.managed.{au_token}.{bucket_label}"
+                        )
+                    },
+                )
+                et.SubElement(
+                    qmd_numerator_attr,
+                    "curve",
+                    {"idref": base_curve_ref},
+                )
+                treated_area_attr = et.SubElement(
+                    products_node,
+                    "attribute",
+                    {"label": f"product.Treated.managed.{au_token}.{bucket_label}"},
+                )
+                et.SubElement(treated_area_attr, "curve", {"idref": "unity"})
     for share_column, species_label in managed_share_label_map.items():
         product_indsp_attr = et.SubElement(
             products_node,
@@ -3487,6 +4327,122 @@ def initialize_mkrf_runtime_package(
                 "ignoreMissingAttributes": "false",
             },
         )
+    for grade_label in MKRF_LOG_GRADE_LABELS:
+        product_log_grade_attr = et.SubElement(
+            products_node,
+            "attribute",
+            {"label": f"product.Logs_Grade_{grade_label}.managed.total"},
+        )
+        et.SubElement(
+            product_log_grade_attr,
+            "expression",
+            {
+                "statement": (
+                    f"{product_curve_expr}*"
+                    f"({log_grade_share_lookup_exprs[grade_label]})"
+                ),
+                "by": "1",
+                "ignoreMissingAttributes": "false",
+            },
+        )
+    for grade_label in MKRF_LOG_GRADE_LABELS:
+        product_log_grade_value_attr = et.SubElement(
+            products_node,
+            "attribute",
+            {"label": f"product.Logs_Grade_{grade_label}.managed.value"},
+        )
+        et.SubElement(
+            product_log_grade_value_attr,
+            "expression",
+            {
+                "statement": (
+                    f"{product_curve_expr}*"
+                    f"({log_grade_share_lookup_exprs[grade_label]})*"
+                    f"({log_grade_price_lookup_exprs[grade_label]})"
+                ),
+                "by": "1",
+                "ignoreMissingAttributes": "false",
+            },
+        )
+    product_log_value_total_attr = et.SubElement(
+        products_node,
+        "attribute",
+        {"label": "product.LogValue.managed.total"},
+    )
+    log_value_total_expr = "+".join(
+        f"({log_grade_share_lookup_exprs[grade_label]})*"
+        f"({log_grade_price_lookup_exprs[grade_label]})"
+        for grade_label in MKRF_LOG_GRADE_LABELS
+    )
+    et.SubElement(
+        product_log_value_total_attr,
+        "expression",
+        {
+            "statement": f"{product_curve_expr}*({log_value_total_expr})",
+            "by": "1",
+            "ignoreMissingAttributes": "false",
+        },
+    )
+    # Cost and net revenue products. Volume-driven costs scale with the harvest
+    # volume curve; basic silviculture is a per-hectare estimate, so it enters
+    # unscaled. Both are therefore expressed per hectare, matching the units of
+    # the gross value attribute above, and Patchworks scales them by treated
+    # area. Harvesting is emitted separately from the tenure obligation costs
+    # because only the tenure obligation rates are published in the Coast
+    # Appraisal Manual; the harvesting rate is a config assumption.
+    cost_volume_terms = {
+        "Harvesting": f"{product_curve_expr}*{harvesting_rate}",
+        "TenureObligation": f"{product_curve_expr}*{tenure_obligation_rate}",
+        "Silviculture": silviculture_cost_expr,
+    }
+    for cost_label, cost_statement in cost_volume_terms.items():
+        product_cost_attr = et.SubElement(
+            products_node,
+            "attribute",
+            {"label": f"product.Cost_{cost_label}.managed.total"},
+        )
+        et.SubElement(
+            product_cost_attr,
+            "expression",
+            {
+                "statement": cost_statement,
+                "by": "1",
+                "ignoreMissingAttributes": "false",
+            },
+        )
+    cost_total_expr = (
+        f"{product_curve_expr}*{harvest_volume_rate_total}+({silviculture_cost_expr})"
+    )
+    product_cost_total_attr = et.SubElement(
+        products_node,
+        "attribute",
+        {"label": "product.Cost_Total.managed.total"},
+    )
+    et.SubElement(
+        product_cost_total_attr,
+        "expression",
+        {
+            "statement": cost_total_expr,
+            "by": "1",
+            "ignoreMissingAttributes": "false",
+        },
+    )
+    product_net_revenue_attr = et.SubElement(
+        products_node,
+        "attribute",
+        {"label": "product.NetRevenue.managed.total"},
+    )
+    et.SubElement(
+        product_net_revenue_attr,
+        "expression",
+        {
+            "statement": (
+                f"{product_curve_expr}*({log_value_total_expr})-({cost_total_expr})"
+            ),
+            "by": "1",
+            "ignoreMissingAttributes": "false",
+        },
+    )
     product_yield_treat = et.SubElement(
         products_node,
         "attribute",
@@ -3501,6 +4457,9 @@ def initialize_mkrf_runtime_package(
             "ignoreMissingAttributes": "false",
         },
     )
+    required_curve_ids = ["unity", "le10"]
+    if greenup_enabled and greenup_curve_id != "le10":
+        required_curve_ids.append(greenup_curve_id)
     validate_forestmodel_xml_tree(
         root=forestmodel_root,
         required_define_fields=(
@@ -3520,7 +4479,7 @@ def initialize_mkrf_runtime_package(
             "lowoper",
             "frd",
         ),
-        required_curve_ids=("unity", "le10"),
+        required_curve_ids=tuple(required_curve_ids),
         require_cc_treatment=True,
     )
     write_forestmodel_xml(root=forestmodel_root, path=forestmodel_xml_path)
@@ -3896,7 +4855,33 @@ def initialize_mkrf_runtime_package(
         encoding="utf-8",
     )
 
-    analysis_pin_path.write_text(
+    greenup_pin_block = ""
+    if greenup_enabled:
+        intermediate_label = (
+            f"{int(greenup_config.intermediate_min_ha)}_"
+            f"{int(greenup_config.max_patch_size_ha)}"
+        )
+        large_label = f"{int(greenup_config.max_patch_size_ha)}plus"
+        greenup_pin_block = (
+            f'   control.inputTopology("../spatial/'
+            f'{greenup_config.topology_filename}", '
+            f"{greenup_config.adjacency_distance_m:g}d);\n"
+            "   if (usePatches) {\n"
+            f'      control.addPatchTarget("{greenup_config.criteria_account}", '
+            f'"patch.sepblk.0_{int(greenup_config.intermediate_min_ha)}", '
+            f"0.0, {greenup_config.intermediate_min_ha:.1f});\n"
+            f'      control.addPatchTarget("{greenup_config.criteria_account}", '
+            f'"patch.sepblk.{intermediate_label}", '
+            f"{greenup_config.intermediate_min_ha:.1f}, "
+            f"{greenup_config.max_patch_size_ha:.1f});\n"
+            f'      control.addPatchTarget("{greenup_config.criteria_account}", '
+            f'"patch.sepblk.{large_label}", '
+            f"{greenup_config.max_patch_size_ha:.1f}, 99999.0);\n"
+            "      setupGreenupPatchTargets(control, periods);\n"
+            "   }\n"
+        )
+
+    analysis_pin_text = (
         dedent(
             """
             /*
@@ -4194,14 +5179,58 @@ def initialize_mkrf_runtime_package(
             }
             """
         ).strip()
-        + "\n",
-        encoding="utf-8",
+        + "\n"
     )
+    if qmd_enabled:
+        analysis_pin_text = analysis_pin_text.replace(
+            'sourceRelative("../scripts/targets/flowtargets.bsh");\n',
+            'sourceRelative("../scripts/targets/flowtargets.bsh");\n'
+            'sourceRelative("../scripts/targets/qmdRatioAccounts.bsh");\n',
+            1,
+        ).replace(
+            "   setupYieldFlowTargets(control, periods, tracks_path_prefix);\n",
+            "   setupYieldFlowTargets(control, periods, tracks_path_prefix);\n"
+            "   setupHarvestedQmdRatioAccounts(control, tracks_path_prefix);\n",
+            1,
+        )
+    if greenup_enabled:
+        analysis_pin_text = (
+            analysis_pin_text.replace(
+                "boolean usePatches = false;",
+                "boolean usePatches = true;",
+                1,
+            )
+            .replace(
+                'sourceRelative("../scripts/targets/flowtargets.bsh");\n',
+                'sourceRelative("../scripts/targets/flowtargets.bsh");\n'
+                'sourceRelative("../scripts/targets/patchtargets.bsh");\n',
+                1,
+            )
+            .replace(
+                "   setupYieldFlowTargets(control, periods, tracks_path_prefix);\n",
+                "   setupYieldFlowTargets(control, periods, tracks_path_prefix);\n"
+                + greenup_pin_block,
+                1,
+            )
+            .replace(
+                'patch1Theme.setFieldname("feature.area.managed.seral.le10.size");',
+                f'patch1Theme.setFieldname("{greenup_config.criteria_account}.size");',
+                1,
+            )
+        )
+    analysis_pin_path.write_text(analysis_pin_text, encoding="utf-8")
 
     manifest_payload = {
         "schema_version": 1,
         "package_root": _manifest_path_value(package_root),
         "runtime_generation_status": "initialized_only",
+        "greenup": {
+            "enabled": greenup_enabled,
+            "greenup_years": greenup_config.greenup_years,
+            "adjacency_distance_m": greenup_config.adjacency_distance_m,
+            "criteria_account": greenup_config.criteria_account,
+            "topology_pair_count": greenup_topology_pair_count,
+        },
         "source_contracts": {
             "selected_au_csv": _manifest_path_value(selected_au_csv),
             "stand_origin_assignment_csv": _manifest_path_value(
@@ -4250,6 +5279,11 @@ def initialize_mkrf_runtime_package(
                 headless_runtime_common_path
             ),
             "flow_targets_bsh": _manifest_path_value(flow_targets_script_path),
+            "greenup_topology_csv": _manifest_path_value(greenup_topology_path),
+            "greenup_patch_targets_bsh": _manifest_path_value(
+                greenup_patch_targets_script_path
+            ),
+            "greenup_provenance_json": _manifest_path_value(greenup_provenance_path),
         },
         "counts": {
             "selected_au_count": selected_au_count,

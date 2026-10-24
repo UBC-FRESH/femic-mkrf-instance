@@ -38,3 +38,15 @@ _build/
 # Legacy intermediate artifacts
 data/*.feather
 data/*.pkl
+
+# ws4 pilot runtime outputs
+ws4/runtime/
+
+# Private data controls (see planning/data_publication_boundary.md).
+# The tracked private overlay is a separate private repo linked as a submodule,
+# not an ignored path; these entries cover raw workbooks and local scratch.
+*.xlsx
+*.xls
+*.xlsm
+config/private.local/
+*.local.yaml

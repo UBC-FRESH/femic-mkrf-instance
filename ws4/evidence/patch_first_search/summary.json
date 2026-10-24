@@ -1,0 +1,36 @@
+{
+  "incumbent_objective": 0.0,
+  "iterations": 50,
+  "patience": 0,
+  "seed": 42,
+  "metaheuristic": "sa",
+  "starts": 1,
+  "initial_schedule_path": "/home/gep/projects/femic/external/femic-mkrf-instance/ws4/schedules/patch_first.csv",
+  "blocks_scheduled": 1226,
+  "operators": [
+    "toggle",
+    "shift",
+    "swap",
+    "lns",
+    "cluster",
+    "coalesce",
+    "merge",
+    "split"
+  ],
+  "status": "ok",
+  "time_limit_reached": false,
+  "dataset": {
+    "schema_version": "0.1",
+    "sources": [
+      {
+        "path": "forestmodel.xml",
+        "sha256": "8a46ca45092c02b0a61e8ed1146940fe2809aace4b24043ea3d348b279d8f409"
+      },
+      {
+        "path": "fragments.shp",
+        "sha256": "e4b16e3a65ad0bb26503aa1632a5d07e93fa459d7da386937192d9914e0a6e13"
+      }
+    ],
+    "manifest_sha256": "9edb6eb07408b0b55ec64438e61f042b906fa178cae9007616fea1b3fe1bee1d"
+  }
+}

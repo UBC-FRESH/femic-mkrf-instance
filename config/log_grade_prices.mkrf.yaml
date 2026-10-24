@@ -1,0 +1,123 @@
+# MKRF log grade price matrix.
+#
+# Context: Malcolm Knapp Research Forest is located at Maple Ridge in the BC
+# Lower Mainland. That is Coast Forest Region, and coastal logs from this area
+# are sold into the Vancouver Log Market (VLM). The governing published price
+# series is therefore the Coast Selling Price System log market report, not any
+# Interior series.
+#
+# Source
+#   Coast Selling Price System - Average Log Prices - Second Growth
+#   For the 3 month period ending: January 2026
+#   Prepared by Timber Pricing Branch, BC Ministry of Forests
+#   https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/timber-pricing/coast-timber-pricing/coast-log-reports/3m2gc_jan_26.pdf
+#   Index page:
+#   https://www2.gov.bc.ca/gov/content/industry/forestry/competitive-forest-industry/timber-pricing/coast-timber-pricing/coast-log-market-reports
+#
+# Why second growth: the MKRF managed lane is planted/second-growth origin, and
+# the shipped FEMIC recipe selector maps planted origin to the second-growth
+# coast matrix. The old-growth VLM series is the counterpart for natural-origin
+# harvest and is not applied to the managed products here.
+#
+# Why the 3-month series: the three-month rolling report smooths single-month
+# market volatility, which is the appropriate basis for strategic planning
+# horizons rather than a one-month spot snapshot.
+#
+# Units: CAD per cubic metre (AMV = average market value).
+#
+# Extraction method: the published PDF leaves unpriced cells blank, so flat text
+# extraction shifts values into the wrong species column. Values below were
+# resolved positionally, matching each numeric cell's horizontal centre against
+# the species header column centres, and cross-checked against the previously
+# shipped December 2025 matrix.
+#
+# Verified species coverage for this reporting period: only Cedar, Fir, Hembal,
+# Spruce and Pine carry any published second-growth prices. There are no Alder,
+# Birch, Cottonwood, Cypress or Maple prices in this report. That is why the
+# deciduous buckets are left unpriced and why yellow cedar is proxied to Cedar
+# rather than to a Cypress row. Pine is published (grade J only) but MKRF has no
+# pine species bucket, so it is not carried.
+#
+# Grade F is held at 0.0 and grade D, though published for Cedar, is inert:
+# TIPSY/BTC cannot produce D or F logs because those grades require 50% and 25%
+# clear lumber respectively and TIPSY does not model pruning (see TIPSY 4.5
+# help, "Coastal Log Grades"). The Cedar D price is carried for faithfulness to
+# the source, but multiplies a volume that is always zero.
+
+schema_version: "1.0"
+
+active_matrix: vlm_second_growth_2026_01
+
+matrices:
+  vlm_second_growth_2026_01:
+    provenance:
+      report_label: "Coast Selling Price System - Average Log Prices - Second Growth"
+      market: "Vancouver Log Market (VLM)"
+      region: "BC Coast Forest Region"
+      period_ending: "2026-01"
+      period_basis: "three month rolling average"
+      source_file: "3m2gc_jan_26.pdf"
+      source_url: "https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/timber-pricing/coast-timber-pricing/coast-log-reports/3m2gc_jan_26.pdf"
+      publisher: "Timber Pricing Branch, BC Ministry of Forests"
+      units: "CAD/m3"
+      retrieved: "2026-07-30"
+    species:
+      Cedar:
+        # Published for Cedar, but unreachable from BTC output (no pruning).
+        Logs_Grade_D: 802.10
+        Logs_Grade_F: 0.0
+        Logs_Grade_H: 476.20
+        Logs_Grade_I: 433.96
+        Logs_Grade_J: 216.99
+        Logs_Grade_U: 130.12
+        Logs_Grade_X: 94.90
+        Logs_Grade_Y: 46.48
+      Fir:
+        Logs_Grade_D: 0.0
+        Logs_Grade_F: 0.0
+        Logs_Grade_H: 180.98
+        Logs_Grade_I: 150.57
+        Logs_Grade_J: 113.39
+        Logs_Grade_U: 75.77
+        Logs_Grade_X: 55.47
+        Logs_Grade_Y: 53.27
+      Hembal:
+        Logs_Grade_D: 0.0
+        Logs_Grade_F: 0.0
+        Logs_Grade_H: 144.77
+        Logs_Grade_I: 110.62
+        Logs_Grade_J: 85.04
+        Logs_Grade_U: 59.88
+        Logs_Grade_X: 55.84
+        Logs_Grade_Y: 35.72
+      Spruce:
+        Logs_Grade_D: 0.0
+        Logs_Grade_F: 0.0
+        Logs_Grade_H: 71.87
+        Logs_Grade_I: 71.11
+        Logs_Grade_J: 88.20
+        Logs_Grade_U: 57.98
+        Logs_Grade_X: 55.12
+        Logs_Grade_Y: 53.19
+
+# Bridge from MKRF species-share buckets to published VLM market species rows.
+# Every bridge assumption is explicit rather than silently averaged.
+#
+#   Cw  -> Cedar   western redcedar
+#   Fd  -> Fir     coastal Douglas-fir
+#   Hw  -> Hembal  western hemlock; "Hembal" is the published hemlock/balsam pool
+#   Ba  -> Hembal  amabilis fir (balsam) is priced in the same Hembal pool
+#   Yc  -> Cedar   the second-growth report publishes no Cypress row, so yellow
+#                  cedar is proxied to Cedar
+#   Dr  -> null    red alder is a hardwood with no coast conifer log price
+#   Dec -> null    deciduous bucket, same reason
+#   Oth -> null    unresolved residual bucket is deliberately unpriced
+species_market_proxies:
+  share_ba: Hembal
+  share_cw: Cedar
+  share_dec: null
+  share_dr: null
+  share_fd: Fir
+  share_hw: Hembal
+  share_oth: null
+  share_yc: Cedar

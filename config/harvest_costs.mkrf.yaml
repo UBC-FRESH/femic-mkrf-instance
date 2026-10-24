@@ -1,0 +1,199 @@
+# MKRF harvest cost and net revenue basis.
+#
+# PUBLICATION NOTE: this file is part of the public open model. It uses
+# published Coast Appraisal Manual rates and explicitly flagged assumptions.
+# It does not contain MKRF contractor rates, raw sorts/revenue spreadsheets or
+# other internal financial data. The private planning overlay is tracked in the
+# separate private instance repository and linked as a git submodule in
+# internal checkouts; see planning/data_publication_boundary.md.
+#
+# Companion to log_grade_prices.mkrf.yaml. That file supplies gross log value
+# ($/m3 by species and grade, Vancouver Log Market). This file supplies the
+# cost side so the model can express net revenue rather than gross revenue
+# only.
+#
+# ---------------------------------------------------------------------------
+# WHY NOT THE K3Z INSTANCE
+# ---------------------------------------------------------------------------
+# The k3z instance was checked first as a possible cost source. It has none.
+# Verified across k3z src/, config/, docs/, and every accounts.csv,
+# protoaccounts.csv and forestmodel*.xml across all of its track variants:
+# there are zero cost, stumpage or net-revenue surfaces. The k3z docs describe
+# its economics explicitly and repeatedly as "gross-revenue" teaching accounts.
+# The only economics k3z carries is the price side, from the shipped FEMIC
+# coast log price matrices, which MKRF already uses a newer vintage of. So
+# there was no k3z cost basis to mirror and none is claimed here.
+#
+# ---------------------------------------------------------------------------
+# PRIMARY SOURCE
+# ---------------------------------------------------------------------------
+#   Coast Appraisal Manual (CAM)
+#   Effective January 1, 2026
+#   BC Ministry of Forests, Timber Pricing Branch
+#   https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/timber-pricing/coast-timber-pricing/coast-appraisal-manual/cam_2026_master.pdf
+#
+# The CAM is the right companion to the VLM price series already in use: same
+# ministry, same region, same effective period, and the coast appraisal system
+# it defines is built on top of exactly those log market prices.
+#
+# ---------------------------------------------------------------------------
+# IMPORTANT LIMITATION - READ BEFORE TRUSTING NET REVENUE
+# ---------------------------------------------------------------------------
+# The CAM does NOT publish a base harvesting (tree-to-truck) or hauling cost.
+# Its cost sections are "tenure obligation adjustments", which are the costs a
+# long-term licensee bears that a market logger does not. Base harvesting and
+# hauling cost is absorbed inside the Estimated Winning Bid regression
+# (CAM 4.3.1), whose coefficients are not decomposable into a cost rate.
+#
+# The only operating-cost figures the CAM states outright are area-specific
+# *increments*, not a base rate:
+#   - Clayoquot Sound operating cost adjustment    $13.02/m3  (CAM 4.4.2)
+#   - Ecosystem-Based Management operating cost    $ 9.39/m3  (CAM 4.4.4)
+#   - Inland water transportation adjustment       $12.10/m3  (CAM 4.4.1)
+# None of these apply to MKRF and none is a base harvesting cost.
+#
+# Consequently the harvesting and hauling entries below are ASSUMPTIONS, not
+# published values. They are the single largest component of cost, so net
+# revenue computed from this file is only as good as those two numbers. They
+# are isolated, individually adjustable, and flagged with basis: assumption so
+# that no downstream consumer mistakes them for a citable rate.
+#
+# Refinement paths, in preference order:
+#   1. TIPSY/FAN$IER exposes "Tree-to-Truck Cost" ($/ha, indicator 64) and
+#      "Haul Costs" ($/ha, indicator 65). These are stand-specific, so cost per
+#      cubic metre would correctly fall as piece size rises, which matters for
+#      the diameter-response work. Blocked today: FEMIC's BTC indicator bank
+#      registry (_BTC_INDICATOR_BANK_SPECS in femic/pipeline/tipsy.py) has no
+#      economics bank, and FAN$IER cost functions are GUI-configured with
+#      undocumented default vintage. Wiring this up is tracked as follow-on
+#      work rather than assumed here.
+#   2. A site-specific MKRF operating cost figure from forest management staff,
+#      which would be authoritative for this tenure and should simply replace
+#      the assumed values below.
+#
+# ---------------------------------------------------------------------------
+# STUMPAGE
+# ---------------------------------------------------------------------------
+# Excluded by default. MKRF is a UBC-managed research and teaching forest, not
+# a conventional Crown tenure paying market stumpage, so charging a standard
+# coast MPS stumpage rate would misrepresent it. Deriving one would also mean
+# running the full EWB regression and tenure obligation adjustment chain, which
+# is a stumpage-determination exercise rather than a management-planning one.
+# The toggle is present and off, with the rate left null, so that enabling it
+# is a deliberate act that requires supplying a defended rate.
+
+schema_version: 1
+active_matrix: cam_2026_coast
+
+matrices:
+  cam_2026_coast:
+    provenance:
+      title: Coast Appraisal Manual
+      publisher: BC Ministry of Forests, Timber Pricing Branch
+      effective_date: "2026-01-01"
+      retrieved: "2026-07-30"
+      url: https://www2.gov.bc.ca/assets/gov/farming-natural-resources-and-industry/forestry/timber-pricing/coast-timber-pricing/coast-appraisal-manual/cam_2026_master.pdf
+      currency: CAD
+      notes: >-
+        Published values are transcribed from the scale-based variants. The CAM
+        also defines cruise-based variants as the scale-based rate multiplied by
+        the cut-to-cruise factor CTC = 0.975 (CAM 5.2). Scale-based is used here
+        because the model tracks scaled harvest volume, not cruise volume.
+
+    # Costs proportional to harvested volume, in CAD per cubic metre.
+    volume_costs_cad_per_m3:
+
+      forest_planning_and_administration:
+        rate: 21.56
+        basis: published
+        source: CAM 5.2
+        notes: >-
+          Supervision and administration required to manage public forest.
+          Excludes stumpage and discretionary business costs.
+
+      road_management:
+        rate: 4.73
+        basis: published
+        source: CAM 5.4
+        notes: >-
+          Grading, brush control, surfacing repair, ditch maintenance,
+          deactivation and road use charges. Applies where logs move by truck,
+          which is the case for all MKRF harvest.
+
+      market_logger:
+        rate: 8.58
+        basis: derived
+        source: CAM 5.9
+        notes: >-
+          MLC = [8.37 * (1 - HW) - BCTS] / (1 - LG) + CTSSO, evaluated with
+          HW = 0 (no helicopter-to-water harvesting at MKRF), LG = 0 (no low
+          grade adjustment), BCTS = 0.12 (CAM 5.9.2) and CTSSO = 0.33
+          (CAM 5.9.3), giving (8.37 - 0.12) / 1 + 0.33 = 8.58.
+
+      tree_to_truck:
+        rate: 43.00
+        basis: assumption
+        source: null
+        review_required: true
+        notes: >-
+          NOT a published rate. Falling, yarding, processing and loading for
+          conventional coastal ground-based and cable ground at MKRF. See the
+          limitation section above. Replace with a FAN$IER indicator 64 value
+          or an MKRF staff figure when available.
+
+      hauling:
+        rate: 12.00
+        basis: assumption
+        source: null
+        review_required: true
+        notes: >-
+          NOT a published rate. Short off-highway and highway haul from Maple
+          Ridge to Lower Mainland merchandising and mill destinations. Replace
+          with a FAN$IER indicator 65 value or an MKRF staff figure when
+          available.
+
+    # Costs proportional to harvested area, in CAD per hectare.
+    area_costs_cad_per_ha:
+
+      basic_silviculture:
+        basis: published
+        source: CAM 5.7, Table 5-6
+        applies_to: final harvest only
+        notes: >-
+          Cost of all activities required to achieve free-growing obligations,
+          excluding root disease control. The CAM keys these to BEC zone,
+          subzone and variant, which maps directly onto the MKRF analysis unit
+          identifiers. CAM 5.7 item 3 specifies that where a BEC unit is not
+          listed, the next higher classification is used in priority order of
+          variant, then subzone, then zone. The MKRF dm analysis units carry no
+          published variant, so they resolve to CWHdm under that rule.
+
+          This is a stand re-establishment obligation incurred once after final
+          harvest, so the exporter charges it only against the clearcut
+          treatment. It is deliberately not charged against the commercial
+          thinning treatments: doing so would double-count the regeneration
+          obligation, and because it is a fixed per-hectare amount levied on a
+          light partial-cut volume it would also drive net revenue spuriously
+          negative on thinning entries.
+        by_bec_unit:
+          cwh_dm: 2963.0    # CAM Table 5-6, CWHdm
+          cwh_vm_1: 2027.0  # CAM Table 5-6, CWHvm1
+          cwh_vm_2: 1698.0  # CAM Table 5-6, CWHvm2
+        default: 2178.0     # CAM Table 5-6, CWH zone-level fallback
+
+    # Optional, off by default. See the stumpage note above.
+    stumpage:
+      enabled: false
+      rate_cad_per_m3: null
+      basis: excluded
+      notes: >-
+        MKRF is a UBC research and teaching forest rather than a conventional
+        Crown tenure. Enabling this requires supplying a defended rate.
+
+# Maps an analysis unit identifier prefix to a BEC key in
+# area_costs_cad_per_ha.basic_silviculture.by_bec_unit. Longest prefix wins, so
+# the more specific vm_1 and vm_2 entries are matched before any shorter key.
+bec_unit_prefixes:
+  cwh_dm_x: cwh_dm
+  cwh_vm_1: cwh_vm_1
+  cwh_vm_2: cwh_vm_2

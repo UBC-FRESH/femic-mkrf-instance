@@ -1,0 +1,306 @@
+# MKRF ws4 legacy-literal targets.
+#
+# This file keeps the original 500,000 m3/10-year harvest floor from
+# Targets/01_harvest.bsh. It is useful for parity testing, but it is not
+# expected to be feasible for the current 4,810 ha MKRF model; use
+# targets.yaml for the runnable pilot.
+#
+# Translated from:
+#   data/legacy_mkrf/compiled_controls/targets/01_harvest.bsh
+#   data/legacy_mkrf/compiled_controls/targets/07_flow.bsh
+#   data/legacy_mkrf/compiled_controls/targets/06_patch.bsh
+#   data/legacy_mkrf/compiled_controls/scripts/RATIO_ACCOUNTS.bsh
+#
+# The legacy harvest floor was 500,000 m3 per 10-year period. The current
+# MKRF canonical model is a 4,810 ha research forest; 500,000 m3/decade is
+# not a feasible floor at that scale. This pilot uses 300,000 m3/decade,
+# which is in the range produced by the translated spatially constrained
+# baseline (roughly 0.25-0.67 million m3/decade). Change `minimum` here to
+# restore the literal legacy value if that is what you want to test.
+#
+# The 100-year pilot horizon covers ten 10-year accounting periods. Extend
+# the period list to 30 to match the full Patchworks horizon.
+targets:
+  # --- harvest level, one target per decade -------------------------------
+  - account: product.yield.managed.total
+    period: 1
+    minimum: 500000
+    period_width: 10
+    min_weight: 1.0
+  - account: product.yield.managed.total
+    period: 2
+    minimum: 500000
+    period_width: 10
+    min_weight: 1.0
+  - account: product.yield.managed.total
+    period: 3
+    minimum: 500000
+    period_width: 10
+    min_weight: 1.0
+  - account: product.yield.managed.total
+    period: 4
+    minimum: 500000
+    period_width: 10
+    min_weight: 1.0
+  - account: product.yield.managed.total
+    period: 5
+    minimum: 500000
+    period_width: 10
+    min_weight: 1.0
+  - account: product.yield.managed.total
+    period: 6
+    minimum: 500000
+    period_width: 10
+    min_weight: 1.0
+  - account: product.yield.managed.total
+    period: 7
+    minimum: 500000
+    period_width: 10
+    min_weight: 1.0
+  - account: product.yield.managed.total
+    period: 8
+    minimum: 500000
+    period_width: 10
+    min_weight: 1.0
+  - account: product.yield.managed.total
+    period: 9
+    minimum: 500000
+    period_width: 10
+    min_weight: 1.0
+  - account: product.yield.managed.total
+    period: 10
+    minimum: 500000
+    period_width: 10
+    min_weight: 1.0
+
+  # --- even flow: percent difference from the final period ----------------
+  # Replaces RATIO_ACCOUNTS.bsh product.flow.yield.even + 07_flow.bsh.
+  # Periods 1-9 are the legacy flow_end: 100 (exclusive-year) window; period 10
+  # is the final level target and is not part of the flow-shape comparison.
+  - account: product.yield.managed.total
+    period: 1
+    minimum: -10.0
+    maximum: 10.0
+    flow: even
+    period_width: 10
+    flow_start_period: 1
+    flow_end_period: 9
+    min_weight: 1000.0
+    max_weight: 1000.0
+    shape: non_linear
+
+  # --- non-declining growing stock ---------------------------------------
+  # Replaces RATIO_ACCOUNTS.bsh feature.flow.yield.total + 07_flow.bsh.
+  - account: feature.yield.managed.total
+    period: 1
+    minimum: 0.0
+    flow: ndy
+    period_width: 10
+    flow_start_period: 1
+    flow_end_period: 9
+    min_weight: 100.0
+
+  # --- opening size-class targets (MKRF staff guidance, October 2026) ----
+  # Target shares are maxima; 5-40 ha has no target. Weight mapping:
+  # Very High = 1,000,000, High = 100,000, None = no target.
+  # Classes: <=1, >1-5, >5-40, >40-50, >50 ha.
+  - account: patch.grpblk.0_1.size
+    period: 1
+    maximum: 0.0
+    period_width: 10
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 1
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 1
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 1
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
+    period: 2
+    maximum: 0.0
+    period_width: 10
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 2
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 2
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 2
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
+    period: 3
+    maximum: 0.0
+    period_width: 10
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 3
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 3
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 3
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
+    period: 4
+    maximum: 0.0
+    period_width: 10
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 4
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 4
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 4
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
+    period: 5
+    maximum: 0.0
+    period_width: 10
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 5
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 5
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 5
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
+    period: 6
+    maximum: 0.0
+    period_width: 10
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 6
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 6
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 6
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
+    period: 7
+    maximum: 0.0
+    period_width: 10
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 7
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 7
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 7
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
+    period: 8
+    maximum: 0.0
+    period_width: 10
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 8
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 8
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 8
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
+    period: 9
+    maximum: 0.0
+    period_width: 10
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 9
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 9
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 9
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.0_1.size
+    period: 10
+    maximum: 0.0
+    period_width: 10
+    max_weight: 1000000.0
+  - account: patch.grpblk.1_5.size
+    period: 10
+    maximum: 10.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.40_50.size
+    period: 10
+    maximum: 5.0
+    period_width: 10
+    max_weight: 100000.0
+  - account: patch.grpblk.50_9999999.size
+    period: 10
+    maximum: 0.0
+    period_width: 10
+    max_weight: 100000.0

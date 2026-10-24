@@ -1,0 +1,15 @@
+# Patch accounts translated from the MKRF Patchworks base.pin.
+#
+# Active ws4 policy (MKRF staff guidance, October 2026): opening size is
+# controlled with size-class targets and weights, not with an arbitrary 100 m
+# adjacency rule. The patch membership criterion is the clearcut area; blocks
+# join a patch only when they actually touch (search_distance 0.0).
+#
+# The legacy patch.sepblk (100 m / seral.le10) account is retained in the
+# Patchworks reference package but is not part of the active ws4 pilot.
+accounts:
+  - name: patch.grpblk
+    criteria: product.area.managed.treat.CC
+    threshold: 0.0
+    size_classes: [1.0, 5.0, 40.0, 50.0, .inf]
+    search_distance: 0.0

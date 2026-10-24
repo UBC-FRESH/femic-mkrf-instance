@@ -1,0 +1,17 @@
+{
+  "blocks_scheduled": 1742,
+  "incumbent_objective": 3591306.92855756,
+  "initial_schedule_path": "/srv/shared-data/gep/ws4/femic/external/femic-mkrf-instance/ws4/schedules/greenup_greedy.csv",
+  "iterations": 50,
+  "kind": "search",
+  "max_opening_ha": 50.0,
+  "min_green_up_years": 5,
+  "patch_accounts_path": "/srv/shared-data/gep/ws4/femic/external/femic-mkrf-instance/ws4/patch_accounts.yaml",
+  "seed": 42,
+  "spatial_weight": 1000000.0,
+  "starts": 1,
+  "status": "ok",
+  "targets_path": "/srv/shared-data/gep/ws4/femic/external/femic-mkrf-instance/ws4/targets.yaml",
+  "topology_path": "/srv/shared-data/gep/ws4/femic/external/femic-mkrf-instance/ws4/topology.csv",
+  "years": 100
+}
