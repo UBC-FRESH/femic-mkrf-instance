@@ -105,3 +105,14 @@ Limits
 - Legacy scenario targets that depend on THLB, biodiversity, ECA, UWR or VQO
   accounts are not mapped because the canonical MKRF dataset has no such
   accounts.
+
+
+Sub-hectare polygons
+--------------------
+
+The sub-hectare VRI polygons were analysed separately from the harvest-opening
+policy. There are 628 polygons below 1 ha (35.6% of polygons, 5.76% of area),
+but only 95 polygons / 45.46 ha are attribute-safe to merge into a touching
+≥1 ha neighbour. Blanket merging would change operability, CT eligibility,
+CONTCLAS or AU on substantially more area. See
+``notes/reference/small-polygons.md`` and ``scripts/small_polygons.py``.

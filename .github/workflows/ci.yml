@@ -27,7 +27,7 @@ jobs:
       - name: Install test dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e ".[dev]" pandas pyarrow numpy
+          python -m pip install -e ".[dev]" pandas pyarrow numpy geopandas shapely
 
       - name: Verify the offset schedule contract
-        run: python -m pytest tests/test_ws4_patch_schedule.py -q
+        run: PYTHONPATH=scripts python -m pytest tests/test_ws4_patch_schedule.py tests/test_small_polygons.py -q
