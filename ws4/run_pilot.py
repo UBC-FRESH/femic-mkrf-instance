@@ -34,7 +34,9 @@ def _require_ws4() -> None:
         ) from exc
 
 
-def build_dataset(dataset_dir: Path) -> Path:
+def build_dataset(
+    dataset_dir: Path, fragments_path: Path = MODEL_ROOT / "spatial" / "fragments.shp"
+) -> Path:
     """Compile the MKRF recipe and fragments into a ws4 canonical dataset."""
     from ws4.build.compiler import build_canonical_dataset
 
@@ -43,7 +45,7 @@ def build_dataset(dataset_dir: Path) -> Path:
     dataset_dir.parent.mkdir(parents=True, exist_ok=True)
     return build_canonical_dataset(
         xml_path=MODEL_ROOT / "xml" / "forestmodel.xml",
-        fragments_path=MODEL_ROOT / "spatial" / "fragments.shp",
+        fragments_path=fragments_path,
         out_dir=dataset_dir,
     )
 
@@ -72,7 +74,9 @@ def run_simulation(
     return run_dir
 
 
-def write_ui_assets(run_dir: Path) -> None:
+def write_ui_assets(
+    run_dir: Path, fragments_path: Path = MODEL_ROOT / "spatial" / "fragments.shp"
+) -> None:
     """Write the geometry and report files the ws4 web UI reads."""
     import geopandas as gpd
     import pandas as pd
@@ -81,7 +85,7 @@ def write_ui_assets(run_dir: Path) -> None:
 
     runtime_dir = run_dir.parent
     geometry_path = runtime_dir / "fragments.geojson"
-    fragments = gpd.read_file(MODEL_ROOT / "spatial" / "fragments.shp")
+    fragments = gpd.read_file(fragments_path)
     fragments["block_id"] = fragments["RES_KEY"].astype(int)
     fragments[["block_id", "geometry"]].to_file(geometry_path, driver="GeoJSON")
 
@@ -173,6 +177,12 @@ def main() -> None:
         default=WS4_ROOT / "schedules" / "patch_first.csv",
     )
     parser.add_argument("--years", type=int, default=100)
+    parser.add_argument(
+        "--fragments",
+        type=Path,
+        default=MODEL_ROOT / "spatial" / "fragments.shp",
+        help="Fragment inventory to compile; use the optional attribute-safe GPKG here.",
+    )
     parser.add_argument("--skip-build", action="store_true")
     parser.add_argument(
         "--rebuild",
@@ -186,14 +196,16 @@ def main() -> None:
         import shutil
 
         shutil.rmtree(args.dataset, ignore_errors=True)
-    dataset = args.dataset if args.skip_build else build_dataset(args.dataset)
+    dataset = (
+        args.dataset if args.skip_build else build_dataset(args.dataset, args.fragments)
+    )
     run_dir = run_simulation(
         dataset_dir=dataset,
         schedule_path=args.schedule,
         run_dir=args.run,
         years=args.years,
     )
-    write_ui_assets(run_dir)
+    write_ui_assets(run_dir, args.fragments)
     summary = summarise(run_dir)
     print(json.dumps(summary, indent=2, sort_keys=True))
 
