@@ -1,0 +1,22 @@
+{
+  "blocks":741,
+  "area_ha":2306.0961262123,
+  "mean_retained_ba_share":0.1034213387,
+  "mean_retained_volume_share":0.1142820838,
+  "mean_retained_value_share":0.1164677957,
+  "retention_target_pct":[
+    0.1,
+    0.2
+  ],
+  "profile_age_range":[
+    60.0,
+    180.0
+  ],
+  "source":{
+    "vri":"\/srv\/shared-data\/gep\/ws4\/sources\/mkrf-gis-2026-11-02\/processed\/vri_2016.gpkg",
+    "tree_list":"\/srv\/shared-data\/gep\/ws4\/fhops-public-demo\/examples\/game\/stands\/mkrf_684\/trees.csv",
+    "price_deck":"\/srv\/shared-data\/gep\/ws4\/fhops-public-demo\/examples\/game\/levels\/mkrf_684\/prices.yaml",
+    "regime":"\/srv\/shared-data\/gep\/ws4\/femic\/external\/femic-mkrf-instance\/data\/model_input_bundle\/silviculture_regime_assignment.csv"
+  },
+  "caveat":"First-pass bootstrap. Species DBH shapes come from one synthetic MKRF stand; VRI supplies scale. Not a full-estate tree list."
+}
