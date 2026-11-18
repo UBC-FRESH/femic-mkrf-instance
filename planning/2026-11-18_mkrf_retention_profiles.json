@@ -1,12 +1,15 @@
 {
-  "blocks":741,
-  "area_ha":2306.0961262123,
-  "mean_retained_ba_share":0.1034213387,
-  "mean_retained_volume_share":0.1142820838,
-  "mean_retained_value_share":0.1164677957,
+  "blocks":923,
+  "rows":3692,
+  "area_ha":2728.5679250286,
+  "mean_retained_ba_share":0.090703453,
+  "mean_retained_volume_share":0.0981274607,
+  "mean_retained_value_share":0.0989410076,
   "retention_target_pct":[
+    0.0,
     0.1,
-    0.2
+    0.2,
+    0.3
   ],
   "profile_age_range":[
     60.0,
