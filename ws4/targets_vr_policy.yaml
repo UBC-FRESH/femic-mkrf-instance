@@ -122,50 +122,50 @@ targets:
 - account: product.ba.retention.total
   period: 1
   period_width: 10
-  minimum: 500.0
+  minimum: 400.0
   min_weight: 10.0
 - account: product.ba.retention.total
   period: 2
   period_width: 10
-  minimum: 500.0
+  minimum: 400.0
   min_weight: 10.0
 - account: product.ba.retention.total
   period: 3
   period_width: 10
-  minimum: 500.0
+  minimum: 400.0
   min_weight: 10.0
 - account: product.ba.retention.total
   period: 4
   period_width: 10
-  minimum: 500.0
+  minimum: 400.0
   min_weight: 10.0
 - account: product.ba.retention.total
   period: 5
   period_width: 10
-  minimum: 500.0
+  minimum: 400.0
   min_weight: 10.0
 - account: product.ba.retention.total
   period: 6
   period_width: 10
-  minimum: 500.0
+  minimum: 400.0
   min_weight: 10.0
 - account: product.ba.retention.total
   period: 7
   period_width: 10
-  minimum: 500.0
+  minimum: 400.0
   min_weight: 10.0
 - account: product.ba.retention.total
   period: 8
   period_width: 10
-  minimum: 500.0
+  minimum: 400.0
   min_weight: 10.0
 - account: product.ba.retention.total
   period: 9
   period_width: 10
-  minimum: 500.0
+  minimum: 400.0
   min_weight: 10.0
 - account: product.ba.retention.total
   period: 10
   period_width: 10
-  minimum: 500.0
+  minimum: 400.0
   min_weight: 10.0
