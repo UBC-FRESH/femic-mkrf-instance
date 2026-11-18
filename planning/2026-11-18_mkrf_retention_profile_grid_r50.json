@@ -2,9 +2,14 @@
   "blocks":923,
   "rows":3692,
   "area_ha":2728.5679250286,
-  "mean_retained_ba_share":0.0894373891,
-  "mean_retained_volume_share":0.1375688415,
-  "mean_retained_value_share":0.1375688415,
+  "mean_retained_ba_share":0.0903115733,
+  "mean_retained_volume_share":0.0938014972,
+  "mean_retained_value_share":0.0936721692,
+  "retained_log_volume_share":{
+    "sawlog_butt":0.0957274951,
+    "sawlog_upper":0.1014461016,
+    "pulp":0.0360400134
+  },
   "retention_target_pct":[
     0.0,
     0.1,
